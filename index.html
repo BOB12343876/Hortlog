@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hortlog</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e6efec;--card:#fbfdfc;--ink:#0b1f20;--soft:#4d6665;--deep:#0f3d3e;--hot:#ff6b2c;--sun:#ffd23f;--map:#d4e3de;--blk:#f4faf8;--psa:#e03131;--dead:#1c7ed6;--buy:#e6a700;--note:#6b8a86;--todo:#7c4dff;--crew:#0a9c82;--spray:#a0643a;--bio:#3a9d23;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1718;--card:#122a2b;--ink:#e6f2ef;--soft:#8fb0ac;--deep:#1d6b6c;--map:#0f2223;--blk:#16312f;--psa:#ff6b5e;--dead:#5aa9f5;--buy:#ffc933;--note:#8fb0ac;--todo:#a98bff;--crew:#3fd1b5;--spray:#d29a6e;--bio:#7fd05a}}
+:root[data-theme="dark"]{--bg:#0a1718;--card:#122a2b;--ink:#e6f2ef;--soft:#8fb0ac;--deep:#1d6b6c;--map:#0f2223;--blk:#16312f;--psa:#ff6b5e;--dead:#5aa9f5;--buy:#ffc933;--note:#8fb0ac;--todo:#a98bff;--crew:#3fd1b5;--spray:#d29a6e;--bio:#7fd05a}
+*{box-sizing:inherit}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:500 17px/1.35 Barlow,system-ui,sans-serif;max-width:560px;margin:0 auto}
+h1,h2,.hd{font-family:'Barlow Condensed',Impact,sans-serif;text-transform:none;letter-spacing:.01em}
+.cut{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+header{background:var(--deep);color:#fff;padding:14px 18px 0;position:sticky;top:0;z-index:4}
+.top{display:flex;justify-content:space-between;align-items:flex-end}
+h1{margin:0;font-size:36px;font-weight:800;line-height:1}
+h1 i{font-style:normal;color:var(--sun)}
+.top span{font:600 15px 'Barlow Condensed',sans-serif;color:#cfe8e3;padding-bottom:4px}
+.tabs{display:flex;gap:0;margin-top:12px;margin-left:-6px}
+.tab{flex:1;border:0;background:#0a2c2d;color:#9fc5c0;font:800 22px 'Barlow Condensed',sans-serif;padding:12px 0 12px 18px;min-height:50px;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,0 100%,14px 50%);margin-right:-12px;text-align:center}
+.tab.on{background:var(--hot);color:#1a0d05;z-index:1}
+.tab:last-child{margin-right:0}
+main{padding:14px 14px 190px}
+.next{background:var(--sun);color:#1c1600;padding:14px 18px 14px 16px;display:flex;align-items:center;gap:12px;border:0;width:100%;text-align:left;font:600 17px Barlow,sans-serif}
+.next b{font:800 24px/1 'Barlow Condensed',sans-serif;display:block}
+.next .ar{font:800 30px 'Barlow Condensed';margin-left:auto}
+.bar{display:flex;gap:3px;margin:12px 0 4px}
+.bar i{flex:1;height:10px;background:var(--map);transform:skewX(-25deg)}
+.bar i.f{background:var(--hot)}
+.cap{font:600 14px Barlow;color:var(--soft)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0}
+.chip{flex:none;border:0;background:var(--card);color:var(--ink);font:800 18px 'Barlow Condensed',sans-serif;padding:9px 16px 9px 12px;min-height:44px;display:flex;gap:8px;align-items:center;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%)}
+.chip.on{background:var(--ink);color:var(--bg)}
+.sq{width:12px;height:12px;display:inline-block;flex:none;transform:rotate(45deg)}
+svg.m{width:100%;height:auto;display:block;background:var(--map)}
+.blk{fill:var(--blk)}.bl{fill:var(--soft);font:800 15px 'Barlow Condensed',sans-serif}
+.pin{stroke:var(--bg);stroke-width:2;cursor:pointer}.pin.done{opacity:.28}
+.card{background:var(--card);padding:6px 16px 8px 20px;margin-top:14px;position:relative}
+.card h2{margin:8px 0 2px;font-size:26px;font-weight:800;display:flex;gap:10px;align-items:center}
+.card h2 em{margin-left:auto;font:600 16px Barlow;color:var(--soft);font-style:normal}
+.stripe{position:absolute;left:0;top:0;bottom:0;width:7px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:2px dashed var(--map)}
+.row.first{border-top:0}
+.row .t{flex:1;font-weight:600}.row small{display:block;color:var(--soft);font-size:14px;font-weight:500}
+.row.done .t{text-decoration:line-through;opacity:.45}
+.tick{width:36px;height:36px;border:3px solid var(--deep);background:none;color:transparent;font:800 20px sans-serif;flex:none;transform:skewX(-8deg)}
+.done .tick{background:var(--hot);border-color:var(--hot);color:#1a0d05}
+.x{background:none;border:0;color:var(--soft);font-size:22px;min-width:44px;min-height:44px}
+.empty{color:var(--soft);padding:8px 0 12px}
+input[type=text],input[type=email],input[type=password],input[type=number]{width:100%;font:600 17px Barlow,sans-serif;padding:13px;border:3px solid var(--deep);background:var(--bg);color:var(--ink);border-radius:0}
+.hint{color:var(--soft);font-size:15px;margin:10px 2px}
+#log{position:fixed;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 40%);z-index:5}
+#mic{width:100%;border:0;background:var(--hot);color:#1a0d05;min-height:62px;font:800 26px 'Barlow Condensed',sans-serif;display:flex;align-items:center;justify-content:center;gap:14px;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px))}
+#mic svg{width:30px;height:30px;fill:currentColor}
+#mic.live{background:var(--psa);color:#fff;background-image:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(255,255,255,.18) 12px 24px);background-size:34px 34px;animation:go .8s linear infinite}
+@keyframes go{to{background-position:34px 0}}
+@media (prefers-reduced-motion:reduce){#mic.live{animation:none}}
+#toast{position:fixed;left:14px;right:14px;max-width:532px;margin:0 auto;bottom:calc(176px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:13px 16px;display:none;gap:12px;align-items:center;z-index:6;font-weight:600}
+#toast span{flex:1}#toast button{background:none;border:0;color:var(--sun);font:800 20px 'Barlow Condensed',sans-serif;min-height:40px}
+button:focus-visible,input:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.tab{font-size:20px;padding-left:16px}
+.lr{display:flex;gap:10px}
+#mic{flex:1;width:auto}
+#cam{width:76px;border:0;background:var(--sun);color:#1c1600;display:grid;place-items:center;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px))}
+#cam svg{width:32px;height:32px;fill:currentColor}
+.recb{border:2px solid #9fc5c0;background:none;color:#cfe8e3;font:800 17px 'Barlow Condensed',sans-serif;padding:3px 10px;margin-left:6px;min-height:36px}
+.thumb{width:64px;height:64px;object-fit:cover;display:block;margin-top:8px}
+.btn{border:0;background:var(--deep);color:#fff;font:800 20px 'Barlow Condensed',sans-serif;padding:12px 20px;min-height:46px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.x{min-width:40px}
+.qr{display:flex;gap:8px;margin-bottom:8px}
+#q{flex:1;background:var(--card);min-width:0}
+#go{width:62px;border:0;background:var(--deep);color:#fff;font:800 30px 'Barlow Condensed',sans-serif}
+.dn{display:flex;align-items:center;justify-content:space-between;background:var(--deep);color:#fff;padding:4px 6px}
+.dn .hd{font-size:28px;font-weight:800}.dn .x{color:#fff;font-size:30px;min-width:56px;min-height:52px}
+.tip{background:var(--sun);color:#1c1600;padding:12px 46px 12px 14px;position:relative;margin-bottom:12px;font-weight:600}
+.tip button{position:absolute;right:0;top:0;background:none;border:0;font:800 22px sans-serif;color:inherit;min-width:46px;min-height:46px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.tile{background:var(--card);color:var(--ink);border:0;text-align:left;padding:12px 14px;font:600 16px Barlow,sans-serif;min-height:92px;width:100%;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+.tile b{font:800 26px 'Barlow Condensed',sans-serif;display:block;margin-bottom:4px}
+.dbtn{border:3px solid var(--deep);background:none;color:var(--ink);font:800 17px 'Barlow Condensed',sans-serif;padding:6px 12px;min-height:46px;flex:none}
+.row.done .dbtn{background:var(--hot);border-color:var(--hot);color:#1a0d05}
+.back{background:none;border:0;color:var(--ink);font:800 22px 'Barlow Condensed',sans-serif;padding:8px 0;min-height:46px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0 8px}
+a.btn{display:inline-block;text-decoration:none;line-height:22px}
+svg.img{touch-action:manipulation}
+#ob{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:9;display:flex;align-items:center;justify-content:center;padding:20px}
+#ob .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:24px 22px}
+#ob h2{font-size:34px;margin:12px 0 8px;font-weight:800}#ob p{margin:0 0 20px;font-size:19px}
+.obn{display:flex;justify-content:space-between;align-items:center}
+.btn[disabled]{opacity:.35}
+.dots i{display:inline-block;width:22px;height:6px;background:var(--map);margin-right:5px;transform:skewX(-25deg)}.dots i.on{background:var(--hot)}
+.blk,.bl{cursor:pointer}
+.bl.li{fill:#fff;stroke:#000;stroke-width:3px;paint-order:stroke}
+.btn.alt{background:none;border:3px solid var(--deep);color:var(--ink)}
+@keyframes pop{0%{opacity:.25;transform:translateY(-46px);background:var(--sun)}60%{background:var(--sun)}100%{opacity:1;transform:none;background:transparent}}
+.row.pop{animation:pop .8s ease-out}
+@keyframes drop{0%{transform:translateY(-240px);opacity:.3}100%{transform:none;opacity:1}}
+.card.drop{animation:drop .7s ease-out}
+@media (prefers-reduced-motion:reduce){.row.pop,.card.drop{animation:none}}
+@media (min-width:900px){body{max-width:980px}#log{max-width:none}#toast{max-width:940px}.tiles{grid-template-columns:repeat(4,1fr)}}
+.ban{display:flex;align-items:center;justify-content:space-between;width:100%;height:76px;border:0;color:#fff;background-size:cover;background-position:center;padding:0 16px;margin:4px 0 8px;font:800 22px 'Barlow Condensed',sans-serif}
+#auth{position:fixed;inset:0;background:var(--bg);z-index:10;display:flex;align-items:center;justify-content:center;padding:20px}
+#auth .box{background:var(--card);padding:26px 22px;max-width:420px;width:100%}
+#auth h2{font:800 46px 'Barlow Condensed',sans-serif;margin:0 0 6px}#auth h2 i{font-style:normal;color:var(--hot)}#auth p{margin:0 0 14px}
+#hb{background:var(--sun);color:#1c1600;border:0;width:38px;height:38px;padding:0;font:800 20px 'Barlow Condensed',sans-serif;margin-left:6px}
+#cap{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:9;display:flex;align-items:center;justify-content:center;padding:16px}
+#cap .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:16px}
+#cap h2{font-size:28px;margin:10px 0 8px;font-weight:800}.capimg{width:100%;max-height:34vh;object-fit:cover;display:block}
+#plus{display:none}
+@media (min-width:900px){
+body{max-width:none;margin:0;font-size:15px}
+header{padding:10px 24px 0}h1{font-size:28px}
+.tab{font-size:17px;min-height:38px;padding:8px 0 8px 14px}
+main{padding:16px 24px 70px;display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:0 18px;align-items:start}
+main>.tip,main>.next,main>.chips,main>.tiles,main>.dn,main>.hint,main>.back,main>.bar,main>.cap,main>svg.m{grid-column:1/-1}
+svg.m{width:100%;max-width:480px;margin:0 auto}
+.tiles{grid-template-columns:repeat(4,1fr)}.tile{min-height:68px}.tile b{font-size:22px}
+.row{padding:7px 0}.dbtn{min-height:34px;padding:3px 10px;font-size:15px}.x{min-height:34px}
+.card{margin-top:10px}.card h2{font-size:21px}
+.chip{min-height:34px;font-size:16px;padding:5px 14px 5px 10px}
+.next{padding:10px 16px}.next b{font-size:20px}
+.thumb{width:48px;height:48px}.btn{min-height:38px;font-size:17px;padding:8px 16px}.ban{height:56px}
+#plus{display:grid;place-items:center;position:fixed;right:24px;bottom:24px;width:52px;height:52px;border:0;background:var(--hot);color:#1a0d05;font:800 34px/1 'Barlow Condensed',sans-serif;z-index:6;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+#log{display:none;left:auto;right:24px;bottom:88px;width:420px;max-width:none;margin:0;padding:12px;background:var(--card);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+#log.open{display:block}#log .lr{display:none}#log .qr{margin:0}
+#toast{left:24px;right:auto;bottom:24px;max-width:460px;margin:0}
+}
+.big{font:800 80px/1 'Barlow Condensed',sans-serif;color:var(--hot)}
+label input[type=number]{width:96px;margin-left:6px;padding:8px}
+label{font-weight:600}
+#setup{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:9;display:flex;align-items:center;justify-content:center;padding:16px}
+#setup .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:22px}
+#setup h2{font-size:32px;margin:0 0 8px;font-weight:800}
+.stp{display:flex;align-items:center;gap:16px;margin:6px 0 16px}.stp b{font:800 56px 'Barlow Condensed',sans-serif;min-width:70px;text-align:center}
+.tab{display:flex;align-items:center;justify-content:center;padding:0 10px 0 18px;line-height:1}
+.stats,.feed{display:none}
+.stat{background:linear-gradient(var(--c),var(--c)) top/100% 6px no-repeat,var(--card);padding:16px 16px 12px;font-weight:600;color:var(--soft)}
+.stat b{display:block;font:800 42px/1 'Barlow Condensed',sans-serif;color:var(--ink);margin-bottom:2px}
+.fi{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:2px dashed var(--map)}.fi span:nth-child(2){flex:1}.fi small{color:var(--soft)}
+.tw{overflow-x:auto;background:var(--card);margin-top:10px}
+.rt{border-collapse:collapse;width:100%;font-size:15px}
+.rt th{text-align:left;font:800 16px 'Barlow Condensed',sans-serif;padding:8px 10px;background:var(--deep);color:#fff;white-space:nowrap}
+.rt td{padding:8px 10px;border-top:2px dashed var(--map);vertical-align:top}
+.rt .thumb{margin:0;width:44px;height:44px}
+select,input[type=date]{font:600 16px Barlow,sans-serif;padding:10px;border:3px solid var(--deep);background:var(--bg);color:var(--ink);border-radius:0;min-height:44px}
+@media (min-width:900px){
+main>.stats,main>.dash,main>.tw{grid-column:1/-1}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:2px 0 16px}
+.feed{display:block}
+.dash{display:grid;grid-template-columns:minmax(300px,1fr) minmax(400px,1.4fr);gap:20px;align-items:start}
+.dr .tiles{grid-template-columns:repeat(2,1fr);margin-top:0}
+.dr svg.m{max-width:none;max-height:520px}
+.tile{transition:transform .15s}.tile:hover{transform:translateY(-2px)}
+}
+@media (prefers-reduced-motion:reduce){.tile{transition:none}}
+.brand{display:flex;align-items:center;gap:12px}.lg{height:34px;max-width:120px;object-fit:contain}
+.lgprev{height:46px;max-width:140px;object-fit:contain;background:#fff;padding:4px}
+.rbrand{display:flex;align-items:center;gap:12px;margin:0 0 10px}.rbrand img{height:40px;max-width:140px;object-fit:contain}.rbrand b{font:800 24px 'Barlow Condensed',sans-serif}
+.mood{display:flex;gap:6px;flex-wrap:wrap}.mood .chip{padding:6px 12px 6px 10px;font-size:16px}
+.trend{display:flex;align-items:flex-end;gap:5px;height:54px;margin-top:10px}.trend i{flex:1;background:var(--dead);transform:skewX(-20deg)}
+#spq{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:9;display:flex;align-items:center;justify-content:center;padding:16px}
+#spq .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:22px}#spq h2{font-size:32px;margin:0 0 8px;font-weight:800}#spq p{margin:0 0 14px;font-size:18px}
+@media (max-width:899px){.home{display:flex;flex-direction:column}.dash,.dl,.dm,.dr{display:contents}.o1{order:1}.o2{order:2}.o3{order:3}.o4{order:4}.o5{order:5}.o6{order:6}.o7{order:7}.o8{order:8}.o9{order:9}}
+@media (min-width:900px){
+main>.home{grid-column:1/-1}
+.stats{gap:10px;margin:0 0 12px}.stat{padding:10px 14px 8px}.stat b{font-size:32px}
+.strip .tiles{display:flex;gap:12px;overflow-x:auto;margin:0 0 12px;padding-bottom:2px}.strip .tile{flex:1 0 190px;min-height:74px}
+.dash{grid-template-columns:1fr 1fr 1.2fr;gap:16px}
+.dr svg.m{max-width:none;max-height:380px}
+.dl .card:first-child,.dm .card:first-child,.dr .chips{margin-top:0}
+}
+.lg{display:none;width:42px;height:42px;border-radius:50%;object-fit:cover;background:#fff}.lg.sq{border-radius:10px;object-fit:contain;padding:3px}
+.lgprev{width:56px;height:56px;border-radius:50%;object-fit:cover;background:#fff}.lgprev.sq{border-radius:10px;object-fit:contain}
+.rbrand img{display:none;width:44px;height:44px;border-radius:50%;object-fit:cover;background:#fff}.rbrand img.sq{border-radius:10px;object-fit:contain}
+.dials{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:8px 0 10px}.dial{text-align:center}.dial svg{width:100%;max-width:130px;height:auto;margin:0 auto}
+.dial b{display:block;font:800 26px 'Barlow Condensed',sans-serif;margin-top:-18px}.dial small{color:var(--soft);font-size:14px}
+.ck{display:flex;align-items:center;gap:6px;font-weight:600;min-height:40px}.ck input{width:20px;height:20px}
+@media (min-width:900px){
+.lg,.rbrand img{display:block}
+.strip{display:none}
+.dash{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.dl,.dm,.dr{display:flex;flex-direction:column;gap:16px}
+.dash .card{margin-top:0}
+.dr svg.m{max-height:420px}
+}
+.recb.on{background:#cfe8e3;color:#0f3d3e;border-color:#cfe8e3}
+#hb.on{background:transparent;color:var(--sun);border:2px solid var(--sun)}
+.tw2{position:relative}.tw2.spot{z-index:9;outline:4px solid var(--sun);outline-offset:3px}
+.bin{position:absolute;top:8px;right:20px;width:34px;height:34px;border:0;background:rgba(0,0,0,.45);color:#fff;display:grid;place-items:center;z-index:1}
+#coach{position:fixed;inset:0;background:rgba(5,20,20,.72);z-index:8}
+#coach .cbox{position:fixed;left:16px;right:16px;bottom:28px;max-width:460px;margin:0 auto;background:var(--card);color:var(--ink);padding:16px;font-size:18px}
+#delq,#legal{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:9;display:flex;align-items:center;justify-content:center;padding:16px}
+#delq .box,#legal .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:22px}
+#delq h2,#legal h2{font-size:30px;margin:0 0 8px;font-weight:800}#delq p,#legal p{margin:0 0 14px;font-size:17px}
+.lnk{background:none;border:0;color:var(--soft);font:600 14px Barlow,sans-serif;text-decoration:underline;padding:6px;min-height:36px}.legal{text-align:center;margin-top:14px}
+@keyframes zout{to{opacity:0;transform:scale(.8)}}.zout{animation:zout .45s ease-in forwards}
+.demo{background:var(--card);border:0;padding:14px 16px;margin:0 0 14px;position:relative;outline:2px dashed var(--soft);outline-offset:-6px}
+.demo .tag{position:absolute;top:8px;right:14px;font:800 13px 'Barlow Condensed',sans-serif;color:var(--soft);letter-spacing:.08em}
+.dfake{background:var(--bg);border:3px solid var(--deep);padding:10px 12px;margin:14px 0 10px;font-weight:600;min-height:46px}
+.dtype{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;border-right:3px solid var(--hot);width:var(--w)}
+@keyframes typing{0%{width:0}45%,100%{width:var(--w)}}
+.dres{padding:8px 12px;background:var(--bg);margin-bottom:10px;animation:res 6s infinite}
+@keyframes res{0%,48%{opacity:0;transform:translateY(8px)}58%,92%{opacity:1;transform:none}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.zout{animation:none;opacity:0}.dtype,.dres{animation:none!important}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f3d3e"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+<header>
+<div class="top"><span class="brand"><h1>Hort<i>log</i></h1></span><span><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="recb" class="recb">Records</button></span></div>
+<div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab" data-v="lists">Lists</button></div>
+</header>
+<main id="main"></main>
+<div id="toast"></div>
+<button id="plus" aria-label="Add a log">+</button>
+<div id="log"><input id="file" type="file" accept="image/*" capture="environment" hidden><input id="bfile" type="file" accept="image/*" hidden><input id="rfile" type="file" accept="image/*" hidden><div class="qr"><input id="q" type="text" placeholder="Type, or use your keyboard mic" enterkeyhint="send"><button id="go" aria-label="Add">→</button></div><div class="lr"><button id="mic"><svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 0 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.6a6 6 0 0 0 5-5.9z"/></svg><span id="ml">Tap and speak</span></button><button id="cam" aria-label="Add a photo"><svg viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-3.5L15 4zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg></button></div></div>
+<script>
+const SB_URL='https://hqarztbbnayyjlpzyufp.supabase.co',SB_KEY='sb_publishable_vqne2DRPo3bKcQRj79pYug_ZbXiEgfl';
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
+const KEY='hortlog.v1',BK='hortlog.blocks',SK='hortlog.seen';
+const CATS={psa:['PSA','--psa'],dead:['Dead vine','--dead'],buy:['To buy','--buy'],todo:['To do','--todo'],crew:['Crew jobs','--crew'],spray:['Spray','--spray'],rec:['Record','--note'],note:['Note','--note']};
+const NUM={one:1,two:2,three:3,four:4};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const iso=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,10)};
+const DAYS=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'],MON=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+const rd=(k,d)=>{try{const s=localStorage.getItem(k);return s?JSON.parse(s):d}catch(e){return d}};
+const wr=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Storage is full. Delete some photos or block images.');return false}};
+function starter(){const t=new Date();t.setDate(t.getDate()+1);return [{id:1,c:'psa',t:'PSA on leader, block 3 row 49 bay 16',b:3,r:49,y:16},{id:2,c:'psa',t:'PSA block 3 row 51 bay 12',b:3,r:51,y:12},{id:3,c:'dead',t:'Dead vine block 1 row 12 bay 8',b:1,r:12,y:8},{id:4,c:'dead',t:'Dead vine block 2 row 30 bay 20',b:2,r:30,y:20},{id:5,c:'buy',t:'Need to buy Botector'},{id:6,c:'buy',t:'Irrigation pipe, 20 mm'},{id:7,c:'todo',t:'Fix gate, block 2',b:2},{id:8,c:'crew',t:'Stringing block 1',b:1,due:iso(t)},{id:9,c:'spray',t:'Spray Botector, block 2',b:2,due:iso(t)}]}
+let items=[],B={},seen=rd(SK,{}),U=null,synced={},syncedB={},pending=false,syncMsg='',view='home',filter='all',sel=null,last=null,blk=null,drawing=null,pts=[],day=iso(new Date()),AI=null,DL=null,canImg=false,tt,popId=null,imgSet=false,dropN=null,imgOpen=false,loaded=false,dmode='poly',recCat='compliance',recFolder='all',recForm=false,recPhoto=null,recDraft={},strPrev=null,moodPend=null,moodTimer=null,apSel={compliance:1,monitoring:1,induction:1,biodiversity:1},apFrom=iso(new Date(Date.now()-365*864e5)),apTo=iso(new Date());
+const PK=()=>'hortlog.pending.'+U.id,migrate=i=>{};
+function pend(v){pending=v;try{v?localStorage.setItem(PK(),'true'):localStorage.removeItem(PK())}catch(e){}}
+function setSync(m){syncMsg=m;const e=$('#sy');if(e)e.textContent=m}
+function save(){if(!U)return;try{localStorage.setItem(KEY+'.'+U.id,JSON.stringify(items))}catch(e){toast('Storage is full on this device.')}pend(true);push()}
+async function pushI(){if(!U)return;setSync('Saving…');const cur={};items.forEach(i=>cur[i.id]=JSON.stringify(i));
+const up=items.filter(i=>synced[i.id]!==cur[i.id]).map(i=>({id:i.id,data:i})),del=Object.keys(synced).filter(k=>!(k in cur));
+try{if(up.length){const r=await sb.from('entries').upsert(up);if(r.error)throw r.error}
+if(del.length){const r=await sb.from('entries').delete().in('id',del);if(r.error)throw r.error}
+synced=cur;pend(false);setSync('Saved ✓')}catch(e){setSync('Offline. Will save when connected.')}}
+let pq=Promise.resolve();const push=()=>pq=pq.then(pushI),pushB=()=>pq=pq.then(pushBI);
+function saveB(){if(!U)return;try{localStorage.setItem(BK+'.'+U.id,JSON.stringify(B))}catch(e){toast('Storage is full on this device.')}pushB()}
+async function pushBI(){if(!U)return;setSync('Saving…');const cur={};Object.keys(B).forEach(k=>cur[k]=JSON.stringify(B[k]));
+const up=Object.keys(B).filter(k=>syncedB[k]!==cur[k]).map(k=>({block:+k,data:B[k]})),del=Object.keys(syncedB).filter(k=>!(k in cur)).map(Number);
+try{if(up.length){const r=await sb.from('blocks').upsert(up);if(r.error)throw r.error}
+if(del.length){const r=await sb.from('blocks').delete().in('block',del);if(r.error)throw r.error}
+syncedB=cur;setSync('Saved ✓')}catch(e){setSync('Offline. Will save when connected.')}}
+async function pull(){if(pending)await push();if(pending)return;
+const a=await sb.from('entries').select('data').order('id',{ascending:false}),b=await sb.from('blocks').select('block,data');
+if(a.error||b.error){setSync('Offline. Showing your saved copy.');return}
+items=a.data.map(r=>r.data);items.forEach(migrate);B={};b.data.forEach(r=>B[r.block]=r.data);
+synced={};items.forEach(i=>synced[i.id]=JSON.stringify(i));syncedB={};Object.keys(B).forEach(k=>syncedB[k]=JSON.stringify(B[k]));
+try{localStorage.setItem(KEY+'.'+U.id,JSON.stringify(items));localStorage.setItem(BK+'.'+U.id,JSON.stringify(B))}catch(e){}
+setSync('Saved ✓');loaded=true;render();maybeSetup();checkSprays()}
+async function enter(u){U=u;items=rd(KEY+'.'+u.id,[]);B=rd(BK+'.'+u.id,{});items.forEach(migrate);pending=rd(PK(),false)===true;synced={};syncedB={};loaded=false;
+const a=$('#auth');if(a)a.remove();view='home';blk=null;render();if(!seen.ob)openOb();await pull()}
+function coach(n,t){const tile=document.querySelector('.tw2 .tile[data-blk="'+n+'"]');if(!tile)return;const w=tile.closest('.tw2'),o=document.body.appendChild(Object.assign(document.createElement('div'),{id:'coach'}));
+o.innerHTML=`<div class="cbox cut"><b>${esc(t)}</b><div class="acts"><button class="btn alt" id="cok">Got it</button></div></div>`;w.classList.add('spot');if(w.scrollIntoView)w.scrollIntoView({block:'center'});
+const done=()=>{o.remove();w.classList.remove('spot')};$('#cok').onclick=done;o.onclick=e=>{if(e.target===o)done()};tile.addEventListener('click',done,{once:true})}
+function confirmDel(n){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'delq'}));
+e.innerHTML=`<div class="box cut"><h2>Delete Block ${n}?</h2><p>This removes the block, its imagery and its row setup. Jobs and records you logged for it stay in your lists.</p><div class="acts"><button class="btn" id="dy">Yes, delete</button><button class="btn alt" id="dn">Cancel</button></div></div>`;
+$('#dn').onclick=()=>e.remove();$('#dy').onclick=()=>{delete B[n];saveB();e.remove();blk=null;render();toast('Block '+n+' deleted.')}}
+const LEG={Privacy:'Your logs, photos and block images are saved in your own account and are only visible when you are signed in. Voice input uses your browser’s speech service, which may send audio to the browser’s provider to turn it into text.',Disclaimer:'Hortlog is a notebook. It does not give growing, spraying or compliance advice. Check your records are complete and correct before an audit.'};
+function legal(t){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'legal'}));e.innerHTML=`<div class="box cut"><h2>${t}</h2><p>${LEG[t]}</p><div class="acts"><button class="btn" id="lx">Close</button></div></div>`;$('#lx').onclick=()=>e.remove()}
+const demo=(txt,res)=>`<div class="demo cut"><span class="tag">EXAMPLE</span><div class="dfake"><span class="dtype" style="--w:${txt.length}ch;animation:typing 6s steps(${txt.length},end) infinite">${esc(txt)}</span></div><div class="dres">${res}</div><button class="btn alt" data-try="${esc(txt)}">Try this one</button></div>`;
+function checkSprays(){if(!U||!loaded||$('#spq')||$('#ob')||$('#setup')||$('#cap'))return;const T=iso(new Date()),late=new Date().getHours()>=16;
+const due=items.filter(i=>i.c==='spray'&&!i.d&&i.due&&(i.due<T||(i.due===T&&late))&&i.snooze!==T);if(due.length)showSpq(due[0],due.length)}
+function showSpq(i,n){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'spq'}));
+e.innerHTML=`<div class="box cut"><h2>Did you spray${i.b?' Block '+i.b:''}?</h2><p>${esc(i.t)}<br><small>Planned for ${dayLabel(i.due)}${n>1?' · '+(n-1)+' more to check':''}</small></p><div class="acts"><button class="btn" id="spy">Yes, sprayed</button><button class="btn alt" id="spn">Not yet</button></div></div>`;
+$('#spy').onclick=()=>{const T=iso(new Date());i.d=true;i.doneAt=new Date((i.due<=T?i.due:T)+'T12:00:00').getTime();save();e.remove();render();toast('Saved to your spray diary.');checkSprays()};
+$('#spn').onclick=()=>{i.snooze=iso(new Date());save();e.remove();checkSprays()}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkSprays()});
+function maybeSetup(){if(U&&loaded&&!bl().length&&!$('#ob')&&!$('#setup'))showSetup()}
+function showSetup(){let n=4;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'setup'}));
+const draw=()=>{e.innerHTML=`<div class="box cut"><h2>Set up your blocks</h2><p>How many blocks does your orchard have? A block is one section, like “Block 1”. You can add or remove blocks later.</p><div class="stp"><button class="btn" id="m1" aria-label="Fewer">−</button><b>${n}</b><button class="btn" id="p1" aria-label="More">+</button></div><div class="acts"><button class="btn" id="mk">Create ${n} block${n>1?'s':''}</button><button class="btn alt" id="lat">Later</button></div></div>`;
+$('#m1').onclick=()=>{n=Math.max(1,n-1);draw()};$('#p1').onclick=()=>{n=Math.min(40,n+1);draw()};$('#lat').onclick=()=>e.remove();
+$('#mk').onclick=()=>{for(let k=1;k<=n;k++)B[k]={rows:60,bays:30};saveB();e.remove();view='blocks';blk=null;render();coach(1,'Your blocks are ready. Tap Block 1 to add imagery and set it up. Use the bin in a block’s corner to delete it.')}};draw()}
+let mode='in',sentTo='';
+function showAuth(){const e=$('#auth')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'auth'}));
+if(mode==='sent'){e.innerHTML=`<div class="box cut"><div class="big">✓</div><h2>Email sent</h2><p>We sent a password reset link to <b>${esc(sentTo)}</b>. Check your inbox and your spam folder. It can take a minute or two. Please do not press the button again.</p><button class="btn" id="bk">Back to log in</button></div>`;$('#bk').onclick=()=>{mode='in';showAuth()};return}
+if(mode==='reset'){e.innerHTML=`<div class="box cut"><h2>New password</h2><p>Choose a new password for your account.</p><input id="np" type="password" placeholder="New password (6+ characters)" autocomplete="new-password"><div id="am" class="hint"></div><div class="acts"><button class="btn" id="nps">Save password</button></div></div>`;
+$('#nps').onclick=async()=>{const p=$('#np').value;if(p.length<6){$('#am').textContent='Use at least 6 characters.';return}$('#am').textContent='One moment…';
+try{const r=await sb.auth.updateUser({password:p});if(r.error){$('#am').textContent=r.error.message;return}mode='in';const a=$('#auth');if(a)a.remove();toast('Password changed.');if(!U){const s=await sb.auth.getSession();if(s.data.session)await enter(s.data.session.user)}}catch(x){$('#am').textContent='Could not reach the server.'}};return}
+e.innerHTML=`<div class="box cut"><h2>Hort<i>log</i></h2><p>${mode==='in'?'Log in to your orchard notebook.':'Create your account.'}</p><input id="em" type="email" placeholder="Email" autocomplete="email"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="${mode==='in'?'current-password':'new-password'}"><div id="am" class="hint"></div><div class="acts"><button class="btn" id="ago">${mode==='in'?'Log in':'Sign up'}</button><button class="btn alt" id="asw">${mode==='in'?'Create account':'I have an account'}</button></div>${mode==='in'?'<button class="back" id="afg" style="font-size:17px">Forgot password?</button>':''}</div>`;
+const msg=t=>{$('#am').textContent=t};
+$('#asw').onclick=()=>{mode=mode==='in'?'up':'in';showAuth()};
+if($('#afg'))$('#afg').onclick=async()=>{const em=$('#em').value.trim();if(!em){msg('Type your email first.');return}$('#afg').disabled=true;msg('Sending…');
+try{const r=await sb.auth.resetPasswordForEmail(em);if(r.error){msg(r.error.message);$('#afg').disabled=false}else{sentTo=em;mode='sent';showAuth()}}catch(x){msg('Could not reach the server.');$('#afg').disabled=false}};
+$('#ago').onclick=async()=>{const em=$('#em').value.trim(),pw=$('#pw').value;if(!em||pw.length<6){msg('Enter your email and a password of at least 6 characters.');return}
+msg('One moment…');
+try{if(mode==='in'){const r=await sb.auth.signInWithPassword({email:em,password:pw});if(r.error)msg(r.error.message);else await enter(r.data.user)}
+else{const r=await sb.auth.signUp({email:em,password:pw});if(r.error)msg(r.error.message);else if(r.data.session)await enter(r.data.user);else msg('Check your email to confirm your account, then log in.')}}
+catch(e){msg('Could not reach the server. Check your connection.')}}}
+sb.auth.onAuthStateChange((ev)=>{if(ev==='SIGNED_OUT'){U=null;items=[];B={};mode='in';showAuth();render()}else if(ev==='PASSWORD_RECOVERY'){mode='reset';showAuth()}});
+window.addEventListener('online',()=>{if(U&&pending)push()});
+async function boot(){try{const r=await sb.auth.getSession();if(r.data&&r.data.session)await enter(r.data.session.user);else showAuth()}catch(e){showAuth()}}
+function dayLabel(d){const T=new Date();T.setHours(12,0,0,0);const x=new Date(d+'T12:00:00'),k=Math.round((x-T)/864e5);
+return k===0?'Today':k===1?'Tomorrow':k===-1?'Yesterday':x.toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'})}
+function pdate(s){s=s.toLowerCase();const t=new Date();t.setHours(12,0,0,0);
+if(/\btoday\b/.test(s))return iso(t);
+if(/\btomorrow\b/.test(s)){t.setDate(t.getDate()+1);return iso(t)}
+let m=s.match(/\b(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b/);
+if(m){let k=(DAYS.indexOf(m[1])-t.getDay()+7)%7;if(k===0)k=7;t.setDate(t.getDate()+k);return iso(t)}
+m=s.match(/\bin (\d+) days?\b/);if(m){t.setDate(t.getDate()+ +m[1]);return iso(t)}
+if(/\bnext week\b|\bin a week\b/.test(s)){t.setDate(t.getDate()+7);return iso(t)}
+m=s.match(/\bthe (\d{1,2})(?:st|nd|rd|th)\b/);if(m&&+m[1]<=31){const d=new Date(t.getFullYear(),t.getMonth(),+m[1],12);if(d<t)d.setMonth(d.getMonth()+1);return iso(d)}
+m=s.match(/\b(\d{1,2})(?:st|nd|rd|th)?\s+(?:of\s+)?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/);
+if(m){const d=new Date(t.getFullYear(),MON.indexOf(m[2]),+m[1],12);if(d<t-864e5*30)d.setFullYear(d.getFullYear()+1);return iso(d)}
+return null}
+const W2N={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60};
+const nums=s=>s.replace(/\b(twenty|thirty|forty|fifty|sixty)[\s-](one|two|three|four|five|six|seven|eight|nine)\b/g,(m,a,b)=>W2N[a]+W2N[b]).replace(/\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty)\b/g,m=>W2N[m]);
+const lev=(a,b)=>{if(Math.abs(a.length-b.length)>1)return 9;const m=[];for(let i=0;i<=a.length;i++)m[i]=[i];for(let j=1;j<=b.length;j++)m[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length]};
+const KW={done:['sprayed','applied','fertilised','fertilized','dusted','finished spraying','done spraying','spraying done'],buy:['buy','order','purchase','pick up','run out','running low','low on','out of','need more','get more','need to get','restock'],psa:['psa','canker','bleeding','leaf spot','leafspot','spotting'],dead:['dead','dying','dieback','died','collapsed','missing vine'],spray:['spray','fertiliser','fertilizer','fungicide','insecticide','foliar','botector','bioprotector','copper','seaweed'],crew:['crew','team','staff','contractor','pruner','prune','pruning','stringing','thinning','gang','picker','tying','harvest'],todo:['fix','repair','check','mow','mend','replace','clear','service','remember','irrigation','gate','fence','weeds','sharpen','clean','call','book','to do','todo','monitor','scout','inspect','induct','calibrat'],need:['need','get']};
+const has=(w,j,k)=>KW[k].some(x=>x.includes(' ')?j.includes(x):w.some(t=>t===x||(x.length>=4&&t.startsWith(x))||(k!=='done'&&x.length>=5&&lev(t,x)<=1)));
+const RC={compliance:['Compliance','var(--spray)'],monitoring:['Monitoring','var(--dead)'],induction:['Induction','var(--crew)'],biodiversity:['Biodiversity','var(--bio)']};
+const DEF={compliance:['Spray diary','Fertiliser','Equipment calibration'],monitoring:['Pests & disease','PSA','Bud counts','Dry matter','Nutrients','Weather & frost'],induction:['Staff induction','Visitors'],biodiversity:['Plantings','Pest control','Wildlife']};
+const fold=c=>[...DEF[c],...((B[0]&&B[0].folders&&B[0].folders[c])||[])];
+function recGuess(s){for(const k of Object.keys(RC))for(const f of fold(k))if(!DEF[k].includes(f)&&s.includes(f.toLowerCase()))return{rc:k,rf:f};
+if(/induct|toolbox|safety briefing|orientation/.test(s))return{rc:'induction',rf:/visitor/.test(s)?'Visitors':'Staff induction'};
+if(/biodiversity|native|riparian|predator|wildlife|bird|planting|planted|stoat/.test(s))return{rc:'biodiversity',rf:/predator|stoat|trap/.test(s)?'Pest control':/bird|wildlife/.test(s)?'Wildlife':'Plantings'};
+if(/monitor|scout|bud count|counted|dry matter|brix|trap count|leaf test|soil test/.test(s))return{rc:'monitoring',rf:/psa/.test(s)?'PSA':/bud/.test(s)?'Bud counts':/dry matter|brix/.test(s)?'Dry matter':/nutrient|leaf test|soil/.test(s)?'Nutrients':/frost|weather|temperature/.test(s)?'Weather & frost':'Pests & disease'};
+if(/calibrat|audit/.test(s))return{rc:'compliance',rf:'Equipment calibration'};return null}
+function pastAt(s){const t=new Date();t.setHours(12,0,0,0);
+if(/day before yesterday/.test(s)){t.setDate(t.getDate()-2);return t.getTime()}
+if(/\byesterday\b/.test(s)){t.setDate(t.getDate()-1);return t.getTime()}
+if(/\btoday\b|this morning|this afternoon/.test(s))return Date.now();
+const m=s.match(/\b(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b/);if(m){let k=(t.getDay()-DAYS.indexOf(m[1])+7)%7;if(k===0)k=7;t.setDate(t.getDate()-k);return t.getTime()}
+return Date.now()}
+function parse(text){const raw=text.toLowerCase(),s=nums(raw),w=s.match(/[a-z']+/g)||[],j=w.join(' ');
+const n=re=>{const m=s.match(re);return m?parseInt(m[1],10)||null:null};
+let c='note',d=false,rr=null;
+if(has(w,j,'done')){c='spray';d=true}else if((!pdate(s)||pdate(s)<=iso(new Date()))&&(rr=recGuess(raw))){c='rec';d=true}else if(has(w,j,'buy'))c='buy';else if(has(w,j,'psa'))c='psa';else if(has(w,j,'dead'))c='dead';else if(has(w,j,'spray'))c='spray';else if(has(w,j,'crew'))c='crew';else if(has(w,j,'todo'))c='todo';else if(has(w,j,'need'))c='buy';
+const o={c,t:text.trim(),b:n(/block\s*(\d+)/),r:n(/row\s*(\d+)/),y:n(/bay\s*(\d+)/),due:pdate(s)};
+if(rr){o.rc=rr.rc;o.rf=rr.rf;o.due=null;o.rdate=iso(new Date(pastAt(s)))}
+if(c==='spray'){const hit=((B[0]&&B[0].products)||[]).find(p=>raw.includes(p.n.toLowerCase()));if(hit){o.prod=hit.n;if(hit.r)o.rate=hit.r}}
+if(d){o.d=true;o.doneAt=pastAt(s);if(c==='spray')o.due=null}return o}
+async function smart(text,blob){const base=parse(text||'');
+if(!AI||(blob&&!canImg))return base;
+const prompt='You sort quick notes from a kiwifruit orchard grower into a notebook. Today is '+iso(new Date())+'. '+(blob?'The grower sent a photo with this caption (may be empty): "'+(text||'')+'". Describe what you see in one short sentence for the notebook. Say "looks like" or "possible" and never state a diagnosis as fact. ':'The note is: "'+text+'". ')+'Reply with JSON only: {"category":"psa|dead|buy|todo|crew|spray|note","text":"short clean version","block":number or null,"row":number or null,"bay":number or null,"due":"YYYY-MM-DD" or null,"done":true or false}. Categories: psa = PSA or canker sighting; dead = dead or dying vine; buy = things to buy or order; todo = a job to do; crew = work for staff or contractors such as stringing, pruning, thinning; spray = any spray or fertiliser, planned or already applied (done=true only if already applied); note = anything else. Turn words like Friday or tomorrow into dates.';
+try{const o={modelTier:blob?'default':'quick'};if(blob)o.images=[blob];const r=await AI.json(prompt,o);
+const x={c:CATS[r.category]?r.category:base.c,t:String(r.text||text||'Photo').slice(0,140),b:r.block||base.b,r:r.row||base.r,y:r.bay||base.y,due:r.due||base.due};
+if(base.c==='rec'){return base}if(r.done===true||base.d){x.d=true;x.doneAt=Date.now()}return x}catch(e){return base}}
+async function add(text,blob,photo){text=(text||'').trim();if(!text&&!blob)return;toast(blob?'Looking at your photo…':'Sorting…');
+const it=await smart(text,blob);it.id=Date.now();if(photo)it.p=photo;if(blob&&!it.t)it.t='Photo (not sorted)';
+items.unshift(it);last=it.id;save();
+if(photo){filter=it.c;setView('lists')}else render();
+const loc=it.b?` → block ${it.b}${it.r?' row '+it.r:''}${it.y?' bay '+it.y:''}`:'';
+toast('Logged: '+CATS[it.c][0]+loc+(it.due?' · '+dayLabel(it.due):'')+(it.d&&it.c==='spray'?' · in Records':''),()=>{items=items.filter(i=>i.id!==it.id);save();render()})}
+function sendQ(){const v=$('#q').value;$('#q').value='';$('#log').classList.remove('open');add(v)}
+$('#q').onkeydown=e=>{if(e.key==='Enter')sendQ()};$('#go').onclick=sendQ;
+function toast(m,fn,label){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</span>'+(fn?'<button id="un">'+(label||'UNDO')+'</button>':'');t.style.display='flex';
+if(fn)$('#un').onclick=()=>{fn();t.style.display='none'};
+clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',6000)}
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,got=false;
+const ERR={'not-allowed':'Mic permission was refused, or this page is not allowed to use it.','service-not-allowed':'Voice is not allowed on this page.','network':'Voice needs an internet connection.','no-speech':'Heard nothing. Tap and try again.','audio-capture':'No microphone found.'};
+$('#mic').onclick=()=>{
+if(!SR){toast('Voice input is not available in this browser. Type it, or use your keyboard mic.');$('#q').focus();return}
+if(rec){rec.stop();return}
+got=false;rec=new SR();rec.lang='en-NZ';rec.interimResults=false;
+rec.onstart=()=>{$('#mic').classList.add('live');$('#ml').textContent='Listening… tap to stop'};
+rec.onresult=e=>{got=true;add(e.results[0][0].transcript)};
+rec.onerror=e=>{got=true;toast((ERR[e.error]||'Voice error')+' ['+e.error+'] Type it instead, or use your keyboard mic.')};
+rec.onend=()=>{$('#mic').classList.remove('live');$('#ml').textContent='Tap and speak';if(!got)toast('Heard nothing. Type it, or use your keyboard mic.');rec=null};
+try{rec.start()}catch(e){rec=null;toast('Could not start the mic ['+e.name+']. Type it instead.')}};
+function showCap(blob,p){const e=$('#cap')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'cap'}));
+e.innerHTML=`<div class="box cut"><img class="capimg" src="${p}" alt="Your photo"><h2>What is this?</h2><input id="cq" type="text" placeholder="e.g. PSA block 3 row 49, or new tractor" value="${esc($('#q').value)}" enterkeyhint="done"><div class="chips" style="padding:10px 0 0">${['PSA','Dead vine','Buy','To do','Spray'].map(w=>`<button class="chip" data-w="${w}">${w}</button>`).join('')}</div><div class="acts"><button class="btn" id="cs">Save</button><button class="btn alt" id="cd">Discard photo</button></div></div>`;
+const save=()=>{const t=$('#cq').value;$('#q').value='';e.remove();add(t,blob,p)};
+$('#cs').onclick=save;$('#cd').onclick=()=>e.remove();$('#cq').onkeydown=ev=>{if(ev.key==='Enter')save()};
+e.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const i=$('#cq');i.value=b.dataset.w+' '+i.value.replace(/^\s+/,'');i.focus()});
+setTimeout(()=>$('#cq')&&$('#cq').focus(),50)}
+function shrink(f,max,q,cb){const u=URL.createObjectURL(f),img=new Image();
+img.onload=()=>{const k=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);cb(c)};
+img.onerror=()=>toast('Could not read that image.');img.src=u}
+$('#cam').onclick=()=>$('#file').click();
+$('#file').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+shrink(f,640,.6,c=>{const p=c.toDataURL('image/jpeg',.6);c.toBlob(b=>showCap(b,p),'image/jpeg',.6)})};
+$('#bfile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f||!blk)return;
+shrink(f,900,.7,c=>{B[blk]={img:c.toDataURL('image/jpeg',.7),w:c.width,h:c.height,poly:null};saveB();drawing=blk;pts=[];render()})};
+
+$('#rfile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;shrink(f,640,.6,c=>{recPhoto=c.toDataURL('image/jpeg',.6);render()})};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setView(b.dataset.v));
+$('#recb').onclick=()=>setView('records');
+function setView(v){view=v;blk=null;drawing=null;render();window.scrollTo(0,0)}
+const TIPS={home:'Home shows what needs attention: jobs due today, each block’s open issues, and the map. Tap a block to see everything for it.',cal:'Jobs with a date appear here on their day. Use the arrows to look ahead, and tap Done when a job is finished. Jobs without a date live under Lists.',blocks:'Jobs and tasks that have a block appear under that block. Tap a block to see its jobs, spray records and imagery.',blockpage:'Everything for this block is here: coming up, open lists, spray records and your own imagery.',lists:'Jobs without a date and everything else you log are sorted here by type. Tap a type to filter.',records:'Records are grouped by type, then folder. Finished sprays land in Compliance automatically. Use + Folder to make your own, and export to Excel or a PDF of photos for audits.'};
+const tip=k=>seen[k]?'':`<div class="tip">${TIPS[k]}<button data-tip="${k}" aria-label="Dismiss tip">✕</button></div>`;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function slides(){return [['Log it in seconds',`Type in the bar, or tap the mic and say what you see, like “${pick(['PSA block 3 row 49','dead vine block 1 row 22 bay 8','broken irrigation line block 2','need to buy copper','wilting leader block 4 row 8'])}”. It is sorted for you.`],['Take a purposeful photo','Tap the camera and take one photo of one problem, close enough to see it clearly. Add a few words so it is filed in the right place.'],['Add a date or a block',`Say “${pick(['prune block 2 on Friday','fix the gate at block 4 tomorrow','crew thinning block 1 in 3 days','mow block 5 on Monday','order pipe for block 3 next week'])}”. Dated jobs go on the Calendar. No date? They go under Lists.`],['Sprays become records',`Say “${pick(['spray Botector, block 2, Friday','spray copper on block 3 tomorrow','spray seaweed block 1 on Monday','spray block 4 with Zivo on Thursday'])}”. Tap Done once it is sprayed and it is saved under Records for audits.`]]}
+let ob=0,SLD=slides();
+function openOb(){ob=0;SLD=slides();showOb()}
+function showOb(){const e=$('#ob')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'ob'}));const[t,p]=SLD[ob],last=SLD.length-1;
+e.innerHTML=`<div class="box cut"><div class="dots">${SLD.map((_,k)=>`<i class="${k===ob?'on':''}"></i>`).join('')}</div><h2>${t}</h2><p>${p}</p><div class="obn"><button class="btn alt" id="obl">${ob?'← Back':'Skip'}</button><button class="btn" id="obn">${ob===last?'Start':'Next →'}</button></div></div>`;
+$('#obl').onclick=()=>{if(ob===0)closeOb();else{ob--;showOb()}};$('#obn').onclick=()=>{if(ob===last)closeOb();else{ob++;showOb()}}}
+function closeOb(){const e=$('#ob');if(e)e.remove();seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}
+$('#hb').onclick=()=>setView('settings');
+$('#plus').onclick=()=>{const l=$('#log');l.classList.toggle('open');if(l.classList.contains('open'))$('#q').focus()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#log').classList.remove('open')});
+const chips=()=>'<div class="chips">'+[['all','All']].concat(Object.entries(CATS).map(([k,v])=>[k,v[0]])).map(([k,n])=>{
+const cnt=items.filter(i=>!i.d&&(k==='all'||i.c===k)).length;
+return `<button class="chip ${filter===k?'on':''}" data-f="${k}">${k!=='all'?`<span class="sq" style="background:var(${CATS[k][1]})"></span>`:''}${n} ${cnt}</button>`}).join('')+'</div>';
+function nextBanner(){const o=items.filter(i=>!i.d&&i.c==='psa'&&i.b),cnt={};o.forEach(i=>cnt[i.b]=(cnt[i.b]||0)+1);
+const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+return top?`<button class="next cut" data-go="psa"><div><b>Block ${top[0]} has the most PSA</b>${top[1]} open. Show them.</div><span class="ar">→</span></button>`:`<div class="next cut"><div><b>No open PSA</b>Nothing logged to chase right now.</div></div>`}
+const BX=[[10,10],[190,10],[10,200],[190,200]],BW=160,BH=170;
+const bl=()=>Object.keys(B).map(Number).filter(n=>n>0).sort((a,b)=>a-b);
+const bpos=i=>[10+(i%2)*180,10+Math.floor(i/2)*190];
+const bp=(x,y)=>`M${x} ${y}H${x+BW-18}L${x+BW} ${y+18}V${y+BH}H${x+18}L${x} ${y+BH-18}Z`;
+function gpos(n,r,y){const b=B[n];if(!b||!b.grid||!b.w)return null;const[P1,P2,P3]=b.grid,R=Math.max(1,(b.rows||60)-1),Y=Math.max(1,(b.bays||30)-1),v0=Math.min(Math.max((r||1)-1,0),R)/R,u0=Math.min(Math.max((y||1)-1,0),Y)/Y,v=b.flipX?1-v0:v0,u=b.flipY?1-u0:u0;
+return[(P1[0]+v*(P3[0]-P1[0])+u*(P2[0]-P1[0]))*b.w,(P1[1]+v*(P3[1]-P1[1])+u*(P2[1]-P1[1]))*b.h]}
+function ipos(n,i){const b=B[n],g=gpos(n,i.r,i.y);if(g)return g;if(!b||!b.poly||!b.w)return null;
+const xs=b.poly.map(p=>p[0]),ys=b.poly.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),R=b.rows||60,Y=b.bays||30;
+return[(x0+Math.min(i.r,R)/R*(x1-x0))*b.w,(y0+Math.min(i.y||Math.ceil(Y/2),Y)/Y*(y1-y0))*b.h]}
+function pinsOf(n,r){let s='';items.filter(i=>i.b===n&&!i.d&&i.r&&i.c!=='spray'&&(filter==='all'||i.c===filter)).forEach(i=>{const p=ipos(n,i);if(!p)return;const[x,y]=p;
+s+=`<path class="pin" data-id="${i.id}" d="M${x} ${y-r}L${x+r} ${y}L${x} ${y+r}L${x-r} ${y}Z" fill="var(${CATS[i.c][1]})"/>`});return s}
+function mapSvg(){const L=bl();if(!L.length)return '';const H=20+Math.ceil(L.length/2)*190;
+let s=`<svg class="m cut" viewBox="0 0 360 ${H}" role="img" aria-label="Orchard map"><defs>`;
+L.forEach((n,i)=>{const p=bpos(i);s+=`<clipPath id="c${i}"><path d="${bp(p[0],p[1])}"/></clipPath>`});s+='</defs>';
+L.forEach((n,i)=>{const[x,y]=bpos(i),b=B[n],im=b.img,W=b.w,Hh=b.h,real=im&&b.poly;s+=`<path class="blk" data-blk="${n}" d="${bp(x,y)}"/>`;
+if(real){const xs=b.poly.map(q=>q[0]*W),ys=b.poly.map(q=>q[1]*Hh),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+s+=`<g clip-path="url(#c${i})"><svg data-blk="${n}" x="${x}" y="${y}" width="${BW}" height="${BH}" viewBox="${x0} ${y0} ${x1-x0} ${y1-y0}" preserveAspectRatio="xMidYMid slice"><image href="${im}" width="${W}" height="${Hh}"/>${pinsOf(n,(x1-x0)/34)}</svg></g>`}
+else{if(im)s+=`<image data-blk="${n}" href="${im}" x="${x}" y="${y}" width="${BW}" height="${BH}" preserveAspectRatio="xMidYMid slice" clip-path="url(#c${i})"/>`;
+for(let k=5;k<60;k+=5){const lx=x+k/60*BW;s+=`<line pointer-events="none" x1="${lx}" x2="${lx}" y1="${y+10}" y2="${y+BH-10}" stroke="${im?'rgba(255,255,255,.35)':'var(--map)'}" stroke-width="1.5" stroke-dasharray="6 4"/>`}
+const R=b.rows||60,Y=b.bays||30;
+items.filter(it=>it.b===n&&it.c!=='spray'&&(filter==='all'||it.c===filter)).forEach(it=>{const px=x+14+(Math.min(it.r||Math.ceil(R/2),R)-1)/Math.max(1,R-1)*(BW-28),py=y+14+(Math.min(it.y||Math.ceil(Y/2),Y)-1)/Math.max(1,Y-1)*(BH-44),r=sel===it.id?14:10;
+s+=`<path class="pin ${it.d?'done':''}" data-id="${it.id}" d="M${px} ${py-r}L${px+r} ${py}L${px} ${py+r}L${px-r} ${py}Z" fill="var(${CATS[it.c][1]})"/>`})}
+s+=`<text class="bl ${im?'li':''}" data-blk="${n}" x="${x+12}" y="${y+BH-12}">BLOCK ${n} →</text>`});
+return s+'</svg>'}
+function rowHtml(i,first){const loc=i.b?`Block ${i.b}${i.r?', row '+i.r:''}${i.y?', bay '+i.y:''}`:'No block';
+return `<div class="row ${i.d?'done':''} ${first?'first':''} ${i.id===popId?'pop':''}"><div class="t">${esc(i.t)}<small>${CATS[i.c][0]} · ${loc}${i.due?' · '+dayLabel(i.due):''}${i.d&&i.doneAt?' · done '+dayLabel(iso(new Date(i.doneAt))):''}</small>${i.p?`<img class="thumb" src="${i.p}" alt="Photo">`:''}</div>${i.c==='rec'?'':`<button class="dbtn" data-d="${i.id}">${i.d?'✓ Completed':'Done'}</button>`}<button class="x" data-x="${i.id}" aria-label="Delete">✕</button></div>`}
+const card=(col,inner)=>`<div class="card cut"><span class="stripe" style="background:${col}"></span>${inner}</div>`;
+const list=l=>[...l].sort((a,b)=>(a.d?1:0)-(b.d?1:0)).map((i,k)=>rowHtml(i,!k)).join('');
+const counts=l=>Object.keys(CATS).map(k=>{const c=l.filter(i=>i.c===k).length;return c?`<span class="sq" style="background:var(${CATS[k][1]})"></span> ${c}`:''}).filter(Boolean).join(' ');
+const BIN='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2zm-3 6h12l-1 12H7L6 9z"/></svg>';
+const tiles=edit=>{const L=bl();if(!L.length)return '<p class="hint">No blocks yet. Add your first block on the Blocks tab.</p>';
+return '<div class="tiles">'+L.map(n=>{const l=items.filter(i=>i.b===n&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88)),url('${im}') center/cover;color:#fff"`:'';
+const t=`<button class="tile"${st} data-blk="${n}"><b>Block ${n} →</b>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}</button>`;
+return edit?`<div class="tw2">${t}<button class="bin" data-del="${n}" aria-label="Delete Block ${n}">${BIN}</button></div>`:t}).join('')+'</div>'};
+const recs=()=>items.filter(i=>i.c==='spray'&&i.d).sort((a,b)=>(b.doneAt||b.id)-(a.doneAt||a.id));
+const acct=()=>`<p class="hint"><span id="sy">${syncMsg}</span></p>`;
+const bizCard=()=>{const b=B[0]||{};return card('var(--hot)',`<h2>Your business</h2><div class="acts"><input id="biz" type="text" placeholder="Orchard or business name" value="${esc(b.biz||'')}" style="max-width:260px"><button class="btn" id="bizsave">Save name</button></div>`)};
+const prodCard=()=>{const P=(B[0]&&B[0].products)||[];return card('var(--spray)',`<h2>Your products</h2><p style="margin:2px 0 6px;font-size:15px;color:var(--soft)">Add the sprays and fertilisers you use. When you log one by name, the product is filled in for you.</p>`+P.map((p,k)=>`<div class="fi"><span style="flex:1"><b>${esc(p.n)}</b>${p.r?' · '+esc(p.r):''}</span><button class="x" data-pr="${k}" aria-label="Remove">✕</button></div>`).join('')+`<div class="acts"><input id="pnm" type="text" placeholder="Product name" style="max-width:200px"><input id="prt" type="text" placeholder="Usual rate (optional)" style="max-width:200px"><button class="btn" id="padd">Add product</button></div>`)};
+const installCard=()=>card('var(--bio)','<h2>Install as an app</h2><p style="margin:4px 0 10px">Android (Chrome): menu, then Install app or Add to Home screen. iPhone (Safari): Share, then Add to Home Screen. It then opens full screen like an app.</p>');
+const brandStrip=()=>{const b=B[0]||{};return b.biz?`<div class="rbrand"><b>${esc(b.biz)}</b></div>`:''};
+const setHtml=()=>card('var(--deep)',`<h2>Account</h2><p style="margin:4px 0 8px">${esc(U?U.email:'')}</p><div class="acts"><input id="npw" type="password" placeholder="New password" autocomplete="new-password" style="max-width:240px"><button class="btn" id="npb">Change password</button><button class="btn alt" id="logout">Log out</button></div>`)+card('var(--hot)','<h2>Tutorial</h2><div class="acts"><button class="btn" id="tut">Show tutorial</button><button class="btn alt" id="tips">Show tab tips again</button></div>')+bizCard()+prodCard()+installCard()+card('var(--psa)','<h2>Reset</h2><p style="margin:4px 0 10px">Erase everything in this account (logs, blocks, folders and settings) and start again like a brand new grower. This cannot be undone.</p><div class="acts"><button class="btn alt" id="reset">Reset everything</button></div>')+'<p class="hint legal"><button class="lnk" id="lp">Privacy</button> · <button class="lnk" id="ld">Disclaimer</button></p>';
+const ago=d=>{const k=Math.round((new Date(iso(new Date())+'T12:00:00')-new Date(d+'T12:00:00'))/864e5);return k<=0?'today':k===1?'yesterday':k+' days ago'};
+const lastSpray=n=>{const r=recRows().find(x=>x.rf==='Spray diary'&&x.b===n);return r?`<span style="display:block;font-size:13px;opacity:.8">Sprayed ${ago(r.date)}</span>`:''};
+const MOODS=['Behind','Stretched','On track','On top'];
+function checkinCard(){const c=(B[0]&&B[0].checkins)||[],last=c[c.length-1],T=iso(new Date()),days=last?Math.round((new Date(T+'T12:00:00')-new Date(last.d+'T12:00:00'))/864e5):99;
+if(days<7)return '';
+return card('var(--dead)',`<h2>Weekly check-in</h2><p style="margin:2px 0 8px;font-size:15px;color:var(--soft)">How on top of the orchard do you feel this week?</p><div class="mood">${MOODS.map((m,k)=>`<button class="chip" data-mood="${k+1}">${m}</button>`).join('')}</div>`)}
+function trendsCard(){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-1);const cm=iso(new Date()).slice(0,7),pm=iso(d).slice(0,7),mo=i=>iso(new Date(i)).slice(0,7);
+const psa=items.filter(i=>i.c==='psa').map(i=>mo(i.id)),jobs=items.filter(i=>i.d&&i.c!=='rec').map(i=>mo(i.doneAt||i.id)),rec=recRows().map(r=>r.date.slice(0,7)),cnt=(a,m)=>a.filter(x=>x===m).length;
+const ck=(B[0]&&B[0].checkins)||[],avg=m=>{const v=ck.filter(x=>x.d.slice(0,7)===m).map(x=>x.v);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0};
+const M=[['PSA logged',cnt(psa,cm),cnt(psa,pm),true],['Jobs finished',cnt(jobs,cm),cnt(jobs,pm),false],['Records kept',cnt(rec,cm),cnt(rec,pm),false],['Weekly mood',avg(cm),avg(pm),false]].filter(m=>m[2]>0);
+if(!M.length)return '';
+return card('var(--bio)',`<h2>This month vs last</h2><div class="dials">${M.map(([n,c,p,low])=>{const pc=Math.round((c-p)/p*100),good=low?pc<=0:pc>=0,f=Math.min(Math.abs(pc),100);return `<div class="dial"><svg viewBox="0 0 120 70"><path d="M10 62A50 50 0 0 1 110 62" fill="none" stroke="var(--map)" stroke-width="12" pathLength="100"/><path d="M10 62A50 50 0 0 1 110 62" fill="none" stroke="${good?'var(--bio)':'var(--psa)'}" stroke-width="12" pathLength="100" stroke-dasharray="${f} 100"/></svg><b>${pc>0?'+':''}${pc}%</b><small>${n}</small></div>`}).join('')}</div>`)}
+function sprayCard(){const r=recRows().filter(x=>x.rf==='Spray diary').slice(0,4),pl=items.filter(i=>i.c==='spray'&&!i.d).length;
+return card('var(--spray)',`<h2>Spray log<em>${pl} planned</em></h2>`+(r.length?r.map(x=>`<div class="fi"><span class="sq" style="background:var(--spray)"></span><span>${esc(x.t)}</span><small>${dayLabel(x.date)}${x.b?' · B'+x.b:''}</small></div>`).join(''):'<div class="empty">No sprays recorded yet. Say “sprayed block 2 today”.</div>')+'<div class="acts"><button class="btn alt" id="todiary">View diary →</button></div>')}
+function homeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T),it=items.find(i=>i.id===sel),m=T.slice(0,7);
+const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec').length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
+const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
+return tip('home')+(items.length?'':demo('PSA block 3 row 49','<b>PSA</b> · Block 3, row 49 · a pin appears on the map'))+'<div class="home"><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2">${card('var(--hot)',`<h2>Due today<em>${du.length}</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div></div><div class="dm"><div class="o6">${sprayCard()}</div><div class="o7">${checkinCard()}${trendsCard()}</div></div><div class="dr"><div class="o4">${chips()}</div><div class="o5">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
+function calHtml(){const T=iso(new Date()),od=day===T?items.filter(i=>!i.d&&i.due&&i.due<T):[],l=items.filter(i=>i.due===day);
+return tip('cal')+(items.some(i=>i.due)?'':demo('prune block 2 on Friday','<b>Crew jobs</b> · Block 2 · shows up on Friday'))+`<div class="dn"><button class="x" data-day="-1" aria-label="Previous day">←</button><div class="hd">${dayLabel(day)}</div><button class="x" data-day="1" aria-label="Next day">→</button></div>`+(od.length?card('var(--psa)',`<h2>Overdue<em>${od.length}</em></h2>`+list(od)):'')+card('var(--hot)',`<h2>${dayLabel(day)}<em>${l.filter(i=>!i.d).length} to do</em></h2>`+(l.length?list(l):'<div class="empty">Nothing planned. Say “crew, prune block 2 on Friday”.</div>'))+'<p class="hint">A job with a date is shown here on its day. Jobs without a date are kept under Lists.</p>'}
+function listsHtml(){let h=tip('lists')+(items.length?'':demo('need to buy Botector','<b>To buy</b> · Need to buy Botector'))+chips();
+Object.keys(CATS).filter(k=>filter==='all'||k===filter).forEach(k=>{const l=items.filter(i=>i.c===k);
+h+=card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))});return h}
+function recRows(){const out=[];items.forEach(i=>{if(i.c==='spray'&&i.d)out.push({id:i.id,rc:'compliance',rf:'Spray diary',date:iso(new Date(i.doneAt||i.id)),b:i.b,t:i.t,p:i.p,prod:i.prod,rate:i.rate});else if(i.c==='rec')out.push({id:i.id,rc:i.rc,rf:i.rf,date:i.rdate||iso(new Date(i.id)),b:i.b,t:i.t,p:i.p})});return out.sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:b.id-a.id)}
+const exRows=()=>recRows().filter(r=>r.rc===recCat&&(recFolder==='all'||r.rf===recFolder));
+function recHtml(){const all=recRows(),cat=all.filter(r=>r.rc===recCat),F=fold(recCat),rows=exRows(),dr=recDraft;
+let s=tip('records')+brandStrip()+(recRows().length?'':demo('sprayed block 2 today with copper','<b>Spray diary</b> · today · Block 2 · copper'))+auditCard()+`<div class="chips">${Object.keys(RC).map(k=>`<button class="chip ${recCat===k?'on':''}" data-rc="${k}"><span class="sq" style="background:${RC[k][1]}"></span>${RC[k][0]} ${all.filter(r=>r.rc===k).length}</button>`).join('')}</div>`;
+s+=`<div class="chips"><button class="chip ${recFolder==='all'?'on':''}" data-rf="all">All</button>${F.map(f=>`<button class="chip ${recFolder===f?'on':''}" data-rf="${esc(f)}">${esc(f)} ${cat.filter(r=>r.rf===f).length}</button>`).join('')}<button class="chip" id="addf">+ Folder</button></div>`;
+s+=`<div class="acts"><button class="btn" id="addr">+ Add record</button><button class="btn alt" id="xcopy">Copy for Excel</button><button class="btn alt" id="xlsx">Download Excel</button><button class="btn alt" id="pdf">PDF of photos</button></div>`;
+if(recForm)s+=card(RC[recCat][1],`<h2>New ${RC[recCat][0].toLowerCase()} record</h2><div class="acts"><select id="rf2">${F.map(f=>`<option ${f===(dr.rf||(recFolder!=='all'?recFolder:F[0]))?'selected':''}>${esc(f)}</option>`).join('')}</select><input id="rd" type="date" value="${dr.rd||iso(new Date())}"><select id="rb"><option value="">No block</option>${bl().map(n=>`<option value="${n}" ${String(dr.rb)===String(n)?'selected':''}>Block ${n}</option>`).join('')}</select></div><div style="padding:0 0 6px"><input id="rt" type="text" placeholder="Details, e.g. PSA monitoring, 12 vines checked, no symptoms" value="${esc(dr.t||'')}"></div><div class="acts"><button class="btn alt" id="rph">${recPhoto?'Change photo':'Add photo'}</button>${recPhoto?'<img class="thumb" src="'+recPhoto+'" alt="Photo">':''}<button class="btn" id="rsave">Save record</button><button class="btn alt" id="rcancel">Cancel</button></div>`);
+s+=`<div class="tw"><table class="rt"><thead><tr><th>Date</th><th>Folder</th><th>Block</th><th>Product</th><th>Details</th><th>Photo</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.date}</td><td>${esc(r.rf||'')}</td><td>${r.b||''}</td><td>${esc(r.prod||'')}</td><td>${esc(r.t)}</td><td>${r.p?`<img class="thumb" src="${r.p}" alt="Photo">`:''}</td><td><button class="x" data-x="${r.id}" aria-label="Delete">✕</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nothing in this folder yet. Tap + Add record, or log one by typing, like “monitoring PSA block 3, no symptoms”.</td></tr>'}</tbody></table></div>`;
+return s}
+const aoa=rows=>[['Date','Category','Folder','Block','Product','Rate','Details','Has photo']].concat(rows.map(r=>[r.date,RC[r.rc][0],r.rf||'',r.b||'',r.prod||'',r.rate||'',r.t,r.p?'Yes':'']));
+const CATN=Object.keys(RC);
+function auditCard(){return card('var(--hot)',`<h2>Audit pack</h2><p style="margin:2px 0 6px;font-size:15px;color:var(--soft)">Everything an auditor asks for in one go. Tick only the parts you want.</p><div class="acts">${CATN.map(k=>`<label class="ck"><input type="checkbox" data-ap="${k}" ${apSel[k]?'checked':''}> ${RC[k][0]}</label>`).join('')}</div><div class="acts"><label>From <input id="apf" type="date" value="${apFrom}"></label><label>To <input id="apt" type="date" value="${apTo}"></label></div><div class="acts"><button class="btn" id="apx">Audit pack: Excel</button><button class="btn" id="app">Audit pack: PDF</button></div>`)}
+const apRows=()=>{apFrom=$('#apf').value||apFrom;apTo=$('#apt').value||apTo;return recRows().filter(r=>apSel[r.rc]&&r.date>=apFrom&&r.date<=apTo)};
+function pdfExport(rows,title,all){if(!rows.length){toast(all?'No records in that range.':'No records with photos here yet.');return}if(!window.jspdf){toast('PDF tool did not load. Check your connection.');return}
+rows=[...rows].sort((a,b)=>CATN.indexOf(a.rc)-CATN.indexOf(b.rc)||(a.date<b.date?1:-1));
+const d=new window.jspdf.jsPDF({unit:'pt',format:'a4'}),W=d.internal.pageSize.getWidth(),Hh=d.internal.pageSize.getHeight(),m=40,b0=B[0]||{};let y=m,lastRc='';
+d.setFontSize(18);d.text((b0.biz?b0.biz+': ':'')+title,m,y);y+=20;d.setFontSize(10);d.text('Generated '+iso(new Date())+(all?'  |  '+apFrom+' to '+apTo:'')+'  |  '+rows.length+' records',m,y);y+=26;
+rows.forEach(r=>{if(r.rc!==lastRc){lastRc=r.rc;if(y+40>Hh-m){d.addPage();y=m}d.setFontSize(14);d.text(RC[r.rc][0],m,y);y+=18}
+d.setFontSize(11);const L=d.splitTextToSize(r.date+'  |  '+(r.rf||'')+(r.b?'  |  Block '+r.b:'')+(r.prod?'  |  '+r.prod:'')+'\n'+r.t,W-2*m);let iw=0,ih=0;
+if(r.p){try{const pr=d.getImageProperties(r.p),k=Math.min(300/pr.width,220/pr.height);iw=pr.width*k;ih=pr.height*k}catch(e){}}
+if(y+L.length*13+ih+24>Hh-m){d.addPage();y=m}
+d.text(L,m,y);y+=L.length*13+4;if(ih){try{d.addImage(r.p,'JPEG',m,y,iw,ih)}catch(e){}y+=ih}
+y+=12;d.setDrawColor(200);d.line(m,y,W-m,y);y+=16});
+d.save('hortlog-'+(all?'audit-pack':recCat)+'-'+iso(new Date())+'.pdf')}
+function readForm(){if($('#rt'))recDraft={t:$('#rt').value,rf:$('#rf2').value,rd:$('#rd').value,rb:$('#rb').value}}
+const loadImg=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
+function domAngle(g,w,h,m){let sx=0,sy=0,sm=0;for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){const o=y*w+x;if(!m[o])continue;
+const gx=(g[o-w+1]+2*g[o+1]+g[o+w+1])-(g[o-w-1]+2*g[o-1]+g[o+w-1]),gy=(g[o+w-1]+2*g[o+w]+g[o+w+1])-(g[o-w-1]+2*g[o-w]+g[o-w+1]),mag=Math.hypot(gx,gy);if(mag<1)continue;
+const t=Math.atan2(gy,gx);sx+=mag*Math.cos(2*t);sy+=mag*Math.sin(2*t);sm+=mag}
+if(!sm)return null;let d=-Math.atan2(sy,sx)/2*180/Math.PI;while(d>90)d-=180;while(d<=-90)d+=180;return{d,coh:Math.hypot(sx,sy)/sm}}
+async function autoAngle(b){const img=await loadImg(b.orig||b.img),poly=b.poly0||b.poly,k=Math.min(1,300/Math.max(img.width,img.height)),w=Math.round(img.width*k),h=Math.round(img.height*k);
+const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(img,0,0,w,h);const id=x.getImageData(0,0,w,h).data,g=new Float32Array(w*h);for(let i=0;i<w*h;i++)g[i]=.3*id[i*4]+.59*id[i*4+1]+.11*id[i*4+2];
+const mc=document.createElement('canvas');mc.width=w;mc.height=h;const mx=mc.getContext('2d');mx.fillStyle='#fff';mx.beginPath();poly.forEach((p,i)=>i?mx.lineTo(p[0]*w,p[1]*h):mx.moveTo(p[0]*w,p[1]*h));mx.closePath();mx.fill();
+const md=mx.getImageData(0,0,w,h).data,m=new Uint8Array(w*h);for(let i=0;i<w*h;i++)m[i]=md[i*4+3]>128?1:0;return domAngle(g,w,h,m)}
+async function applyRot(n,ang){const b=B[n];if(!b.orig){b.orig=b.img;b.poly0=b.poly;b.ow=b.w;b.oh=b.h}
+const img=await loadImg(b.orig),W=b.ow,H=b.oh,P=b.poly0.map(p=>[p[0]*W,p[1]*H]),cx=P.reduce((s,p)=>s+p[0],0)/P.length,cy=P.reduce((s,p)=>s+p[1],0)/P.length,r=ang*Math.PI/180,co=Math.cos(r),si=Math.sin(r);
+const R=P.map(p=>[cx+(p[0]-cx)*co-(p[1]-cy)*si,cy+(p[0]-cx)*si+(p[1]-cy)*co]),xs=R.map(p=>p[0]),ys=R.map(p=>p[1]),mw=(Math.max(...xs)-Math.min(...xs))*.08,mh=(Math.max(...ys)-Math.min(...ys))*.08;
+const x0=Math.min(...xs)-mw,y0=Math.min(...ys)-mh,cw=Math.max(...xs)+mw-x0,ch=Math.max(...ys)+mh-y0,sc=Math.min(1,900/Math.max(cw,ch));
+const c=document.createElement('canvas');c.width=Math.round(cw*sc);c.height=Math.round(ch*sc);const x=c.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,c.width,c.height);x.scale(sc,sc);x.translate(-x0,-y0);x.translate(cx,cy);x.rotate(r);x.translate(-cx,-cy);x.drawImage(img,0,0,W,H);
+b.img=c.toDataURL('image/jpeg',.8);b.w=c.width;b.h=c.height;b.ang=ang;b.poly=R.map(p=>[(p[0]-x0)*sc/c.width,(p[1]-y0)*sc/c.height]);
+const px=b.poly.map(p=>p[0]),py=b.poly.map(p=>p[1]),ax=Math.min(...px),bx=Math.max(...px),ay=Math.min(...py),by=Math.max(...py);b.grid=[[ax,ay],[ax,by],[bx,ay]];b.skipGrid=false;saveB()}
+async function straighten(n){toast('Finding the rows…');let r=null;try{r=await autoAngle(B[n])}catch(e){}const ang=r?Math.round(r.d*2)/2:0;await applyRot(n,ang);strPrev=n;imgOpen=true;render();
+toast(r&&r.coh>.15?'Rows straightened. Check the dashed lines, then press Looks good.':'Could not find clear rows. Use the turn buttons to line them up.')}
+async function nudge(n,d){await applyRot(n,(B[n].ang||0)+d);render()}
+function imgSvg(n,edit){const b=B[n],W=b.w,H=b.h,sw=W/150,P=(edit?pts:[]).map(p=>[p[0]*W,p[1]*H]);
+let s=`<svg class="img m" id="bsvg" viewBox="0 0 ${W} ${H}"><image href="${b.img}" width="${W}" height="${H}"/>`;
+if(b.poly&&(!edit||dmode==='grid'))s+=`<polygon points="${b.poly.map(p=>p[0]*W+','+p[1]*H).join(' ')}" fill="rgba(255,210,63,.18)" stroke="#ffd23f" stroke-width="${sw}"/>`;
+if(edit&&dmode==='poly'&&P.length){const d=P.map(p=>p.join(',')).join(' ');s+=P.length<3?`<polyline points="${d}" fill="none" stroke="#ffd23f" stroke-width="${sw}"/>`:`<polygon points="${d}" fill="rgba(255,210,63,.2)" stroke="#ffd23f" stroke-width="${sw}"/>`}
+if(edit&&dmode==='grid'){if(P.length>1)s+=`<line x1="${P[0][0]}" y1="${P[0][1]}" x2="${P[1][0]}" y2="${P[1][1]}" stroke="#ff6b2c" stroke-width="${sw}"/>`;if(P.length>2)s+=`<line x1="${P[0][0]}" y1="${P[0][1]}" x2="${P[2][0]}" y2="${P[2][1]}" stroke="#ff6b2c" stroke-width="${sw}"/>`}
+if(edit)P.forEach((p,k)=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${W/60}" fill="#ff6b2c"/>`+(dmode==='grid'?`<text x="${p[0]+W/50}" y="${p[1]}" fill="#fff" stroke="#000" stroke-width="${W/300}" paint-order="stroke" font-size="${W/22}" font-weight="800">${k+1}</text>`:''));
+if(!edit&&b.grid){const R=b.rows||60,Y=b.bays||30,st=Math.max(1,Math.round(R/10));for(let r=1;r<=R;r+=st){const a=gpos(n,r,1),c=gpos(n,r,Y);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${c[0]}" y2="${c[1]}" stroke="rgba(255,255,255,.6)" stroke-width="${sw/2}" stroke-dasharray="${sw*3} ${sw*2}"/>`}}
+if(!edit&&b.grid&&(strPrev===n||imgSet)){const a=gpos(n,1,1);if(a)s+=`<circle cx="${a[0]}" cy="${a[1]}" r="${W/70}" fill="#ff6b2c"/><text x="${a[0]+W/60}" y="${a[1]+W/60}" fill="#fff" stroke="#000" stroke-width="${W/300}" paint-order="stroke" font-size="${W/24}" font-weight="800">Row 1, bay 1</text>`}
+if(!edit)s+=pinsOf(n,W/45);
+return s+'</svg>'}
+const imgDone=n=>{const b=B[n];return !!(b&&b.img&&b.poly&&(b.grid||b.skipGrid)&&drawing!==n)};
+function imagery(n){const b=B[n]||{};let s;
+if(!b.img)s=`<p style="margin:4px 0 10px">Add real imagery of this block. 1. Open Google Maps in satellite view and find the block. 2. Take a screenshot. 3. Upload it here. Then you will mark the edges and roughly where the rows run.</p><div class="acts"><a class="btn" href="https://www.google.com/maps/@?api=1&map_action=map&basemap=satellite" target="_blank" rel="noopener">Open Google Maps</a><button class="btn" id="newimg">Upload screenshot</button></div>`;
+else if(drawing===n)s=`<p class="hint" style="margin:0 0 8px">${dmode==='poly'?'Tap the corners of your block, going around the edge. You need at least 3.':'Tap 3 points: 1) the start of the first row, 2) the end of that same row, 3) the start of the last row.'}</p>`+imgSvg(n,true)+`<div class="acts"><button class="btn" id="finish">Done</button><button class="btn" id="undopt">Undo point</button><button class="btn" id="cancel">Cancel</button></div>`;
+else if(strPrev===n)s=imgSvg(n,false)+`<p style="margin:8px 0 0">The dashed lines should run along your rows. “Row 1, bay 1” should be where your numbering starts. Flip it if not.</p><div class="acts"><button class="btn alt" id="rotl5">↺ 5°</button><button class="btn alt" id="rotl">↺ 1°</button><button class="btn alt" id="rotr">1° ↻</button><button class="btn alt" id="rotr5">5° ↻</button></div><div class="acts"><button class="btn alt" id="flipx">Flip row order</button><button class="btn alt" id="flipy">Flip bay order</button><button class="btn" id="strok">Looks good</button></div>`;
+else if(imgDone(n)&&!imgOpen)s=`<button class="ban" id="imgopen" style="background-image:linear-gradient(90deg,rgba(8,28,28,.75),rgba(8,28,28,.1)),url('${b.img}')"><span>Block imagery</span><span>▾ Expand</span></button>`;
+else{s=imgSvg(n,false);
+if(!b.poly)s+=`<p style="margin:8px 0 0">Next: mark the edges of your block.</p><div class="acts"><button class="btn" id="redraw">Mark edges</button><button class="btn alt" id="newimg">New image</button></div>`;
+else if(!b.grid&&!b.skipGrid)s+=`<p style="margin:8px 0 0">Next: straighten the image so your rows run up and down, and fit the row grid. This happens automatically.</p><div class="acts"><button class="btn" id="straight">Straighten rows</button><button class="btn alt" id="regrid">Mark rows by hand</button><button class="btn alt" id="skiprows">Skip</button></div>`;
+else s+=imgSet?`<div class="acts"><button class="btn" id="straight">Straighten rows</button><button class="btn" id="redraw">Redraw edges</button><button class="btn" id="regrid">Redraw rows</button><button class="btn" id="newimg">New image</button><button class="btn alt" id="rmimg">Remove image</button></div>`:`<div class="acts"><button class="btn alt" id="imgclose">▴ Collapse</button><button class="btn" id="imgset">Settings</button></div>`}
+let cd=card('var(--deep)','<h2>Imagery</h2>'+s);if(dropN===n){cd=cd.replace('class="card cut"','class="card cut drop"');dropN=null}return cd}
+function blockPage(n){const b=B[n]||{},all=items.filter(i=>i.b===n),op=all.filter(i=>!i.d),dated=op.filter(i=>i.due).sort((a,c)=>a.due<c.due?-1:1),und=op.filter(i=>!i.due),sp=all.filter(i=>i.c==='spray'&&i.d);
+return `<button class="back" data-blk="0">← All blocks</button><div class="dn"><div class="hd" style="padding-left:12px">Block ${n}</div></div>`+tip('blockpage')+(imgDone(n)?'':imagery(n))+
+card('var(--hot)',`<h2>Coming up<em>${dated.length}</em></h2>`+(dated.length?list(dated):'<div class="empty">No dated jobs for this block.</div>'))+
+card('var(--todo)',`<h2>Open lists<em>${und.length}</em></h2>`+(und.length?list(und):'<div class="empty">Nothing open without a date.</div>'))+
+card('var(--spray)',`<h2>Spray records<em>${sp.length}</em></h2>`+(sp.length?list(sp):'<div class="empty">No finished sprays for this block yet.</div>'))+(imgDone(n)?imagery(n):'')+
+card('var(--soft)',`<h2>Block settings</h2><div class="acts"><label>Rows <input id="rws" type="number" min="1" value="${b.rows||60}"></label><label>Bays per row <input id="bys" type="number" min="1" value="${b.bays||30}"></label><button class="btn" id="bsave">Save</button><button class="btn alt" id="bdel">Delete block</button></div>`)}
+function bind(){const A=(s,f)=>document.querySelectorAll(s).forEach(f);
+A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
+A('[data-d]',b=>b.onclick=()=>{const i=items.find(a=>a.id==b.dataset.d);i.d=!i.d;i.doneAt=i.d?Date.now():null;popId=i.d?i.id:null;save();render();popId=null;if(i.d&&i.c==='spray')toast('Saved to Records')});
+A('[data-x]',b=>b.onclick=()=>{const k=items.findIndex(a=>a.id==b.dataset.x),it=items[k];items.splice(k,1);save();sel=null;render();toast('Deleted: '+it.t.slice(0,40),()=>{items.splice(k,0,it);save();render()})});
+A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
+A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;render()});
+A('[data-blk]',b=>b.onclick=()=>{blk=+b.dataset.blk||null;drawing=null;imgSet=false;imgOpen=false;strPrev=null;view='blocks';render();window.scrollTo(0,0)});
+A('[data-tip]',b=>b.onclick=()=>{seen[b.dataset.tip]=1;wr(SK,seen);render()});
+A('.pin',c=>c.onclick=e=>{e.stopPropagation();sel=+c.dataset.id;render()});
+const on=(id,f)=>{const e=document.getElementById(id);if(e)e.onclick=f};
+on('imgopen',()=>{imgOpen=true;render()});on('imgclose',()=>{imgOpen=false;imgSet=false;render()});on('imgset',()=>{imgSet=true;render()});on('rmimg',()=>{const b=B[blk];B[blk]={rows:b.rows,bays:b.bays};saveB();imgSet=false;render()});on('newimg',()=>$('#bfile').click());on('redraw',()=>{drawing=blk;dmode='poly';pts=[];render()});on('regrid',()=>{drawing=blk;dmode='grid';pts=[];render()});on('skiprows',()=>{B[blk].skipGrid=true;saveB();render()});
+on('straight',()=>straighten(blk));on('rotl',()=>nudge(blk,-1));on('rotr',()=>nudge(blk,1));on('rotl5',()=>nudge(blk,-5));on('rotr5',()=>nudge(blk,5));
+on('strok',()=>{strPrev=null;imgOpen=false;render()});on('flipx',()=>{B[blk].flipX=!B[blk].flipX;saveB();render()});on('flipy',()=>{B[blk].flipY=!B[blk].flipY;saveB();render()});
+on('bsave',()=>{const b=B[blk];b.rows=Math.max(1,parseInt($('#rws').value,10)||60);b.bays=Math.max(1,parseInt($('#bys').value,10)||30);saveB();render();toast('Block settings saved.')});
+on('bdel',()=>confirmDel(blk));
+on('addb',()=>{const L=bl(),n=(L.length?Math.max(...L):0)+1;B[n]={rows:60,bays:30};saveB();blk=null;view='blocks';render();coach(n,'Block '+n+' added. Tap it to add imagery and set it up. Use the bin in its corner to delete a block.')});on('undopt',()=>{pts.pop();render()});on('cancel',()=>{drawing=null;render()});
+on('finish',()=>{const b=B[blk];if(pts.length<3){toast(dmode==='poly'?'Tap at least 3 corners first.':'Tap all 3 points first.');return}if(dmode==='poly')b.poly=pts;else{b.grid=pts;b.skipGrid=false}saveB();drawing=null;imgSet=false;imgOpen=false;dropN=blk;render()});
+const sv=document.getElementById('bsvg');if(sv&&drawing)sv.onclick=e=>{if(dmode==='grid'&&pts.length>=3)return;const r=sv.getBoundingClientRect();pts.push([(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]);render()};
+
+on('logout',async()=>{await sb.auth.signOut()});on('tut',()=>openOb());on('tips',()=>{seen={ob:seen.ob};wr(SK,seen);toast('Tips will show again on each tab.')});
+on('npb',async()=>{const p=$('#npw').value;if(p.length<6){toast('Use at least 6 characters.');return}try{const r=await sb.auth.updateUser({password:p});toast(r.error?r.error.message:'Password changed.')}catch(e){toast('Could not reach the server.')}});
+A('[data-mood]',b=>b.onclick=()=>{const v=+b.dataset.mood,cd=b.closest('.card');if(cd)cd.classList.add('zout');setTimeout(()=>{const B0=B[0]=B[0]||{},c=B0.checkins=B0.checkins||[],T=iso(new Date());if(c.length&&c[c.length-1].d===T)c[c.length-1].v=v;else c.push({d:T,v});B0.checkins=c.slice(-60);saveB();render()},450)});
+A('[data-ap]',b=>b.onchange=()=>{apSel[b.dataset.ap]=b.checked});
+A('[data-del]',b=>b.onclick=e=>{e.stopPropagation();confirmDel(+b.dataset.del)});
+A('[data-try]',b=>b.onclick=()=>{const q=$('#q');q.value=b.dataset.try;if(window.innerWidth>=900)$('#log').classList.add('open');q.focus();toast('Now press → to log it.')});
+A('[data-rc]',b=>b.onclick=()=>{recCat=b.dataset.rc;recFolder='all';recForm=false;render()});
+A('[data-rf]',b=>b.onclick=()=>{recFolder=b.dataset.rf;render()});
+on('addf',()=>{const nm=(prompt('Name your new folder, for example: Pollen')||'').trim();if(!nm)return;if(fold(recCat).some(f=>f.toLowerCase()===nm.toLowerCase())){toast('That folder already exists.');return}
+const B0=B[0]=B[0]||{};B0.folders=B0.folders||{};(B0.folders[recCat]=B0.folders[recCat]||[]).push(nm);saveB();recFolder=nm;render()});
+on('todiary',()=>{recCat='compliance';recFolder='Spray diary';setView('records')});on('padd',()=>{const n=$('#pnm').value.trim();if(!n)return;const B0=B[0]=B[0]||{};(B0.products=B0.products||[]).push({n,r:$('#prt').value.trim()});saveB();render()});A('[data-pr]',b=>b.onclick=()=>{B[0].products.splice(+b.dataset.pr,1);saveB();render()});
+on('bizsave',()=>{const B0=B[0]=B[0]||{};B0.biz=$('#biz').value.trim();saveB();render();toast('Saved.')});
+on('reset',()=>{if((prompt('This erases ALL your logs, blocks, folders and settings. Type RESET to confirm.')||'').trim().toUpperCase()!=='RESET')return;items=[];B={};seen={};wr(SK,seen);sel=null;last=null;blk=null;filter='all';recCat='compliance';recFolder='all';recForm=false;view='home';save();saveB();render();toast('Everything was reset.');openOb()});
+on('lp',()=>legal('Privacy'));on('ld',()=>legal('Disclaimer'));
+on('addr',()=>{recForm=!recForm;render()});on('rph',()=>{readForm();$('#rfile').click()});on('rcancel',()=>{recForm=false;recPhoto=null;recDraft={};render()});
+on('rsave',()=>{readForm();const d=recDraft;if(!(d.t||'').trim()){toast('Add some details first.');return}
+items.unshift({id:Date.now(),c:'rec',rc:recCat,rf:d.rf||fold(recCat)[0],t:d.t.trim(),b:d.rb?+d.rb:null,rdate:d.rd||iso(new Date()),d:true,doneAt:Date.now(),p:recPhoto||undefined});save();recForm=false;recPhoto=null;recDraft={};render();toast('Record saved.')});
+on('xcopy',async()=>{try{await navigator.clipboard.writeText(aoa(exRows()).map(r=>r.join('\t')).join('\n'));toast('Copied. Paste straight into Excel.')}catch(e){toast('Could not copy on this browser.')}});
+on('xlsx',()=>{if(!window.XLSX){toast('Excel tool did not load. Check your connection.');return}const ws=XLSX.utils.aoa_to_sheet(aoa(exRows()));ws['!cols']=[{wch:12},{wch:14},{wch:20},{wch:7},{wch:60},{wch:10}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,RC[recCat][0]);XLSX.writeFile(wb,'hortlog-'+recCat+'-'+iso(new Date())+'.xlsx')});
+on('pdf',()=>pdfExport(exRows().filter(r=>r.p),'Records, '+RC[recCat][0],false));
+on('apx',()=>{const rows=apRows();if(!rows.length){toast('No records in that range.');return}if(!window.XLSX){toast('Excel tool did not load. Check your connection.');return}
+const wb=XLSX.utils.book_new();CATN.filter(k=>apSel[k]).forEach(k=>{const rs=rows.filter(r=>r.rc===k);if(rs.length){const ws=XLSX.utils.aoa_to_sheet(aoa(rs));ws['!cols']=[{wch:12},{wch:14},{wch:20},{wch:7},{wch:18},{wch:12},{wch:60},{wch:10}];XLSX.utils.book_append_sheet(wb,ws,RC[k][0])}});XLSX.writeFile(wb,'hortlog-audit-pack-'+iso(new Date())+'.xlsx')});
+on('app',()=>pdfExport(apRows(),'Audit pack',true))}
+
+function render(){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
+$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):tip('blocks')+tiles(true)+'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>'):view==='records'?recHtml():view==='settings'?setHtml():listsHtml();$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');$('#hb').textContent=U&&U.email?U.email[0].toUpperCase():'•';bind()}
+(async()=>{try{if(!window.claude)return;AI=await window.claude.use('sample');DL=await window.claude.use('downloads');
+if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
+render();
+boot();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>

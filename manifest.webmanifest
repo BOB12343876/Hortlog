@@ -1,0 +1,15 @@
+{
+  "name": "Hortlog",
+  "short_name": "Hortlog",
+  "description": "Orchard notebook: log jobs, sprays and records by voice or text.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e6efec",
+  "theme_color": "#0f3d3e",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
