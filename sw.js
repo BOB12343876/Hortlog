@@ -1,6 +1,6 @@
-// Hortlog service worker: lets the app open offline.
-// Bump CACHE when you deploy a new index.html so phones pick it up.
-const CACHE = 'hortlog-v16';
+// Hortlog service worker: lets the app open offline, and shows push notifications.
+// Bump CACHE only if a phone keeps showing an old version.
+const CACHE = 'hortlog-v18';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg'];
 
 self.addEventListener('install', e => {
@@ -29,6 +29,31 @@ self.addEventListener('fetch', e => {
         return res;
       }).catch(() => hit);
       return hit || net;
+    })
+  );
+});
+
+// Notifications sent by the server
+self.addEventListener('push', e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (x) { d = { title: 'Hortlog', body: e.data ? e.data.text() : '' }; }
+  e.waitUntil(self.registration.showNotification(d.title || 'Hortlog', {
+    body: d.body || '',
+    icon: 'icon-192.png',
+    badge: 'icon-192.png',
+    tag: d.tag,
+    data: { url: d.url || './' }
+  }));
+});
+
+// Tapping a notification opens the app
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || './';
+  e.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(cs => {
+      for (const c of cs) { if ('focus' in c) { c.focus(); return; } }
+      return clients.openWindow(url);
     })
   );
 });
