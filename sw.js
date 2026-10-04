@@ -1,10 +1,10 @@
 // Hortlog service worker: lets the app open offline, and shows push notifications.
 // Bump CACHE only if a phone keeps showing an old version.
-const CACHE = 'hortlog-v18';
+const CACHE = 'hortlog-v21';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))));
   self.skipWaiting();
 });
 
@@ -20,6 +20,21 @@ self.addEventListener('fetch', e => {
   if (r.method !== 'GET') return;
   const u = new URL(r.url);
   if (u.hostname.endsWith('supabase.co')) return; // never cache account or data calls
+  // The app page itself: always try the network first so a new version shows on the first open.
+  // If there is no signal (or it is slow), use the saved copy so it still opens.
+  if (r.mode === 'navigate' || u.pathname.endsWith('/index.html')) {
+    e.respondWith((async () => {
+      const cached = (await caches.match(r)) || (await caches.match('index.html'));
+      try {
+        const res = await Promise.race([fetch(r), new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 4000))]);
+        if (res && res.ok) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); }
+        return res;
+      } catch (err) {
+        return cached || Response.error();
+      }
+    })());
+    return;
+  }
   const ok = u.origin === location.origin || /cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|fonts\.(googleapis|gstatic)\.com/.test(u.hostname);
   if (!ok) return;
   e.respondWith(
@@ -40,7 +55,10 @@ self.addEventListener('push', e => {
   e.waitUntil(self.registration.showNotification(d.title || 'Hortlog', {
     body: d.body || '',
     icon: 'icon-192.png',
-    badge: 'icon-192.png',
+    badge: 'badge-96.png',
+    vibrate: [200, 100, 200],
+    silent: false,
+    renotify: !!d.tag,
     tag: d.tag,
     data: { url: d.url || './' }
   }));

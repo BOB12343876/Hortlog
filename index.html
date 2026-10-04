@@ -232,6 +232,9 @@ main>.home{grid-column:1/-1}
 #nbq,#ntip{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:10;display:flex;align-items:center;justify-content:center;padding:16px}
 #nbq .box,#ntip .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:22px}
 #nbq h2,#ntip h2{font-size:32px;margin:0 0 8px;font-weight:800}#nbq p,#ntip p{margin:0 0 14px;font-size:18px}
+#instq{position:fixed;inset:0;background:rgba(5,20,20,.93);z-index:10;display:flex;align-items:center;justify-content:center;padding:16px}
+#instq .box{background:var(--card);color:var(--ink);max-width:420px;width:100%;padding:22px}
+#instq h2{font-size:32px;margin:0 0 8px;font-weight:800}#instq p{margin:0 0 14px;font-size:18px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -253,7 +256,7 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY);
 const VAPID_PUBLIC='BCfJDZtvSsJ70BqWbqitJ3C53ctfzCnZgPQHzvDroznZcFsiRa8GzSWxWrq4IMN32cPhaLeThuO83wyI2c4jgNw';
 const KEY='hortlog.v1',BK='hortlog.blocks',SK='hortlog.seen';
 const CATS={psa:['PSA','--psa'],dead:['Dead vine','--dead'],buy:['To buy','--buy'],todo:['To do','--todo'],crew:['Crew jobs','--crew'],meet:['Meetings','--bio'],spray:['Spray','--spray'],rec:['Record','--note'],note:['Note','--note']};
-const VER='20',NEWS=['Alerts guide for sound and pop-ups, plus an experimental Bluetooth earbud button.','Calendar now sits under today’s jobs; tap PSA or Due today to jump there.','Product rates now show in your Excel audit, and adding a missing block is one tap.'];
+const VER='21',NEWS=['One-tap install: Hortlog now offers to add itself to your phone.','Updates arrive on the first open, with no repeated pull-to-refresh.','Tidied the notification settings.'];
 const NUM={one:1,two:2,three:3,four:4};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -314,7 +317,7 @@ const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pus
 async function notifOn(){const perm=await Notification.requestPermission();if(perm!=='granted'){toast('Notifications are blocked. '+PHELP);return}
 const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID_PUBLIC)});
 const j=sub.toJSON(),r=await sb.from('push_subs').upsert({endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth,tz:Intl.DateTimeFormat().resolvedOptions().timeZone,user_id:U.id},{onConflict:'endpoint'});
-if(r.error){toast('Could not save notifications: '+r.error.message);return}toast('Notifications are on.');if(!seen.ntip){seen.ntip=1;wr(SK,seen);showNotifTip()}}
+if(r.error){toast('Could not save notifications: '+r.error.message);return}toast('Notifications are on.')}
 async function notifOff(){const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pushManager.getSubscription();if(sub){await sb.from('push_subs').delete().eq('endpoint',sub.endpoint);await sub.unsubscribe()}toast('Notifications are off.')}
 async function notifTest(){const reg=await navigator.serviceWorker.ready;reg.showNotification('Hortlog',{body:'Notifications are working.',icon:'icon-192.png',badge:'badge-96.png',vibrate:[200,100,200],tag:'test',renotify:true})}
 async function paintNotif(){const b=$('#nbox');if(!b)return;const s=await notifStatus();
@@ -323,7 +326,7 @@ else if(s==='ios-install')b.innerHTML='<p style="margin:4px 0">On iPhone, first 
 else if(s==='denied')b.innerHTML='<p style="margin:4px 0">Notifications are blocked for this app. Allow them in your phone or browser settings, then come back.</p>';
 else if(s==='off')b.innerHTML='<p style="margin:4px 0 8px">Get a nudge for jobs due today, a spray check, and a weekly check-in.</p><div class="acts"><button class="btn" id="non">Turn on notifications</button></div>';
 else{let pr={due:true,spray:true,weekly:true};try{const reg=await navigator.serviceWorker.getRegistration(),sub=await reg.pushManager.getSubscription(),r=await sb.from('push_subs').select('prefs').eq('endpoint',sub.endpoint);if(r.data&&r.data[0]&&r.data[0].prefs)pr=Object.assign(pr,r.data[0].prefs)}catch(e){}
-b.innerHTML=`<p style="margin:4px 0">Notifications are on for this device.</p><div class="acts"><label class="ck"><input type="checkbox" data-np="due" ${pr.due?'checked':''}> Jobs due today (morning)</label><label class="ck"><input type="checkbox" data-np="spray" ${pr.spray?'checked':''}> Spray check (afternoon)</label><label class="ck"><input type="checkbox" data-np="weekly" ${pr.weekly?'checked':''}> Weekly check-in (Friday)</label></div><div class="acts"><button class="btn alt" id="ntest">Send a test</button><button class="btn alt" id="noff">Turn off</button></div><p class="hint" style="margin:8px 0 0">No sound or pop-up? Open your phone’s Settings, then Apps, then Hortlog (or Chrome), then Notifications, and set it to Alerting or Pop on screen, with sound and vibration on.</p>`;
+b.innerHTML=`<p style="margin:4px 0">Notifications are on for this device.</p><div class="acts"><label class="ck"><input type="checkbox" data-np="due" ${pr.due?'checked':''}> Jobs due today (morning)</label><label class="ck"><input type="checkbox" data-np="spray" ${pr.spray?'checked':''}> Spray check (afternoon)</label><label class="ck"><input type="checkbox" data-np="weekly" ${pr.weekly?'checked':''}> Weekly check-in (Friday)</label></div><div class="acts"><button class="btn alt" id="ntest">Send a test</button><button class="btn alt" id="noff">Turn off</button></div>`;
 b.querySelectorAll('[data-np]').forEach(c=>c.onchange=async()=>{pr[c.dataset.np]=c.checked;try{const reg=await navigator.serviceWorker.getRegistration(),sub=await reg.pushManager.getSubscription();await sb.from('push_subs').update({prefs:pr}).eq('endpoint',sub.endpoint)}catch(e){toast('Could not save that.')}})}
 const on=(id,f)=>{const e=b.querySelector('#'+id);if(e)e.onclick=f};on('non',async()=>{try{await notifOn()}catch(e){toast('Could not turn on notifications.')}paintNotif()});on('ntest',()=>notifTest());on('noff',async()=>{try{await notifOff()}catch(e){}paintNotif()})}
 const notifCard=()=>card('var(--dead)','<h2>Notifications</h2><div id="nbox"><p style="margin:4px 0">Checking…</p></div>');
@@ -355,12 +358,20 @@ e.innerHTML=`<div class="box cut"><h2>Audits made easy</h2><p>Log on to Hortlog 
 $('#rig').onclick=()=>{seen.recintro=1;wr(SK,seen);e.remove()}}
 function showUpd(){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'upd'}));
 e.className='upd cut';e.innerHTML=`<button class="dx" id="ux" aria-label="Close">✕</button><b>Updated to version ${VER}</b><ul>${NEWS.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`;$('#ux').onclick=()=>e.remove()}
+let dp=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;maybeInstall()});
+window.addEventListener('appinstalled',()=>{dp=null;seen.instAt=9e15;wr(SK,seen);const e=$('#instq');if(e)e.remove()});
+const busy=()=>!!document.querySelector('#ob,#setup,#bizq,#perm,#spq,#cap,#nbq,#prodq,#rn,#recintro,#coach,#delq,#legal,#instq');
+function maybeInstall(){if(!U||!loaded||standalone||window.innerWidth>=900||busy())return;if(seen.instAt&&Date.now()-seen.instAt<2*864e5)return;if(!dp&&!isIOS)return;showInstall()}
+function showInstall(){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'instq'}));
+const body=dp?'Add Hortlog to your phone like an app. It opens full screen and works better for reminders.':'To add Hortlog to your iPhone, tap the Share button, then Add to Home Screen. Then open it from your Home Screen.';
+e.innerHTML=`<div class="box cut"><h2>Get the Hortlog app</h2><p>${body}</p><div class="acts">${dp?'<button class="btn" id="insgo">Install app</button>':''}<button class="btn alt" id="insno">Not now</button></div></div>`;
+const snooze=()=>{seen.instAt=Date.now();wr(SK,seen);e.remove()};$('#insno').onclick=snooze;
+const g=$('#insgo');if(g)g.onclick=async()=>{try{dp.prompt();await dp.userChoice}catch(x){}dp=null;snooze()}}
 const askedBlk={};let eb=null;
 function askBlock(ref){if($('#nbq')||$('#setup'))return;const none=!bl().length,e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'nbq'}));
 e.innerHTML=`<div class="box cut"><h2>${none?'Add your blocks':'Add '+esc(bn(ref))}</h2><p>${none?'You mentioned '+esc(bn(ref))+', but you have not added any blocks yet. Add them to make everything easier to manage and see on your map.':esc(bn(ref))+' is not set up yet. Add it to see it on your map and keep its jobs together.'}</p><div class="acts"><button class="btn" id="nby">${none?'Add blocks':'Add block'}</button><button class="btn alt" id="nbn">Not now</button></div></div>`;
 $('#nbn').onclick=()=>e.remove();$('#nby').onclick=()=>{e.remove();if(none)showSetup(ref);else{B[ref]={rows:60,bays:30};saveB();view='blocks';blk=null;render();coach(ref,bn(ref)+' added. Tap it to add imagery and set it up.')}}}
-function showNotifTip(){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'ntip'}));
-e.innerHTML=`<div class="box cut"><h2>One more step for sound</h2><p>Your phone decides how notifications look and sound. For sound, vibration and pop-ups, open Settings, then Apps, then Hortlog (or Chrome), then Notifications, and set it to Alerting or Pop on screen.</p><div class="acts"><button class="btn" id="ntk">Got it</button></div></div>`;$('#ntk').onclick=()=>e.remove()}
 function silentWav(){const n=8000,b=new Uint8Array(44+n),v=new DataView(b.buffer),s=(o,t)=>{for(let i=0;i<t.length;i++)b[o+i]=t.charCodeAt(i)};s(0,'RIFF');v.setUint32(4,36+n,true);s(8,'WAVE');s(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);s(36,'data');v.setUint32(40,n,true);b.fill(128,44);return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
 function earbudOn(){const ma=navigator.mediaSession;if(!ma||!window.MediaMetadata){toast('Earbud button is not supported on this device.');return}
 const a=new Audio(silentWav());a.loop=true;a.volume=.02;a.play().then(()=>{eb=a;ma.metadata=new MediaMetadata({title:'Hortlog voice log',artist:'Press play/pause to speak'});
@@ -374,7 +385,7 @@ e.innerHTML=`<div class="box cut"><h2>Did you spray${i.b?' '+esc(bn(i.b)):''}?</
 $('#spy').onclick=()=>{const T=iso(new Date());i.d=true;i.doneAt=new Date((i.due<=T?i.due:T)+'T12:00:00').getTime();save();e.remove();render();toast('Saved to your spray diary.');checkSprays()};
 $('#spn').onclick=()=>{i.snooze=iso(new Date());save();e.remove();checkSprays()}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkSprays()});
-function maybeSetup(){if(!U||!loaded||$('#ob')||$('#setup')||$('#bizq')||$('#perm'))return;if(!seen.biz&&!(B[0]&&B[0].biz)){showBiz();return}if(!seen.perm){showPerm();return}if(!bl().length)showSetup()}
+function maybeSetup(){if(!U||!loaded||$('#ob')||$('#setup')||$('#bizq')||$('#perm'))return;if(!seen.biz&&!(B[0]&&B[0].biz)){showBiz();return}if(!seen.perm){showPerm();return}if(!bl().length){showSetup();return}maybeInstall()}
 function showSetup(min){let n=Math.max(4,min||0);const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'setup'}));
 const draw=()=>{e.innerHTML=`<div class="box cut"><h2>Set up your blocks</h2><p>How many blocks does your orchard have? A block is one section, like “Block 1”. You can add or remove blocks later.</p><div class="stp"><button class="btn" id="m1" aria-label="Fewer">−</button><b>${n}</b><button class="btn" id="p1" aria-label="More">+</button></div><div class="acts"><button class="btn" id="mk">Create ${n} block${n>1?'s':''}</button><button class="btn alt" id="lat">Later</button></div></div>`;
 $('#m1').onclick=()=>{n=Math.max(1,n-1);draw()};$('#p1').onclick=()=>{n=Math.min(40,n+1);draw()};$('#lat').onclick=()=>e.remove();
@@ -558,7 +569,7 @@ const recs=()=>items.filter(i=>i.c==='spray'&&i.d).sort((a,b)=>(b.doneAt||b.id)-
 const acct=()=>`<p class="hint"><span id="sy">${syncMsg}</span></p>`;
 const bizCard=()=>{const b=B[0]||{};return card('var(--hot)',`<h2>Your business</h2><div class="acts"><input id="biz" type="text" placeholder="Orchard or business name" value="${esc(b.biz||'')}" style="max-width:260px"><button class="btn" id="bizsave">Save name</button></div>`)};
 const prodCard=()=>{const P=(B[0]&&B[0].products)||[];return card('var(--spray)',`<h2>Your products</h2><p style="margin:2px 0 6px;font-size:15px;color:var(--soft)">Add the sprays and fertilisers you use. When you log one by name, the product is filled in for you.</p>`+P.map((p,k)=>`<div class="fi"><span style="flex:1"><b>${esc(p.n)}</b>${p.r?' · '+esc(p.r):''}</span><button class="x" data-pr="${k}" aria-label="Remove">✕</button></div>`).join('')+`<div class="acts"><input id="pnm" type="text" placeholder="Product name" style="max-width:200px"><input id="prt" type="text" placeholder="Usual rate (optional)" style="max-width:200px"><button class="btn" id="padd">Add product</button></div>`)};
-const installCard=()=>card('var(--bio)','<h2>Install as an app</h2><p style="margin:4px 0 10px">Android (Chrome): menu, then Install app or Add to Home screen. iPhone (Safari): Share, then Add to Home Screen. It then opens full screen like an app.</p>');
+const installCard=()=>card('var(--bio)','<h2>Install as an app</h2><p style="margin:4px 0 10px">Android (Chrome): menu, then Install app. iPhone (Safari or Chrome): Share, then Add to Home Screen. It then opens full screen like an app.</p>'+(dp?'<div class="acts"><button class="btn" id="insnow">Install app</button></div>':''));
 const brandStrip=()=>{const b=B[0]||{};return b.biz?`<div class="rbrand"><b>${esc(b.biz)}</b></div>`:''};
 const setHtml=()=>card('var(--deep)',`<h2>Account</h2><p style="margin:4px 0 8px">${esc(U?U.email:'')}</p><div class="acts"><input id="npw" type="password" placeholder="New password" autocomplete="new-password" style="max-width:240px"><button class="btn" id="npb">Change password</button><button class="btn" id="logout">Log out</button></div>`)+card('var(--hot)','<h2>Tutorial</h2><div class="acts"><button class="btn" id="tut">Show tutorial</button><button class="btn alt" id="tips">Show tab tips again</button></div>')+bizCard()+permCard()+notifCard()+earCard()+installCard()+card('var(--psa)','<h2>Reset</h2><p style="margin:4px 0 10px">Erase everything in this account (logs, blocks, folders and settings) and start again like a brand new grower. This cannot be undone.</p><div class="acts"><button class="btn alt" id="reset">Reset everything</button><button class="btn alt" id="resetout">Reset and log out (testing)</button></div>')+'<p class="hint legal"><button class="lnk" id="lp">Privacy</button> · <button class="lnk" id="ld">Disclaimer</button></p>';
 const ago=d=>{const k=Math.round((new Date(iso(new Date())+'T12:00:00')-new Date(d+'T12:00:00'))/864e5);return k<=0?'today':k===1?'yesterday':k+' days ago'};
@@ -705,7 +716,7 @@ on('bizsave',()=>{const B0=B[0]=B[0]||{};B0.biz=$('#biz').value.trim();saveB();r
 on('reset',()=>{if((prompt('This erases ALL your logs, blocks, folders and settings. Type RESET to confirm.')||'').trim().toUpperCase()!=='RESET')return;items=[];B={};resetCats();seen={};wr(SK,seen);sel=null;last=null;blk=null;filter='all';recCat='compliance';recFolder='all';recForm=false;view='home';save();saveB();render();toast('Everything was reset.');openOb()});
 on('lp',()=>legal('Privacy'));on('ld',()=>legal('Disclaimer'));
 on('resetout',async()=>{if(!confirm('Reset everything and log out? (for testing)'))return;items=[];B={};resetCats();seen={};wr(SK,seen);save();saveB();await pq;try{localStorage.removeItem(PK())}catch(e){}await sb.auth.signOut()});
-on('ebt',()=>eb?earbudOff():earbudOn());
+on('insnow',async()=>{try{dp.prompt();await dp.userChoice}catch(e){}dp=null;render()});on('ebt',()=>eb?earbudOff():earbudOn());
 on('addr',()=>{recForm=!recForm;render()});on('rph',()=>{readForm();$('#rfile').click()});on('rcancel',()=>{recForm=false;recPhoto=null;recDraft={};render()});
 on('rsave',()=>{readForm();const d=recDraft;if(!(d.t||'').trim()){toast('Add some details first.');return}
 items.unshift({id:Date.now(),c:'rec',rc:recCat,rf:d.rf||fold(recCat)[0],t:d.t.trim(),b:d.rb?+d.rb:null,rdate:d.rd||iso(new Date()),d:true,doneAt:Date.now(),p:recPhoto||undefined});save();recForm=false;recPhoto=null;recDraft={};render();toast('Record saved.')});
@@ -722,7 +733,8 @@ $('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blo
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
 boot();
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl&&!($('#q')&&$('#q').value)){rl=true;location.reload()}});
+window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})}).catch(()=>{}))}
 </script>
 </body>
 </html>
