@@ -237,6 +237,20 @@ main>.home{grid-column:1/-1}
 #instq h2{font-size:32px;margin:0 0 8px;font-weight:800}#instq p{margin:0 0 14px;font-size:18px}
 
 /* v22 */
+.tile{position:relative;overflow:hidden}
+.tile .tx{position:relative;display:block;z-index:1}
+.tile.ti{color:#fff;background:#173a3a}
+.tbg{position:absolute;inset:0;width:100%;height:100%}.tsh{position:absolute;inset:0;background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88))}
+.tiles.mas{display:flex;gap:10px;align-items:flex-start}.tiles.mas .tcol{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+#adj{position:fixed;inset:0;z-index:8;background:var(--bg);display:flex;flex-direction:column;gap:2px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+#adj .adjh{display:flex;justify-content:space-between;align-items:center;gap:8px;font:800 18px 'Barlow Condensed',sans-serif;color:var(--soft);margin:0 0 4px}
+#adj svg.img{width:100%;max-height:42vh;flex:none}
+#adj .ar{display:flex;align-items:center;gap:5px;margin:5px 0}
+#adj .ar>span{flex:0 0 76px;font:800 15px 'Barlow Condensed',sans-serif;line-height:1.1;color:var(--soft)}
+#adj .btn{flex:1;min-height:38px;padding:4px 6px;font-size:16px;min-width:0}
+#adj .btn.alt{border-width:2px}
+@media (min-width:900px){#adj{max-width:980px;margin:0 auto}}
+
 .x svg{display:block;margin:0 auto}
 textarea{width:100%;font:600 17px Barlow,sans-serif;padding:13px;border:3px solid var(--deep);background:var(--bg);color:var(--ink);border-radius:0;min-height:84px;resize:vertical}
 textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
@@ -280,7 +294,7 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY);
 const VAPID_PUBLIC='BCfJDZtvSsJ70BqWbqitJ3C53ctfzCnZgPQHzvDroznZcFsiRa8GzSWxWrq4IMN32cPhaLeThuO83wyI2c4jgNw';
 const KEY='hortlog.v1',BK='hortlog.blocks',SK='hortlog.seen';
 const CATS={psa:['PSA','--psa'],dead:['Dead vine','--dead'],buy:['To buy','--buy'],todo:['To do','--todo'],crew:['Crew jobs','--crew'],meet:['Meetings','--bio'],spray:['Spray','--spray'],rec:['Record','--note'],note:['Note','--note']};
-const VER='22',NEWS=['Edit any entry with the pencil.','New Spray and Fert and Vine Development folders.','Product and water rates, row spacing, longer voice pause.'],OLDNEWS=['One-tap install: Hortlog now offers to add itself to your phone.','Updates arrive on the first open, with no repeated pull-to-refresh.','Tidied the notification settings.'];
+const VER='22',NEWS=['Voice stops about 2.5 seconds after you finish, with no second beep.','Line up rows on one full screen with compact controls.','Collapsible notifications and block tiles that match each block’s shape.'],OLDNEWS=['One-tap install: Hortlog now offers to add itself to your phone.','Updates arrive on the first open, with no repeated pull-to-refresh.','Tidied the notification settings.'];
 const NUM={one:1,two:2,three:3,four:4};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -349,16 +363,17 @@ const j=sub.toJSON(),r=await sb.from('push_subs').upsert({endpoint:j.endpoint,p2
 if(r.error){toast('Could not save notifications: '+r.error.message);return}toast('Notifications are on.')}
 async function notifOff(){const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pushManager.getSubscription();if(sub){await sb.from('push_subs').delete().eq('endpoint',sub.endpoint);await sub.unsubscribe()}toast('Notifications are off.')}
 async function notifTest(){const reg=await navigator.serviceWorker.ready;reg.showNotification('Hortlog',{body:'Notifications are working.',icon:'icon-192.png',badge:'badge-96.png',vibrate:[200,100,200],tag:'test',renotify:true})}
-async function paintNotif(){const b=$('#nbox');if(!b)return;const s=await notifStatus();
+async function paintNotif(){const b=$('#nbox');if(!b)return;const s=await notifStatus();const sm=$('#nsum');if(sm)sm.textContent={on:'On',off:'Off',denied:'Blocked',unsupported:'Not available','ios-install':'Install first'}[s]||'';
 if(s==='unsupported')b.innerHTML='<p style="margin:4px 0">This browser can’t show notifications. Try Chrome on Android, or add Hortlog to your iPhone Home Screen.</p>';
 else if(s==='ios-install')b.innerHTML='<p style="margin:4px 0">On iPhone, first add Hortlog to your Home Screen (Share, then Add to Home Screen), open it from there, then come back here.</p>';
 else if(s==='denied')b.innerHTML='<p style="margin:4px 0">Notifications are blocked for this app. Allow them in your phone or browser settings, then come back.</p>';
 else if(s==='off')b.innerHTML='<p style="margin:4px 0 8px">Get a nudge for jobs due today, a spray check, and a weekly check-in.</p><div class="acts"><button class="btn" id="non">Turn on notifications</button></div>';
 else{let pr={due:true,spray:true,weekly:true};try{const reg=await navigator.serviceWorker.getRegistration(),sub=await reg.pushManager.getSubscription(),r=await sb.from('push_subs').select('prefs').eq('endpoint',sub.endpoint);if(r.data&&r.data[0]&&r.data[0].prefs)pr=Object.assign(pr,r.data[0].prefs)}catch(e){}
-b.innerHTML=`<p style="margin:4px 0">Notifications are on for this device.</p><div class="acts"><label class="ck"><input type="checkbox" data-np="due" ${pr.due?'checked':''}> Jobs due today (morning)</label><label class="ck"><input type="checkbox" data-np="spray" ${pr.spray?'checked':''}> Spray check (afternoon)</label><label class="ck"><input type="checkbox" data-np="weekly" ${pr.weekly?'checked':''}> Weekly check-in (Friday)</label></div><div class="acts"><button class="btn alt" id="ntest">Send a test</button><button class="btn alt" id="noff">Turn off</button></div>`;
+b.innerHTML=`<p style="margin:4px 0">Notifications are on for this device.</p><div class="acts"><label class="ck"><input type="checkbox" data-np="due" ${pr.due?'checked':''}> Jobs due today (morning)</label><label class="ck"><input type="checkbox" data-np="spray" ${pr.spray?'checked':''}> Spray check (afternoon)</label><label class="ck"><input type="checkbox" data-np="weekly" ${pr.weekly?'checked':''}> Weekly check-in (Friday)</label></div><div class="acts"><button class="btn alt" id="ntest">Send a test</button><button class="btn alt" id="noff">Turn off</button></div><p class="hint" style="margin:8px 0 0">Android: if you hear a ding but no banner pops up, press and hold a Hortlog notification, tap Settings, and set it to Alerting or Pop on screen.</p>`;
 b.querySelectorAll('[data-np]').forEach(c=>c.onchange=async()=>{pr[c.dataset.np]=c.checked;try{const reg=await navigator.serviceWorker.getRegistration(),sub=await reg.pushManager.getSubscription();await sb.from('push_subs').update({prefs:pr}).eq('endpoint',sub.endpoint)}catch(e){toast('Could not save that.')}})}
 const on=(id,f)=>{const e=b.querySelector('#'+id);if(e)e.onclick=f};on('non',async()=>{try{await notifOn()}catch(e){toast('Could not turn on notifications.')}paintNotif()});on('ntest',()=>notifTest());on('noff',async()=>{try{await notifOff()}catch(e){}paintNotif()})}
-const notifCard=()=>card('var(--dead)','<h2>Notifications</h2><div id="nbox"><p style="margin:4px 0">Checking…</p></div>');
+let notifOpen=false;
+const notifCard=()=>card('var(--dead)',`<h2>Notifications <em id="nsum"></em></h2><div class="acts"><button class="btn alt" id="nexp" aria-expanded="${notifOpen}">${notifOpen?'▴ Collapse':'▾ Expand'}</button></div><div id="nbox" style="${notifOpen?'':'display:none'}"><p style="margin:4px 0">Checking…</p></div>`);
 function showBiz(){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'bizq'}));
 e.innerHTML=`<div class="box cut"><h2>What’s your orchard called?</h2><p>Your orchard or business name. It goes on your records and audit packs. You can change it later in your profile.</p><input id="bq" type="text" placeholder="e.g. Green Acres Kiwifruit" autocomplete="organization"><div class="acts"><button class="btn" id="bqs">Save</button><button class="btn alt" id="bqk">Skip</button></div></div>`;
 const fin=()=>{seen.biz=1;wr(SK,seen);e.remove();maybeSetup()};
@@ -483,10 +498,10 @@ return Date.now()}
 function extractProd(raw){const STOP=new Set(['the','a','an','some','block','today','yesterday','tomorrow','it','this','that','my','our']);
 const clean=s=>s.trim().replace(/\s+/g,' ').split(' ').filter(x=>!STOP.has(x)).join(' '),cap=p=>p.charAt(0).toUpperCase()+p.slice(1);
 let m=raw.match(/\bwith\s+([a-z0-9][a-z0-9\- ]{1,30}?)(?=\s+(?:on|in|at|to|for|today|yesterday|tomorrow|this|last|and|then)\b|[,.]|$)/);
-if(m){const p=clean(m[1]);if(p)return cap(p)}
-m=raw.match(/\b(?:sprayed|applied|spray|dusted|fertili[sz]ed)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24}(?: [a-z0-9\-]{2,12})?)\s+(?:on|to|in|over|across|at)\b/);
+if(m){const p=clean(m[1]);if(p&&!/\bwater\b|\b(?:litres?|liters?)\b|^\d/.test(p))return cap(p)}
+m=raw.match(/\b(?:sprayed|applied|spray|dusted|fertili[sz]ed)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24}(?: [a-z0-9\-]{2,12}){0,2})\s+(?:on|to|in|over|across|at|block|row)\b/);
 if(m){const p=clean(m[1]);if(p&&!/^block/.test(p))return cap(p)}
-m=raw.match(/\b(?:sprayed|applied|spray)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24})\s*(?:,|$)/);
+m=raw.match(/\b(?:sprayed|applied|spray)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24}(?: [a-z0-9\-]{2,12}){0,2})\s*(?:,|$)/);
 if(m){const p=clean(m[1]);if(p)return cap(p)}
 return ''}
 function extractRates(s){const o={},U=u=>/^l/.test(u)?'L':u==='ml'?'mL':u;
@@ -498,10 +513,11 @@ return o}
 function sprayDetail(raw,s,o){const P=(B[0]&&B[0].products)||[],hit=P.find(p=>p.n&&raw.includes(p.n.toLowerCase()));
 if(hit){o.prod=hit.n;if(hit.r)o.rate=hit.r}else{const x=extractProd(raw);if(x)o.prod=x}
 const q=extractRates(s);if(q.rate)o.rate=q.rate;if(q.wrate)o.wrate=q.wrate}
+const sprayedLike=(w,j)=>!/\b(not|isn't|isnt|hasn't|hasnt|haven't|havent|still|yet|need|needs|to be|must|should|going to|gonna|will|remind)\b/.test(j)&&(w.some(t=>/^(un|re)?sprayed$/.test(t))||/\b(i|we|i've|we've|ive|weve)\s+(?:just\s+|have\s+|had\s+|already\s+)?(?:spray|fertili[sz]e|apply|dust)\b/.test(j));
 function parse(text){const raw=text.toLowerCase(),s=nums(raw),w=s.match(/[a-z']+/g)||[],j=w.join(' ');
 const n=re=>{const m=s.match(re);return m?parseInt(m[1],10)||null:null};
 let c='note',d=false,rr=null;
-if(has(w,j,'done')){c='spray';d=true}else if((!pdate(s)||pdate(s)<=iso(new Date()))&&(rr=recGuess(raw))){c='rec';d=true}else if(has(w,j,'buy'))c='buy';else if(has(w,j,'psa'))c='psa';else if(has(w,j,'dead'))c='dead';else if(has(w,j,'spray'))c='spray';else if(has(w,j,'meet'))c='meet';else if(has(w,j,'crew'))c='crew';else if(has(w,j,'todo'))c='todo';else if(has(w,j,'need'))c='buy';
+if(has(w,j,'done')||sprayedLike(w,j)){c='spray';d=true}else if((!pdate(s)||pdate(s)<=iso(new Date()))&&(rr=recGuess(raw))){c='rec';d=true}else if(has(w,j,'buy'))c='buy';else if(has(w,j,'psa'))c='psa';else if(has(w,j,'dead'))c='dead';else if(has(w,j,'spray'))c='spray';else if(has(w,j,'meet'))c='meet';else if(has(w,j,'crew'))c='crew';else if(has(w,j,'todo'))c='todo';else if(has(w,j,'need'))c='buy';
 const o={c,t:text.trim(),b:n(/block\s*(\d+)/),r:n(/row\s*(\d+)/),y:n(/bay\s*(\d+)/),due:pdate(s)};
 if(!o.b){for(const k of bl()){const nm=B[k]&&B[k].name;if(nm&&raw.includes(nm.toLowerCase())){o.b=k;break}}}
 if(rr){o.rc=rr.rc;o.rf=rr.rf;o.due=null;o.rdate=iso(new Date(pastAt(s)))}
@@ -529,7 +545,7 @@ function toast(m,fn,label){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</sp
 if(fn)$('#un').onclick=()=>{fn();t.style.display='none'};
 clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',6000)}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null;
-const VOICE_SILENCE_MS=4000,VOICE_FIRST_MS=9000,VOICE_MAX_MS=45000; // pause that ends a note (3 to 5 s works well), wait for the first word, hard cap
+const VOICE_SILENCE_MS=2500,VOICE_FIRST_MS=9000,VOICE_MAX_MS=45000; // pause that ends a note (3 to 5 s works well), wait for the first word, hard cap
 const ERR={'not-allowed':'Mic permission was refused, or this page is not allowed to use it.','service-not-allowed':'Voice is not allowed on this page.','network':'Voice needs an internet connection.','no-speech':'Heard nothing. Tap and try again.','audio-capture':'No microphone found.'};
 function vClear(){clearTimeout(vT);clearTimeout(vH);vT=vH=null}
 function vArm(ms){clearTimeout(vT);vT=setTimeout(vFinish,ms)}
@@ -544,7 +560,7 @@ r.onresult=e=>{for(let k=e.resultIndex;k<e.results.length;k++){const x=e.results
 if(x.isFinal){const p=vsegs[vsegs.length-1];if(p&&t.toLowerCase().startsWith(p.toLowerCase()))vsegs[vsegs.length-1]=t;else vsegs.push(t);vint=''}else vint=t}
 vArm(VOICE_SILENCE_MS)};
 r.onerror=e=>{if(e.error==='aborted')return;vstop=true;if(e.error==='no-speech'&&!vsegs.length&&!vint)return;vErr=true;toast((ERR[e.error]||'Voice error')+' ['+e.error+'] Type it instead, or use your keyboard mic.')};
-r.onend=()=>{if(r!==rec)return;if(!vstop&&vRestarts<3&&(vsegs.length||vint)){vRestarts++;if(vint){vsegs.push(vint);vint=''}try{vStart();return}catch(x){}}vDone()};
+r.onend=()=>{if(r!==rec)return;vDone()};
 r.start()}
 $('#mic').onclick=()=>{
 if(!SR){toast('Voice input is not available in this browser. Type it, or use your keyboard mic.');$('#q').focus();return}
@@ -597,8 +613,8 @@ if(isRec){i.rc=$('#edc').value;i.rf=$('#edf').value;if(dv)i.rdate=dv}
 else{i.c=$('#edc').value;if(dSp){if(dv&&dv!==iso(new Date(i.doneAt||i.id)))i.doneAt=new Date(dv+'T12:00:00').getTime()}else i.due=dv||null}
 if(spShow()){i.prod=$('#edp').value.trim();i.rate=rateVal('edpr');i.wrate=rateVal('edwr')}
 if(edPhoto!==undefined){if(edPhoto)i.p=edPhoto;else delete i.p}
-save();e.remove();render();toast('Saved.')};
-setTimeout(()=>$('#edt')&&$('#edt').focus(),50)}
+{const k=items.findIndex(a=>a.id==i.id);if(k>=0)items[k]=i;else items.unshift(i)}save();e.remove();render();toast('Saved.')};
+}
 $('#efile').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f||!$('#ed'))return;shrink(f,640,.6,c=>{edPhoto=c.toDataURL('image/jpeg',.6);if(edPaint)edPaint()})};
 document.addEventListener('keydown',ev=>{if(ev.key!=='Escape')return;const e=$('#ed');if(e)e.remove();closeFr()});
 
@@ -644,26 +660,29 @@ const BX=[[10,10],[190,10],[10,200],[190,200]],BW=160,BH=170;
 const bn=n=>(B[n]&&B[n].name)||'Block '+n;
 const bl=()=>Object.keys(B).map(Number).filter(n=>n>0).sort((a,b)=>a-b);
 const bpos=i=>[10+(i%2)*180,10+Math.floor(i/2)*190];
-const bp=(x,y)=>`M${x} ${y}H${x+BW-18}L${x+BW} ${y+18}V${y+BH}H${x+18}L${x} ${y+BH-18}Z`;
-function gpos(n,r,y){const b=B[n];if(!b||!b.grid||!b.w)return null;const[P1,P2,P3]=b.grid,R=Math.max(1,(b.rows||60)-1),Y=Math.max(1,(b.bays||30)-1),v0=Math.min(Math.max((r||1)-1,0),R)/R,u0=Math.min(Math.max((y||1)-1,0),Y)/Y,v1=b.flipX?1-v0:v0,u=b.flipY?1-u0:u0,v=.5+(v1-.5)*(b.gs||1);
+const bp=(x,y,w,h)=>`M${x} ${y}H${x+w-18}L${x+w} ${y+18}V${y+h}H${x+18}L${x} ${y+h-18}Z`;
+function blockAr(n){const b=B[n];if(!(b&&b.img&&b.w&&b.h))return null;let a=b.w/b.h;if(b.poly&&b.poly.length>2){const xs=b.poly.map(p=>p[0]),ys=b.poly.map(p=>p[1]),bw=(Math.max(...xs)-Math.min(...xs))*b.w,bh=(Math.max(...ys)-Math.min(...ys))*b.h;if(bw>0&&bh>0)a=bw/bh}return Math.min(2.4,Math.max(.6,a))}
+function blockVb(n){const b=B[n];if(b.poly&&b.poly.length>2){const xs=b.poly.map(p=>p[0]*b.w),ys=b.poly.map(p=>p[1]*b.h),x0=Math.min(...xs),y0=Math.min(...ys);return [x0,y0,Math.max(...xs)-x0,Math.max(...ys)-y0]}return [0,0,b.w,b.h]}
+function gpos(n,r,y){const b=B[n];if(!b||!b.grid||!b.w)return null;const[P1,P2,P3]=b.grid,R=Math.max(1,(b.rows||60)-1),Y=Math.max(1,(b.bays||30)-1),v0=Math.min(Math.max((r||1)-1,0),R)/R,u0=Math.min(Math.max((y||Math.ceil((b.bays||30)/2))-1,0),Y)/Y,v1=b.flipX?1-v0:v0,u=b.flipY?1-u0:u0,v=.5+(v1-.5)*(b.gs||1);
 return[(P1[0]+v*(P3[0]-P1[0])+u*(P2[0]-P1[0])+(b.ox||0))*b.w,(P1[1]+v*(P3[1]-P1[1])+u*(P2[1]-P1[1])+(b.oy||0))*b.h]}
 function ipos(n,i){const b=B[n],g=gpos(n,i.r,i.y);if(g)return g;if(!b||!b.poly||!b.w)return null;
 const xs=b.poly.map(p=>p[0]),ys=b.poly.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),R=b.rows||60,Y=b.bays||30;
 return[(x0+Math.min(i.r,R)/R*(x1-x0))*b.w,(y0+Math.min(i.y||Math.ceil(Y/2),Y)/Y*(y1-y0))*b.h]}
 function pinsOf(n,r){let s='';items.filter(i=>i.b===n&&!i.d&&i.r&&i.c!=='spray'&&(filter==='all'||i.c===filter)).forEach(i=>{const p=ipos(n,i);if(!p)return;const[x,y]=p;
 s+=`<path class="pin" data-id="${i.id}" d="M${x} ${y-r}L${x+r} ${y}L${x} ${y+r}L${x-r} ${y}Z" fill="var(${CATS[i.c][1]})"/>`});return s}
-function mapSvg(){const L=bl();if(!L.length)return '';const H=20+Math.ceil(L.length/2)*190;
+function mapSvg(){const L=bl();if(!L.length)return '';
+const colY=[10,10],D=L.map(n=>{const ar=blockAr(n),h=Math.round(ar?Math.min(250,Math.max(104,BW/ar)):BH-30),c=colY[1]<colY[0]?1:0,o={x:10+c*180,y:colY[c],w:BW,h};colY[c]+=h+20;return o}),H=Math.max(...colY)+0;
 let s=`<svg class="m cut" viewBox="0 0 360 ${H}" role="img" aria-label="Orchard map"><defs>`;
-L.forEach((n,i)=>{const p=bpos(i);s+=`<clipPath id="c${i}"><path d="${bp(p[0],p[1])}"/></clipPath>`});s+='</defs>';
-L.forEach((n,i)=>{const[x,y]=bpos(i),b=B[n],im=b.img,W=b.w,Hh=b.h,real=im&&b.poly;s+=`<path class="blk" data-blk="${n}" d="${bp(x,y)}"/>`;
-if(real){const xs=b.poly.map(q=>q[0]*W),ys=b.poly.map(q=>q[1]*Hh),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
-s+=`<g clip-path="url(#c${i})"><svg data-blk="${n}" x="${x}" y="${y}" width="${BW}" height="${BH}" viewBox="${x0} ${y0} ${x1-x0} ${y1-y0}" preserveAspectRatio="xMidYMid slice"><image href="${im}" width="${W}" height="${Hh}"/>${pinsOf(n,(x1-x0)/34)}</svg></g>`}
-else{if(im)s+=`<image data-blk="${n}" href="${im}" x="${x}" y="${y}" width="${BW}" height="${BH}" preserveAspectRatio="xMidYMid slice" clip-path="url(#c${i})"/>`;
-for(let k=5;k<60;k+=5){const lx=x+k/60*BW;s+=`<line pointer-events="none" x1="${lx}" x2="${lx}" y1="${y+10}" y2="${y+BH-10}" stroke="${im?'rgba(255,255,255,.35)':'var(--map)'}" stroke-width="1.5" stroke-dasharray="6 4"/>`}
+L.forEach((n,i)=>{const d=D[i];s+=`<clipPath id="c${i}"><path d="${bp(d.x,d.y,d.w,d.h)}"/></clipPath>`});s+='</defs>';
+L.forEach((n,i)=>{const{x,y,w,h}=D[i],b=B[n],im=b.img,W=b.w,Hh=b.h,real=im&&b.poly;s+=`<path class="blk" data-blk="${n}" d="${bp(x,y,w,h)}"/>`;
+if(real){const[x0,y0,bw,bh]=blockVb(n);
+s+=`<g clip-path="url(#c${i})"><svg data-blk="${n}" x="${x}" y="${y}" width="${w}" height="${h}" viewBox="${x0} ${y0} ${bw} ${bh}" preserveAspectRatio="xMidYMid slice"><image href="${im}" width="${W}" height="${Hh}"/>${pinsOf(n,bw/34)}</svg></g>`}
+else{if(im)s+=`<image data-blk="${n}" href="${im}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#c${i})"/>`;
+for(let k=5;k<60;k+=5){const lx=x+k/60*w;s+=`<line pointer-events="none" x1="${lx}" x2="${lx}" y1="${y+10}" y2="${y+h-10}" stroke="${im?'rgba(255,255,255,.35)':'var(--map)'}" stroke-width="1.5" stroke-dasharray="6 4"/>`}
 const R=b.rows||60,Y=b.bays||30;
-items.filter(it=>it.b===n&&it.c!=='spray'&&(filter==='all'||it.c===filter)).forEach(it=>{const px=x+14+(Math.min(it.r||Math.ceil(R/2),R)-1)/Math.max(1,R-1)*(BW-28),py=y+14+(Math.min(it.y||Math.ceil(Y/2),Y)-1)/Math.max(1,Y-1)*(BH-44),r=sel===it.id?14:10;
+items.filter(it=>it.b===n&&it.c!=='spray'&&(filter==='all'||it.c===filter)).forEach(it=>{const px=x+14+(Math.min(it.r||Math.ceil(R/2),R)-1)/Math.max(1,R-1)*(w-28),py=y+14+(Math.min(it.y||Math.ceil(Y/2),Y)-1)/Math.max(1,Y-1)*(h-44),r=sel===it.id?14:10;
 s+=`<path class="pin ${it.d?'done':''}" data-id="${it.id}" d="M${px} ${py-r}L${px+r} ${py}L${px} ${py+r}L${px-r} ${py}Z" fill="var(${CATS[it.c][1]})"/>`})}
-s+=`<text class="bl ${im?'li':''}" data-blk="${n}" x="${x+12}" y="${y+BH-12}">${esc(bn(n)).toUpperCase().slice(0,16)} →</text>`});
+s+=`<text class="bl ${im?'li':''}" data-blk="${n}" x="${x+12}" y="${y+h-12}">${esc(bn(n)).toUpperCase().slice(0,16)} →</text>`});
 return s+'</svg>'}
 function rowHtml(i,first){const loc=i.b?`${esc(bn(i.b))}${i.r?', row '+i.r:''}${i.y?', bay '+i.y:''}`:'No block',lab=i.c==='rec'&&RC[i.rc]?esc(RC[i.rc][0])+(i.rf?' · '+esc(i.rf):''):CATS[i.c]?CATS[i.c][0]:'Record',
 dt=i.c==='rec'?' · '+dayLabel(i.rdate||iso(new Date(i.id))):(i.due?' · '+dayLabel(i.due):'')+(i.d&&i.doneAt?' · done '+dayLabel(iso(new Date(i.doneAt))):''),
@@ -673,10 +692,15 @@ const card=(col,inner)=>`<div class="card cut"><span class="stripe" style="backg
 const list=l=>[...l].sort((a,b)=>(a.d?1:0)-(b.d?1:0)).map((i,k)=>rowHtml(i,!k)).join('');
 const counts=l=>Object.keys(CATS).map(k=>{const c=l.filter(i=>i.c===k).length;return c?`<span class="sq" style="background:var(${CATS[k][1]})"></span> ${c}`:''}).filter(Boolean).join(' ');
 const BIN='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2zm-3 6h12l-1 12H7L6 9z"/></svg>';
+const tileHtml=(n,edit)=>{const l=items.filter(i=>i.b===n&&!i.d),b=B[n],im=b.img,ar=edit?blockAr(n):null;
+let bg='';if(im&&b.w&&b.h){const[x0,y0,bw,bh]=blockVb(n);bg=`<svg class="tbg" viewBox="${x0} ${y0} ${bw} ${bh}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="${im}" width="${b.w}" height="${b.h}"/></svg><span class="tsh"></span>`}
+const t=`<button class="tile${bg?' ti':''}"${ar?` style="aspect-ratio:${ar.toFixed(3)}"`:''} data-blk="${n}">${bg}<span class="tx"><b>${esc(bn(n))} →</b>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}</span></button>`;
+return edit?`<div class="tw2">${t}</div>`:t};
 const tiles=edit=>{const L=bl();if(!L.length)return '<p class="hint">No blocks yet. Add your first block on the Blocks tab.</p>';
-return '<div class="tiles">'+L.map(n=>{const l=items.filter(i=>i.b===n&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88)),url('${im}') center/cover;color:#fff"`:'';
-const t=`<button class="tile"${st} data-blk="${n}"><b>${esc(bn(n))} →</b>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}</button>`;
-return edit?`<div class="tw2">${t}</div>`:t}).join('')+'</div>'};
+if(!edit)return '<div class="tiles">'+L.map(n=>tileHtml(n,false)).join('')+'</div>';
+const cols=window.innerWidth>=900?4:2,col=Array.from({length:cols},()=>({h:0,a:[]}));
+L.forEach(n=>{const ar=blockAr(n),c=col.reduce((m,x)=>x.h<m.h-1e-6?x:m,col[0]);c.a.push(tileHtml(n,true));c.h+=(ar?1/ar:.7)+.08});
+return '<div class="tiles mas">'+col.map(c=>'<div class="tcol">'+c.a.join('')+'</div>').join('')+'</div>'};
 const recs=()=>items.filter(i=>i.c==='spray'&&i.d).sort((a,b)=>(b.doneAt||b.id)-(a.doneAt||a.id));
 const acct=()=>`<p class="hint"><span id="sy">${syncMsg}</span></p>`;
 const bizCard=()=>{const b=B[0]||{};return card('var(--hot)',`<h2>Your business</h2><div class="acts"><input id="biz" type="text" placeholder="Orchard or business name" value="${esc(b.biz||'')}" style="max-width:260px"><button class="btn" id="bizsave">Save name</button></div>`)};
@@ -793,24 +817,26 @@ if(!edit&&b.grid&&(strPrev===n||imgSet)){const a=gpos(n,1,1);if(a)s+=`<circle cx
 if(!edit)s+=pinsOf(n,W/45);
 return s+'</svg>'}
 function gridCtl(b){const dir=(v,a,c)=>!v?'centred':Math.abs(v*100).toFixed(1)+'% '+(v<0?a:c);
-return `<div class="acts"><span class="cap2">Row spacing: ${Math.round((b.gs||1)*100)}%</span><button class="btn alt" id="gsm5" aria-label="Rows much closer">− 5%</button><button class="btn alt" id="gsm1" aria-label="Rows slightly closer">− 1%</button><button class="btn alt" id="gsp1" aria-label="Rows slightly wider apart">+ 1%</button><button class="btn alt" id="gsp5" aria-label="Rows much wider apart">+ 5%</button></div><div class="acts"><span class="cap2">Move rows: ${dir(b.ox||0,'left','right')}${b.landscape?', '+dir(b.oy||0,'up','down'):''}</span><button class="btn alt" id="gxl5" aria-label="Move rows far left">◀◀</button><button class="btn alt" id="gxl1" aria-label="Move rows left">◀</button><button class="btn alt" id="gxr1" aria-label="Move rows right">▶</button><button class="btn alt" id="gxr5" aria-label="Move rows far right">▶▶</button>${b.landscape?'<button class="btn alt" id="gyu" aria-label="Move rows up">▲</button><button class="btn alt" id="gyd" aria-label="Move rows down">▼</button>':''}<button class="btn alt" id="gxreset">Reset</button></div>`}
+return `<div class="ar"><span>Spacing<br>${Math.round((b.gs||1)*100)}%</span><button class="btn alt" id="gsm5" aria-label="Rows much closer">− 5%</button><button class="btn alt" id="gsm1" aria-label="Rows slightly closer">− 1%</button><button class="btn alt" id="gsp1" aria-label="Rows slightly wider apart">+ 1%</button><button class="btn alt" id="gsp5" aria-label="Rows much wider apart">+ 5%</button></div><div class="ar"><span>Move<br>${dir(b.ox||0,'left','right')}${b.landscape?'<br>'+dir(b.oy||0,'up','down'):''}</span><button class="btn alt" id="gxl5" aria-label="Move rows far left">◀◀</button><button class="btn alt" id="gxl1" aria-label="Move rows left">◀</button><button class="btn alt" id="gxr1" aria-label="Move rows right">▶</button><button class="btn alt" id="gxr5" aria-label="Move rows far right">▶▶</button>${b.landscape?'<button class="btn alt" id="gyu" aria-label="Move rows up">▲</button><button class="btn alt" id="gyd" aria-label="Move rows down">▼</button>':''}<button class="btn alt" id="gxreset">Reset</button></div>`}
+function adjPanel(n){const b=B[n]||{};return `<div id="adj" role="dialog" aria-label="Line up your rows"><div class="adjh"><span>${esc(bn(n))}: line the dashes up with your rows</span><button class="btn" id="strok" style="flex:none;min-height:38px;padding:4px 14px">Looks good</button></div>${imgSvg(n,false)}<div class="ar"><span>Rotate</span><button class="btn alt" id="rotl5">↺ 5°</button><button class="btn alt" id="rotl">↺ 1°</button><button class="btn alt" id="rotr">1° ↻</button><button class="btn alt" id="rotr5">5° ↻</button></div>${gridCtl(b)}<div class="ar"><span>Rows run</span><button class="btn alt" id="orient">${b.landscape?'Across':'Up/down'} ⇄</button><button class="btn alt" id="flipx">Flip rows</button><button class="btn alt" id="flipy">Flip bays</button></div></div>`}
 const imgDone=n=>{const b=B[n];return !!(b&&b.img&&b.poly&&(b.grid||b.skipGrid)&&drawing!==n)};
 function imagery(n){const b=B[n]||{};let s;
 if(!b.img)s=`<p style="margin:4px 0 10px">Add real imagery of this block. 1. Open Google Maps in satellite view and find the block. 2. Take a screenshot. 3. Upload it here. Then you will mark the edges and roughly where the rows run.</p><div class="acts"><a class="btn" href="https://www.google.com/maps/@?api=1&map_action=map&basemap=satellite" target="_blank" rel="noopener">Open Google Maps</a><button class="btn" id="newimg">Upload screenshot</button></div>`;
 else if(drawing===n)s=`<p class="hint" style="margin:0 0 8px">${dmode==='poly'?'Tap the corners of your block, going around the edge. You need at least 3.':'Tap 3 points: 1) the start of the first row, 2) the end of that same row, 3) the start of the last row.'}</p>`+imgSvg(n,true)+`<div class="acts"><button class="btn" id="finish">${dmode==='poly'&&!b.grid?'Next':'Done'}</button><button class="btn" id="undopt">Undo point</button><button class="btn" id="cancel">Cancel</button></div>`;
-else if(strPrev===n)s=imgSvg(n,false)+`<p style="margin:8px 0 0">The dashed lines should run along your rows. “Row 1, bay 1” should be where your numbering starts. Flip it if not. Use Row spacing and Move rows to line the dashes up with your real rows.</p><div class="acts"><button class="btn alt" id="rotl5">↺ 5°</button><button class="btn alt" id="rotl">↺ 1°</button><button class="btn alt" id="rotr">1° ↻</button><button class="btn alt" id="rotr5">5° ↻</button></div>${gridCtl(b)}<div class="acts"><button class="btn alt" id="orient">Rows run: ${b.landscape?'across':'up and down'} (switch)</button><button class="btn alt" id="flipx">Flip row order</button><button class="btn alt" id="flipy">Flip bay order</button><button class="btn" id="strok">Looks good</button></div>`;
+else if(strPrev===n)s='<p class="hint" style="margin:0">Lining up your rows…</p>';
 else if(imgDone(n)&&!imgOpen)s=`<button class="ban" id="imgopen" style="background-image:linear-gradient(90deg,rgba(8,28,28,.75),rgba(8,28,28,.1)),url('${b.img}')"><span>Block imagery</span><span>▾ Expand</span></button>`;
 else{s=imgSvg(n,false);
 if(!b.poly)s+=`<p style="margin:8px 0 0">Next: mark the edges of your block.</p><div class="acts"><button class="btn" id="redraw">Mark edges</button><button class="btn alt" id="newimg">New image</button></div>`;
 else if(!b.grid&&!b.skipGrid)s+=`<p style="margin:8px 0 0">Next: straighten the image so your rows run up and down, and fit the row grid. This happens automatically.</p><div class="acts"><button class="btn" id="straight">Straighten rows</button><button class="btn alt" id="regrid">Mark rows by hand</button><button class="btn alt" id="skiprows">Skip</button></div>`;
 else s+=imgSet?`<div class="acts">${b.grid?'<button class="btn" id="adjrows">Adjust rows</button>':''}<button class="btn" id="straight">Straighten rows</button><button class="btn" id="orient">Rows run: ${b.landscape?'across':'up and down'} (switch)</button><button class="btn" id="redraw">Redraw edges</button><button class="btn" id="regrid">Redraw rows</button><button class="btn" id="newimg">New image</button><button class="btn alt" id="rmimg">Remove image</button></div>`:`<div class="acts"><button class="btn alt" id="imgclose">▴ Collapse</button><button class="btn" id="imgset">Settings</button></div>`}
 let cd=card('var(--deep)','<h2>Imagery</h2>'+s);if(dropN===n){cd=cd.replace('class="card cut"','class="card cut drop"');dropN=null}return cd}
+const rowSkip={};const needRows=n=>{const b=B[n]||{};return !b.rowsSet&&!b.img&&!rowSkip[n]};
 function blockPage(n){const b=B[n]||{},all=items.filter(i=>i.b===n),op=all.filter(i=>!i.d),dated=op.filter(i=>i.due).sort((a,c)=>a.due<c.due?-1:1),und=op.filter(i=>!i.due),sp=all.filter(i=>i.c==='spray'&&i.d);
 return `<button class="back" data-blk="0">← All blocks</button><div class="dn"><div class="hd" id="bname" style="padding-left:12px">${esc(bn(n))} <button class="x" id="rnb" aria-label="Rename block" style="color:#fff;min-width:44px">✎</button></div></div>`+tip('blockpage')+(imgDone(n)?'':imagery(n))+
 card('var(--hot)',`<h2>Coming up<em>${dated.length}</em></h2>`+(dated.length?list(dated):'<div class="empty">No dated jobs for this block.</div>'))+
 card('var(--todo)',`<h2>Open lists<em>${und.length}</em></h2>`+(und.length?list(und):'<div class="empty">Nothing open without a date.</div>'))+
 card('var(--spray)',`<h2>Spray records<em>${sp.length}</em></h2>`+(sp.length?list(sp):'<div class="empty">No finished sprays for this block yet.</div>'))+(imgDone(n)?imagery(n):'')+
-card('var(--soft)',`<h2>Block settings</h2><div class="acts"><label>Rows <input id="rws" type="number" min="1" value="${b.rows||60}"></label><label>Bays per row <input id="bys" type="number" min="1" value="${b.bays||30}"></label><button class="btn" id="bsave">Save</button></div>`)+'<div class="dz"><button class="btn danger" id="bdel">Delete block</button></div>'}
+card('var(--soft)',`<h2 id="rowcard">${needRows(n)?'How many rows are in this block?':'Block settings'}</h2>${needRows(n)?'<p class="hint" style="margin:2px 0 8px">Count the rows across the block, then the bays (vine spots) along one row. This lines your pins up with the real block.</p>':''}<div class="acts"><label>Rows <input id="rws" type="number" min="1" value="${b.rows||60}"></label><label>Bays per row <input id="bys" type="number" min="1" value="${b.bays||30}"></label><button class="btn" id="bsave">Save</button>${needRows(n)?'<button class="btn alt" id="rowlater">Later</button>':''}</div>`)+'<div class="dz"><button class="btn danger" id="bdel">Delete block</button></div>'+(strPrev===n&&B[n]&&B[n].img?adjPanel(n):'')}
 function bind(){const A=(s,f)=>document.querySelectorAll(s).forEach(f);
 A('[data-e]',b=>b.onclick=()=>openEdit(b.dataset.e));
 A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
@@ -819,7 +845,7 @@ A('[data-x]',b=>b.onclick=()=>{const k=items.findIndex(a=>a.id==b.dataset.x),it=
 A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
 A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
 A('[data-nav]',b=>b.onclick=e=>{if(e.target.closest('button'))return;setView(b.dataset.nav)});
-A('[data-blk]',b=>b.onclick=()=>{blk=+b.dataset.blk||null;drawing=null;imgSet=false;imgOpen=false;strPrev=null;view='blocks';render();window.scrollTo(0,0)});
+A('[data-blk]',b=>b.onclick=()=>{blk=+b.dataset.blk||null;drawing=null;imgSet=false;imgOpen=false;strPrev=null;view='blocks';render();window.scrollTo(0,0);if(blk&&needRows(blk))setTimeout(()=>{const e=$('#rws');if(e){e.scrollIntoView({block:'center'});e.focus();e.select&&e.select()}},150)});
 A('[data-tip]',b=>b.onclick=()=>{const t=b.closest('.tip');if(t)t.classList.add('fade');setTimeout(()=>{seen[b.dataset.tip]=1;wr(SK,seen);render()},330)});
 A('.pin',c=>c.onclick=e=>{e.stopPropagation();sel=+c.dataset.id;render()});
 const on=(id,f)=>{const e=document.getElementById(id);if(e)e.onclick=f};
@@ -827,7 +853,7 @@ on('imgopen',()=>{imgOpen=true;render()});on('imgclose',()=>{imgOpen=false;imgSe
 on('straight',()=>straighten(blk));on('rotl',()=>nudge(blk,-1));on('rotr',()=>nudge(blk,1));on('rotl5',()=>nudge(blk,-5));on('rotr5',()=>nudge(blk,5));
 on('strok',()=>{strPrev=null;imgOpen=false;render()});on('flipx',()=>{B[blk].flipX=!B[blk].flipX;saveB();render()});on('flipy',()=>{B[blk].flipY=!B[blk].flipY;saveB();render()});
 const bnm=document.getElementById('bname');if(bnm)bnm.ondblclick=()=>showRename(blk);on('rnb',()=>showRename(blk));
-on('bsave',()=>{const b=B[blk];b.rows=Math.max(1,parseInt($('#rws').value,10)||60);b.bays=Math.max(1,parseInt($('#bys').value,10)||30);saveB();render();toast('Block settings saved.')});
+on('bsave',()=>{const b=B[blk];b.rows=Math.max(1,parseInt($('#rws').value,10)||60);b.bays=Math.max(1,parseInt($('#bys').value,10)||30);b.rowsSet=true;saveB();render();toast('Block settings saved.')});on('rowlater',()=>{rowSkip[blk]=1;render()});
 on('bdel',()=>confirmDel(blk));
 on('addb',()=>{const L=bl(),n=(L.length?Math.max(...L):0)+1;B[n]={rows:60,bays:30};saveB();blk=null;view='blocks';render();coach(n,bn(n)+' added. Tap it to add imagery and set it up.')});on('undopt',()=>{pts.pop();render()});on('cancel',()=>{drawing=null;render()});
 on('finish',async()=>{const b=B[blk];if(pts.length<3){toast(dmode==='poly'?'Tap at least 3 corners first.':'Tap all 3 points first.');return}
@@ -869,6 +895,7 @@ on('pdf',()=>pdfExport(exRows().filter(r=>r.p),'Records, '+RC[recCat][0],false))
 on('apx',()=>{const rows=apRows();if(!rows.length){toast('No records in that range.');return}if(!window.XLSX){toast('Excel tool did not load. Check your connection.');return}
 const wb=XLSX.utils.book_new();catn().filter(k=>apSel[k]!==false).forEach(k=>{const rs=rows.filter(r=>r.rc===k);if(rs.length)addSheet(wb,RC[k][0],rs,k)});XLSX.writeFile(wb,'hortlog-audit-pack-'+iso(new Date())+'.xlsx')});
 on('app',()=>pdfExport(apRows(),'Audit pack',true));
+on('nexp',()=>{notifOpen=!notifOpen;render()});
 on('renc',()=>{const cur=RC[recCat][0],nm=(prompt('Rename this main folder',cur)||'').trim();if(!nm||nm===cur)return;
 if(Object.entries(RC).some(([k,v])=>k!==recCat&&v[0].toLowerCase()===nm.toLowerCase())){toast('That name is already used.');return}
 const B0=B[0]=B[0]||{};if(recCat.startsWith('c_')){const c=(B0.cats||[]).find(x=>x.k===recCat);if(c)c.n=nm}else{B0.rcn=B0.rcn||{};if(nm===RC0[recCat])delete B0.rcn[recCat];else B0.rcn[recCat]=nm}

@@ -1,6 +1,6 @@
 // Hortlog service worker: lets the app open offline, and shows push notifications.
 // Bump CACHE only if a phone keeps showing an old version.
-const CACHE = 'hortlog-v22';
+const CACHE = 'hortlog-v23';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg'];
 
 self.addEventListener('install', e => {
