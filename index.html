@@ -298,6 +298,28 @@ main>.rec{grid-column:1/-1;display:grid;grid-template-columns:300px minmax(0,1fr
 .rfilt{display:none;flex-wrap:wrap;gap:10px;align-items:flex-end;margin:6px 0 4px}.rfilt label{font-weight:600;font-size:14px;color:var(--soft)}.rfilt input,.rfilt select{display:block;margin-top:2px}.rfilt .grow2{flex:1;min-width:180px}
 .rcount{color:var(--soft);font-weight:600;margin:2px 0 6px;font-size:14px}
 @media (min-width:900px){.rfilt{display:flex}}
+.rlabel{font:800 13px 'Barlow Condensed',sans-serif;letter-spacing:.08em;color:var(--soft);text-transform:uppercase;margin:8px 0 2px}.rhint{color:var(--soft);font-size:14px;margin:2px 0 8px}
+.chips.wrap{flex-wrap:wrap;overflow:visible}
+
+/* v26 */
+textarea{width:100%;font:600 17px Barlow,sans-serif;padding:13px;border:3px solid var(--deep);background:var(--bg);color:var(--ink);border-radius:0;min-height:84px;resize:vertical}
+textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.edf textarea{margin-top:4px}
+.pair{display:flex;gap:10px}.pair>*{flex:1;min-width:0}
+.ejph{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 10px}.ejph .thumb{margin:0}
+.x.ed{color:var(--soft)}.x svg{display:block;margin:0 auto}
+.tiles.mas{display:flex!important;gap:10px;align-items:flex-start}.tiles.mas .tcol{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tiles.mas .tile{position:relative;overflow:hidden}.tiles.mas .tile .tx{position:relative;display:block;z-index:1}
+.tiles.mas .tile.ti{color:#fff;background:#173a3a}
+.tbg{position:absolute;inset:0;width:100%;height:100%}.tsh{position:absolute;inset:0;background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88))}
+#adjov{position:fixed;inset:0;z-index:8;background:var(--bg);display:flex;flex-direction:column;gap:2px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+#adjov .adjh{display:flex;justify-content:space-between;align-items:center;gap:8px;font:800 18px 'Barlow Condensed',sans-serif;color:var(--soft);margin:0 0 4px}
+#adjov svg.img{width:100%;max-height:42vh;flex:none}
+#adjov .ar{display:flex;align-items:center;gap:5px;margin:5px 0}
+#adjov .ar>span{flex:0 0 76px;font:800 15px 'Barlow Condensed',sans-serif;line-height:1.1;color:var(--soft)}
+#adjov .btn{flex:1;min-height:38px;padding:4px 6px;font-size:16px;min-width:0;touch-action:manipulation;user-select:none}
+#adjov .btn.alt{border-width:2px}
+@media (min-width:900px){#adjov{max-width:980px;margin:0 auto}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -312,14 +334,14 @@ main>.rec{grid-column:1/-1;display:grid;grid-template-columns:300px minmax(0,1fr
 <main id="main"></main>
 <div id="toast"></div>
 <button id="plus" aria-label="Add a log">+</button>
-<div id="log"><input id="file" type="file" accept="image/*" capture="environment" hidden><input id="bfile" type="file" accept="image/*" hidden><input id="rfile" type="file" accept="image/*" hidden><input id="avf" type="file" accept="image/*" hidden><div class="qr"><input id="q" type="text" placeholder="Type, or use your keyboard mic" enterkeyhint="send"><button id="go" aria-label="Add">→</button></div><div class="lr"><button id="mic"><svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 0 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.6a6 6 0 0 0 5-5.9z"/></svg><span id="ml">Tap and speak</span></button><button id="cam" aria-label="Add a photo"><svg viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-3.5L15 4zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg></button></div></div>
+<div id="log"><input id="file" type="file" accept="image/*" capture="environment" hidden><input id="bfile" type="file" accept="image/*" hidden><input id="rfile" type="file" accept="image/*" hidden><input id="efile" type="file" accept="image/*" hidden><input id="avf" type="file" accept="image/*" hidden><div class="qr"><input id="q" type="text" placeholder="Type, or use your keyboard mic" enterkeyhint="send"><button id="go" aria-label="Add">→</button></div><div class="lr"><button id="mic"><svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 0 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.6a6 6 0 0 0 5-5.9z"/></svg><span id="ml">Tap and speak</span></button><button id="cam" aria-label="Add a photo"><svg viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-3.5L15 4zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg></button></div></div>
 <script>
 const SB_URL='https://hqarztbbnayyjlpzyufp.supabase.co',SB_KEY='sb_publishable_vqne2DRPo3bKcQRj79pYug_ZbXiEgfl';
 const sb=window.supabase.createClient(SB_URL,SB_KEY);
 const VAPID_PUBLIC='BCfJDZtvSsJ70BqWbqitJ3C53ctfzCnZgPQHzvDroznZcFsiRa8GzSWxWrq4IMN32cPhaLeThuO83wyI2c4jgNw';
 const KEY='hortlog.v1',BK='hortlog.blocks',SK='hortlog.seen';
 const CATS={psa:['PSA','--psa'],dead:['Dead vine','--dead'],buy:['To buy','--buy'],todo:['To do','--todo'],crew:['Crew jobs','--crew'],meet:['Meetings','--bio'],spray:['Spray','--spray'],rec:['Record','--note'],note:['Note','--note']};
-const VER='24',NEWS=['Desktop is rebuilt around records: balanced pages, a greeting on Home, and bigger block cards.','Records get Farmable-style filters (dates, block, product) that also apply to your Excel and PDF exports.','Profile photo sits level with the Records button.'];
+const VER='26',NEWS=['Voice stops about 2.5 seconds after you finish, with no second beep.','Line up rows on one full screen. Pencil on every list entry to edit it.','Collapsible notifications, block tiles shaped like each block, rename any main folder.'];
 const NUM={one:1,two:2,three:3,four:4};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -352,7 +374,7 @@ items=a.data.map(r=>r.data);items.forEach(migrate);B={};b.data.forEach(r=>B[r.bl
 synced={};items.forEach(i=>synced[i.id]=JSON.stringify(i));syncedB={};Object.keys(B).forEach(k=>syncedB[k]=JSON.stringify(B[k]));
 try{localStorage.setItem(KEY+'.'+U.id,JSON.stringify(items));localStorage.setItem(BK+'.'+U.id,JSON.stringify(B))}catch(e){}
 setSync('Saved ✓');loaded=true;render();maybeSetup();checkSprays()}
-async function enter(u){U=u;items=rd(KEY+'.'+u.id,[]);B=rd(BK+'.'+u.id,{});items.forEach(migrate);pending=rd(PK(),false)===true;synced={};syncedB={};loaded=false;
+async function enter(u){U=u;items=rd(KEY+'.'+u.id,[]);B=rd(BK+'.'+u.id,{});items.forEach(migrate);prevUse=seen.lu||0;seen.lu=Date.now();wr(SK,seen);pending=rd(PK(),false)===true;synced={};syncedB={};loaded=false;
 const a=$('#auth');if(a)a.remove();view='home';blk=null;render();if(!seen.ob)openOb();
 let pv=null;try{pv=localStorage.getItem('hortlog.ver')}catch(e){}try{localStorage.setItem('hortlog.ver',VER)}catch(e){}if((pv&&pv!==VER)||(!pv&&seen.ob))showUpd();
 await pull()}
@@ -383,16 +405,17 @@ const j=sub.toJSON(),r=await sb.from('push_subs').upsert({endpoint:j.endpoint,p2
 if(r.error){toast('Could not save notifications: '+r.error.message);return}toast('Notifications are on.')}
 async function notifOff(){const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pushManager.getSubscription();if(sub){await sb.from('push_subs').delete().eq('endpoint',sub.endpoint);await sub.unsubscribe()}toast('Notifications are off.')}
 async function notifTest(){const reg=await navigator.serviceWorker.ready;reg.showNotification('Hortlog',{body:'Notifications are working.',icon:'icon-192.png',badge:'badge-96.png',vibrate:[200,100,200],tag:'test',renotify:true})}
-async function paintNotif(){const b=$('#nbox');if(!b)return;const s=await notifStatus();
+async function paintNotif(){const b=$('#nbox');if(!b)return;const s=await notifStatus();const sm=$('#nsum');if(sm)sm.textContent={on:'On',off:'Off',denied:'Blocked',unsupported:'Not available','ios-install':'Install first'}[s]||'';
 if(s==='unsupported')b.innerHTML='<p style="margin:4px 0">This browser can’t show notifications. Try Chrome on Android, or add Hortlog to your iPhone Home Screen.</p>';
 else if(s==='ios-install')b.innerHTML='<p style="margin:4px 0">On iPhone, first add Hortlog to your Home Screen (Share, then Add to Home Screen), open it from there, then come back here.</p>';
 else if(s==='denied')b.innerHTML='<p style="margin:4px 0">Notifications are blocked for this app. Allow them in your phone or browser settings, then come back.</p>';
 else if(s==='off')b.innerHTML='<p style="margin:4px 0 8px">Get a nudge for jobs due today, a spray check, and a weekly check-in.</p><div class="acts"><button class="btn" id="non">Turn on notifications</button></div>';
 else{let pr={due:true,spray:true,weekly:true};try{const reg=await navigator.serviceWorker.getRegistration(),sub=await reg.pushManager.getSubscription(),r=await sb.from('push_subs').select('prefs').eq('endpoint',sub.endpoint);if(r.data&&r.data[0]&&r.data[0].prefs)pr=Object.assign(pr,r.data[0].prefs)}catch(e){}
-b.innerHTML=`<p style="margin:4px 0">Notifications are on for this device.</p><div class="acts"><label class="ck"><input type="checkbox" data-np="due" ${pr.due?'checked':''}> Jobs due today (morning)</label><label class="ck"><input type="checkbox" data-np="spray" ${pr.spray?'checked':''}> Spray check (afternoon)</label><label class="ck"><input type="checkbox" data-np="weekly" ${pr.weekly?'checked':''}> Weekly check-in (Friday)</label></div><div class="acts"><button class="btn alt" id="ntest">Send a test</button><button class="btn alt" id="noff">Turn off</button></div>`;
+b.innerHTML=`<p style="margin:4px 0">Notifications are on for this device.</p><div class="acts"><label class="ck"><input type="checkbox" data-np="due" ${pr.due?'checked':''}> Jobs due today (morning)</label><label class="ck"><input type="checkbox" data-np="spray" ${pr.spray?'checked':''}> Spray check (afternoon)</label><label class="ck"><input type="checkbox" data-np="weekly" ${pr.weekly?'checked':''}> Weekly check-in (Friday)</label></div><div class="acts"><button class="btn alt" id="ntest">Send a test</button><button class="btn alt" id="noff">Turn off</button></div><p class="hint" style="margin:8px 0 0">Android: if you hear a ding but no banner pops up, press and hold a Hortlog notification, tap Settings, and set it to Alerting or Pop on screen.</p>`;
 b.querySelectorAll('[data-np]').forEach(c=>c.onchange=async()=>{pr[c.dataset.np]=c.checked;try{const reg=await navigator.serviceWorker.getRegistration(),sub=await reg.pushManager.getSubscription();await sb.from('push_subs').update({prefs:pr}).eq('endpoint',sub.endpoint)}catch(e){toast('Could not save that.')}})}
 const on=(id,f)=>{const e=b.querySelector('#'+id);if(e)e.onclick=f};on('non',async()=>{try{await notifOn()}catch(e){toast('Could not turn on notifications.')}paintNotif()});on('ntest',()=>notifTest());on('noff',async()=>{try{await notifOff()}catch(e){}paintNotif()})}
-const notifCard=()=>card('var(--dead)','<h2>Notifications</h2><div id="nbox"><p style="margin:4px 0">Checking…</p></div>');
+let notifOpen=false;
+const notifCard=()=>card('var(--dead)',`<h2>Notifications <em id="nsum"></em></h2><div class="acts"><button class="btn alt" id="nexp" aria-expanded="${notifOpen}">${notifOpen?'▴ Collapse':'▾ Expand'}</button></div><div id="nbox" style="${notifOpen?'':'display:none'}"><p style="margin:4px 0">Checking…</p></div>`);
 function showBiz(){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'bizq'}));
 e.innerHTML=`<div class="box cut"><h2>What’s your orchard called?</h2><p>Your orchard or business name. It goes on your records and audit packs. You can change it later in your profile.</p><input id="bq" type="text" placeholder="e.g. Green Acres Kiwifruit" autocomplete="organization"><div class="acts"><button class="btn" id="bqs">Save</button><button class="btn alt" id="bqk">Skip</button></div></div>`;
 const fin=()=>{seen.biz=1;wr(SK,seen);e.remove();maybeSetup()};
@@ -401,6 +424,23 @@ function showProd(pre,idx){const P=(B[0]&&B[0].products)||[],cur=idx!=null?P[idx
 e.innerHTML=`<div class="box cut"><h2>${cur?'Edit product':pre?'Create a product':'Add a product'}</h2><p>${pre&&!cur?'You just logged a spray with '+esc(pre)+'. Save it as a product and add its rate and water rate, so audits and compliance are easier. Next time it fills in for you.':'A spray or fertiliser you use. When you log it by name, it is filled in for you.'}</p><input id="pn" type="text" placeholder="Product name, e.g. Botector" value="${esc(cur?cur.n:pre||'')}"><div style="height:10px"></div><input id="pr" type="text" placeholder="Product rate, e.g. 2 kg/ha" value="${esc(cur?cur.r||'':'')}"><div style="height:10px"></div><input id="pw2" type="text" placeholder="Water rate, e.g. 1000 L/ha" value="${esc(cur?cur.w||'':'')}"><div class="acts"><button class="btn" id="ps">Save product</button><button class="btn alt" id="pc">${cur?'Cancel':'Not now'}</button></div></div>`;
 const fin=()=>{seen.prodq=1;wr(SK,seen);e.remove()};$('#pc').onclick=fin;
 $('#ps').onclick=()=>{const n=$('#pn').value.trim();if(!n){toast('Add a product name first.');return}const B0=B[0]=B[0]||{},o={n,r:$('#pr').value.trim(),w:$('#pw2').value.trim()};B0.products=B0.products||[];if(cur)B0.products[idx]=o;else B0.products.push(o);saveB();fin();render();toast('Saved. Sprays you log by this name fill in automatically.')};setTimeout(()=>{const f=$(pre?'#pr':'#pn');if(f)f.focus()},50)}
+
+let ejPhoto;
+function editAny(id){const i=items.find(x=>x.id===id);if(!i)return;if(i.c==='rec'||(i.c==='spray'&&i.d))showEdit(id);else showEditJob(id)}
+function showEditJob(id){const i=items.find(x=>x.id===id);if(!i||$('#edq'))return;ejPhoto=undefined;
+const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'edq'})),spOn=()=>$('#ejc').value==='spray',rt=i.rate||lookupRate(i.prod)||'',wt=i.water||lookupWater(i.prod)||'';
+e.innerHTML=`<div class="box cut" role="dialog" aria-modal="true" aria-labelledby="ejh"><h2 id="ejh">Edit entry</h2><div class="edf"><label>Type<select id="ejc">${Object.keys(CATS).filter(k=>k!=='rec').map(k=>`<option value="${k}" ${k===i.c?'selected':''}>${CATS[k][0]}</option>`).join('')}</select></label><label>Details<textarea id="ejt" rows="3">${esc(i.t)}</textarea></label><div class="pair"><label>Due date (optional)<input id="ejd" type="date" value="${i.due||''}"></label><label>Block<select id="ejb"><option value="">No block</option>${i.b&&!bl().includes(i.b)?`<option value="${i.b}" selected>${esc(bn(i.b))}</option>`:''}${bl().map(n=>`<option value="${n}" ${i.b===n?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label></div><div class="pair"><label>Row<input id="ejr" type="text" inputmode="numeric" value="${i.r||''}"></label><label>Bay<input id="ejy" type="text" inputmode="numeric" value="${i.y||''}"></label></div><div id="ejs"><label>Product<input id="ejp" type="text" value="${esc(i.prod||'')}"></label><div class="pair"><label>Rate<input id="ejrt" type="text" value="${esc(rt)}" placeholder="e.g. 2 kg/ha"></label><label>Water rate<input id="ejw" type="text" value="${esc(wt)}" placeholder="e.g. 1000 L/ha"></label></div></div><div class="ejph" id="ejph"></div></div><div class="acts"><button class="btn" id="ejsv">Save</button><button class="btn alt" id="ejcn">Cancel</button></div></div>`;
+const tog=()=>{$('#ejs').style.display=spOn()?'block':'none'},
+ph=window.ejPaint=()=>{const cur=ejPhoto===undefined?i.p:ejPhoto;$('#ejph').innerHTML=(cur?`<img class="thumb" src="${cur}" alt="Photo">`:'')+`<button class="btn alt" id="ejphc">${cur?'Change photo':'Add photo'}</button>`+(cur?'<button class="btn alt" id="ejphr">Remove photo</button>':'');$('#ejphc').onclick=()=>$('#efile').click();const r=$('#ejphr');if(r)r.onclick=()=>{ejPhoto='';ph()}};
+$('#ejc').onchange=tog;tog();ph();$('#ejcn').onclick=()=>e.remove();
+$('#ejsv').onclick=()=>{const t=$('#ejt').value.trim();if(!t){toast('Add some details first.');return}
+const b=$('#ejb').value,r=parseInt($('#ejr').value,10),y=parseInt($('#ejy').value,10);
+i.t=t;i.c=$('#ejc').value;i.due=$('#ejd').value||null;i.b=b?+b:null;i.r=r>0?r:null;i.y=y>0?y:null;
+if(spOn()){i.prod=$('#ejp').value.trim()||undefined;i.rate=$('#ejrt').value.trim()||undefined;i.water=$('#ejw').value.trim()||undefined}
+if(ejPhoto!==undefined){if(ejPhoto)i.p=ejPhoto;else delete i.p}
+{const k=items.findIndex(a=>a.id===i.id);if(k>=0)items[k]=i;else items.unshift(i)}
+save();e.remove();render();toast('Saved.')}}
+$('#efile').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f||!$('#edq'))return;shrink(f,640,.6,c=>{ejPhoto=c.toDataURL('image/jpeg',.6);if(window.ejPaint)window.ejPaint()})};
 function showEdit(id){const i=items.find(x=>x.id===id);if(!i)return;const isS=i.c==='spray',rr=recRows().find(r=>r.id===id)||{},rc0=isS?'sf':(RMAP[i.rc]||i.rc),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'edq'})),date=isS?iso(new Date(i.doneAt||i.id)):(i.rdate||iso(new Date(i.id)));
 const fopts=(rc,sel)=>fold(rc).map(f=>`<option ${f===sel?'selected':''}>${esc(f)}</option>`).join('');
 e.innerHTML=`<div class="box cut"><h2>Edit record</h2><div class="edf"><label>Details<input id="et" type="text" value="${esc(i.t)}"></label><label>Date<input id="ed" type="date" value="${date}"></label><label>Category<select id="ec">${Object.keys(RC).map(k=>`<option value="${k}" ${k===rc0?'selected':''}>${esc(RC[k][0])}</option>`).join('')}</select></label><label>Folder<select id="ef">${fopts(rc0,rr.rf||i.rf)}</select></label><label>Block<select id="eb"><option value="">No block</option>${bl().map(n=>`<option value="${n}" ${i.b===n?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><div id="esf" style="${rc0==='sf'?'':'display:none'}"><label>Product<input id="ep" type="text" value="${esc(i.prod||'')}"></label><label>Rate<input id="er" type="text" value="${esc(i.rate||rr.rate||'')}"></label><label>Water rate<input id="ew" type="text" value="${esc(i.water||rr.water||'')}"></label></div></div><div class="acts"><button class="btn" id="esv">Save</button><button class="btn alt" id="ecn">Cancel</button></div></div>`;
@@ -445,6 +485,11 @@ function showIndAsk(id){const it=items.find(x=>x.id===id);if(!it||$('#iq'))retur
 e.innerHTML=`<div class="box cut"><h2>Who was inducted?</h2><p>“${esc(it.t)}”<br>Are these visitors, or staff and workers?</p><div class="acts"><button class="btn" data-ik="Visitors">Visitors</button><button class="btn" data-ik="Staff induction">Staff / workers</button></div></div>`;
 e.querySelectorAll('[data-ik]').forEach(b=>b.onclick=()=>{it.rf=b.dataset.ik;delete it.ask;save();e.remove();render();toast('Filed under Compliance, '+it.rf+'.')})}
 const instBar=()=>(standalone||window.innerWidth>=900||seen.inapp)?'':`<button class="instbar cut" id="insbar"><b>Get the Hortlog app</b><span>Opens full screen, works offline, sends reminders</span><i>Install →</i></button>`;
+function showSprayDone(id){const it=items.find(x=>x.id===id);if(!it||$('#sdq'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'sdq',className:'ov'}));
+e.innerHTML=`<div class="box cut"><h2>Already sprayed?</h2><p>“${esc(it.t)}”<br>Is this spray done, or are you planning it?</p><div class="acts"><button class="btn" id="sdy">Yes, it’s done</button><button class="btn alt" id="sdn">Not yet, plan it</button></div></div>`;
+$('#sdn').onclick=()=>{delete it.ask2;save();e.remove();render();toast('Kept as a to-do. Add a date when you know it.')};
+$('#sdy').onclick=()=>{delete it.ask2;it.d=true;it.doneAt=Date.now();delete it.due;save();e.remove();render();toast('Saved to Records, Spray diary.');
+if(fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),400);else if(it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),400)}}
 function maybeInstall(){if(!U||!loaded||standalone||window.innerWidth>=900||busy()||seen.inapp)return;if(seen.instAt&&Date.now()-seen.instAt<2*864e5)return;showInstallAsk()}
 function showInstallAsk(){const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'instq',className:'ov'}));
 e.innerHTML=`<div class="box cut"><h2>Get the Hortlog app</h2><p>You are using Hortlog in your browser. Add it to your phone so it opens like an app, keeps working with poor signal and can send reminders.</p><div class="acts"><button class="btn" id="insgo">${dp?'Install app':isIOS?'Add to Home Screen':'Show me how'}</button><button class="btn alt" id="insno">Not now</button></div><button class="lnk" id="ina">I’m already using the app</button></div>`;
@@ -484,7 +529,7 @@ $('#nps').onclick=async()=>{const p=$('#np').value;if(p.length<6){$('#am').textC
 try{const r=await sb.auth.updateUser({password:p});if(r.error){$('#am').textContent=r.error.message;return}mode='in';const a=$('#auth');if(a)a.remove();toast('Password changed.');if(!U){const s=await sb.auth.getSession();if(s.data.session)await enter(s.data.session.user)}}catch(x){$('#am').textContent='Could not reach the server.'}};return}
 e.innerHTML=`<div class="box cut"><h2>Hort<i>log</i></h2><p>${mode==='in'?'Log in to your orchard notebook.':'Create your account.'}</p><input id="em" type="email" placeholder="Email" autocomplete="email"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="${mode==='in'?'current-password':'new-password'}"><div id="am" class="hint"></div><div class="acts"><button class="btn" id="ago">${mode==='in'?'Log in':'Sign up'}</button><button class="btn alt" id="asw">${mode==='in'?'Create account':'I have an account'}</button></div>${mode==='in'?'<button class="back" id="afg" style="font-size:17px">Forgot password?</button>':''}</div>`;
 const msg=t=>{$('#am').textContent=t};
-$('#asw').onclick=()=>{const em=$('#em').value,pw=$('#pw').value;mode=mode==='in'?'up':'in';showAuth();$('#em').value=em;$('#pw').value=pw};
+$('#asw').onclick=()=>{const em=$('#em').value.trim();mode=mode==='in'?'up':'in';showAuth();$('#em').value=em;setTimeout(()=>{const t=$(em?'#pw':'#em');if(t)t.focus()},50)};
 if($('#afg'))$('#afg').onclick=async()=>{const em=$('#em').value.trim();if(!em){msg('Type your email first.');return}$('#afg').disabled=true;msg('Sending…');
 try{const r=await sb.auth.resetPasswordForEmail(em);if(r.error){msg(r.error.message);$('#afg').disabled=false}else{sentTo=em;mode='sent';showAuth()}}catch(x){msg('Could not reach the server.');$('#afg').disabled=false}};
 $('#ago').onclick=async()=>{const em=$('#em').value.trim(),pw=$('#pw').value;if(!em||pw.length<6){msg('Enter your email and a password of at least 6 characters.');return}
@@ -511,13 +556,14 @@ return null}
 const W2N={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60};
 const nums=s=>s.replace(/\b(twenty|thirty|forty|fifty|sixty)[\s-](one|two|three|four|five|six|seven|eight|nine)\b/g,(m,a,b)=>W2N[a]+W2N[b]).replace(/\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty)\b/g,m=>W2N[m]);
 const lev=(a,b)=>{if(Math.abs(a.length-b.length)>1)return 9;const m=[];for(let i=0;i<=a.length;i++)m[i]=[i];for(let j=1;j<=b.length;j++)m[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length]};
-const KW={done:['sprayed','applied','fertilised','fertilized','dusted','top dressed','topdressed','finished spraying','done spraying','spraying done','spraying complete','completed spraying','complete spraying'],buy:['buy','order','purchase','pick up','run out','running low','low on','out of','need more','get more','need to get','restock'],psa:['psa','canker','bleeding','leaf spot','leafspot','spotting'],dead:['dead','dying','dieback','died','collapsed','missing vine'],spray:['spray','fertiliser','fertilizer','fungicide','insecticide','foliar','botector','bioprotector','copper','seaweed'],meet:['meeting','meet with','catch up with','appointment','call with','phone call'],crew:['crew','team','staff','contractor','pruner','prune','pruning','stringing','thinning','gang','picker','tying','harvest'],todo:['fix','repair','check','mow','mend','replace','clear','service','remember','irrigation','gate','fence','weeds','sharpen','clean','call','book','to do','todo','monitor','scout','inspect','induct','calibrat','broken','trellis','pole'],need:['need','get']};
+const KW={done:['sprayed','applied','fertilised','fertilized','dusted','top dressed','topdressed','finished spraying','sprayd','spraid','spraed','done spraying','spraying done','spraying complete','completed spraying','complete spraying'],buy:['buy','order','purchase','pick up','run out','running low','low on','out of','need more','get more','need to get','restock'],psa:['psa','canker','bleeding','leaf spot','leafspot','spotting'],dead:['dead','dying','dieback','died','collapsed','missing vine'],spray:['spray','fertiliser','fertilizer','fungicide','insecticide','foliar','botector','bioprotector','copper','seaweed'],meet:['meeting','meet with','catch up with','appointment','call with','phone call'],crew:['crew','team','staff','contractor','pruner','prune','pruning','stringing','thinning','gang','picker','tying','harvest'],todo:['fix','repair','check','mow','mend','replace','clear','service','remember','irrigation','gate','fence','weeds','sharpen','clean','call','book','to do','todo','monitor','scout','inspect','induct','calibrat','broken','trellis','pole'],need:['need','get']};
 const has=(w,j,k)=>KW[k].some(x=>x.includes(' ')?j.includes(x):w.some(t=>t===x||(x.length>=4&&t.startsWith(x))||(k!=='done'&&x.length>=5&&lev(t,x)<=1)));
 const RC={sf:['Spray & Fert','var(--spray)'],compliance:['Compliance','var(--todo)'],monitoring:['Monitoring','var(--dead)'],biodiversity:['Biodiversity','var(--bio)'],vine:['Vine Development','var(--crew)']};
 const DEF={sf:['Spray diary','Fertiliser'],compliance:['Staff induction','Visitors','Equipment calibration'],monitoring:['PSA','Bud counts','Fruit maturity','Leaf sample','Soil sample','Pests & disease'],biodiversity:['Plantings','Wildlife','Soil'],vine:['Bud break','Flowering','Fruit set','Thinning','Fruit growth','Harvest']};
+const RC0=Object.fromEntries(Object.entries(RC).map(([k,v])=>[k,v[0]]));
 const FMAP={'Dry matter':'Fruit maturity','Nutrients':'Leaf sample','Weather & frost':'Pests & disease','Pest control':'Wildlife','Induction':'Staff induction'},RMAP={induction:'compliance'};
 const fold=c=>{const f=[...(DEF[c]||[]),...((B[0]&&B[0].folders&&B[0].folders[c])||[])];return f.length?f:['General']};
-function syncCats(){((B[0]&&B[0].cats)||[]).forEach(c=>{if(!RC[c.k]){RC[c.k]=[c.n,'var(--note)'];DEF[c.k]=[]}})}
+function syncCats(){const rn=(B[0]&&B[0].rcn)||{};Object.keys(RC0).forEach(k=>{RC[k][0]=rn[k]||RC0[k]});((B[0]&&B[0].cats)||[]).forEach(c=>{if(!RC[c.k]){RC[c.k]=[c.n,'var(--note)'];DEF[c.k]=[]}RC[c.k][0]=c.n})}
 function resetCats(){Object.keys(RC).filter(k=>k.startsWith('c_')).forEach(k=>{delete RC[k];delete DEF[k]})}
 const MONF=[['PSA',/psa/],['Bud counts',/\bbud\b/],['Fruit maturity',/maturity|dry matter|brix/],['Leaf sample',/leaf/],['Soil sample',/soil/],['Pests & disease',/pest|disease|mite|scale|thrips|leafroller|botrytis/]];
 const MSTRONG=/leaf (sample|samples|test|tests|sampling)|soil (sample|samples|test|tests|sampling)|bud counts?|fruit maturity|dry matter|\bbrix\b|psa (check|checks|checking|monitoring|monitor|count|counts|inspection|inspections|scouting)|(monitoring|monitor|scouting) .{0,15}psa|maturity (test|tests|sample|samples|check)/;
@@ -542,34 +588,48 @@ return Date.now()}
 function extractProd(raw){const STOP=new Set(['the','a','an','some','block','today','yesterday','tomorrow','it','this','that','my','our']);
 const clean=s=>s.trim().replace(/\s+/g,' ').split(' ').filter(x=>!STOP.has(x)).join(' '),cap=p=>p.charAt(0).toUpperCase()+p.slice(1);
 let m=raw.match(/\bwith\s+([a-z0-9][a-z0-9\- ]{1,30}?)(?=\s+(?:on|in|at|to|for|today|yesterday|tomorrow|this|last|and|then)\b|[,.]|$)/);
-if(m){const p=clean(m[1]);if(p)return cap(p)}
-m=raw.match(/\b(?:sprayed|applied|spray|dusted|fertili[sz]ed)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24}(?: [a-z0-9\-]{2,12})?)\s+(?:on|to|in|over|across)\b/);
+if(m){const p=clean(m[1]);if(p&&!/\bwater\b|\b(?:litres?|liters?)\b|^\d/.test(p))return cap(p)}
+m=raw.match(/\b(?:sprayed|applied|spray|dusted|fertili[sz]ed)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24}(?: (?!(?:on|to|in|over|across|for|at|with|and|block)\b)[a-z0-9\-]{2,12}){0,2})(?:\s+(?:on|to|in|over|across|at)\b|\s+(?=block\b))/);
 if(m){const p=clean(m[1]);if(p&&!/^block/.test(p))return cap(p)}
+m=raw.match(/\b([a-z][a-z0-9\-]{2,20})\s+(?:was\s+|were\s+)?(?:sprayed|applied)\b/);
+if(m&&!/^(have|just|already|ive|had|block|then|also|was|were)$/.test(m[1])){const p=clean(m[1]);if(p)return cap(p)}
 m=raw.match(/\b(?:sprayed|applied|spray)\s+(?:the\s+)?(?!block\b)([a-z][a-z0-9\-]{2,24})\s*(?:,|$)/);
 if(m){const p=clean(m[1]);if(p)return cap(p)}
 return ''}
+const sprayedLike=(w,j)=>!/\b(not|isn't|isnt|hasn't|hasnt|haven't|havent|still|yet|need|needs|to be|must|should|going to|gonna|will|remind)\b/.test(j)&&(w.some(t=>/^(un|re)?sprayed$/.test(t))||/\b(i|we|i've|we've|ive|weve)\s+(?:just\s+|have\s+|had\s+|already\s+)?(?:spray|fertili[sz]e|apply|dust)\b/.test(j));
+function extractRates(s){const o={},U=u=>/^l/.test(u)?'L':u==='ml'?'mL':u;
+let m=s.match(/\bwater(?:\s+rate)?(?:\s+(?:of|at))?\s+(\d[\d.,]*)\s*(l|litres?|liters?)(?:\s*(?:\/|per)\s*(ha|hectare))?/)||s.match(/(\d[\d.,]*)\s*(l|litres?|liters?)(?:\s*(?:\/|per)\s*(ha|hectare))?\s+(?:of\s+)?water\b/);
+if(m){o.wrate=m[1].replace(/[.,]$/,'')+' L'+(m[3]?'/ha':'');s=s.replace(m[0],' ')}
+m=s.match(/(?:\b(?:at|rate(?:\s+of)?)\s+|@\s*)?(\d[\d.,]*)\s*(kg|g|ml|l|litres?|liters?)\s*(?:\/|per)\s*(ha|hectare|100\s*(?:l|litres?|liters?))\b/);
+if(m)o.rate=m[1].replace(/[.,]$/,'')+' '+U(m[2])+'/'+(/^100/.test(m[3])?'100 L':'ha');
+return o}
+function sprayDetail(raw,s,o){const hit=((B[0]&&B[0].products)||[]).find(p=>p.n&&raw.includes(p.n.toLowerCase()));
+if(hit){o.prod=hit.n;if(hit.r)o.rate=hit.r;if(hit.w)o.water=hit.w}else{const x=extractProd(raw);if(x)o.prod=x}
+const q=extractRates(s);if(q.rate)o.rate=q.rate;if(q.wrate)o.water=q.wrate}
 function parse(text,opts){const raw=text.toLowerCase(),s=nums(raw),w=s.match(/[a-z']+/g)||[],j=w.join(' ');
 const n=re=>{const m=s.match(re);return m?parseInt(m[1],10)||null:null};
 let c='note',d=false,rr=null;
-if(has(w,j,'done')){c='spray';d=true}else if((!pdate(s)||pdate(s)<=iso(new Date()))&&(rr=recGuess(raw,opts&&opts.photo))){c='rec';d=true}else if(has(w,j,'buy'))c='buy';else if(has(w,j,'psa'))c='psa';else if(has(w,j,'dead'))c='dead';else if(has(w,j,'spray'))c='spray';else if(has(w,j,'meet'))c='meet';else if(has(w,j,'crew'))c='crew';else if(has(w,j,'todo'))c='todo';else if(has(w,j,'need'))c='buy';
+if(has(w,j,'done')||sprayedLike(w,j)){c='spray';d=true}else if((!pdate(s)||pdate(s)<=iso(new Date()))&&(rr=recGuess(raw,opts&&opts.photo))){c='rec';d=true}else if(has(w,j,'buy'))c='buy';else if(has(w,j,'psa'))c='psa';else if(has(w,j,'dead'))c='dead';else if(has(w,j,'spray'))c='spray';else if(has(w,j,'meet'))c='meet';else if(has(w,j,'crew'))c='crew';else if(has(w,j,'todo'))c='todo';else if(has(w,j,'need'))c='buy';
+if(c==='spray'&&!d&&/\b(done|complete|completed|finished|did)\b/.test(raw))d=true;
 const o={c,t:text.trim(),b:n(/block\s*(\d+)/),r:n(/row\s*(\d+)/),y:n(/bay\s*(\d+)/),due:pdate(s)};
+if(c==='spray'&&!d&&!o.due&&!/need|must|should|going to|gonna|will |plan|schedule|remember|want to|have to|to spray|tomorrow|next |later|friday|monday|tuesday|wednesday|thursday|saturday|sunday/.test(raw))o.ask2='spraydone';
 if(!o.b){for(const k of bl()){const nm=B[k]&&B[k].name;if(nm&&raw.includes(nm.toLowerCase())){o.b=k;break}}}
 if(rr){o.rc=rr.rc;o.rf=rr.rf;if(rr.ask)o.ask=rr.ask;o.due=null;o.rdate=iso(new Date(pastAt(s)))}
-if(c==='spray'){const hit=((B[0]&&B[0].products)||[]).find(p=>raw.includes(p.n.toLowerCase()));if(hit){o.prod=hit.n;if(hit.r)o.rate=hit.r;if(hit.w)o.water=hit.w}else{const x=extractProd(raw);if(x)o.prod=x}}
+if(c==='spray')sprayDetail(raw,s,o);
 if(d){o.d=true;o.doneAt=pastAt(s);if(c==='spray')o.due=null}return o}
 async function smart(text,blob){const base=parse(text||'',{photo:!!blob});
 if(!AI||(blob&&!canImg))return base;
 const prompt='You sort quick notes from a kiwifruit orchard grower into a notebook. Today is '+iso(new Date())+'. '+(blob?'The grower sent a photo with this caption (may be empty): "'+(text||'')+'". Describe what you see in one short sentence for the notebook. Say "looks like" or "possible" and never state a diagnosis as fact. ':'The note is: "'+text+'". ')+'Reply with JSON only: {"category":"psa|dead|buy|todo|crew|spray|note","text":"short clean version","block":number or null,"row":number or null,"bay":number or null,"due":"YYYY-MM-DD" or null,"done":true or false}. Categories: psa = PSA or canker sighting; dead = dead or dying vine; buy = things to buy or order; todo = a job to do; crew = work for staff or contractors such as stringing, pruning, thinning; spray = any spray or fertiliser, planned or already applied (done=true only if already applied); note = anything else. Turn words like Friday or tomorrow into dates.';
 try{const o={modelTier:blob?'default':'quick'};if(blob)o.images=[blob];const r=await AI.json(prompt,o);
 const x={c:CATS[r.category]?r.category:base.c,t:String(r.text||text||'Photo').slice(0,140),b:r.block||base.b,r:r.row||base.r,y:r.bay||base.y,due:r.due||base.due};
-if(base.c==='rec'){return base}if(r.done===true||base.d){x.d=true;x.doneAt=Date.now()}return x}catch(e){return base}}
+if(base.c==='rec'){return base}if(r.done===true||base.d){x.d=true;x.doneAt=Date.now()}if(x.c==='spray'){const rw=(text||'').toLowerCase();['prod','rate','water'].forEach(k=>{if(base[k])x[k]=base[k]});if(!x.prod)sprayDetail(rw,nums(rw),x)}return x}catch(e){return base}}
 async function add(text,blob,photo,opts){text=(text||'').trim();if(!text&&!blob)return;toast(blob?'Looking at your photo…':'Sorting…');
 const it=await smart(text,blob);it.id=Date.now();if(photo)it.p=photo;if(opts&&opts.rdate){it.rdate=opts.rdate;if(it.c==='rec'&&it.d)it.doneAt=new Date(opts.rdate+'T12:00:00').getTime()}if(blob&&!it.t)it.t='Photo (not sorted)';
 items.unshift(it);last=it.id;save();
 if(photo){if(it.c==='rec'){recCat=RMAP[it.rc]||it.rc;recFolder=it.rf;setView('records')}else{filter=it.c;setView('lists')}if(it.c==='note')setTimeout(()=>showWhere(it.id),300)}else render();
 const loc=it.b?` → ${bn(it.b)}${it.r?' row '+it.r:''}${it.y?' bay '+it.y:''}`:'';
 toast('Logged: '+CATS[it.c][0]+loc+(it.due?' · '+dayLabel(it.due):'')+(it.d&&it.c==='spray'?' · in Records':''),()=>{items=items.filter(i=>i.id!==it.id);save();render()});
-if(it.b&&!B[it.b]&&!askedBlk[it.b]){askedBlk[it.b]=1;setTimeout(()=>askBlock(it.b),500)}else if(it.ask==='induct')setTimeout(()=>showIndAsk(it.id),500);else if(it.c==='spray'&&it.d&&fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),500);else if(it.c==='spray'&&it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),700)}
+if(it.b&&!B[it.b]&&!askedBlk[it.b]){askedBlk[it.b]=1;setTimeout(()=>askBlock(it.b),500)}else if(it.ask2==='spraydone')setTimeout(()=>showSprayDone(it.id),500);else if(it.ask==='induct')setTimeout(()=>showIndAsk(it.id),500);else if(it.c==='spray'&&it.d&&fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),500);else if(it.c==='spray'&&it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),700)}
 function sendQ(){const v=$('#q').value;$('#q').value='';$('#log').classList.remove('open');add(v)}
 $('#q').onkeydown=e=>{if(e.key==='Enter')sendQ()};$('#go').onclick=sendQ;
 function toast(m,fn,label){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</span>'+(fn?'<button id="un">'+(label||'UNDO')+'</button>':'');t.style.display='flex';
@@ -583,14 +643,14 @@ function armSil(ms){clearTimeout(silT);silT=setTimeout(()=>stopRec(),ms)}
 function stopRec(){listening=false;clearTimeout(silT);clearTimeout(maxT);if(rec){try{rec.stop()}catch(e){finishRec()}}else finishRec()}
 function finishRec(){const t=liveTxt();listening=false;clearTimeout(silT);clearTimeout(maxT);rec=null;base=curFin=curInt='';micUI(false);if(t)add(t);else if(!micErr)toast('Heard nothing. Type it, or use your keyboard mic.')}
 function startRec(){const r=rec=new SR();r.lang='en-NZ';r.continuous=true;r.interimResults=true;
-r.onresult=e=>{let f='',t='';for(let i=0;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)f+=x[0].transcript+' ';else t+=x[0].transcript}curFin=f;curInt=t;$('#ml').textContent='“'+liveTxt().slice(-32)+'” tap to finish';armSil(4500)};
+r.onresult=e=>{let f='',t='';for(let i=0;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)f+=x[0].transcript+' ';else t+=x[0].transcript}curFin=f;curInt=t;$('#ml').textContent='“'+liveTxt().slice(-32)+'” tap to finish';armSil(2500)};
 r.onerror=e=>{if(e.error==='no-speech'||e.error==='aborted')return;micErr=true;listening=false;toast((ERR[e.error]||'Voice error')+' ['+e.error+'] Type it instead, or use your keyboard mic.')};
-r.onend=()=>{base=liveTxt();curFin=curInt='';if(listening){try{startRec()}catch(e){finishRec()}}else finishRec()};
+r.onend=()=>{if(r===rec)finishRec()};
 r.start()}
 $('#mic').onclick=()=>{
 if(!SR){toast('Voice input is not available in this browser. Type it, or use your keyboard mic.');$('#q').focus();return}
 if(listening||rec){stopRec();return}
-base=curFin=curInt='';micErr=false;listening=true;micUI(true);armSil(10000);maxT=setTimeout(()=>stopRec(),90000);
+base=curFin=curInt='';micErr=false;listening=true;micUI(true);armSil(9000);maxT=setTimeout(()=>stopRec(),45000);
 try{startRec()}catch(e){listening=false;rec=null;micUI(false);toast('Could not start the mic ['+e.name+']. Type it instead.')}};
 function showCap(blob,p){const e=$('#cap')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'cap'}));
 e.innerHTML=`<div class="box cut"><img class="capimg" src="${p}" alt="Your photo"><h2>What is this?</h2><input id="cq" type="text" placeholder="e.g. PSA block 3 row 49, or new tractor" value="${esc($('#q').value)}" enterkeyhint="done"><div class="chips" style="padding:10px 0 0">${['PSA','Dead vine','Broken pole','Soil sample','Bud break','Flowering','Induction'].map(w=>`<button class="chip" data-w="${w}">${w}</button>`).join('')}</div><div class="acts" style="padding-bottom:0"><label class="ck">Date <input id="cdate" type="date" value="${iso(new Date())}"></label></div><div class="acts"><button class="btn" id="cs">Save</button><button class="btn alt" id="cd">Discard photo</button></div></div>`;
@@ -618,10 +678,11 @@ $('#avf').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
 $('#rfile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;shrink(f,640,.6,c=>{recPhoto=c.toDataURL('image/jpeg',.6);render()})};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setView(b.dataset.v));
 $('#recb').onclick=()=>setView('records');
-let sessStart=Date.now(),visited=new Set(['home']),nudged=false;
-function nudgeCheck(v){if(!U||!loaded||items.length||nudged||busy()||(seen.nudgeN||0)>=3)return;const long=Date.now()-sessStart>5*60e3;if((visited.size>=4&&v==='home')||(long&&v!=='home'))showNudge()}
-function showNudge(){nudged=true;seen.nudgeN=(seen.nudgeN||0)+1;wr(SK,seen);const mob=window.innerWidth<900,ex=pick(['PSA block 3 row 49','dead vine block 2 row 12','sprayed block 1 with copper','need to buy pipe']),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'nudge'})),tgt=mob?$('#log'):$('#plus');
-e.innerHTML=`<div class="nbox cut"><h2>Record your first entry</h2><p>${mob?'Type it, say it or snap it in the bar below. Try “'+ex+'”.':'Press the + button, then type it. Try “'+ex+'”.'}</p><div class="acts"><button class="btn" id="ngo">Got it</button></div><div class="narrow">▼</div></div>`;
+const FR_AWAY=45*864e5;let sessStart=Date.now(),visited=new Set(['home']),nudged=false,prevUse=0,nudgeK='';
+function nudgeKind(){if(!items.length)return 'new';const ref=prevUse||items.reduce((m,i)=>{const t=i.doneAt||i.id;return t>1e12&&t>m?t:m},0);return ref&&Date.now()-ref>FR_AWAY?'back':''}
+function nudgeCheck(v){nudgeK=nudgeKind();if(!U||!loaded||!nudgeK||nudged||busy()||(nudgeK==='new'&&(seen.nudgeN||0)>=3)||(nudgeK==='back'&&Date.now()-(seen.nudgeBk||0)<FR_AWAY))return;const long=Date.now()-sessStart>5*60e3;if((visited.size>=4&&v==='home')||(long&&v!=='home'))showNudge()}
+function showNudge(){nudged=true;if(nudgeK==='back')seen.nudgeBk=Date.now();else seen.nudgeN=(seen.nudgeN||0)+1;wr(SK,seen);const mob=window.innerWidth<900,ex=pick(['PSA block 3 row 49','dead vine block 2 row 12','sprayed block 1 with copper','need to buy pipe']),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'nudge'})),tgt=mob?$('#log'):$('#plus');
+e.innerHTML=`<div class="nbox cut"><h2>Record your first entry${nudgeK==='back'?' back':''}</h2><p>${nudgeK==='back'?'Good to see you back. ':''}${mob?'Type it, say it or snap it in the bar below. Try “'+ex+'”.':'Press the + button, then type it. Try “'+ex+'”.'}</p><div class="acts"><button class="btn" id="ngo">Got it</button></div><div class="narrow">▼</div></div>`;
 tgt.classList.add('spot2');const done=()=>{e.remove();tgt.classList.remove('spot2')};$('#ngo').onclick=done;e.onclick=ev=>{if(ev.target===e)done()}}
 function setView(v){view=v;blk=null;drawing=null;sprayEx=null;render();window.scrollTo(0,0);visited.add(v);nudgeCheck(v)}
 const TIPS={home:'Home shows what needs attention: jobs due today, each block’s open issues, and the map. Tap a block to see everything for it.',cal:'Jobs with a date appear here on their day. Use the arrows to look ahead, and tap Done when a job is finished. Jobs without a date live under Lists.',blocks:'Jobs and tasks that have a block appear under that block. Tap a block to see its jobs, spray records and imagery.',blockpage:'Everything for this block is here: coming up, open lists, spray records and your own imagery.',lists:'Jobs without a date and everything else you log are sorted here by type. Tap a type to filter.',records:'Records are grouped by type, then folder. Finished sprays land in Compliance automatically. Use + Folder to make your own, and export to Excel or a PDF of photos for audits.'};
@@ -649,34 +710,49 @@ const BX=[[10,10],[190,10],[10,200],[190,200]],BW=160,BH=170;
 const bn=n=>(B[n]&&B[n].name)||'Block '+n;
 const bl=()=>Object.keys(B).map(Number).filter(n=>n>0).sort((a,b)=>a-b);
 const bpos=i=>[10+(i%2)*180,10+Math.floor(i/2)*190];
-const bp=(x,y)=>`M${x} ${y}H${x+BW-18}L${x+BW} ${y+18}V${y+BH}H${x+18}L${x} ${y+BH-18}Z`;
-function gpos(n,r,y){const b=B[n];if(!b||!b.grid||!b.w)return null;const[P1,P2,P3]=b.grid,R=Math.max(1,(b.rows||60)-1),Y=Math.max(1,(b.bays||30)-1),v0=Math.min(Math.max((r||1)-1,0),R)/R,u0=Math.min(Math.max((y||1)-1,0),Y)/Y,v=b.flipX?1-v0:v0,u=b.flipY?1-u0:u0;
+const bp=(x,y,w,h)=>{w=w||BW;h=h||BH;return `M${x} ${y}H${x+w-18}L${x+w} ${y+18}V${y+h}H${x+18}L${x} ${y+h-18}Z`};
+function blockAr(n){const b=B[n];if(!(b&&b.img&&b.w&&b.h))return null;let a=b.w/b.h;if(b.poly&&b.poly.length>2){const xs=b.poly.map(p=>p[0]),ys=b.poly.map(p=>p[1]),bw=(Math.max(...xs)-Math.min(...xs))*b.w,bh=(Math.max(...ys)-Math.min(...ys))*b.h;if(bw>0&&bh>0)a=bw/bh}return Math.min(2.4,Math.max(.6,a))}
+function blockVb(n){const b=B[n];if(b.poly&&b.poly.length>2){const xs=b.poly.map(p=>p[0]*b.w),ys=b.poly.map(p=>p[1]*b.h),x0=Math.min(...xs),y0=Math.min(...ys);return [x0,y0,Math.max(...xs)-x0,Math.max(...ys)-y0]}return [0,0,b.w,b.h]}
+function gpos(n,r,y){const b=B[n];if(!b||!b.grid||!b.w)return null;const[P1,P2,P3]=b.grid,R=Math.max(1,(b.rows||60)-1),Y=Math.max(1,(b.bays||30)-1),v0=Math.min(Math.max((r||1)-1,0),R)/R,u0=Math.min(Math.max((y||Math.ceil((b.bays||30)/2))-1,0),Y)/Y,v=b.flipX?1-v0:v0,u=b.flipY?1-u0:u0;
 return[(P1[0]+v*(P3[0]-P1[0])+u*(P2[0]-P1[0]))*b.w,(P1[1]+v*(P3[1]-P1[1])+u*(P2[1]-P1[1]))*b.h]}
 function ipos(n,i){const b=B[n],g=gpos(n,i.r,i.y);if(g)return g;if(!b||!b.poly||!b.w)return null;
 const xs=b.poly.map(p=>p[0]),ys=b.poly.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),R=b.rows||60,Y=b.bays||30;
 return[(x0+Math.min(i.r,R)/R*(x1-x0))*b.w,(y0+Math.min(i.y||Math.ceil(Y/2),Y)/Y*(y1-y0))*b.h]}
 function pinsOf(n,r){let s='';items.filter(i=>i.b===n&&!i.d&&i.r&&i.c!=='spray'&&(filter==='all'||i.c===filter)).forEach(i=>{const p=ipos(n,i);if(!p)return;const[x,y]=p;
 s+=`<path class="pin" data-id="${i.id}" d="M${x} ${y-r}L${x+r} ${y}L${x} ${y+r}L${x-r} ${y}Z" fill="var(${CATS[i.c][1]})"/>`});return s}
-function mapSvg(){const L=bl();if(!L.length)return '';const H=20+Math.ceil(L.length/2)*190;
+function mapSvg(){const L=bl();if(!L.length)return '';
+const colY=[10,10],D=L.map(n=>{const ar=blockAr(n),h=Math.round(ar?Math.min(250,Math.max(104,BW/ar)):BH-30),c=colY[1]<colY[0]?1:0,o={x:10+c*180,y:colY[c],w:BW,h};colY[c]+=h+20;return o}),H=Math.max(...colY);
 let s=`<svg class="m cut" viewBox="0 0 360 ${H}" role="img" aria-label="Orchard map"><defs>`;
-L.forEach((n,i)=>{const p=bpos(i);s+=`<clipPath id="c${i}"><path d="${bp(p[0],p[1])}"/></clipPath>`});s+='</defs>';
-L.forEach((n,i)=>{const[x,y]=bpos(i),b=B[n],im=b.img,W=b.w,Hh=b.h,real=im&&b.poly;s+=`<path class="blk" data-blk="${n}" d="${bp(x,y)}"/>`;
-if(real){const xs=b.poly.map(q=>q[0]*W),ys=b.poly.map(q=>q[1]*Hh),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
-s+=`<g clip-path="url(#c${i})"><svg data-blk="${n}" x="${x}" y="${y}" width="${BW}" height="${BH}" viewBox="${x0} ${y0} ${x1-x0} ${y1-y0}" preserveAspectRatio="xMidYMid slice"><image href="${im}" width="${W}" height="${Hh}"/>${pinsOf(n,(x1-x0)/34)}</svg></g>`}
-else{if(im)s+=`<image data-blk="${n}" href="${im}" x="${x}" y="${y}" width="${BW}" height="${BH}" preserveAspectRatio="xMidYMid slice" clip-path="url(#c${i})"/>`;
-for(let k=5;k<60;k+=5){const lx=x+k/60*BW;s+=`<line pointer-events="none" x1="${lx}" x2="${lx}" y1="${y+10}" y2="${y+BH-10}" stroke="${im?'rgba(255,255,255,.35)':'var(--map)'}" stroke-width="1.5" stroke-dasharray="6 4"/>`}
+L.forEach((n,i)=>{const d=D[i];s+=`<clipPath id="c${i}"><path d="${bp(d.x,d.y,d.w,d.h)}"/></clipPath>`});s+='</defs>';
+L.forEach((n,i)=>{const{x,y,w,h}=D[i],b=B[n],im=b.img,W=b.w,Hh=b.h,real=im&&b.poly;s+=`<path class="blk" data-blk="${n}" d="${bp(x,y,w,h)}"/>`;
+if(real){const[x0,y0,bw,bh]=blockVb(n);
+s+=`<g clip-path="url(#c${i})"><svg data-blk="${n}" x="${x}" y="${y}" width="${w}" height="${h}" viewBox="${x0} ${y0} ${bw} ${bh}" preserveAspectRatio="xMidYMid slice"><image href="${im}" width="${W}" height="${Hh}"/>${pinsOf(n,bw/34)}</svg></g>`}
+else{if(im)s+=`<image data-blk="${n}" href="${im}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#c${i})"/>`;
+for(let k=5;k<60;k+=5){const lx=x+k/60*w;s+=`<line pointer-events="none" x1="${lx}" x2="${lx}" y1="${y+10}" y2="${y+h-10}" stroke="${im?'rgba(255,255,255,.35)':'var(--map)'}" stroke-width="1.5" stroke-dasharray="6 4"/>`}
 const R=b.rows||60,Y=b.bays||30;
-items.filter(it=>it.b===n&&it.c!=='spray'&&(filter==='all'||it.c===filter)).forEach(it=>{const px=x+14+(Math.min(it.r||Math.ceil(R/2),R)-1)/Math.max(1,R-1)*(BW-28),py=y+14+(Math.min(it.y||Math.ceil(Y/2),Y)-1)/Math.max(1,Y-1)*(BH-44),r=sel===it.id?14:10;
+items.filter(it=>it.b===n&&it.c!=='spray'&&(filter==='all'||it.c===filter)).forEach(it=>{const px=x+14+(Math.min(it.r||Math.ceil(R/2),R)-1)/Math.max(1,R-1)*(w-28),py=y+14+(Math.min(it.y||Math.ceil(Y/2),Y)-1)/Math.max(1,Y-1)*(h-44),r=sel===it.id?14:10;
 s+=`<path class="pin ${it.d?'done':''}" data-id="${it.id}" d="M${px} ${py-r}L${px+r} ${py}L${px} ${py+r}L${px-r} ${py}Z" fill="var(${CATS[it.c][1]})"/>`})}
-s+=`<text class="bl ${im?'li':''}" data-blk="${n}" x="${x+12}" y="${y+BH-12}">${esc(bn(n)).toUpperCase().slice(0,16)} →</text>`});
+s+=`<text class="bl ${im?'li':''}" data-blk="${n}" x="${x+12}" y="${y+h-12}">${esc(bn(n)).toUpperCase().slice(0,16)} →</text>`});
 return s+'</svg>'}
-function rowHtml(i,first){const loc=i.b?`${esc(bn(i.b))}${i.r?', row '+i.r:''}${i.y?', bay '+i.y:''}`:'No block';
-return `<div class="row ${i.d?'done':''} ${first?'first':''} ${i.id===popId?'pop':''}"><div class="t">${esc(i.t)}<small>${CATS[i.c][0]} · ${loc}${i.due?' · '+dayLabel(i.due):''}${i.d&&i.doneAt?' · done '+dayLabel(iso(new Date(i.doneAt))):''}</small>${i.p?`<img class="thumb" src="${i.p}" alt="Photo">`:''}</div>${i.c==='rec'?'':`<button class="dbtn" data-d="${i.id}">${i.d?'✓ Completed':'Done'}</button>`}<button class="x" data-x="${i.id}" aria-label="Delete">✕</button></div>`}
+function rowHtml(i,first){const loc=i.b?`${esc(bn(i.b))}${i.r?', row '+i.r:''}${i.y?', bay '+i.y:''}`:'No block',ro=i.c==='rec'?recOf(i):null,
+lab=ro&&RC[ro.rc]?esc(RC[ro.rc][0])+(ro.rf?' · '+esc(ro.rf):''):CATS[i.c]?CATS[i.c][0]:'Record',
+dt=i.c==='rec'?' · '+dayLabel(i.rdate||iso(new Date(i.id))):(i.due?' · '+dayLabel(i.due):'')+(i.d&&i.doneAt?' · done '+dayLabel(iso(new Date(i.doneAt))):''),
+sp=i.c==='spray'&&i.prod?' · '+esc(i.prod)+((i.rate||lookupRate(i.prod))?' '+esc(i.rate||lookupRate(i.prod)):'')+(i.water?' · water '+esc(i.water):''):'';
+return `<div class="row ${i.d?'done':''} ${first?'first':''} ${i.id===popId?'pop':''}"><div class="t">${esc(i.t)}<small>${lab} · ${loc}${dt}${sp}</small>${i.p?`<img class="thumb" src="${i.p}" alt="Photo">`:''}</div>${i.c==='rec'?'':`<button class="dbtn" data-d="${i.id}">${i.d?'✓ Completed':'Done'}</button>`}<button class="x ed" data-ej="${i.id}" aria-label="Edit">${PEN}</button><button class="x" data-x="${i.id}" aria-label="Delete">✕</button></div>`}
 const card=(col,inner)=>`<div class="card cut"><span class="stripe" style="background:${col}"></span>${inner}</div>`;
 const list=l=>[...l].sort((a,b)=>(a.d?1:0)-(b.d?1:0)).map((i,k)=>rowHtml(i,!k)).join('');
 const counts=l=>Object.keys(CATS).map(k=>{const c=l.filter(i=>i.c===k).length;return c?`<span class="sq" style="background:var(${CATS[k][1]})"></span> ${c}`:''}).filter(Boolean).join(' ');
+const PEN='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zM20.7 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
+const recOf=i=>{let rc=RMAP[i.rc]||i.rc,rf=FMAP[i.rf]||i.rf;if(rc==='compliance'&&(rf==='Spray diary'||rf==='Fertiliser'))rc='sf';return{rc,rf}};
 const BIN='<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2zm-3 6h12l-1 12H7L6 9z"/></svg>';
-const tiles=edit=>{const L=bl();if(!L.length)return '<p class="hint">No blocks yet. Add your first block on the Blocks tab.</p>';
+const tilesMas=()=>{const L=bl(),col=[{h:0,a:[]},{h:0,a:[]}];
+L.forEach(n=>{const l=items.filter(i=>i.b===n&&!i.d),b=B[n],im=b.img,ar=blockAr(n);let bg='';
+if(im&&b.w&&b.h){const[x0,y0,bw,bh]=blockVb(n);bg=`<svg class="tbg" viewBox="${x0} ${y0} ${bw} ${bh}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="${im}" width="${b.w}" height="${b.h}"/></svg><span class="tsh"></span>`}
+const t=`<button class="tile${bg?' ti':''}"${ar?` style="aspect-ratio:${ar.toFixed(3)}"`:''} data-blk="${n}">${bg}<span class="tx"><b>${esc(bn(n))} →</b>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}</span></button>`;
+const c=col[1].h<col[0].h-1e-6?col[1]:col[0];c.a.push(`<div class="tw2">${t}</div>`);c.h+=(ar?1/ar:.7)+.08});
+return '<div class="tiles mas">'+col.map(c=>'<div class="tcol">'+c.a.join('')+'</div>').join('')+'</div>'};
+const tiles=edit=>{if(edit&&window.innerWidth<900&&bl().length)return tilesMas();return tilesFlat(edit)};
+const tilesFlat=edit=>{const L=bl();if(!L.length)return '<p class="hint">No blocks yet. Add your first block on the Blocks tab.</p>';
 return '<div class="tiles">'+L.map(n=>{const l=items.filter(i=>i.b===n&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88)),url('${im}') center/cover;color:#fff"`:'';
 const t=`<button class="tile"${st} data-blk="${n}"><b>${esc(bn(n))} →</b><span class="dkonly tbig">${l.length}<small> open jobs</small></span>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}<span class="dk tmeta">${B[n].rows||'?'} rows · ${B[n].bays||'?'} bays · ${l.length} open</span></button>`;
 return edit?`<div class="tw2">${t}</div>`:t}).join('')+'</div>'};
@@ -731,25 +807,33 @@ const lookupRate=p=>{const x=findProd(p);return (x&&x.r)||''},lookupWater=p=>{co
 const FERT_ONLY=/fertili[sz]|urea|nitrogen|potash|potassium|phosph|superphosphate|\bdap\b|\bnpk\b|\blime\b|dolomite|gypsum|manure|compost|blood and bone|bone meal|mussel shell|calcium nitrate|boron|epsom|magnesium sulph|top ?dress/i,BOTH_RE=/\bfish\b|seaweed|kelp|humic|humate|worm (juice|tea|cast)|compost tea|molasses|amino|hydrolysate|biostimulant|foliar feed/i,SPRAY_RE=/fungicide|insecticide|herbicide|botector|copper|zivo|bioprotect|pesticide|miticide|\boil\b|sulphur|kaolin|streptomycin|kasumin|surround/i;
 function fertKind(i){if(i.fk)return i.fk;if(typeof i.fert==='boolean')return i.fert?'fert':'spray';const t=(i.t||'')+' '+(i.prod||'');if(/fertili[sz]/i.test(t))return 'fert';const f=FERT_ONLY.test(t),b=BOTH_RE.test(t),s=SPRAY_RE.test(t);if(b)return 'ask';if(f&&s)return 'both';if(f)return 'fert';return 'spray'}
 const isFert=i=>fertKind(i)==='fert';
-function recRows(){const out=[];items.forEach(i=>{if(i.c==='spray'&&i.d){const k=fertKind(i),fl=k==='both'?['Spray diary','Fertiliser']:[k==='fert'?'Fertiliser':'Spray diary'];fl.forEach(rf=>out.push({id:i.id,rc:'sf',rf,date:iso(new Date(i.doneAt||i.id)),b:i.b,t:i.t,p:i.p,prod:i.prod,rate:i.rate||lookupRate(i.prod),water:i.water||lookupWater(i.prod)}))}
-else if(i.c==='rec'){let rc=RMAP[i.rc]||i.rc,rf=FMAP[i.rf]||i.rf;if(rc==='compliance'&&(rf==='Spray diary'||rf==='Fertiliser'))rc='sf';out.push({id:i.id,rc,rf,date:i.rdate||iso(new Date(i.id)),b:i.b,t:i.t,p:i.p})}});
+function recRows(){const out=[];items.forEach(i=>{if(i.c==='spray'&&i.d){const k=fertKind(i),fl=k==='both'?['Spray diary','Fertiliser']:[k==='fert'?'Fertiliser':'Spray diary'];fl.forEach(rf=>out.push({id:i.id,rc:'sf',rf,date:iso(new Date(i.doneAt||i.id)),b:i.b,r:i.r,y:i.y,t:i.t,p:i.p,prod:i.prod,rate:i.rate||lookupRate(i.prod),water:i.water||lookupWater(i.prod)}))}
+else if(i.c==='rec'){let rc=RMAP[i.rc]||i.rc,rf=FMAP[i.rf]||i.rf;if(rc==='compliance'&&(rf==='Spray diary'||rf==='Fertiliser'))rc='sf';out.push({id:i.id,rc,rf,date:i.rdate||iso(new Date(i.id)),b:i.b,r:i.r,y:i.y,t:i.t,p:i.p})}});
 return out.sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:b.id-a.id)}
 const recFOk=r=>(!recF.from||r.date>=recF.from)&&(!recF.to||r.date<=recF.to)&&(!recF.b||String(r.b)===recF.b)&&(!recF.q||((r.t||'')+' '+(r.prod||'')+' '+(r.rf||'')).toLowerCase().includes(recF.q.toLowerCase()));
 const exRows=()=>recRows().filter(r=>r.rc===recCat&&(recFolder==='all'||r.rf===recFolder)&&recFOk(r));
+const vfmt=d=>new Date(d+'T12:00:00').toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'});
+function vineCard(){const rows=recRows().filter(r=>r.rc==='vine');if(!rows.length)return '';
+const inner=fold('vine').map(f=>{const d=[...new Set(rows.filter(r=>r.rf===f).map(r=>r.date))].sort();return d.length?`<div class="fi"><span class="sq" style="background:var(--crew)"></span><span><b>${esc(f)}</b> — ${d.slice(-3).reverse().map(vfmt).join(', ')}${d.length>3?' (+'+(d.length-3)+' earlier)':''}</span></div>`:''}).join('');
+return inner?card('var(--crew)',`<h2>Season timeline</h2>${inner}`):''}
 function recHtml(){const all=recRows(),cat=all.filter(r=>r.rc===recCat),F=fold(recCat),rows=exRows(),dr=recDraft;
-let s=tip('records')+brandStrip()+demoFor('records',!recRows().length)+'<div class="rec"><div class="recl"><div class="aud">'+auditCard()+'</div>'+`<div class="chips catrow">${Object.keys(RC).map(k=>`<button class="chip ${recCat===k?'on':''}" data-rc="${k}"><span class="sq" style="background:${RC[k][1]}"></span>${RC[k][0]} ${all.filter(r=>r.rc===k).length}</button>`).join('')}<button class="chip" id="addc">+ Add</button></div>`;s+='</div><div class="recr">';
-s+=`<div class="chips"><button class="chip ${recFolder==='all'?'on':''}" data-rf="all">All</button>${F.map(f=>`<button class="chip ${recFolder===f?'on':''}" data-rf="${esc(f)}">${esc(f)} ${cat.filter(r=>r.rf===f).length}</button>`).join('')}<button class="chip" id="addf">+ Folder</button></div>`;
+let s=tip('records')+brandStrip()+demoFor('records',!recRows().length)+'<div class="rec"><div class="recl"><div class="aud">'+auditCard()+'</div>'+`<div class="rlabel">Category</div><div class="chips catrow wrap">${Object.keys(RC).map(k=>`<button class="chip ${recCat===k?'on':''}" data-rc="${k}"><span class="sq" style="background:${RC[k][1]}"></span>${RC[k][0]} ${all.filter(r=>r.rc===k).length}</button>`).join('')}<button class="chip" id="addc">+ Add</button><button class="chip" id="renc" aria-label="Rename this category">✎ Rename</button></div>`;s+='</div><div class="recr">';
+s+=`<div class="rlabel">Folder in ${esc(RC[recCat][0])}</div><div class="chips wrap"><button class="chip ${recFolder==='all'?'on':''}" data-rf="all">All</button>${F.map(f=>`<button class="chip ${recFolder===f?'on':''}" data-rf="${esc(f)}">${esc(f)} ${cat.filter(r=>r.rf===f).length}</button>`).join('')}<button class="chip" id="addf">+ Folder</button></div><div class="rhint">${F.length>1?'Tap a folder to switch: '+F.map(esc).join(' · '):'Tap + Folder to add your own.'}</div>`;
 const fon=!!(recF.from||recF.to||recF.b||recF.q);
 s+=`<div class="rfilt"><label>From<input type="date" data-rfl="from" value="${recF.from}"></label><label>To<input type="date" data-rfl="to" value="${recF.to}"></label><label>Block<select data-rfl="b"><option value="">All blocks</option>${bl().map(n=>`<option value="${n}" ${recF.b===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><label class="grow2">Search<input type="text" data-rfl="q" placeholder="Product, details…" value="${esc(recF.q)}"></label>${fon?'<button class="btn alt" id="rfclr">Clear filters</button>':''}</div><div class="rcount">${rows.length} record${rows.length===1?'':'s'}${fon?' (filtered)':''}</div>`;
 s+=`<div class="acts"><button class="btn" id="addr">+ Add record</button><button class="btn alt" id="xcopy">Copy for Excel</button><button class="btn alt" id="xlsx">${recFolder==='all'?'Excel per folder':'Download Excel'}</button><button class="btn alt" id="pdf">PDF of photos</button></div>`;
 if(recForm)s+=card(RC[recCat][1],`<h2>New ${RC[recCat][0].toLowerCase()} record</h2><div class="acts"><select id="rf2">${F.map(f=>`<option ${f===(dr.rf||(recFolder!=='all'?recFolder:F[0]))?'selected':''}>${esc(f)}</option>`).join('')}</select><input id="rd" type="date" value="${dr.rd||iso(new Date())}"><select id="rb"><option value="">No block</option>${bl().map(n=>`<option value="${n}" ${String(dr.rb)===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></div><div style="padding:0 0 6px"><input id="rt" type="text" placeholder="Details, e.g. PSA monitoring, 12 vines checked, no symptoms" value="${esc(dr.t||'')}"></div><div class="acts"><button class="btn alt" id="rph">${recPhoto?'Change photo':'Add photo'}</button>${recPhoto?'<img class="thumb" src="'+recPhoto+'" alt="Photo">':''}<button class="btn" id="rsave">Save record</button><button class="btn alt" id="rcancel">Cancel</button></div>`);
-const sfc=recCat==='sf';
+const sfc=recCat==='sf';if(recCat==='vine')s+=vineCard();
 s+=`<div class="tw"><table class="rt"><thead><tr><th>Date</th><th>Folder</th><th>Block</th>${sfc?'<th>Product</th><th>Rate</th><th>Water rate</th>':''}<th>Details</th><th>Photo</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.date}</td><td>${esc(r.rf||'')}</td><td>${r.b?esc(bn(r.b)):''}</td>${sfc?`<td>${esc(r.prod||'')}</td><td>${esc(r.rate||'')}</td><td>${esc(r.water||'')}</td>`:''}<td>${esc(r.t)}</td><td>${r.p?`<img class="thumb" src="${r.p}" alt="Photo">`:''}</td><td class="acell"><button class="edb" data-ed="${r.id}">✎ Edit</button><button class="x" data-x="${r.id}" aria-label="Delete">✕</button></td></tr>`).join('')||`<tr><td colspan="${sfc?9:6}" class="empty">Nothing in this folder yet. Tap + Add record, or log one by typing, like “monitoring PSA block 3, no symptoms”.</td></tr>`}</tbody></table></div>`;
 return s+'</div></div>'}
-const aoaS=rows=>[['Date','Folder','Block','Product','Rate','Water rate','Details','Has photo']].concat(rows.map(r=>[r.date,r.rf||'',r.b?bn(r.b):'',r.prod||'',r.rate||'',r.water||'',r.t,r.p?'Yes':'']));
-const aoaG=rows=>[['Date','Category','Folder','Block','Details','Has photo']].concat(rows.map(r=>[r.date,RC[r.rc]?RC[r.rc][0]:r.rc,r.rf||'',r.b?bn(r.b):'',r.t,r.p?'Yes':'']));
-const aoa=rows=>rows.length&&rows.every(r=>r.rc==='sf')?aoaS(rows):aoaG(rows);
-function dlXlsx(rows,fname,sheet){const ws=XLSX.utils.aoa_to_sheet(aoa(rows));ws['!cols']=rows.every(r=>r.rc==='sf')?[{wch:12},{wch:14},{wch:18},{wch:18},{wch:14},{wch:14},{wch:50},{wch:10}]:[{wch:12},{wch:18},{wch:20},{wch:18},{wch:60},{wch:10}];
+const _d=r=>r.date,_b=r=>r.b?bn(r.b):'',_t=r=>r.t,_p=r=>r.p?'Yes':'',_f=r=>r.rf||'',_r=r=>r.r||'',_y=r=>r.y||'';
+const SCH={sf:[['Date',_d,12],['Folder',_f,14],['Block',_b,18],['Product',r=>r.prod||'',18],['Rate',r=>r.rate||'',14],['Water rate',r=>r.water||'',14],['Details',_t,50],['Has photo',_p,10]],
+monitoring:[['Date',_d,12],['Type',_f,18],['Block',_b,18],['Row',_r,6],['Bay',_y,6],['Details',_t,60],['Has photo',_p,10]],
+vine:[['Date',_d,12],['Stage',_f,18],['Block',_b,18],['Row',_r,6],['Bay',_y,6],['Details',_t,60],['Has photo',_p,10]]};
+const SCHG=[['Date',_d,12],['Folder',_f,20],['Block',_b,18],['Details',_t,60],['Has photo',_p,10]];
+const schemaOf=rows=>{const k=rows.length&&rows.every(r=>r.rc===rows[0].rc)?rows[0].rc:null;return k&&SCH[k]?SCH[k]:SCHG};
+const aoa=rows=>{const sc=schemaOf(rows);return [sc.map(c=>c[0])].concat(rows.map(r=>sc.map(c=>c[1](r))))};
+function dlXlsx(rows,fname,sheet){const ws=XLSX.utils.aoa_to_sheet(aoa(rows));ws['!cols']=schemaOf(rows).map(c=>({wch:c[2]}));
 const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,String(sheet).replace(/[\\\/\?\*\[\]:]/g,' ').slice(0,31)||'Records');XLSX.writeFile(wb,fname)}
 function dlGroups(rows){if(!window.XLSX){toast('Excel tool did not load. Check your connection.');return}const g={};rows.forEach(r=>{const k=r.rc+'|'+(r.rf||'General');(g[k]=g[k]||[]).push(r)});const ks=Object.keys(g);if(!ks.length){toast('Nothing to download yet.');return}
 const sl=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-');
@@ -786,10 +870,12 @@ const c=document.createElement('canvas');c.width=Math.round(cw*sc);c.height=Math
 b.img=c.toDataURL('image/jpeg',.8);b.w=c.width;b.h=c.height;b.ang=ang;b.poly=R.map(p=>[(p[0]-x0)*sc/c.width,(p[1]-y0)*sc/c.height]);
 const px=b.poly.map(p=>p[0]),py=b.poly.map(p=>p[1]),ax=Math.min(...px),bx=Math.max(...px),ay=Math.min(...py),by=Math.max(...py);if(o.grid===false){b.grid=null;b.skipGrid=false}else{b.grid=b.landscape?[[ax,ay],[bx,ay],[ax,by]]:[[ax,ay],[ax,by],[bx,ay]];b.skipGrid=false}saveB()}
 const ADJ='<div class="adj"><span>Row spacing</span><button class="btn alt" data-adj="sp-">− Closer</button><button class="btn alt" data-adj="sp+">Further +</button></div><div class="adj"><span>Move rows</span><button class="btn alt" data-adj="l">←</button><button class="btn alt" data-adj="r">→</button><button class="btn alt" data-adj="u">↑</button><button class="btn alt" data-adj="d">↓</button></div>';
-function adjGrid(n,k){const b=B[n];if(!b||!b.grid)return;const[P1,P2,P3]=b.grid,st=.004;let g;
-if(k==='l'||k==='r'||k==='u'||k==='d'){const dx=k==='l'?-st:k==='r'?st:0,dy=k==='u'?-st:k==='d'?st:0;g=b.grid.map(p=>[p[0]+dx,p[1]+dy])}
-else{const f=k==='sp+'?1.01:1/1.01,v=[P3[0]-P1[0],P3[1]-P1[1]],c=[P1[0]+v[0]/2,P1[1]+v[1]/2],nv=[v[0]*f,v[1]*f],n1=[c[0]-nv[0]/2,c[1]-nv[1]/2],u=[P2[0]-P1[0],P2[1]-P1[1]];g=[n1,[n1[0]+u[0],n1[1]+u[1]],[n1[0]+nv[0],n1[1]+nv[1]]]}
+function adjGrid(n,k){const b=B[n];if(!b||!b.grid)return;const[P1,P2,P3]=b.grid;let g;
+if(/^[lrud]$/i.test(k)){const st=k===k.toUpperCase()?.02:.004,c=k.toLowerCase(),dx=c==='l'?-st:c==='r'?st:0,dy=c==='u'?-st:c==='d'?st:0;g=b.grid.map(p=>[p[0]+dx,p[1]+dy])}
+else{const f=k==='sp+'?1.01:k==='sp-'?1/1.01:k==='sp+5'?1.05:1/1.05,v=[P3[0]-P1[0],P3[1]-P1[1]],c=[P1[0]+v[0]/2,P1[1]+v[1]/2],nv=[v[0]*f,v[1]*f],n1=[c[0]-nv[0]/2,c[1]-nv[1]/2],u=[P2[0]-P1[0],P2[1]-P1[1]];g=[n1,[n1[0]+u[0],n1[1]+u[1]],[n1[0]+nv[0],n1[1]+nv[1]]]}
 b.grid=g;const s=$('#bsvg');if(s)s.outerHTML=imgSvg(n,false)}
+function adjPanel(n){const b=B[n]||{},A=(k,t,l)=>`<button class="btn alt" data-adj="${k}" aria-label="${l}">${t}</button>`;
+return `<div id="adjov" role="dialog" aria-label="Line up your rows"><div class="adjh"><span>${esc(bn(n))}: line the dashes up with your rows</span><button class="btn" id="strok" style="flex:none;min-height:38px;padding:4px 14px">Looks good</button></div>${imgSvg(n,false)}<div class="ar"><span>Rotate</span><button class="btn alt" id="rotl5">↺ 5°</button><button class="btn alt" id="rotl">↺ 1°</button><button class="btn alt" id="rotr">1° ↻</button><button class="btn alt" id="rotr5">5° ↻</button></div><div class="ar"><span>Row spacing</span>${A('sp-5','− 5%','Rows much closer')}${A('sp-','− 1%','Rows slightly closer')}${A('sp+','+ 1%','Rows slightly wider apart')}${A('sp+5','+ 5%','Rows much wider apart')}</div><div class="ar"><span>Move left or right</span>${A('L','◀◀','Move far left')}${A('l','◀','Move left')}${A('r','▶','Move right')}${A('R','▶▶','Move far right')}</div><div class="ar"><span>Move up or down</span>${A('U','▲▲','Move far up')}${A('u','▲','Move up')}${A('d','▼','Move down')}${A('D','▼▼','Move far down')}</div><div class="ar"><span>Rows run</span><button class="btn alt" id="orient">${b.landscape?'Across':'Up/down'} ⇄</button><button class="btn alt" id="flipx">Flip rows</button><button class="btn alt" id="flipy">Flip bays</button><button class="btn alt" id="adjreset">Reset</button></div></div>`}
 function refit(n){const b=B[n],px=b.poly.map(p=>p[0]),py=b.poly.map(p=>p[1]),ax=Math.min(...px),bx=Math.max(...px),ay=Math.min(...py),by=Math.max(...py);b.grid=b.landscape?[[ax,ay],[bx,ay],[ax,by]]:[[ax,ay],[ax,by],[bx,ay]];b.skipGrid=false;saveB()}
 async function straighten(n){toast('Finding the rows…');let r=null;try{r=await autoAngle(B[n])}catch(e){}let ang=r?Math.round(r.d*2)/2:0;if(Math.abs(ang)>45){ang=ang>0?ang-90:ang+90;B[n].landscape=true}else B[n].landscape=false;await applyRot(n,ang);strPrev=n;imgOpen=true;render();
 toast(r&&r.coh>.15?'Rows straightened. Check the dashed lines, then press Looks good.':'Could not find clear rows. Use the turn buttons to line them up.')}
@@ -801,26 +887,27 @@ if(edit&&dmode==='poly'&&P.length){const d=P.map(p=>p.join(',')).join(' ');s+=P.
 if(edit&&dmode==='grid'){if(P.length>1)s+=`<line x1="${P[0][0]}" y1="${P[0][1]}" x2="${P[1][0]}" y2="${P[1][1]}" stroke="#ff6b2c" stroke-width="${sw}"/>`;if(P.length>2)s+=`<line x1="${P[0][0]}" y1="${P[0][1]}" x2="${P[2][0]}" y2="${P[2][1]}" stroke="#ff6b2c" stroke-width="${sw}"/>`}
 if(edit)P.forEach((p,k)=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${W/60}" fill="#ff6b2c"/>`+(dmode==='grid'?`<text x="${p[0]+W/50}" y="${p[1]}" fill="#fff" stroke="#000" stroke-width="${W/300}" paint-order="stroke" font-size="${W/22}" font-weight="800">${k+1}</text>`:''));
 if(!edit&&b.grid){const R=b.rows||60,Y=b.bays||30,st=Math.max(1,Math.round(R/10));for(let r=1;r<=R;r+=st){const a=gpos(n,r,1),c=gpos(n,r,Y);s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${c[0]}" y2="${c[1]}" stroke="rgba(255,255,255,.6)" stroke-width="${sw/2}" stroke-dasharray="${sw*3} ${sw*2}"/>`}}
-if(!edit&&b.grid&&(strPrev===n||imgSet)){const a=gpos(n,1,1);if(a)s+=`<circle cx="${a[0]}" cy="${a[1]}" r="${W/70}" fill="#ff6b2c"/><text x="${a[0]+W/60}" y="${a[1]+W/60}" fill="#fff" stroke="#000" stroke-width="${W/300}" paint-order="stroke" font-size="${W/24}" font-weight="800">Row 1, bay 1</text>`}
+if(!edit&&b.grid&&(strPrev===n||imgSet)){const a=gpos(n,1,1);if(a){const fs=W/26,lab='Row 1, bay 1',lw=lab.length*fs*.56+W/30,lh=fs*1.6;let lx=a[0]+W/50,ly=a[1]-lh/2;if(lx+lw>W-4)lx=a[0]-W/50-lw;if(lx<4)lx=4;if(ly<4)ly=4;if(ly+lh>H-4)ly=H-4-lh;
+s+=`<circle cx="${a[0]}" cy="${a[1]}" r="${W/70}" fill="#ff6b2c" stroke="#fff" stroke-width="${W/400}"/><rect x="${lx}" y="${ly}" width="${lw}" height="${lh}" fill="rgba(0,0,0,.72)"/><text x="${lx+W/60}" y="${ly+lh*.7}" fill="#fff" font-size="${fs}" font-weight="800">${lab}</text>`}}
 if(!edit)s+=pinsOf(n,W/45);
 return s+'</svg>'}
 const imgDone=n=>{const b=B[n];return !!(b&&b.img&&b.poly&&(b.grid||b.skipGrid)&&drawing!==n)};
 function imagery(n){const b=B[n]||{};let s;
 if(!b.img)s=`<p style="margin:4px 0 10px">Add real imagery of this block. 1. Open Maps in satellite view and find the block. 2. Take a screenshot. 3. Upload it here. Then you will mark the edges and roughly where the rows run.</p><div class="acts"><a class="btn" href="${isIOS?'https://maps.apple.com/?t=k':'https://www.google.com/maps/@?api=1&map_action=map&basemap=satellite'}" target="_blank" rel="noopener">Open Maps</a><button class="btn" id="newimg">Upload screenshot</button></div>`;
 else if(drawing===n)s=`<p class="hint" style="margin:0 0 8px">${dmode==='poly'?'Tap the corners of your block, going around the edge. You need at least 3.':'Tap 3 points: 1) the start of the first row, 2) the end of that same row, 3) the start of the last row.'}</p>`+imgSvg(n,true)+`<div class="acts"><button class="btn" id="finish">${dmode==='poly'&&!b.grid?'Next':'Done'}</button><button class="btn" id="undopt">Undo point</button><button class="btn" id="cancel">Cancel</button></div>`;
-else if(strPrev===n)s=imgSvg(n,false)+`<p style="margin:8px 0 0">The dashed lines should run along your rows. “Row 1, bay 1” should be where your numbering starts. Flip it if not.</p><div class="acts"><button class="btn alt" id="rotl5">↺ 5°</button><button class="btn alt" id="rotl">↺ 1°</button><button class="btn alt" id="rotr">1° ↻</button><button class="btn alt" id="rotr5">5° ↻</button></div>${ADJ}<div class="acts"><button class="btn alt" id="orient">Rows run: ${b.landscape?'across':'up and down'} (switch)</button><button class="btn alt" id="flipx">Flip row order</button><button class="btn alt" id="flipy">Flip bay order</button><button class="btn" id="strok">Looks good</button></div>`;
+else if(strPrev===n)s='<p class="hint" style="margin:0">Lining up your rows…</p>';
 else if(imgDone(n)&&!imgOpen)s=`<button class="ban" id="imgopen" style="background-image:linear-gradient(90deg,rgba(8,28,28,.75),rgba(8,28,28,.1)),url('${b.img}')"><span>Block imagery</span><span>▾ Expand</span></button>`;
 else{s=imgSvg(n,false);
 if(!b.poly)s+=`<p style="margin:8px 0 0">Next: mark the edges of your block.</p><div class="acts"><button class="btn" id="redraw">Mark edges</button><button class="btn alt" id="newimg">New image</button></div>`;
 else if(!b.grid&&!b.skipGrid)s+=`<p style="margin:8px 0 0">Next: straighten the image so your rows run up and down, and fit the row grid. This happens automatically.</p><div class="acts"><button class="btn" id="straight">Straighten rows</button><button class="btn alt" id="regrid">Mark rows by hand</button><button class="btn alt" id="skiprows">Skip</button></div>`;
-else s+=imgSet?`${ADJ}<div class="acts"><button class="btn" id="straight">Straighten rows</button><button class="btn" id="orient">Rows run: ${b.landscape?'across':'up and down'} (switch)</button><button class="btn" id="redraw">Redraw edges</button><button class="btn" id="regrid">Redraw rows</button><button class="btn" id="newimg">New image</button><button class="btn alt" id="rmimg">Remove image</button></div>`:`<div class="acts"><button class="btn alt" id="imgclose">▴ Collapse</button><button class="btn" id="imgset">Settings</button></div>`}
+else s+=imgSet?`<div class="acts">${b.grid?'<button class="btn" id="adjrows">Adjust rows</button>':''}<button class="btn" id="straight">Straighten rows</button><button class="btn" id="orient">Rows run: ${b.landscape?'across':'up and down'} (switch)</button><button class="btn" id="redraw">Redraw edges</button><button class="btn" id="regrid">Redraw rows</button><button class="btn" id="newimg">New image</button><button class="btn alt" id="rmimg">Remove image</button></div>`:`<div class="acts"><button class="btn alt" id="imgclose">▴ Collapse</button><button class="btn" id="imgset">Settings</button></div>`}
 let cd=card('var(--deep)','<h2>Imagery</h2>'+s).replace('class="card cut"','class="card cut imgcard"');if(dropN===n){cd=cd.replace('imgcard"','imgcard drop"');dropN=null}return cd}
 function blockPage(n){const b=B[n]||{},all=items.filter(i=>i.b===n),op=all.filter(i=>!i.d),dated=op.filter(i=>i.due).sort((a,c)=>a.due<c.due?-1:1),und=op.filter(i=>!i.due),sp=all.filter(i=>i.c==='spray'&&i.d);
 return `<button class="back" data-blk="0">← All blocks</button><div class="dn"><div class="hd" id="bname" style="padding-left:12px">${esc(bn(n))} <button class="x" id="rnb" aria-label="Rename block" style="color:#fff;min-width:44px">✎</button></div></div>`+tip('blockpage')+'<div class="bp">'+(imgDone(n)?'':imagery(n))+
 card('var(--hot)',`<h2>Coming up<em>${dated.length}</em></h2>`+(dated.length?list(dated):'<div class="empty">No dated jobs for this block.</div>'))+
 card('var(--todo)',`<h2>Open lists<em>${und.length}</em></h2>`+(und.length?list(und):'<div class="empty">Nothing open without a date.</div>'))+
 card('var(--spray)',`<h2>Spray records<em>${sp.length}</em></h2>`+(sp.length?list(sp):'<div class="empty">No finished sprays for this block yet.</div>'))+(imgDone(n)?imagery(n):'')+
-card('var(--soft)',`<h2>Block settings</h2><p class="hint" style="margin:0 0 6px">Not the same across the block? Enter the average. A bay is the gap between two posts along a row.</p><div class="acts"><label>Rows <input id="rws" type="number" min="1" value="${b.rows||60}"></label><label>Bays per row <input id="bys" type="number" min="1" value="${b.bays||30}"></label><button class="btn" id="bsave">Save</button></div>`)+'<div class="dz"><button class="btn danger" id="bdel">Delete block</button></div>'+'</div>'}
+card('var(--soft)',`<h2>Block settings</h2><p class="hint" style="margin:0 0 6px">Not the same across the block? Enter the average. A bay is the gap between two posts along a row.</p><div class="acts"><label>Rows <input id="rws" type="number" min="1" value="${b.rows||60}"></label><label>Bays per row <input id="bys" type="number" min="1" value="${b.bays||30}"></label><button class="btn" id="bsave">Save</button></div>`)+'<div class="dz"><button class="btn danger" id="bdel">Delete block</button></div>'+'</div>'+(strPrev===n&&B[n]&&B[n].img?adjPanel(n):'')}
 function bind(){const A=(s,f)=>document.querySelectorAll(s).forEach(f);
 A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
 A('[data-d]',b=>b.onclick=()=>{const i=items.find(a=>a.id==b.dataset.d);i.d=!i.d;i.doneAt=i.d?Date.now():null;popId=i.d?i.id:null;save();render();popId=null;if(i.d&&i.c==='spray'){toast('Saved to Records');if(fertKind(i)==='ask')setTimeout(()=>showFertAsk(i.id),500)}});
@@ -835,7 +922,7 @@ const on=(id,f)=>{const e=document.getElementById(id);if(e)e.onclick=f};
 on('imgopen',()=>{imgOpen=true;render()});on('imgclose',()=>{imgOpen=false;imgSet=false;render()});on('imgset',()=>{imgSet=true;render()});on('rmimg',()=>{const b=B[blk];B[blk]={rows:b.rows,bays:b.bays};saveB();imgSet=false;render()});on('newimg',()=>$('#bfile').click());on('redraw',()=>{drawing=blk;dmode='poly';pts=[];render()});on('regrid',()=>{drawing=blk;dmode='grid';pts=[];render()});on('skiprows',()=>{B[blk].skipGrid=true;saveB();render()});
 A('[data-adj]',b=>{let t1,t2,moved=false;const go=()=>{moved=true;adjGrid(blk,b.dataset.adj)},end=()=>{clearTimeout(t1);clearInterval(t2);if(moved){moved=false;saveB()}};b.onpointerdown=e=>{e.preventDefault();go();t1=setTimeout(()=>{t2=setInterval(go,70)},380)};b.onpointerup=end;b.onpointerleave=end;b.onpointercancel=end;b.onclick=e=>e.preventDefault()});
 on('straight',()=>straighten(blk));on('rotl',()=>nudge(blk,-1));on('rotr',()=>nudge(blk,1));on('rotl5',()=>nudge(blk,-5));on('rotr5',()=>nudge(blk,5));
-on('strok',()=>{strPrev=null;imgOpen=false;render()});on('flipx',()=>{B[blk].flipX=!B[blk].flipX;saveB();render()});on('flipy',()=>{B[blk].flipY=!B[blk].flipY;saveB();render()});
+on('strok',()=>{strPrev=null;imgOpen=false;render()});on('adjrows',()=>{strPrev=blk;imgOpen=true;render()});on('adjreset',()=>{refit(blk);render()});on('flipx',()=>{B[blk].flipX=!B[blk].flipX;saveB();render()});on('flipy',()=>{B[blk].flipY=!B[blk].flipY;saveB();render()});
 const bnm=document.getElementById('bname');if(bnm)bnm.ondblclick=()=>showRename(blk);on('rnb',()=>showRename(blk));
 on('bsave',()=>{const b=B[blk];b.rows=Math.max(1,parseInt($('#rws').value,10)||60);b.bays=Math.max(1,parseInt($('#bys').value,10)||30);b.cfg=true;saveB();render();toast('Block settings saved.')});
 on('bdel',()=>confirmDel(blk));
@@ -860,7 +947,12 @@ on('addc',()=>{const nm=(prompt('Name your new category, for example: Harvest')|
 const k='c_'+nm.toLowerCase().replace(/[^a-z0-9]+/g,'_'),B0=B[0]=B[0]||{};(B0.cats=B0.cats||[]).push({k,n:nm});saveB();syncCats();recCat=k;recFolder='all';render()});
 on('addf',()=>{const nm=(prompt('Name your new folder, for example: Pollen')||'').trim();if(!nm)return;if(fold(recCat).some(f=>f.toLowerCase()===nm.toLowerCase())){toast('That folder already exists.');return}
 const B0=B[0]=B[0]||{};B0.folders=B0.folders||{};(B0.folders[recCat]=B0.folders[recCat]||[]).push(nm);saveB();recFolder=nm;render()});
-on('addprod',showProd);on('todiary',()=>{recCat='sf';recFolder='Spray diary';setView('records')});on('padd',()=>{const n=$('#pnm').value.trim();if(!n)return;const B0=B[0]=B[0]||{};(B0.products=B0.products||[]).push({n,r:$('#prt').value.trim(),w:$('#pwt').value.trim()});saveB();render()});A('[data-pr]',b=>b.onclick=()=>{B[0].products.splice(+b.dataset.pr,1);saveB();render()});A('[data-pe]',b=>b.onclick=()=>showProd(null,+b.dataset.pe));A('[data-ed]',b=>b.onclick=()=>showEdit(+b.dataset.ed));
+on('addprod',showProd);on('todiary',()=>{recCat='sf';recFolder='Spray diary';setView('records')});on('padd',()=>{const n=$('#pnm').value.trim();if(!n)return;const B0=B[0]=B[0]||{};(B0.products=B0.products||[]).push({n,r:$('#prt').value.trim(),w:$('#pwt').value.trim()});saveB();render()});A('[data-pr]',b=>b.onclick=()=>{B[0].products.splice(+b.dataset.pr,1);saveB();render()});A('[data-pe]',b=>b.onclick=()=>showProd(null,+b.dataset.pe));A('[data-ed]',b=>b.onclick=()=>showEdit(+b.dataset.ed));A('[data-ej]',b=>b.onclick=()=>editAny(+b.dataset.ej));
+on('nexp',()=>{notifOpen=!notifOpen;render()});
+on('renc',()=>{const cur=RC[recCat][0],nm=(prompt('Rename this category',cur)||'').trim();if(!nm||nm===cur)return;
+if(Object.entries(RC).some(([k,v])=>k!==recCat&&v[0].toLowerCase()===nm.toLowerCase())){toast('That name is already used.');return}
+const B0=B[0]=B[0]||{};if(recCat.startsWith('c_')){const c=(B0.cats||[]).find(x=>x.k===recCat);if(c)c.n=nm}else{B0.rcn=B0.rcn||{};if(nm===RC0[recCat])delete B0.rcn[recCat];else B0.rcn[recCat]=nm}
+saveB();render();toast('Renamed. Your records stay in it.')});
 on('bizsave',()=>{const B0=B[0]=B[0]||{};B0.biz=$('#biz').value.trim();saveB();render();toast('Saved.')});
 on('reset',()=>{if((prompt('This erases ALL your logs, blocks, folders and settings. Type RESET to confirm.')||'').trim().toUpperCase()!=='RESET')return;items=[];B={};resetCats();seen={};wr(SK,seen);sel=null;last=null;blk=null;filter='all';recCat='sf';recFolder='all';recForm=false;view='home';save();saveB();render();toast('Everything was reset.');openOb()});
 on('lp',()=>legal('Privacy'));on('ld',()=>legal('Disclaimer'));
