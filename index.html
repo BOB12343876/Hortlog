@@ -327,10 +327,32 @@ textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .alertb{display:flex;align-items:flex-start;gap:10px;background:var(--psa);color:#fff;padding:12px 8px 12px 16px;margin:0 0 10px}
 .alertb span{flex:1;font-weight:600}.alertb b{display:block;font:800 22px 'Barlow Condensed',sans-serif;letter-spacing:.02em}
 .alertb button{background:none;border:0;color:#fff;font:800 22px sans-serif;min-width:44px;min-height:44px}
-#orq,#spw,#bkq,#nmq{z-index:11}
+#orq,#spw,#bkq,#nmq,#invq{z-index:11}
 .fi select{max-width:150px;margin-left:auto}.fi .pill{margin-left:auto}
 .edf .rhint{margin:4px 0}
 #tbox .fi{gap:8px;align-items:center}#tbox .fi small{display:block;margin:0;overflow-wrap:anywhere}#tbox .fi select{max-width:128px;flex:none}#tbox .fi .edb{flex:none}
+#prevbar{position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:12;background:var(--hot);color:#fff;border:0;padding:8px 14px;font:800 15px 'Barlow Condensed',sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+
+/* v30 team */
+.teamb{display:none}body.roles .teamb{display:inline-block}
+.tab.tteam{display:none}
+@media (min-width:900px){body.roles .tab.tteam{display:block}body.roles .teamb{display:none}}
+.teampg{grid-column:1/-1}
+.teamhero{background:var(--hot);color:#fff;padding:16px 18px;margin:0 0 12px}
+.teamhero h2{font:800 32px 'Barlow Condensed',sans-serif;margin:0 0 4px;color:#fff}.teamhero p{margin:0;font-weight:600}
+.teamhero.calm{background:var(--deep)}
+.tcols{display:block}
+@media (min-width:900px){.tcols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}}
+.teamcta{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--hot);color:#fff;padding:14px 8px 14px 16px;margin:0 0 10px;flex-wrap:wrap}
+.teamcta b{display:block;font:800 26px 'Barlow Condensed',sans-serif}.teamcta span{font-weight:600;display:block}
+.teamcta .btn{background:#fff;color:var(--deep);border-color:#fff}
+.teamcta .x{color:#fff}
+.teamcta.small{background:var(--card);color:var(--ink);border-left:6px solid var(--crew)}
+.teamcta.small .btn{background:transparent;color:var(--ink);border-color:var(--deep)}
+.rolegd .fi{align-items:flex-start;gap:10px}.rolegd .fi b{flex:0 0 112px}.rolegd .fi span{flex:1;font-size:15px}
+ul.tw{margin:8px 0 12px;padding-left:20px}ul.tw li{margin:0 0 6px}
+#teampg .fi{gap:8px;align-items:center}#teampg .fi small{display:block;margin:0;overflow-wrap:anywhere}#teampg .fi select{max-width:150px;flex:none}#teampg .fi .edb{flex:none}#teampg .rolegd .fi{align-items:flex-start}
+details.tset summary{cursor:pointer;font:800 20px 'Barlow Condensed',sans-serif;padding:6px 0}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -339,8 +361,8 @@ textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 </head>
 <body>
 <header>
-<div class="top"><span class="brand" id="brand" role="button" tabindex="0" aria-label="Home"><h1>Hort<i>log</i></h1></span><span class="hdr-r"><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="recb" class="recb">Records</button></span></div>
-<div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab" data-v="lists">Lists</button></div>
+<div class="top"><span class="brand" id="brand" role="button" tabindex="0" aria-label="Home"><h1>Hort<i>log</i></h1></span><span class="hdr-r"><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="teamb" class="recb teamb">Team</button><button id="recb" class="recb">Records</button></span></div>
+<div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab" data-v="lists">Lists</button><button class="tab tteam" data-v="team">Team</button></div>
 </header>
 <main id="main"></main>
 <div id="toast"></div>
@@ -353,7 +375,7 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY);
 const VAPID_PUBLIC='BCfJDZtvSsJ70BqWbqitJ3C53ctfzCnZgPQHzvDroznZcFsiRa8GzSWxWrq4IMN32cPhaLeThuO83wyI2c4jgNw';
 const KEY='hortlog.v1',BK='hortlog.blocks',SK='hortlog.seen';
 const CATS={psa:['PSA','--psa'],dead:['Dead vine','--dead'],buy:['To buy','--buy'],todo:['To do','--todo'],crew:['Crew jobs','--crew'],meet:['Meetings','--bio'],spray:['Spray','--spray'],rec:['Record','--note'],note:['Note','--note']};
-const VER='28',NEWS=['Teams: invite staff and give each person a role (Settings, Your orchard).','Everyone in the orchard is alerted when spraying or spreading is planned or done today.','Your records stay yours. Existing accounts become the Owner automatically.'];
+const VER='30',NEWS=['New Team page: invite people, set roles, see who can do what.','Invitation emails now carry your orchard name and a Hortlog look.','Team button in the header on phones, a Team tab on computers.'];
 const NUM={one:1,two:2,three:3,four:4};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -365,10 +387,10 @@ function starter(){const t=new Date();t.setDate(t.getDate()+1);return [{id:1,c:'
 let items=[],B={},seen=rd(SK,{}),U=null,synced={},syncedB={},pending=false,syncMsg='',view='home',filter='all',sel=null,last=null,blk=null,drawing=null,pts=[],day=iso(new Date()),AI=null,DL=null,canImg=false,tt,popId=null,imgSet=false,dropN=null,imgOpen=false,loaded=false,dmode='poly',recF={from:'',to:'',b:'',q:''},calM=iso(new Date()).slice(0,7),recCat='sf',recFolder='all',recForm=false,recPhoto=null,recDraft={},strPrev=null,moodPend=null,moodTimer=null,apSel={compliance:1,monitoring:1,induction:1,biodiversity:1},apFrom=iso(new Date(Date.now()-365*864e5)),apTo=iso(new Date());
 
 // ---- roles and orchards (active only after the Supabase migration has been run) ----
-let ROLES=false,OID=null,ORCH=[],ROLE='',MEMBERS=[],ALERTS=[],PROF={},AUTH={},newOrchardName='',joinedMsg='',toasted={};
+let teamShown=false,openCounted=false,PREV='',ROLES=false,OID=null,ORCH=[],ROLE='',MEMBERS=[],ALERTS=[],PROF={},AUTH={},newOrchardName='',joinedMsg='',toasted={};
 let alertSeen=(()=>{try{return JSON.parse(localStorage.getItem('hortlog.alertseen')||'{}')}catch(e){return {}}})();
 const RLAB={owner:'Owner',manager:'Manager',supervisor:'Supervisor',worker:'Orchard worker',contractor:'Contractor',other:'Other'};
-const R=()=>ROLES?ROLE:'owner';
+const R=()=>ROLES?(PREV||ROLE):'owner';
 const isMgr=()=>['owner','manager'].includes(R()),canBlk=()=>['owner','manager','supervisor'].includes(R()),canExp=()=>canBlk(),canWrite=()=>R()!=='other',seesSpray=()=>R()!=='contractor';
 const mineI=i=>!ROLES||(AUTH[i.id]||(U&&U.id))===(U&&U.id);
 const finishedI=i=>i.c==='rec'||(i.c==='spray'&&i.d);
@@ -406,7 +428,8 @@ const mine=ORCH.find(x=>x.orchard_id===o)||ORCH[0];OID=mine.orchard_id;ROLE=mine
 try{localStorage.setItem('hortlog.oid',OID);localStorage.setItem(ck,JSON.stringify({on:true,orch:ORCH,oid:OID}))}catch(e){}
 if(!seesSpray()&&recCat==='sf')recCat='compliance';
 return 'ok'}
-function rolesReset(){ROLES=false;OID=null;ORCH=[];ROLE='';MEMBERS=[];ALERTS=[];PROF={};AUTH={}}
+function rolesReset(){PREV='';ROLES=false;OID=null;ORCH=[];ROLE='';MEMBERS=[];ALERTS=[];PROF={};AUTH={}}
+function prevBar(){let e=$('#prevbar');if(!PREV){if(e)e.remove();return}if(!e){e=document.body.appendChild(Object.assign(document.createElement('button'),{id:'prevbar'}));e.onclick=()=>{PREV='';render()}}e.textContent='Previewing as '+(RLAB[PREV]||PREV)+' · tap to exit'}
 function modal(id,html){const o=$('#'+id);if(o)o.remove();const e=document.body.appendChild(Object.assign(document.createElement('div'),{id,className:'ov'}));e.innerHTML=html;return e}
 function showJoin(forceOwner){const meta=(U&&U.user_metadata)||{},req=meta.requested_role||'',own=forceOwner===true||req==='owner'||req==='manager';
 const e=modal('orq',`<div class="box cut"><h2>${own?'Create your orchard':'Waiting for your invitation'}</h2>`+(own?`<p>Set up the orchard you run. You can invite your team afterwards.</p><div class="edf"><label>Orchard name<input id="orn" type="text" placeholder="e.g. Green Acres Kiwifruit" autocomplete="organization"></label><label>Your name<input id="oyn" type="text" value="${esc(meta.full_name||'')}" autocomplete="name"></label></div><div class="acts"><button class="btn" id="orc">Create orchard</button></div>`:`<p>Ask your owner or manager to invite <b>${esc(U.email)}</b> in Hortlog. When they do, open the email they send you and sign in, or tap Check again.</p><div class="acts"><button class="btn" id="orchk">Check again</button></div><button class="lnk" id="orown">I run my own orchard</button>`)+`<div class="acts"><button class="btn alt" id="orout">Log out</button></div></div>`);
@@ -417,24 +440,44 @@ function showSetPw(){if($('#spw'))return;const me=MEMBERS.find(m=>m.user_id===U.
 const e=modal('spw',`<div class="box cut"><h2>Welcome to ${esc(o.name||'the orchard')}</h2><p>You have been added as <b>${RLAB[ROLE]||''}</b>. Choose your name and a password so you can log in next time.</p><div class="edf"><label>Your name<input id="spn" type="text" value="${esc(me.full_name||'')}" autocomplete="name"></label><label>Password<input id="spp" type="password" placeholder="6+ characters" autocomplete="new-password"></label></div><div id="spm" class="hint"></div><div class="acts"><button class="btn" id="sps">Save and continue</button></div></div>`);
 $('#sps').onclick=async()=>{const n=$('#spn').value.trim(),p=$('#spp').value;if(!n){$('#spm').textContent='Add your name.';return}if(p.length<6){$('#spm').textContent='Use at least 6 characters.';return}
 const r=await sb.auth.updateUser({password:p,data:{full_name:n}});if(r.error){$('#spm').textContent=r.error.message;return}await sb.rpc('set_my_name',{o:OID,n});seen.pwset=1;seen.nameAsked=1;wr(SK,seen);e.remove();await rolesRefresh();render();toast('You are all set.')}}
-function maybeAskName(){if(!ROLES||seen.nameAsked)return;const me=ORCH.find(x=>x.orchard_id===OID)||{};if(me.full_name){seen.nameAsked=1;wr(SK,seen);return}
-setTimeout(()=>{if(busy()||$('#nmq'))return;const e=modal('nmq',`<div class="box cut"><h2>What is your name?</h2><p>Your team will see this next to the records you log.</p><input id="nmi" type="text" placeholder="Your name" autocomplete="name"><div class="acts"><button class="btn" id="nms">Save</button><button class="btn alt" id="nmk">Not now</button></div></div>`);
+function goInvite(){setView('team');setTimeout(()=>{const x=$('#iem');if(x){x.scrollIntoView({block:'center'});x.focus()}},1200)}
+function teamWelcome(needName){if(teamShown)return;teamShown=true;const me=ORCH.find(x=>x.orchard_id===OID)||{};
+const e=modal('nmq',`<div class="box cut"><h2>Bring your team in</h2><p>Hortlog works best when everyone logs to the same orchard.</p><ul class="tw"><li><b>Invite people</b> by email or a link.</li><li><b>Give each person a role:</b> Manager, Supervisor, Worker or Contractor.</li><li><b>Everyone is alerted</b> when spraying is happening today.</li></ul>${needName?'<input id="nmi" type="text" placeholder="Your name" autocomplete="name">':''}<div class="acts"><button class="btn" id="nmt">Invite my team</button><button class="btn alt" id="nmk">Later</button></div><p class="hint">You are the Owner of <b>${esc(me.name||'your orchard')}</b>. You can find this any time under Team.</p></div>`);
+const done=async go=>{const n=needName?$('#nmi').value.trim():'';if(n){await sb.rpc('set_my_name',{o:OID,n});me.full_name=n;seen.nameAsked=1}seen.teamWelcome=1;wr(SK,seen);e.remove();rolesRefresh().then(()=>render());if(go)goInvite()};
+$('#nmk').onclick=()=>done(false);$('#nmt').onclick=()=>done(true)}
+function maybeAskName(){if(!ROLES)return;const me0=ORCH.find(x=>x.orchard_id===OID)||{},solo=()=>isMgr()&&MEMBERS.length<2;
+if(!(solo()&&!seen.teamWelcome)&&(me0.full_name||seen.nameAsked))return;
+let tries=0;const tm=setInterval(()=>{if(++tries>90||!ROLES||!U){clearInterval(tm);return}if(busy())return;clearInterval(tm);
+const me=ORCH.find(x=>x.orchard_id===OID)||{};
+if(solo()&&!seen.teamWelcome){teamWelcome(!me.full_name);return}
+if(me.full_name||seen.nameAsked)return;
+const e=modal('nmq',`<div class="box cut"><h2>What is your name?</h2><p>Your team will see this next to the records you log.</p><input id="nmi" type="text" placeholder="Your name" autocomplete="name"><div class="acts"><button class="btn" id="nms">Save</button><button class="btn alt" id="nmk">Not now</button></div></div>`);
 $('#nmk').onclick=()=>{seen.nameAsked=1;wr(SK,seen);e.remove()};$('#nms').onclick=async()=>{const n=$('#nmi').value.trim();if(!n)return;await sb.rpc('set_my_name',{o:OID,n});me.full_name=n;seen.nameAsked=1;wr(SK,seen);e.remove();rolesRefresh().then(()=>render())}},1500)}
+function maybeInviteNudge(){if(!ROLES||!isMgr()||MEMBERS.length>1)return;const n=seen.opens||0,key=n>=30&&!seen.inv30?'inv30':n>=10&&!seen.inv10?'inv10':'';if(!key)return;
+let tries=0;const tm=setInterval(()=>{if(++tries>90||!ROLES||!U||teamShown||MEMBERS.length>1){clearInterval(tm);return}if(busy())return;clearInterval(tm);teamShown=true;
+const e=modal('invq',`<div class="box cut"><h2>Invite your team</h2><p>You have been using Hortlog for a while on your own. Invite your staff and contractors so jobs, records and spray alerts are shared with everyone.</p><div class="acts"><button class="btn" id="ivy">Invite someone</button><button class="btn alt" id="ivn">Not now</button></div><button class="lnk" id="ivx">Don’t remind me again</button></div>`);
+const mark=()=>{seen[key]=1;wr(SK,seen);e.remove()};$('#ivy').onclick=()=>{mark();goInvite()};$('#ivn').onclick=mark;$('#ivx').onclick=()=>{seen.inv10=1;seen.inv30=1;wr(SK,seen);e.remove()}},2500)}
 function pickBlocks(cur,cb){const e=modal('bkq',`<div class="box cut"><h2>Which blocks?</h2><p>This contractor will only see these blocks.</p><div class="acts">${bl().map(n=>`<label class="ck"><input type="checkbox" data-pb="${n}" ${(cur||[]).includes(n)?'checked':''}> ${esc(bn(n))}</label>`).join('')||'<span class="hint">Add blocks first.</span>'}</div><div class="acts"><button class="btn" id="pbs">Save</button><button class="btn alt" id="pbc">Cancel</button></div></div>`);
 $('#pbc').onclick=()=>{e.remove();paintTeam()};$('#pbs').onclick=()=>{const v=[...e.querySelectorAll('[data-pb]:checked')].map(x=>+x.dataset.pb);if(!v.length){toast('Pick at least one block.');return}e.remove();cb(v)}}
-const teamCard=()=>ROLES?card('var(--crew)',`<h2>Your orchard <em>${esc(RLAB[ROLE]||'')}</em></h2><div id="tbox"><p style="margin:4px 0">Loading…</p></div>`):'';
-async function paintTeam(){const b=$('#tbox');if(!b||!ROLES)return;const o=ORCH.find(x=>x.orchard_id===OID)||{},mg=isMgr();
-const mem=await sb.rpc('list_members',{o:OID}),inv=mg?await sb.rpc('list_invites',{o:OID}):{data:[]};if(!$('#tbox'))return;if(!mem.error)MEMBERS=mem.data||[];
-const RO=(sel,own)=>['owner','manager','supervisor','worker','contractor','other'].filter(r=>own||r!=='owner').map(r=>`<option value="${r}" ${r===sel?'selected':''}>${RLAB[r]}</option>`).join(''),me=MEMBERS.find(m=>m.user_id===U.id)||{},nOwn=MEMBERS.filter(m=>m.role==='owner').length;
-let h=`<div class="fi"><span style="flex:1"><b>${esc(o.name||'My orchard')}</b><small>You are ${esc((RLAB[ROLE]||'').toLowerCase())} here</small></span></div>`;
-if(ORCH.length>1)h+=`<div class="acts"><label>Orchard <select id="osw">${ORCH.map(x=>`<option value="${x.orchard_id}" ${x.orchard_id===OID?'selected':''}>${esc(x.name)} (${esc((RLAB[x.role]||'').toLowerCase())})</option>`).join('')}</select></label></div>`;
-if(mg)h+=`<div class="acts"><input id="tnm" type="text" value="${esc(o.name||'')}" placeholder="Orchard name" style="max-width:230px"><button class="btn alt" id="tnms">Rename orchard</button></div>`;
-h+=`<div class="acts"><input id="tmy" type="text" value="${esc(me.full_name||'')}" placeholder="Your name" style="max-width:230px"><button class="btn alt" id="tmys">Save my name</button></div><div class="rlabel">People</div>`+
-MEMBERS.map(m=>{const self=m.user_id===U.id,canEd=mg&&!(ROLE==='manager'&&m.role==='owner')&&!(m.role==='owner'&&nOwn<2);
-return `<div class="fi"><span style="flex:1;min-width:0"><b>${esc(m.full_name||(m.email||'').split('@')[0]||'Unnamed')}${self?' (you)':''}</b><small>${esc(m.email||'')}${m.role==='contractor'&&m.blocks&&m.blocks.length?' · blocks '+m.blocks.join(', '):''}</small></span>${canEd?`<select data-mrole="${m.user_id}" aria-label="Role">${RO(m.role,ROLE==='owner')}</select>`:`<span class="pill">${RLAB[m.role]}</span>`}${m.role==='contractor'&&canEd?`<button class="edb" data-mblk="${m.user_id}">Blocks</button>`:''}${mg&&!self&&!(ROLE==='manager'&&m.role==='owner')?`<button class="x" data-mrm="${m.user_id}" aria-label="Remove">✕</button>`:''}</div>`}).join('');
-if(mg){h+=`<div class="rlabel">Invite someone</div><div class="edf"><label>Email<input id="iem" type="email" placeholder="name@example.com" autocomplete="off"></label><label>Role<select id="irl">${['manager','supervisor','worker','contractor','other'].map(r=>`<option value="${r}" ${r==='worker'?'selected':''}>${RLAB[r]}</option>`).join('')}</select></label><div id="ibk" style="display:none"><div class="rhint">Blocks this contractor can see</div><div class="acts">${bl().map(n=>`<label class="ck"><input type="checkbox" data-ibk="${n}"> ${esc(bn(n))}</label>`).join('')}</div></div></div><div class="acts"><button class="btn" id="isend">Send invitation</button></div><div id="imsg" class="hint"></div><div class="rhint">Other can only look until you give them a role.</div>`;
-if((inv.data||[]).length)h+='<div class="rlabel">Waiting to join</div>'+inv.data.map(v=>`<div class="fi"><span style="flex:1;min-width:0"><b>${esc(v.email)}</b><small>${RLAB[v.role]} · expires ${vfmt(String(v.expires_at).slice(0,10))}</small></span><button class="edb" data-ires="${esc(v.email)}|${v.role}|${(v.blocks||[]).join('.')}">Resend</button><button class="x" data-irev="${v.id}" aria-label="Cancel invitation">✕</button></div>`).join('')}
-h+=`<div class="acts"><button class="btn alt" id="tleave">Leave this orchard</button></div>`;b.innerHTML=h;
+const RDESC={owner:'Everything, including removing people and handing over the orchard.',manager:'Runs the orchard day to day: invites staff, changes roles, edits everything.',supervisor:'Sets jobs, logs and edits records, manages blocks and exports audit packs. Cannot manage people.',worker:'Logs records and jobs. Can edit and delete their own entries.',contractor:'Logs only in the blocks you choose. Does not see the spray diary.',other:'Can look but not change anything, until you give them a role.'};
+const teamHtml=()=>ROLES?'<div id="teampg" class="teampg"><p class="hint">Loading…</p></div>':'<p class="hint">Teams are not switched on for this account yet.</p>';
+const teamLink=()=>ROLES?card('var(--crew)',`<h2>Team</h2><p style="margin:4px 0 10px">${MEMBERS.length>1?MEMBERS.length+' people are in this orchard.':'Invite your staff and set what each person can do.'}</p><div class="acts"><button class="btn" id="gteam">Open Team</button></div>`):'';
+function teamCta(){if(!ROLES||!isMgr())return '';const o=ORCH.find(x=>x.orchard_id===OID)||{};
+if(MEMBERS.length<2){if(seen.teamHide&&Date.now()-seen.teamHide<14*864e5)return '';return `<div class="teamcta cut"><div><b>Invite your team</b><span>Add your staff and contractors so jobs, records and spray alerts are shared.</span></div><div class="acts" style="margin:0"><button class="btn" id="tcta">Invite someone</button><button class="x" id="tctax" aria-label="Hide for now">✕</button></div></div>`}
+return `<div class="teamcta small cut"><div><b>Your team</b><span>${MEMBERS.length} people in ${esc(o.name||'your orchard')}</span></div><button class="btn alt" id="tcta">Manage team</button></div>`}
+async function paintTeam(){const b=$('#teampg');if(!b||!ROLES)return;const o=ORCH.find(x=>x.orchard_id===OID)||{},mg=isMgr();
+const mem=await sb.rpc('list_members',{o:OID}),inv=mg?await sb.rpc('list_invites',{o:OID}):{data:[]};if(!$('#teampg'))return;if(!mem.error)MEMBERS=mem.data||[];
+const RO=(sel,own)=>['owner','manager','supervisor','worker','contractor','other'].filter(r=>own||r!=='owner').map(r=>`<option value="${r}" ${r===sel?'selected':''}>${RLAB[r]}</option>`).join(''),me=MEMBERS.find(m=>m.user_id===U.id)||{},nOwn=MEMBERS.filter(m=>m.role==='owner').length,solo=MEMBERS.length<2;
+const hero=mg&&solo?`<div class="teamhero cut"><h2>Bring your team in</h2><p>You are the only person here. Invite your staff and contractors so everyone logs to the same orchard, and everyone is alerted when spraying is happening.</p></div>`:`<div class="teamhero calm cut"><h2>${mg?'Your team':'The team at '+esc(o.name||'this orchard')}</h2><p>You are ${esc(({owner:'the Owner',manager:'a Manager',supervisor:'a Supervisor',worker:'an Orchard worker',contractor:'a Contractor',other:'view only'})[R()]||'a member')}. ${esc(RDESC[R()]||'')}</p></div>`;
+let left='';
+if(mg)left+=card('var(--hot)',`<h2>Invite someone</h2><div class="edf"><label>Email<input id="iem" type="email" placeholder="name@example.com" autocomplete="off"></label><label>Role<select id="irl">${['manager','supervisor','worker','contractor','other'].map(r=>`<option value="${r}" ${r==='worker'?'selected':''}>${RLAB[r]}</option>`).join('')}</select></label><div class="rhint" id="irole">${esc(RDESC.worker)}</div><div id="ibk" style="display:none"><div class="rhint">Blocks this contractor can see</div><div class="acts">${bl().map(n=>`<label class="ck"><input type="checkbox" data-ibk="${n}"> ${esc(bn(n))}</label>`).join('')}</div></div></div><div class="acts"><button class="btn" id="isend">Send invitation email</button><button class="btn alt" id="ishare">Share a link instead</button></div><div id="imsg" class="hint"></div>`);
+left+=card('var(--crew)',`<h2>People <em>${MEMBERS.length}</em></h2>`+MEMBERS.map(m=>{const self=m.user_id===U.id,canEd=mg&&!(R()==='manager'&&m.role==='owner')&&!(m.role==='owner'&&nOwn<2);
+return `<div class="fi"><span style="flex:1;min-width:0"><b>${esc(m.full_name||(m.email||'').split('@')[0]||'Unnamed')}${self?' (you)':''}</b><small>${esc(m.email||'')}${m.role==='contractor'&&m.blocks&&m.blocks.length?' · blocks '+m.blocks.join(', '):''}</small></span>${canEd?`<select data-mrole="${m.user_id}" aria-label="Role">${RO(m.role,R()==='owner')}</select>`:`<span class="pill">${RLAB[m.role]}</span>`}${m.role==='contractor'&&canEd?`<button class="edb" data-mblk="${m.user_id}">Blocks</button>`:''}${mg&&!self&&!(R()==='manager'&&m.role==='owner')?`<button class="x" data-mrm="${m.user_id}" aria-label="Remove">✕</button>`:''}</div>`}).join('')
+ +((inv.data||[]).length?'<div class="rlabel">Waiting to join</div>'+inv.data.map(v=>`<div class="fi"><span style="flex:1;min-width:0"><b>${esc(v.email)}</b><small>${RLAB[v.role]} · expires ${vfmt(String(v.expires_at).slice(0,10))}</small></span><button class="edb" data-ires="${esc(v.email)}|${v.role}|${(v.blocks||[]).join('.')}">Resend</button><button class="x" data-irev="${v.id}" aria-label="Cancel invitation">✕</button></div>`).join(''):''));
+let right=card('var(--deep)',`<h2>What each role can do</h2><div class="rolegd">${['owner','manager','supervisor','worker','contractor','other'].map(r=>`<div class="fi"><b>${RLAB[r]}</b><span>${esc(RDESC[r])}</span></div>`).join('')}</div><p class="rhint">Everyone in the orchard is alerted when spraying or spreading is planned or done today.</p>`);
+if(ROLE==='owner')right+=card('var(--note)',`<h2>Preview the app as</h2><div class="acts"><select id="pvs" aria-label="Preview as"><option value="">${PREV?'Back to Owner':'Choose a role…'}</option>${['manager','supervisor','worker','contractor','other'].map(r=>`<option value="${r}" ${PREV===r?'selected':''}>${RLAB[r]}</option>`).join('')}</select></div><div class="rhint">Only changes what you see on this device. Nothing is saved or changed.</div>`);
+right+=card('var(--note)',`<details class="tset"><summary>Orchard settings and my details</summary>${ORCH.length>1?`<div class="acts"><label>Orchard <select id="osw">${ORCH.map(x=>`<option value="${x.orchard_id}" ${x.orchard_id===OID?'selected':''}>${esc(x.name)} (${esc((RLAB[x.role]||'').toLowerCase())})</option>`).join('')}</select></label></div>`:''}${mg?`<div class="acts"><input id="tnm" type="text" value="${esc(o.name||'')}" placeholder="Orchard name" style="max-width:230px"><button class="btn alt" id="tnms">Rename orchard</button></div>`:''}<div class="acts"><input id="tmy" type="text" value="${esc(me.full_name||'')}" placeholder="Your name" style="max-width:230px"><button class="btn alt" id="tmys">Save my name</button></div><div class="acts"><button class="btn alt" id="tleave">Leave this orchard</button></div></details>`);
+b.innerHTML=hero+`<div class="tcols"><div>${left}</div><div>${right}</div></div>`;const pv=b.querySelector('#pvs');if(pv)pv.onchange=()=>{PREV=pv.value;render()};
 const setM=async(u,role,blocks)=>{const r=await sb.rpc('set_member',{o:OID,u,p_role:role,p_blocks:blocks});toast(r.error?r.error.message:'Role updated.');paintTeam()};
 b.querySelectorAll('[data-mrole]').forEach(x=>x.onchange=()=>{const u=x.dataset.mrole;if(x.value==='contractor'){const m=MEMBERS.find(y=>y.user_id===u)||{};pickBlocks(m.blocks,v=>setM(u,'contractor',v))}else setM(u,x.value,null)});
 b.querySelectorAll('[data-mblk]').forEach(x=>x.onclick=()=>{const u=x.dataset.mblk,m=MEMBERS.find(y=>y.user_id===u)||{};pickBlocks(m.blocks,v=>setM(u,'contractor',v))});
@@ -443,10 +486,17 @@ b.querySelectorAll('[data-irev]').forEach(x=>x.onclick=async()=>{await sb.rpc('r
 const send=async(em,rl,bk)=>{const msg=$('#imsg');if(msg)msg.textContent='Sending…';const body={orchard_id:OID,email:em,role:rl,blocks:rl==='contractor'?bk:null};let res;try{res=await sb.functions.invoke('invite-member',{body})}catch(e){res={error:e}}
 let text='';
 if(res.error){let j=null;try{j=await res.error.context.json()}catch(e){}
- if(j&&j.error){text=j.error}else{const r2=await sb.rpc('create_invite',{o:OID,p_email:em,p_role:rl,p_blocks:rl==='contractor'?bk:null});text=r2.error?r2.error.message:'Invitation saved, but the email service is not set up yet. Ask them to sign up with '+em+' and they will join.'}}
+ if(j&&j.error){text=j.error}else{const r2=await sb.rpc('create_invite',{o:OID,p_email:em,p_role:rl,p_blocks:rl==='contractor'?bk:null});text=r2.error?r2.error.message:'Invitation saved, but the email service is not set up yet. Tap Share a link instead, or ask them to sign up with '+em+' and they will join.'}}
 else{const st=res.data&&res.data.status;text=st==='invited'?'Invitation emailed to '+em+'.':st==='existing_user_emailed'?em+' already has an account. We emailed a sign-in link and they join automatically.':'Invitation saved. They join when they sign in with '+em+'.'}
 await paintTeam();const m2=$('#imsg');if(m2)m2.textContent=text};
-const irl=b.querySelector('#irl');if(irl)irl.onchange=()=>{b.querySelector('#ibk').style.display=irl.value==='contractor'?'block':'none'};
+const irl=b.querySelector('#irl');if(irl)irl.onchange=()=>{b.querySelector('#ibk').style.display=irl.value==='contractor'?'block':'none';const rd=b.querySelector('#irole');if(rd)rd.textContent=RDESC[irl.value]||''};
+const shr=b.querySelector('#ishare');if(shr)shr.onclick=async()=>{const em=b.querySelector('#iem').value.trim(),rl=irl.value,bk=[...b.querySelectorAll('[data-ibk]:checked')].map(x=>+x.dataset.ibk),msg=b.querySelector('#imsg');
+if(!em){msg.textContent='Type their email first.';return}if(rl==='contractor'&&!bk.length){msg.textContent='Pick at least one block for this contractor.';return}
+const r=await sb.rpc('create_invite',{o:OID,p_email:em,p_role:rl,p_blocks:rl==='contractor'?bk:null});if(r.error){msg.textContent=r.error.message;return}
+const url=location.origin+location.pathname,txt=`Join ${o.name||'my orchard'} on Hortlog as ${(RLAB[rl]||'').toLowerCase()}: ${url}\nSign up (or log in) with ${em} and you will be added automatically.`;let text;
+try{if(navigator.share){await navigator.share({title:'Join '+(o.name||'my orchard')+' on Hortlog',text:txt});text='Shared. They join when they sign up or log in with '+em+'.'}else{await navigator.clipboard.writeText(txt);text='Message copied. Paste it into a text or email to '+em+'.'}}
+catch(e){try{await navigator.clipboard.writeText(txt);text='Message copied. Paste it into a text or email to '+em+'.'}catch(x){text=txt}}
+await paintTeam();const m2=$('#imsg');if(m2)m2.textContent=text};
 const isd=b.querySelector('#isend');if(isd)isd.onclick=()=>{const em=b.querySelector('#iem').value.trim(),rl=irl.value,bk=[...b.querySelectorAll('[data-ibk]:checked')].map(x=>+x.dataset.ibk),msg=b.querySelector('#imsg');
 if(!em){msg.textContent='Type their email first.';return}if(rl==='contractor'&&!bk.length){msg.textContent='Pick at least one block for this contractor.';return}send(em,rl,bk)};
 b.querySelectorAll('[data-ires]').forEach(x=>x.onclick=()=>{const[em,rl,bk]=x.dataset.ires.split('|');send(em,rl,bk?bk.split('.').map(Number):[])});
@@ -477,10 +527,10 @@ items=a.data.map(r=>r.data);items.forEach(migrate);B={};b.data.forEach(r=>B[r.bl
 synced={};items.forEach(i=>synced[i.id]=JSON.stringify(i));syncedB={};Object.keys(B).forEach(k=>syncedB[k]=JSON.stringify(B[k]));
 try{localStorage.setItem(KEY+'.'+scope(),JSON.stringify(items));localStorage.setItem(BK+'.'+scope(),JSON.stringify(B))}catch(e){}
 setSync('Saved ✓');if(ROLES)await rolesRefresh();loaded=true;render();maybeSetup();checkSprays()}
-async function enter(u){U=u;const st=await rolesInit(u);if(st==='wait')return;items=rd(KEY+'.'+scope(),rd(KEY+'.'+u.id,[]));B=rd(BK+'.'+scope(),rd(BK+'.'+u.id,{}));items.forEach(migrate);prevUse=seen.lu||0;seen.lu=Date.now();wr(SK,seen);pending=rd(PK(),false)===true;synced={};syncedB={};loaded=false;
+async function enter(u){U=u;const st=await rolesInit(u);if(st==='wait')return;items=rd(KEY+'.'+scope(),rd(KEY+'.'+u.id,[]));B=rd(BK+'.'+scope(),rd(BK+'.'+u.id,{}));items.forEach(migrate);prevUse=seen.lu||0;seen.lu=Date.now();if(!openCounted){openCounted=true;seen.opens=(seen.opens||0)+1}wr(SK,seen);pending=rd(PK(),false)===true;synced={};syncedB={};loaded=false;
 const a=$('#auth');if(a)a.remove();view='home';blk=null;render();if(!seen.ob)openOb();
 let pv=null;try{pv=localStorage.getItem('hortlog.ver')}catch(e){}try{localStorage.setItem('hortlog.ver',VER)}catch(e){}if((pv&&pv!==VER)||(!pv&&seen.ob))showUpd();
-await pull();if(ROLES){if(newOrchardName){const B0=B[0]=B[0]||{};B0.biz=newOrchardName;newOrchardName='';saveB()}if(joinedMsg){toast('You joined '+joinedMsg+'.');joinedMsg=''}if(INVITED&&!seen.pwset)showSetPw();else maybeAskName()}}
+await pull();if(ROLES){if(newOrchardName){const B0=B[0]=B[0]||{};B0.biz=newOrchardName;newOrchardName='';saveB()}if(joinedMsg){toast('You joined '+joinedMsg+'.');joinedMsg=''}if(INVITED&&!seen.pwset)showSetPw();else{maybeAskName();maybeInviteNudge()}}}
 function coach(n,t){const tile=document.querySelector('.tw2 .tile[data-blk="'+n+'"]');if(!tile)return;const w=tile.closest('.tw2'),o=document.body.appendChild(Object.assign(document.createElement('div'),{id:'coach'}));
 o.innerHTML=`<div class="cbox cut"><b>${esc(t)}</b><div class="acts"><button class="btn alt" id="cok">Got it</button></div></div>`;w.classList.add('spot');if(w.scrollIntoView)w.scrollIntoView({block:'center'});
 const done=()=>{o.remove();w.classList.remove('spot')};$('#cok').onclick=done;o.onclick=e=>{if(e.target===o)done()};tile.addEventListener('click',done,{once:true})}
@@ -577,7 +627,7 @@ $('#ux').onclick=()=>{e.remove();maybeSetup();checkSprays()}}
 let dp=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;maybeInstall()});
 window.addEventListener('appinstalled',()=>{dp=null;seen.instAt=9e15;wr(SK,seen);const e=$('#instq');if(e)e.remove()});
-const busy=()=>!!document.querySelector('#upd,#bcfg,#fq,#iq,#ob,#setup,#bizq,#perm,#spq,#cap,#nbq,#prodq,#rn,#recintro,#coach,#delq,#legal,#instq,#nudge,#edq,#wq,#orq,#spw,#bkq,#nmq');
+const busy=()=>!!document.querySelector('#upd,#bcfg,#fq,#iq,#ob,#setup,#bizq,#perm,#spq,#cap,#nbq,#prodq,#rn,#recintro,#coach,#delq,#legal,#instq,#nudge,#edq,#wq,#orq,#spw,#bkq,#nmq,#invq');
 function showBlockCfg(n){if($('#bcfg'))return;const b=B[n],e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'bcfg',className:'ov'}));
 e.innerHTML=`<div class="box cut"><h2>Set up ${esc(bn(n))}</h2><p>How big is this block? If it is not the same all the way across, enter the average.</p><div class="edf"><label>Rows in this block<input id="cr" type="number" min="1" value="${b.rows||60}"></label><label>Bays per row<input id="cb" type="number" min="1" value="${b.bays||30}"></label></div><p class="hint" style="margin:6px 0 12px">A bay is the gap between two posts along a row.</p><div class="acts"><button class="btn" id="cn">Next: add imagery</button></div></div>`;
 $('#cn').onclick=()=>{b.rows=Math.max(1,parseInt($('#cr').value,10)||60);b.bays=Math.max(1,parseInt($('#cb').value,10)||30);b.cfg=true;saveB();e.remove();dropN=n;render();window.scrollTo(0,0);toast('Now add your imagery. Open Maps, take a screenshot of your block, and upload it.')}}
@@ -642,7 +692,7 @@ msg('One moment…');
 try{if(mode==='in'){const r=await sb.auth.signInWithPassword({email:em,password:pw});if(r.error)msg(r.error.message);else await enter(r.data.user)}
 else{const r=await sb.auth.signUp({email:em,password:pw,options:{data:meta}});if(r.error)msg(r.error.message);else if(r.data.session)await enter(r.data.user);else msg('Check your email to confirm your account, then log in.')}}
 catch(e){msg('Could not reach the server. Check your connection.')}}}
-sb.auth.onAuthStateChange((ev)=>{if(ev==='SIGNED_OUT'){rolesReset();document.querySelectorAll('#orq,#spw,#bkq,#nmq').forEach(x=>x.remove());U=null;items=[];B={};resetCats();mode='in';showAuth();render()}else if(ev==='PASSWORD_RECOVERY'){mode='reset';showAuth()}});
+sb.auth.onAuthStateChange((ev)=>{if(ev==='SIGNED_OUT'){rolesReset();document.querySelectorAll('#orq,#spw,#bkq,#nmq,#invq').forEach(x=>x.remove());U=null;items=[];B={};resetCats();mode='in';showAuth();render()}else if(ev==='PASSWORD_RECOVERY'){mode='reset';showAuth()}});
 window.addEventListener('online',()=>{if(U&&pending)push()});
 async function boot(){try{const r=await sb.auth.getSession();if(r.data&&r.data.session)await enter(r.data.session.user);else showAuth()}catch(e){showAuth()}}
 function dayLabel(d){const T=new Date();T.setHours(12,0,0,0);const x=new Date(d+'T12:00:00'),k=Math.round((x-T)/864e5);
@@ -801,7 +851,7 @@ function showOb(){const e=$('#ob')||document.body.appendChild(Object.assign(docu
 e.innerHTML=`<div class="box cut"><div class="dots">${SLD.map((_,k)=>`<i class="${k===ob?'on':''}"></i>`).join('')}</div><h2>${t}</h2><p>${p}</p><div class="obn"><button class="btn alt" id="obl">${ob?'← Back':'Skip'}</button><button class="btn" id="obn">${ob===last?'Start':'Next →'}</button></div></div>`;
 $('#obl').onclick=()=>{if(ob===0)closeOb();else{ob--;showOb()}};$('#obn').onclick=()=>{if(ob===last)closeOb();else{ob++;showOb()}}}
 function closeOb(){const e=$('#ob');if(e)e.remove();seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}
-$('#hb').onclick=()=>setView('settings');
+$('#hb').onclick=()=>setView('settings');$('#teamb').onclick=()=>setView('team');
 $('#brand').onclick=()=>setView('home');$('#brand').onkeydown=e=>{if(e.key==='Enter')setView('home')};
 $('#plus').onclick=()=>{const l=$('#log');l.classList.toggle('open');if(l.classList.contains('open'))$('#q').focus()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#log').classList.remove('open')});
@@ -870,7 +920,7 @@ const brandStrip=()=>{const b=B[0]||{};return b.biz?`<div class="rbrand"><b>${es
 const avRow=()=>{const a=meP().avatar;return `<div class="acts">${a?`<img class="avp" src="${a}" alt="Profile photo">`:''}<button class="btn alt" id="avup">${a?'Change photo':'Add profile photo'}</button>${a?'<button class="btn alt" id="avrm">Remove photo</button>':''}</div>`};
 const setHtml0=()=>'<div class="setpg">'+card('var(--deep)',`<h2>Account</h2><p style="margin:4px 0 8px">${esc(U?U.email:'')}</p>${avRow()}<div class="acts"><input id="npw" type="password" placeholder="New password" autocomplete="new-password" style="max-width:240px"><button class="btn" id="npb">Change password</button><button class="btn" id="logout">Log out</button></div>`)+card('var(--hot)','<h2>Tutorial</h2><div class="acts"><button class="btn" id="tut">Show tutorial</button><button class="btn alt" id="tips">Show tab tips again</button></div>')+bizCard()+permCard()+notifCard()+earCard()+installCard()+card('var(--psa)','<h2>Reset</h2><p style="margin:4px 0 10px">Erase everything in this account (logs, blocks, folders and settings) and start again like a brand new grower. This cannot be undone.</p><div class="acts"><button class="btn alt" id="reset">Reset everything</button><button class="btn alt" id="resetout">Reset and log out (testing)</button></div>')+'</div><p class="hint legal"><button class="lnk" id="lp">Privacy</button> · <button class="lnk" id="ld">Disclaimer</button></p>';
 const setHtml=()=>{let h=setHtml0();if(!ROLES)return h;
-h=h.replace('<div class="setpg">','<div class="setpg">'+teamCard());
+h=h.replace('<div class="setpg">','<div class="setpg">'+teamLink());
 if(!isMgr())h=h.replace(/<div class="card cut"><span class="stripe" style="background:var\(--hot\)"><\/span><h2>Your business<\/h2>[\s\S]*?<\/div><\/div>/,'');
 if(R()!=='owner')h=h.replace(/<div class="card cut"><span class="stripe" style="background:var\(--psa\)"><\/span><h2>Reset<\/h2>[\s\S]*?id="resetout">[^<]*<\/button><\/div><\/div>/,'');
 return h};
@@ -896,7 +946,7 @@ return `<div class="hero dkonly"><b>${g}${b?', '+esc(b):''}</b><span>${d.toLocal
 function homeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T),it=items.find(i=>i.id===sel),m=T.slice(0,7);
 const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec').length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
 const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
-return alertBar()+tip('home')+instBar()+demoFor('home',!items.length)+'<div class="home">'+heroHtml()+'<div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}${trendsCard()}</div><div class="o7a grow">${canBlk()?prodCard():''}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
+return alertBar()+teamCta()+tip('home')+instBar()+demoFor('home',!items.length)+'<div class="home">'+heroHtml()+'<div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}${trendsCard()}</div><div class="o7a grow">${canBlk()?prodCard():''}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
 function monthCard(){const[y,m]=calM.split('-').map(Number),first=new Date(y,m-1,1),nd=new Date(y,m,0).getDate(),off=(first.getDay()+6)%7,T=iso(new Date());
 let s=`<div class="mh"><button class="x" data-cm="-1" aria-label="Previous month">←</button><b>${first.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</b><button class="x" data-cm="1" aria-label="Next month">→</button></div><div class="mg">`+['M','T','W','T','F','S','S'].map(d=>`<span class="wd">${d}</span>`).join('');
 for(let i=0;i<off;i++)s+='<span></span>';
@@ -1023,6 +1073,7 @@ card('var(--soft)',`<h2>Block settings</h2><p class="hint" style="margin:0 0 6px
 function blockPage(n){let h=blockPage0(n);if(ROLES&&!canBlk()){
 h=h.replace(/<div class="card cut"><span class="stripe" style="background:var\(--soft\)"><\/span><h2>Block settings<\/h2>[\s\S]*?<\/div><\/div>/,'').replace(/<div class="dz">[\s\S]*?<\/div>/,'').replace(/<button class="x" id="rnb"[\s\S]*?<\/button>/,'')}return h}
 function bind(){const A=(s,f)=>document.querySelectorAll(s).forEach(f);
+A('#gteam',b=>b.onclick=()=>setView('team'));A('#tcta',b=>b.onclick=()=>setView('team'));A('#tctax',b=>b.onclick=()=>{seen.teamHide=Date.now();wr(SK,seen);render()});
 A('[data-adis]',b=>b.onclick=()=>{b.dataset.adis.split(',').forEach(id=>alertSeen[id]=1);try{localStorage.setItem('hortlog.alertseen',JSON.stringify(alertSeen))}catch(e){}render()});
 A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
 A('[data-d]',b=>b.onclick=()=>{const i=items.find(a=>a.id==b.dataset.d);if(!canEditI(i)){toast('Only the person who logged this, or a supervisor, can change it.');return}i.d=!i.d;i.doneAt=i.d?Date.now():null;popId=i.d?i.id:null;save();render();popId=null;if(i.d&&i.c==='spray'){toast('Saved to Records');if(fertKind(i)==='ask')setTimeout(()=>showFertAsk(i.id),500)}});
@@ -1089,7 +1140,7 @@ const chipKey=(v,c,i)=>v+':'+(v==='records'&&i>0?c:'')+':'+i;
 function chipSave(){if(!lastV)return;document.querySelectorAll('#main .chips').forEach((e,i)=>{chipMem[chipKey(lastV,lastC,i)]=e.scrollLeft})}
 function chipRestore(){document.querySelectorAll('#main .chips').forEach((e,i)=>{const m=chipMem[chipKey(view,recCat,i)];if(m)e.scrollLeft=m});lastV=view;lastC=recCat}
 function render(){syncCats();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
-chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():listsHtml();chipRestore();$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();if(view==='settings'){paintNotif();paintPerm();paintTeam()}if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
+chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
 (async()=>{try{if(!window.claude)return;AI=await window.claude.use('sample');DL=await window.claude.use('downloads');
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
