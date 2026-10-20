@@ -766,6 +766,7 @@ const n=re=>{const m=s.match(re);return m?parseInt(m[1],10)||null:null};
 let c='note',d=false,rr=null;
 if(has(w,j,'done')||sprayedLike(w,j)){c='spray';d=true}else if((!pdate(s)||pdate(s)<=iso(new Date()))&&(rr=recGuess(raw,opts&&opts.photo))){c='rec';d=true}else if(has(w,j,'buy'))c='buy';else if(has(w,j,'psa'))c='psa';else if(has(w,j,'dead'))c='dead';else if(has(w,j,'spray'))c='spray';else if(has(w,j,'meet'))c='meet';else if(has(w,j,'crew'))c='crew';else if(has(w,j,'todo'))c='todo';else if(has(w,j,'need'))c='buy';
 if(c==='spray'&&!d&&/\b(done|complete|completed|finished|did)\b/.test(raw))d=true;
+if(!d&&c!=='buy'&&c!=='meet'&&/\b(completed?|finished|done)\b/.test(raw)&&!/\b(not|isn'?t|wasn'?t|hasn'?t|haven'?t|never|yet to|to be|will be|will|going to|gonna|need|needs|must|should|have to|has to|want to|plan|planned|schedule|scheduled|once|when|until|before|after)\b|tomorrow|next |later|\bto do\b/.test(raw)&&!(pdate(s)&&pdate(s)>iso(new Date())))d=true;
 const o={c,t:text.trim(),b:n(/block\s*(\d+)/),r:n(/row\s*(\d+)/),y:n(/bay\s*(\d+)/),due:pdate(s)};
 if(c==='spray'&&!d&&!o.due&&!/need|must|should|going to|gonna|will |plan|schedule|remember|want to|have to|to spray|tomorrow|next |later|friday|monday|tuesday|wednesday|thursday|saturday|sunday/.test(raw)){o.ask2='spraydone';o.d=true;o.doneAt=Date.now()}
 if(!o.b){for(const k of bl()){const nm=B[k]&&B[k].name;if(nm&&raw.includes(nm.toLowerCase())){o.b=k;break}}}
@@ -792,20 +793,25 @@ if(fn)$('#un').onclick=()=>{fn();t.style.display='none'};
 clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',6000)}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,listening=false,micErr=false,base='',curFin='',curInt='',silT=null,maxT=null;
 const ERR={'not-allowed':'Mic permission was refused, or this page is not allowed to use it.','service-not-allowed':'Voice is not allowed on this page.','network':'Voice needs an internet connection.','no-speech':'Heard nothing. Tap and try again.','audio-capture':'No microphone found.'};
-const liveTxt=()=>(base+' '+curFin+' '+curInt).replace(/\s+/g,' ').trim();
+const norm=x=>x.toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+function collapseRep(x){let p;do{p=x;x=x.replace(/(?<!\S)(\S.{4,}?)(?:\s+\1){1,3}(?=\s|$)/gi,'$1')}while(x!==p);return x}
+const liveTxt=()=>{const f=curFin,i=curInt,nf=norm(f),ni=norm(i);let t;if(!i)t=f;else if(!f)t=i;else if(ni.startsWith(nf))t=i;else if(nf.includes(ni))t=f;else t=f+' '+i;return collapseRep((base+' '+t).replace(/\s+/g,' ').trim())};
+let lastVoice={n:'',ts:0},restarts=0;
 function micUI(on){$('#mic').classList.toggle('live',on);$('#ml').textContent=on?'Listening… tap to finish':'Tap and speak'}
 function armSil(ms){clearTimeout(silT);silT=setTimeout(()=>stopRec(),ms)}
 function stopRec(){listening=false;clearTimeout(silT);clearTimeout(maxT);if(rec){try{rec.stop()}catch(e){finishRec()}}else finishRec()}
-function finishRec(){const t=liveTxt();listening=false;clearTimeout(silT);clearTimeout(maxT);rec=null;base=curFin=curInt='';micUI(false);if(t)add(t);else if(!micErr)toast('Heard nothing. Type it, or use your keyboard mic.')}
+function finishRec(){const t=liveTxt();listening=false;clearTimeout(silT);clearTimeout(maxT);rec=null;base=curFin=curInt='';micUI(false);const nt=norm(t);if(t&&nt===lastVoice.n&&Date.now()-lastVoice.ts<8000){return}if(t){lastVoice={n:nt,ts:Date.now()};add(t)}else if(!micErr)toast('Heard nothing. Type it, or use your keyboard mic.')}
 function startRec(){const r=rec=new SR();r.lang='en-NZ';r.continuous=true;r.interimResults=true;
-r.onresult=e=>{let f='',t='';for(let i=0;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)f+=x[0].transcript+' ';else t+=x[0].transcript}curFin=f;curInt=t;$('#ml').textContent='“'+liveTxt().slice(-32)+'” tap to finish';armSil(2500)};
+r.onresult=e=>{const fs=[];let t='';for(let i=0;i<e.results.length;i++){const x=e.results[i],w=x[0].transcript.trim();if(x.isFinal){if(w)fs.push(w)}else t=w}
+const keep=fs.filter((a,i)=>{const na=norm(a);return !fs.slice(i+1).some(b=>norm(b).startsWith(na))});
+curFin=keep.join(' ');curInt=t;$('#ml').textContent='“'+liveTxt().slice(-32)+'” tap to finish';armSil(3500)};
 r.onerror=e=>{if(e.error==='no-speech'||e.error==='aborted')return;micErr=true;listening=false;toast((ERR[e.error]||'Voice error')+' ['+e.error+'] Type it instead, or use your keyboard mic.')};
-r.onend=()=>{if(r===rec)finishRec()};
+r.onend=()=>{if(r!==rec)return;if(listening&&!micErr&&restarts<30){restarts++;base=liveTxt();curFin=curInt='';try{startRec()}catch(e){finishRec()}}else finishRec()};
 r.start()}
 $('#mic').onclick=()=>{
 if(!SR){toast('Voice input is not available in this browser. Type it, or use your keyboard mic.');$('#q').focus();return}
 if(listening||rec){stopRec();return}
-base=curFin=curInt='';micErr=false;listening=true;micUI(true);armSil(9000);maxT=setTimeout(()=>stopRec(),45000);
+base=curFin=curInt='';micErr=false;listening=true;restarts=0;micUI(true);armSil(10000);maxT=setTimeout(()=>stopRec(),60000);
 try{startRec()}catch(e){listening=false;rec=null;micUI(false);toast('Could not start the mic ['+e.name+']. Type it instead.')}};
 function showCap(blob,p){const e=$('#cap')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'cap'}));
 e.innerHTML=`<div class="box cut"><img class="capimg" src="${p}" alt="Your photo"><h2>What is this?</h2><input id="cq" type="text" placeholder="e.g. PSA block 3 row 49, or new tractor" value="${esc($('#q').value)}" enterkeyhint="done"><div class="chips" style="padding:10px 0 0">${['PSA','Dead vine','Broken pole','Soil sample','Bud break','Flowering','Induction'].map(w=>`<button class="chip" data-w="${w}">${w}</button>`).join('')}</div><div class="acts" style="padding-bottom:0"><label class="ck">Date <input id="cdate" type="date" value="${iso(new Date())}"></label></div><div class="acts"><button class="btn" id="cs">Save</button><button class="btn alt" id="cd">Discard photo</button></div></div>`;
