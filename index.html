@@ -409,14 +409,16 @@ const byLabel=i=>ROLES&&MEMBERS.length>1&&AUTH[i.id]?' · by '+esc(AUTH[i.id]===
 const meP=()=>ROLES?PROF:(B[0]=B[0]||{});
 function saveProf(){try{localStorage.setItem('hortlog.prof.'+U.id,JSON.stringify(PROF))}catch(e){}if(!ROLES||!U)return;sb.from('profiles').upsert({user_id:U.id,prefs:PROF,updated_at:new Date().toISOString()}).then(()=>{},()=>{})}
 const saveMe=()=>ROLES?saveProf():saveB();
-const alertText=a=>(a.kind==='spread'?'Fertiliser or compost spreading today':'Spraying today')+(a.block?': '+bn(a.block):': all blocks');
+const nowFor=a=>{const td=iso(new Date());return items.some(i=>i.c==='spray'&&i.now&&!i.d&&i.due===td&&(!a.block||i.ab||!i.b||i.b===a.block))};
+const alertText=a=>(nowFor(a)?(a.kind==='spread'?'Fertiliser or compost spreading now':'Spraying now'):a.kind==='spread'?'Fertiliser or compost spreading today':'Spraying today')+(a.block?': '+bn(a.block):': all blocks');
 const alertTag=n=>ROLES&&MEMBERS.length>1&&ALERTS.some(a=>a.block===n&&!alertDone(a))?'<span style="display:inline-block;background:var(--psa);color:#fff;padding:1px 8px;font:800 14px \'Barlow Condensed\',sans-serif;margin:4px 0 2px">⚠ SPRAYING TODAY</span>':'';
 const finTxt=t=>/\b(finished|completed?|done|wrapped up)\b/i.test(t)&&!/\b(not|isn'?t|haven'?t|hasn'?t|yet to|to be|will|going to|gonna|need|needs|must|should|tomorrow|later|once|when|until|before|after)\b/i.test(t);
 const alertDone=a=>{const td=iso(new Date());return items.some(i=>i.c==='spray'&&finTxt(i.t||'')&&iso(new Date(i.doneAt||i.id))===td&&(i.ab||(!i.b&&!i.ab)||(a.block&&i.b===a.block)))};
+async function sysNotify(title,body,tag){try{if(!('Notification' in window)||Notification.permission!=='granted'||!navigator.serviceWorker)return;const reg=await navigator.serviceWorker.getRegistration();if(!reg)return;await reg.showNotification(title,{body:body||'',icon:'icon-192.png',badge:'badge-96.png',vibrate:[200,100,200],tag:tag||'hortlog-alert',renotify:true,data:{url:'./'}})}catch(e){}}
 function alertBar(){if(!ROLES||MEMBERS.length<2)return '';const A=ALERTS.filter(a=>!alertSeen[a.id]&&!alertDone(a));if(!A.length)return '';const g={};A.forEach(a=>{(g[a.kind]=g[a.kind]||[]).push(a)});
 return Object.keys(g).map(k=>{const bs=[...new Set(g[k].map(a=>a.block?bn(a.block):'all blocks'))];return `<div class="alertb cut" role="alert"><span><b>⚠ ${k==='spread'?'Fertiliser or compost spreading today':'Spraying today'}</b>${esc(bs.join(', '))}. Take care in that area.</span><button data-adis="${g[k].map(a=>a.id).join(',')}" aria-label="Dismiss alert">✕</button></div>`}).join('')}
 async function alertsRefresh(quiet){if(!ROLES||!U||!OID)return;try{const r=await sb.rpc('todays_alerts',{o:OID});if(r.error)return;ALERTS=r.data||[];
-if(MEMBERS.length>1&&!quiet){const nw=ALERTS.filter(a=>!alertSeen[a.id]&&!toasted[a.id]);nw.forEach(a=>toasted[a.id]=1);if(nw.length)toast('⚠ '+alertText(nw[0]))}
+if(MEMBERS.length>1&&!quiet){const nw=ALERTS.filter(a=>!alertSeen[a.id]&&!toasted[a.id]);nw.forEach(a=>toasted[a.id]=1);if(nw.length){toast('⚠ '+alertText(nw[0]));nw.forEach(a=>sysNotify('Hortlog: '+alertText(a),'Tap to open the app.','alert-'+a.id))}}
 if(view==='home'&&!busy())render()}catch(e){}}
 async function rolesRefresh(){if(!ROLES)return;try{const[m,p]=await Promise.all([sb.rpc('list_members',{o:OID}),sb.from('profiles').select('prefs').eq('user_id',U.id)]);
 if(!m.error)MEMBERS=m.data||[];
@@ -663,7 +665,8 @@ const put=(n,p)=>{it.prod=n;if(p&&p.r&&!it.rate)it.rate=p.r;if(p&&p.w&&!it.water
 e.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const p=P[+b.dataset.k];put(p.n,p)});
 $('#pps').onclick=()=>{const n=$('#ppn').value.trim();if(!n){toast('Type a product name or tap Skip.');return}const p=P.find(x=>x.n.toLowerCase()===n.toLowerCase());put(p?p.n:n,p)};$('#ppx').onclick=()=>e.remove()}
 function showSprayDone(id){const it=items.find(x=>x.id===id);if(!it||$('#sdq'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'sdq',className:'ov'}));
-e.innerHTML=`<div class="box cut"><h2>Saved as sprayed</h2><p>“${esc(it.t)}”<br>Filed in Spray and Fert, Spray diary. Was it only planned?</p><div class="acts"><button class="btn" id="sdy">That’s right</button><button class="btn alt" id="sdn">No, plan it</button></div></div>`;
+e.innerHTML=`<div class="box cut"><h2>Done, planned or happening now?</h2><p>“${esc(it.t)}”</p><div class="acts"><button class="btn" id="sdy">Already done</button><button class="btn" id="sdnow">Happening now</button><button class="btn alt" id="sdn">Planned</button></div></div>`;
+$('#sdnow').onclick=()=>{delete it.ask2;delete it.d;delete it.doneAt;it.now=true;it.due=iso(new Date());save();e.remove();render();toast('Saved as happening now.')};
 $('#sdn').onclick=()=>{delete it.ask2;delete it.d;delete it.doneAt;save();e.remove();render();toast('Moved to your to-do list. Add a date when you know it.')};
 $('#sdy').onclick=()=>{delete it.ask2;it.d=true;it.doneAt=Date.now();delete it.due;save();e.remove();render();toast('Saved to Records, Spray diary.');
 if(fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),400);else if(it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),400)}}
@@ -694,8 +697,8 @@ $('#spy').onclick=()=>{const T=iso(new Date());i.d=true;i.doneAt=new Date((i.due
 $('#spn').onclick=()=>{i.snooze=iso(new Date());save();e.remove();checkSprays()}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkSprays();alertsRefresh()}});
 setInterval(()=>{if(U&&ROLES&&!document.hidden)alertsRefresh()},300000);
-const APP_VER='v37',WHATS_NEW=['New: choose your block on a real aerial map. Open a block, tap Choose on map, zoom in and tap Use this view. No screenshot needed.','Search an address or tap My location to jump to your orchard.','Aerial imagery is from LINZ (free, New Zealand).'];
-function showNew(){if($('#wnq'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'wnq',className:'ov'}));
+const APP_VER='v38',WHATS_NEW=['Say “spraying copper in block 1” and the app now knows it is happening now. It only asks when it cannot tell.','You get a real phone notification when someone starts spraying or spreading.','Records show one line for “all blocks” instead of one per block.'];
+function showNew(){if($('#wnq'))return;seen.ver=APP_VER;wr(SK,seen);const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'wnq',className:'ov'}));
 e.innerHTML=`<div class="box cut"><h2>What’s new in ${APP_VER}</h2><ul style="margin:6px 0 10px;padding-left:20px;font-weight:600">${WHATS_NEW.map(x=>`<li style="margin:6px 0">${esc(x)}</li>`).join('')}</ul><div class="acts"><button class="btn" id="wnok">Got it</button></div></div>`;
 $('#wnok').onclick=()=>{seen.ver=APP_VER;wr(SK,seen);e.remove()}}
 function maybeSetup(){if(!U||!loaded||$('#ob')||$('#setup')||$('#bizq')||$('#perm')||$('#upd'))return;if(!seen.biz&&!(B[0]&&B[0].biz)&&(!ROLES||isMgr())){showBiz();return}if(!seen.perm){if(!seen.ver){seen.ver=APP_VER;wr(SK,seen)}showPerm();return}if(!bl().length&&canBlk()){showSetup();return}if(seen.ver!==APP_VER){showNew();return}maybeInstall()}
@@ -789,6 +792,7 @@ return o}
 function sprayDetail(raw,s,o){const hit=((B[0]&&B[0].products)||[]).find(p=>p.n&&raw.includes(p.n.toLowerCase()));
 if(hit){o.prod=hit.n;if(hit.r)o.rate=hit.r;if(hit.w)o.water=hit.w}else{const x=extractProd(raw);if(x)o.prod=x}
 const q=extractRates(s);if(q.rate)o.rate=q.rate;if(q.wrate)o.water=q.wrate}
+const FUTRE=/need|must|should|going to|gonna|will |plan|schedule|remember|want to|have to|to spray|tomorrow|next |later|friday|monday|tuesday|wednesday|thursday|saturday|sunday/,PRESRE=/\b(spraying|spreading|applying|fertili[sz]ing|currently|right now|at the moment|just started|started|underway|in progress|busy|now)\b/;
 const ALLB=/\b(all|every|each)\s+(of\s+)?(the\s+)?blocks?\b|\b(all|whole|entire)\s+(of\s+)?(the\s+)?orchard\b|\b(whole|entire)\s+(orchard|property)\b/i;
 function parse(text,opts){const raw=text.toLowerCase(),s=nums(raw),w=s.match(/[a-z']+/g)||[],j=w.join(' ');
 const n=re=>{const m=s.match(re);return m?parseInt(m[1],10)||null:null};
@@ -797,7 +801,7 @@ if(has(w,j,'done')||sprayedLike(w,j)){c='spray';d=true}else if((!pdate(s)||pdate
 if(c==='spray'&&!d&&/\b(done|complete|completed|finished|did)\b/.test(raw))d=true;
 if(!d&&c!=='buy'&&c!=='meet'&&/\b(completed?|finished|done)\b/.test(raw)&&!/\b(not|isn'?t|wasn'?t|hasn'?t|haven'?t|never|yet to|to be|will be|will|going to|gonna|need|needs|must|should|have to|has to|want to|plan|planned|schedule|scheduled|once|when|until|before|after)\b|tomorrow|next |later|\bto do\b/.test(raw)&&!(pdate(s)&&pdate(s)>iso(new Date())))d=true;
 const o={c,t:text.trim(),b:n(/block\s*(\d+)/),r:n(/row\s*(\d+)/),y:n(/bay\s*(\d+)/),due:pdate(s)};
-if(c==='spray'&&!d&&!o.due&&!/need|must|should|going to|gonna|will |plan|schedule|remember|want to|have to|to spray|tomorrow|next |later|friday|monday|tuesday|wednesday|thursday|saturday|sunday/.test(raw)){o.ask2='spraydone';o.d=true;o.doneAt=Date.now()}
+if(c==='spray'&&!d&&!o.due&&!FUTRE.test(raw)){if(PRESRE.test(raw)||o.b||ALLB.test(raw)||SPRAY_RE.test(raw)||FERT_ONLY.test(raw)){o.now=true;o.due=iso(new Date())}else{o.ask2='spraydone';o.d=true;o.doneAt=Date.now()}}
 if(!o.b){for(const k of bl()){const nm=B[k]&&B[k].name;if(nm&&raw.includes(nm.toLowerCase())){o.b=k;break}}}
 if(!o.b&&ALLB.test(raw))o.ab=true;
 if(rr){o.rc=rr.rc;o.rf=rr.rf;if(rr.ask)o.ask=rr.ask;o.due=null;o.rdate=iso(new Date(pastAt(s)))}
@@ -811,7 +815,7 @@ const x={c:CATS[r.category]?r.category:base.c,t:String(r.text||text||'Photo').sl
 if(base.c==='rec'){return base}if(r.done===true||base.d){x.d=true;x.doneAt=Date.now()}if(x.c==='spray'){const rw=(text||'').toLowerCase();['prod','rate','water'].forEach(k=>{if(base[k])x[k]=base[k]});if(!x.prod)sprayDetail(rw,nums(rw),x)}return x}catch(e){return base}}
 async function add(text,blob,photo,opts){text=(text||'').trim();if(!text&&!blob)return;if(!canWrite()){toast('Your role is view-only. Ask the owner or manager to change it.');return}toast(blob?'Looking at your photo…':'Sorting…');
 const it=await smart(text,blob);it.id=Date.now();if(R()==='contractor'&&(it.c==='spray'||it.rc==='sf'||RMAP[it.rc]==='sf')){toast('Contractors cannot add spray or fertiliser records. Ask the orchard owner or manager.');return}if(photo)it.p=photo;if(opts&&opts.rdate){it.rdate=opts.rdate;if(it.c==='rec'&&it.d)it.doneAt=new Date(opts.rdate+'T12:00:00').getTime()}if(blob&&!it.t)it.t='Photo (not sorted)';
-items.unshift(it);last=it.id;save();
+items.unshift(it);if(it.c==='spray'&&finTxt(it.t||'')){const td=iso(new Date());items.forEach(x=>{if(x!==it&&x.c==='spray'&&x.now&&!x.d&&x.due===td&&(it.ab||(!it.b&&!it.ab)||x.ab||x.b===it.b)){x.d=true;x.doneAt=Date.now();delete x.now}})}last=it.id;save();
 if(photo){if(it.c==='rec'){recCat=RMAP[it.rc]||it.rc;recFolder=it.rf;setView('records')}else{filter=it.c;setView('lists')}if(it.c==='note')setTimeout(()=>showWhere(it.id),300)}else render();
 const loc=it.ab?' → All blocks':it.b?` → ${bn(it.b)}${it.r?' row '+it.r:''}${it.y?' bay '+it.y:''}`:'';
 toast('Logged: '+CATS[it.c][0]+loc+(it.due?' · '+dayLabel(it.due):'')+(it.d&&it.c==='spray'?' · in Records':''),()=>{items=items.filter(i=>i.id!==it.id);save();render()});
@@ -1005,13 +1009,13 @@ h+=card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} o
 const normP=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const findProd=p=>{const n=normP(p);if(!n)return null;const L=(B[0]&&B[0].products)||[];return L.find(q=>normP(q.n)===n)||L.find(q=>{const m=normP(q.n);return m&&(m.includes(n)||n.includes(m))})||null};
 const lookupRate=p=>{const x=findProd(p);return (x&&x.r)||''},lookupWater=p=>{const x=findProd(p);return (x&&x.w)||''};
-const FERT_ONLY=/fertili[sz]|urea|nitrogen|potash|potassium|phosph|superphosphate|\bdap\b|\bnpk\b|\blime\b|dolomite|gypsum|manure|compost|blood and bone|bone meal|mussel shell|calcium nitrate|boron|epsom|magnesium sulph|top ?dress/i,BOTH_RE=/\bfish\b|seaweed|kelp|humic|humate|worm (juice|tea|cast)|compost tea|molasses|amino|hydrolysate|biostimulant|foliar feed/i,SPRAY_RE=/fungicide|insecticide|herbicide|botector|copper|zivo|bioprotect|pesticide|miticide|\boil\b|sulphur|kaolin|streptomycin|kasumin|surround/i;
-function fertKind(i){if(i.fk)return i.fk;if(typeof i.fert==='boolean')return i.fert?'fert':'spray';const t=(i.t||'')+' '+(i.prod||'');if(/fertili[sz]/i.test(t))return 'fert';const f=FERT_ONLY.test(t),b=BOTH_RE.test(t),s=SPRAY_RE.test(t);if(b)return 'ask';if(f&&s)return 'both';if(f)return 'fert';return 'spray'}
+const FERT_ONLY=/fertili[sz]|fertile\b|urea|nitrogen|potash|potassium|phosph|superphosphate|\bdap\b|\bnpk\b|\blime\b|dolomite|gypsum|manure|compost|blood and bone|bone meal|mussel shell|calcium nitrate|boron|epsom|magnesium sulph|top ?dress/i,BOTH_RE=/\bfish\b|seaweed|kelp|humic|humate|worm (juice|tea|cast)|compost tea|molasses|amino|hydrolysate|biostimulant|foliar feed/i,SPRAY_RE=/fungicide|insecticide|herbicide|botector|copper|zivo|bioprotect|pesticide|miticide|\boil\b|sulphur|kaolin|streptomycin|kasumin|surround/i;
+function fertKind(i){if(i.fk)return i.fk;if(typeof i.fert==='boolean')return i.fert?'fert':'spray';const t=(i.t||'')+' '+(i.prod||'');if(/fertili[sz]|fertile\b/i.test(t))return 'fert';const f=FERT_ONLY.test(t),b=BOTH_RE.test(t),s=SPRAY_RE.test(t);if(b){if(/\b(spray|sprayed|spraying|foliar|knapsack|boom)/i.test(t))return 'spray';if(/\b(spread|spreading|broadcast|granul|top ?dress|incorporat)/i.test(t))return 'fert';return 'ask'}if(f&&s)return 'both';if(f)return 'fert';return 'spray'}
 const isFert=i=>fertKind(i)==='fert';
-function recRows(){const out=[],push=o=>{if(!o.ab){out.push(o);return}const L=bl();if(!L.length){out.push(o);return}L.forEach(n=>out.push(Object.assign({},o,{b:n,ab:true})))};items.forEach(i=>{if(i.c==='spray'&&i.d){const k=fertKind(i),fl=k==='both'?['Spray diary','Fertiliser']:[k==='fert'?'Fertiliser':'Spray diary'];fl.forEach(rf=>push({id:i.id,rc:'sf',rf,date:iso(new Date(i.doneAt||i.id)),ab:i.ab,b:i.b,r:i.r,y:i.y,t:i.t,p:i.p,prod:i.prod,rate:i.rate||lookupRate(i.prod),water:i.water||lookupWater(i.prod)}))}
+function recRows(){const out=[],push=o=>out.push(o);items.forEach(i=>{if(i.c==='spray'&&i.d){const k=fertKind(i),fl=k==='both'?['Spray diary','Fertiliser']:[k==='fert'?'Fertiliser':'Spray diary'];fl.forEach(rf=>push({id:i.id,rc:'sf',rf,date:iso(new Date(i.doneAt||i.id)),ab:i.ab,b:i.b,r:i.r,y:i.y,t:i.t,p:i.p,prod:i.prod,rate:i.rate||lookupRate(i.prod),water:i.water||lookupWater(i.prod)}))}
 else if(i.c==='rec'){let rc=RMAP[i.rc]||i.rc,rf=FMAP[i.rf]||i.rf;if(rc==='compliance'&&(rf==='Spray diary'||rf==='Fertiliser'))rc='sf';push({id:i.id,rc,rf,date:i.rdate||iso(new Date(i.id)),ab:i.ab,b:i.b,r:i.r,y:i.y,t:i.t,p:i.p})}});
 return out.sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:b.id-a.id)}
-const recFOk=r=>(!recF.from||r.date>=recF.from)&&(!recF.to||r.date<=recF.to)&&(!recF.b||String(r.b)===recF.b)&&(!recF.q||((r.t||'')+' '+(r.prod||'')+' '+(r.rf||'')).toLowerCase().includes(recF.q.toLowerCase()));
+const recFOk=r=>(!recF.from||r.date>=recF.from)&&(!recF.to||r.date<=recF.to)&&(!recF.b||String(r.b)===recF.b||r.ab)&&(!recF.q||((r.t||'')+' '+(r.prod||'')+' '+(r.rf||'')).toLowerCase().includes(recF.q.toLowerCase()));
 const exRows=()=>recRows().filter(r=>r.rc===recCat&&(recFolder==='all'||r.rf===recFolder)&&recFOk(r));
 const vfmt=d=>new Date(d+'T12:00:00').toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'});
 function vineCard(){const rows=recRows().filter(r=>r.rc==='vine');if(!rows.length)return '';
