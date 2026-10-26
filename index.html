@@ -352,6 +352,11 @@ textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .teamcta .x{color:#fff}
 @media (min-width:900px){.teamcta.small{display:none}}
 .nudge{margin:0 0 14px}
+#auth{overflow-y:auto;align-items:flex-start}#auth>.box{margin:auto}
+#splash{position:fixed;inset:0;z-index:300;background:var(--deep);display:flex;align-items:center;justify-content:center;transition:opacity .35s}#splash span{font:800 64px/1 'Barlow Condensed',Impact,sans-serif;color:#fff}#splash i{font-style:normal;color:var(--sun)}#splash.out{opacity:0;pointer-events:none}
+.suh{font:800 38px/1.05 'Barlow Condensed',Impact,sans-serif;margin:0 0 6px}.suh i{font-style:normal;color:var(--hot)}.sup{margin:0 0 14px}.sudots{margin:0 0 14px}.sud{display:inline-block;width:34px;height:8px;border-radius:6px;background:#c5d3cf;margin-right:6px}.sud.on{background:var(--hot)}
+.surole{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);color:var(--ink);border:3px solid var(--deep);padding:9px 12px;margin:0 0 8px;font:600 15px Barlow,sans-serif;cursor:pointer;min-height:56px}.surole b{display:block;font:800 21px/1 'Barlow Condensed',sans-serif}.surole .em{font-size:28px}.surole.on{background:var(--deep);color:#fff;border-color:var(--hot)}
+.sustep{animation:suin .28s ease}@keyframes suin{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.sustep{animation:none}#splash{transition:none}}
 .gbar{height:12px;background:#d4e3de;border-radius:8px;overflow:hidden}.gbar i{display:block;height:100%;background:var(--hot);border-radius:8px;transition:width .4s}
 .teamcta.small{background:var(--card);color:var(--ink);border-left:6px solid var(--crew)}
 .teamcta.small .btn{background:transparent;color:var(--ink);border-color:var(--deep)}
@@ -365,7 +370,8 @@ details.tset summary{cursor:pointer;font:800 20px 'Barlow Condensed',sans-serif;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f3d3e"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 </head>
-<body>
+<body class="boot">
+<div id="splash"><span>Hort<i>log</i></span></div><script>setTimeout(function(){var s=document.getElementById('splash');if(s)s.className='out'},8000)</script>
 <header>
 <div class="top"><span class="brand" id="brand" role="button" tabindex="0" aria-label="Home"><h1>Hort<i>log</i></h1></span><span class="hdr-r"><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="teamb" class="recb teamb">Team</button><button id="recb" class="recb">Records</button></span></div>
 <div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab" data-v="lists">Lists</button><button class="tab tteam" data-v="team">Team</button></div>
@@ -411,9 +417,9 @@ const byLabel=i=>ROLES&&MEMBERS.length>1&&AUTH[i.id]?' · by '+esc(AUTH[i.id]===
 const meP=()=>ROLES?PROF:(B[0]=B[0]||{});
 function saveProf(){try{localStorage.setItem('hortlog.prof.'+U.id,JSON.stringify(PROF))}catch(e){}if(!ROLES||!U)return;sb.from('profiles').upsert({user_id:U.id,prefs:PROF,updated_at:new Date().toISOString()}).then(()=>{},()=>{})}
 const saveMe=()=>ROLES?saveProf():saveB();
-const alertLive=a=>{if(R()==='contractor')return true;const td=iso(new Date());return items.some(i=>{if(i.c!=='spray'&&!(i.c==='rec'&&i.rc==='sf'))return false;const hit=(!i.d&&i.due===td)||(i.d&&iso(new Date(i.doneAt||i.id))===td)||(i.rc==='sf'&&i.rdate===td);return hit&&(!a.block||i.ab||!i.b||i.b===a.block)})};
+const alertLive=a=>{if(R()==='contractor')return true;const td=iso(new Date());return items.some(i=>{if(i.c!=='spray'&&!(i.c==='rec'&&i.rc==='sf'))return false;const hit=(!i.d&&i.due===td)||(i.d&&iso(new Date(i.doneAt||i.id))===td)||(i.rc==='sf'&&i.rdate===td);return hit&&(a.block?(i.ab||!i.b||i.b===a.block):(i.ab||!i.b))})};
 const alertGone=a=>alertDone(a)||!alertLive(a);
-const nowFor=a=>{const td=iso(new Date());return items.some(i=>i.c==='spray'&&i.now&&!i.d&&i.due===td&&(!a.block||i.ab||!i.b||i.b===a.block))};
+const nowFor=a=>{const td=iso(new Date());return items.some(i=>i.c==='spray'&&i.now&&!i.d&&i.due===td&&(a.block?(i.ab||!i.b||i.b===a.block):(i.ab||!i.b)))};
 const alertText=a=>(nowFor(a)?(a.kind==='spread'?'Fertiliser or compost spreading now':'Spraying now'):a.kind==='spread'?'Fertiliser or compost spreading today':'Spraying today')+(a.block?': '+bn(a.block):': all blocks');
 const alertTag=n=>ROLES&&MEMBERS.length>1&&ALERTS.some(a=>a.block===n&&!alertGone(a))?'<span style="display:inline-block;background:var(--psa);color:#fff;padding:1px 8px;font:800 14px \'Barlow Condensed\',sans-serif;margin:4px 0 2px">⚠ SPRAYING TODAY</span>':'';
 const finTxt=t=>/\b(finished|completed?|done|wrapped up)\b/i.test(t)&&!/\b(not|isn'?t|haven'?t|hasn'?t|yet to|to be|will|going to|gonna|need|needs|must|should|tomorrow|later|once|when|until|before|after)\b/i.test(t);
@@ -730,7 +736,11 @@ $('#spy').onclick=()=>{const T=iso(new Date());i.d=true;i.doneAt=new Date((i.due
 $('#spn').onclick=()=>{i.snooze=iso(new Date());save();e.remove();checkSprays()}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkSprays();alertsRefresh()}});
 setInterval(()=>{if(U&&ROLES&&!document.hidden)alertsRefresh()},300000);
-const APP_VER='v42',WHATS_NEW=['Fixed how phones are signed up for spraying and spreading alerts, so alerts can reach everyone in the orchard.','Records can be deleted from the edit screen.','Home shows one reminder at a time and greets you by name.'];
+(function(){try{var t=localStorage.getItem('hortlog.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+const themeNow=()=>{try{return localStorage.getItem('hortlog.theme')||'auto'}catch(e){return 'auto'}};
+function setTheme(t){try{if(t==='auto'){localStorage.removeItem('hortlog.theme');document.documentElement.removeAttribute('data-theme')}else{localStorage.setItem('hortlog.theme',t);document.documentElement.setAttribute('data-theme',t)}}catch(e){}}
+const themeCard=()=>{const t=themeNow();return card('var(--note)',`<h2>Appearance</h2><div class="acts">${[['auto','Auto'],['light','Light'],['dark','Dark']].map(x=>`<button class="btn ${t===x[0]?'':'alt'}" data-th="${x[0]}">${x[1]}</button>`).join('')}</div><p class="hint" style="margin:6px 0 0">Auto follows your phone.</p>`)};
+const APP_VER='v43',WHATS_NEW=['Creating an account is now three quick steps: email and password, your name, then your role.','New Appearance choice in Account: Auto, Light or Dark.','The app now opens all at once, with no flicker while it loads.'];
 function showNew(){if($('#wnq'))return;seen.ver=APP_VER;wr(SK,seen);const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'wnq',className:'ov'}));
 e.innerHTML=`<div class="box cut"><h2>What’s new in ${APP_VER}</h2><ul style="margin:6px 0 10px;padding-left:20px;font-weight:600">${WHATS_NEW.map(x=>`<li style="margin:6px 0">${esc(x)}</li>`).join('')}</ul><div class="acts"><button class="btn" id="wnok">Got it</button></div></div>`;
 $('#wnok').onclick=()=>{seen.ver=APP_VER;wr(SK,seen);e.remove()}}
@@ -740,11 +750,30 @@ const draw=()=>{e.innerHTML=`<div class="box cut"><h2>Set up your blocks</h2><p>
 $('#m1').onclick=()=>{n=Math.max(1,n-1);draw()};$('#p1').onclick=()=>{n=Math.min(40,n+1);draw()};$('#lat').onclick=()=>e.remove();
 $('#mk').onclick=()=>{for(let k=1;k<=n;k++)B[k]={rows:60,bays:30};saveB();e.remove();view='blocks';blk=null;render();coach(1,'Your blocks are ready. Tap Block 1 to add imagery and set it up.')}};draw()}
 let mode='in',sentTo='';
+let suStep=1,su={em:'',pw:'',fn:'',rl:'',rlo:''};
+const SU_ROLES=[['owner','🏡','Owner','I run the orchard'],['manager','📋','Manager','I look after the day to day'],['supervisor','🧢','Supervisor','I lead a crew'],['worker','🌿','Orchard worker','I work in the blocks'],['contractor','🚜','Contractor','I am hired in for jobs'],['other','✨','Something else','Tell us below']];
+function showSignup(){const e=$('#auth')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'auth'}));
+const dots='<div class="sudots">'+[1,2,3].map(n=>`<i class="sud ${n<=suStep?'on':''}"></i>`).join('')+'</div>',msg=t=>{const m=$('#am');if(m)m.textContent=t};
+const sw='<button class="back" id="asw" style="font-size:17px">I already have an account</button>';let h='';
+if(suStep===1)h=`${dots}<h2 class="suh">Let’s get you <i>growing</i></h2><p class="sup">First, your email and a password.</p><input id="em" type="email" placeholder="Email" autocomplete="email" value="${esc(su.em)}"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="new-password" value="${esc(su.pw)}"><div id="am" class="hint"></div><div class="acts"><button class="btn" id="sun">Next →</button></div>${sw}`;
+else if(suStep===2)h=`${dots}<h2 class="suh">What should we <i>call you?</i></h2><p class="sup">Just your first name is fine. It is what your team will see.</p><input id="fn" type="text" placeholder="Your name" autocomplete="name" value="${esc(su.fn)}"><div id="am" class="hint"></div><div class="acts"><button class="btn alt" id="sub">← Back</button><button class="btn" id="sun">Next →</button></div>`;
+else h=`${dots}<h2 class="suh">Nice to meet you, <i>${esc((su.fn||'').split(/\s+/)[0]||'friend')}!</i></h2><p class="sup">What is your role in the orchard?</p>${SU_ROLES.map(r=>`<button class="surole ${su.rl===r[0]?'on':''}" data-r="${r[0]}"><span class="em">${r[1]}</span><span><b>${r[2]}</b>${r[3]}</span></button>`).join('')}<input id="rlo" type="text" placeholder="Your role (for example: packhouse)" value="${esc(su.rlo)}" style="display:${su.rl==='other'?'block':'none'};margin:0 0 8px"><p class="hint" style="margin:0 0 6px">Owners and managers set up the orchard. Everyone else is invited by email.</p><div id="am" class="hint"></div><div class="acts"><button class="btn alt" id="sub">← Back</button><button class="btn" id="sugo">Create my account 🌱</button></div>`;
+e.innerHTML=`<div class="box cut sustep">${h}</div>`;
+const asw=$('#asw');if(asw)asw.onclick=()=>{mode='in';suStep=1;showAuth()};
+const bk=$('#sub');if(bk)bk.onclick=()=>{if(suStep===2)su.fn=$('#fn').value;if(suStep===3)su.rlo=$('#rlo').value;suStep--;showSignup()};
+const nx=$('#sun');if(nx)nx.onclick=()=>{if(suStep===1){const em=$('#em').value.trim(),pw=$('#pw').value;if(!em||pw.length<6){msg('Enter your email and a password of at least 6 characters.');return}su.em=em;su.pw=pw;suStep=2;showSignup();const f=$('#fn');if(f)f.focus()}else{const fn=$('#fn').value.trim();if(!fn){msg('Tell us what to call you.');return}su.fn=fn;suStep=3;showSignup()}};
+const fi=$('#fn');if(fi)fi.onkeydown=ev=>{if(ev.key==='Enter')$('#sun').click()};
+e.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{su.rlo=$('#rlo').value;su.rl=b.dataset.r;showSignup()});
+const go=$('#sugo');if(go)go.onclick=async()=>{if(!su.rl){msg('Choose your role.');return}su.rlo=$('#rlo').value.trim();
+const meta={full_name:su.fn,requested_role:su.rl,requested_role_other:su.rl==='other'?su.rlo:''};msg('One moment…');
+try{const r=await sb.auth.signUp({email:su.em,password:su.pw,options:{data:meta}});if(r.error)msg(r.error.message);else if(r.data.session){const u=r.data.user;su={em:'',pw:'',fn:'',rl:'',rlo:''};suStep=1;await enter(u)}else msg('Check your email to confirm your account, then log in.')}
+catch(x){msg('Could not reach the server. Check your connection.')}}}
 function showAuth(){const e=$('#auth')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'auth'}));
 if(mode==='sent'){e.innerHTML=`<div class="box cut"><div class="big">✓</div><h2>Email sent</h2><p>We sent a password reset link to <b>${esc(sentTo)}</b>. Check your inbox and your spam folder. It can take a minute or two. Please do not press the button again.</p><button class="btn" id="bk">Back to log in</button></div>`;$('#bk').onclick=()=>{mode='in';showAuth()};return}
 if(mode==='reset'){e.innerHTML=`<div class="box cut"><h2>New password</h2><p>Choose a new password for your account.</p><input id="np" type="password" placeholder="New password (6+ characters)" autocomplete="new-password"><div id="am" class="hint"></div><div class="acts"><button class="btn" id="nps">Save password</button></div></div>`;
 $('#nps').onclick=async()=>{const p=$('#np').value;if(p.length<6){$('#am').textContent='Use at least 6 characters.';return}$('#am').textContent='One moment…';
 try{const r=await sb.auth.updateUser({password:p});if(r.error){$('#am').textContent=r.error.message;return}mode='in';const a=$('#auth');if(a)a.remove();toast('Password changed.');if(!U){const s=await sb.auth.getSession();if(s.data.session)await enter(s.data.session.user)}}catch(x){$('#am').textContent='Could not reach the server.'}};return}
+if(mode==='up'){showSignup();return}
 e.innerHTML=`<div class="box cut"><h2>Hort<i>log</i></h2><p>${mode==='in'?'Log in to your orchard notebook.':'Create your account.'}</p><input id="em" type="email" placeholder="Email" autocomplete="email"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="${mode==='in'?'current-password':'new-password'}">${mode==='up'?'<div style="height:10px"></div><input id="fn" type="text" placeholder="Your name" autocomplete="name"><div style="height:10px"></div><select id="rl" style="width:100%" aria-label="Your role"><option value="">Your role…</option><option value="owner">Owner</option><option value="manager">Manager</option><option value="supervisor">Supervisor</option><option value="worker">Orchard worker</option><option value="contractor">Contractor</option><option value="other">Other</option></select><input id="rlo" type="text" placeholder="Your role (for example: packhouse)" style="display:none;margin-top:10px"><p class="hint" style="margin:6px 0 0">Owners and managers set up the orchard. Everyone else is invited by email.</p>':''}<div id="am" class="hint"></div><div class="acts"><button class="btn" id="ago">${mode==='in'?'Log in':'Sign up'}</button><button class="btn alt" id="asw">${mode==='in'?'Create account':'I have an account'}</button></div>${mode==='in'?'<button class="back" id="afg" style="font-size:17px">Forgot password?</button>':''}</div>`;
 const msg=t=>{$('#am').textContent=t};const rlS=$('#rl');if(rlS)rlS.onchange=()=>{$('#rlo').style.display=rlS.value==='other'?'block':'none'};
 $('#asw').onclick=()=>{const em=$('#em').value.trim();mode=mode==='in'?'up':'in';showAuth();$('#em').value=em;setTimeout(()=>{const t=$(em?'#pw':'#em');if(t)t.focus()},50)};
@@ -758,7 +787,7 @@ else{const r=await sb.auth.signUp({email:em,password:pw,options:{data:meta}});if
 catch(e){msg('Could not reach the server. Check your connection.')}}}
 sb.auth.onAuthStateChange((ev)=>{if(ev==='SIGNED_OUT'){rolesReset();document.querySelectorAll('#orq,#spw,#bkq,#nmq,#invq').forEach(x=>x.remove());U=null;items=[];B={};resetCats();mode='in';showAuth();render()}else if(ev==='PASSWORD_RECOVERY'){mode='reset';showAuth()}});
 window.addEventListener('online',()=>{if(U&&pending)push()});
-async function boot(){try{const r=await sb.auth.getSession();if(r.data&&r.data.session)await enter(r.data.session.user);else showAuth()}catch(e){showAuth()}}
+async function boot(){try{const r=await sb.auth.getSession();if(r.data&&r.data.session){await enter(r.data.session.user);if(ROLES&&OID)await Promise.race([alertsRefresh(true),new Promise(r=>setTimeout(r,2500))])}else showAuth()}catch(e){showAuth()}reveal()}
 function dayLabel(d){const T=new Date();T.setHours(12,0,0,0);const x=new Date(d+'T12:00:00'),k=Math.round((x-T)/864e5);
 return k===0?'Today':k===1?'Tomorrow':k===-1?'Yesterday':x.toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'})}
 function pdate(s){s=s.toLowerCase();const t=new Date();t.setHours(12,0,0,0);
@@ -995,7 +1024,7 @@ const prodCard=()=>{const P=(B[0]&&B[0].products)||[];return card('var(--spray)'
 const installCard=()=>card('var(--bio)','<h2>Hortlog app</h2>'+(standalone?'<p style="margin:4px 0 10px">You are using the app. ✓</p>':'<p style="margin:4px 0 10px">Add Hortlog to your phone so it opens like an app.</p><div class="acts"><button class="btn" id="insnow">'+(dp?'Install app':isIOS?'Add to Home Screen':'Show me how')+'</button></div>'));
 const brandStrip=()=>{const b=B[0]||{};return b.biz?`<div class="rbrand"><b>${esc(b.biz)}</b></div>`:''};
 const avRow=()=>{const a=meP().avatar;return `<div class="acts">${a?`<img class="avp" src="${a}" alt="Profile photo">`:''}<button class="btn alt" id="avup">${a?'Change photo':'Add profile photo'}</button>${a?'<button class="btn alt" id="avrm">Remove photo</button>':''}</div>`};
-const setHtml0=()=>'<div class="setpg">'+card('var(--deep)',`<h2>Account</h2><p style="margin:4px 0 8px">${esc(U?U.email:'')}</p>${avRow()}<div class="acts"><input id="npw" type="password" placeholder="New password" autocomplete="new-password" style="max-width:240px"><button class="btn" id="npb">Change password</button><button class="btn" id="logout">Log out</button></div>`)+card('var(--hot)','<h2>Tutorial</h2><div class="acts"><button class="btn" id="tut">Show tutorial</button><button class="btn alt" id="tips">Show tab tips again</button></div>')+bizCard()+permCard()+notifCard()+earCard()+installCard()+card('var(--psa)','<h2>Reset</h2><p style="margin:4px 0 10px">Erase everything in this account (logs, blocks, folders and settings) and start again like a brand new grower. This cannot be undone.</p><div class="acts"><button class="btn alt" id="reset">Reset everything</button><button class="btn alt" id="resetout">Reset and log out (testing)</button></div>')+'</div><p class="hint legal"><button class="lnk" id="lp">Privacy</button> · <button class="lnk" id="ld">Disclaimer</button></p>';
+const setHtml0=()=>'<div class="setpg">'+card('var(--deep)',`<h2>Account</h2><p style="margin:4px 0 8px">${esc(U?U.email:'')}</p>${avRow()}<div class="acts"><input id="npw" type="password" placeholder="New password" autocomplete="new-password" style="max-width:240px"><button class="btn" id="npb">Change password</button><button class="btn" id="logout">Log out</button></div>`)+card('var(--hot)','<h2>Tutorial</h2><div class="acts"><button class="btn" id="tut">Show tutorial</button><button class="btn alt" id="tips">Show tab tips again</button></div>')+bizCard()+permCard()+notifCard()+earCard()+installCard()+card('var(--psa)','<h2>Reset</h2><p style="margin:4px 0 10px">Erase everything in this account (logs, blocks, folders and settings) and start again like a brand new grower. This cannot be undone.</p><div class="acts"><button class="btn alt" id="reset">Reset everything</button><button class="btn alt" id="resetout">Reset and log out (testing)</button></div>')+themeCard()+'</div><p class="hint legal"><button class="lnk" id="lp">Privacy</button> · <button class="lnk" id="ld">Disclaimer</button></p>';
 const setHtml=()=>{let h=setHtml0();if(!ROLES)return h;
 h=h.replace('</div><p class="hint legal">',teamLink()+'</div><p class="hint legal">');
 if(!isMgr())h=h.replace(/<div class="card cut"><span class="stripe" style="background:var\(--hot\)"><\/span><h2>Your business<\/h2>[\s\S]*?<\/div><\/div>/,'');
@@ -1215,7 +1244,7 @@ on('logout',async()=>{await sb.auth.signOut()});on('tut',()=>openOb());on('tips'
 on('npb',async()=>{const p=$('#npw').value;if(p.length<6){toast('Use at least 6 characters.');return}try{const r=await sb.auth.updateUser({password:p});toast(r.error?r.error.message:'Password changed.')}catch(e){toast('Could not reach the server.')}});
 A('[data-mood]',b=>b.onclick=()=>{const v=+b.dataset.mood,cd=b.closest('.card');if(cd)cd.classList.add('zout');setTimeout(()=>{const P0=meP(),c=P0.checkins=P0.checkins||[],T=iso(new Date());if(c.length&&c[c.length-1].d===T)c[c.length-1].v=v;else c.push({d:T,v});P0.checkins=c.slice(-60);saveMe();render();toast(v>=3?'Great, see you next week.':v===2?'That’s okay, a busy week. Thanks for checking in.':'That’s okay. Thanks for telling us. See you next week.')},450)});
 A('[data-ap]',b=>b.onchange=()=>{apSel[b.dataset.ap]=b.checked});
-A('[data-su]',b=>b.onclick=()=>suGo(b.dataset.su));A('[data-suhide]',b=>b.onclick=()=>{seen.suHide=1;wr(SK,seen);render()});A('[data-kp]',b=>b.onclick=()=>showProdPick(+b.dataset.kp));
+A('[data-th]',b=>b.onclick=()=>{setTheme(b.dataset.th);render()});A('[data-su]',b=>b.onclick=()=>suGo(b.dataset.su));A('[data-suhide]',b=>b.onclick=()=>{seen.suHide=1;wr(SK,seen);render()});A('[data-kp]',b=>b.onclick=()=>showProdPick(+b.dataset.kp));
 A('[data-del]',b=>b.onclick=e=>{e.stopPropagation();confirmDel(+b.dataset.del)});
 A('[data-try]',b=>b.onclick=()=>{const q=$('#q');q.value=b.dataset.try;if(window.innerWidth>=900)$('#log').classList.add('open');q.focus();toast('Now press → to log it.')});
 A('[data-cm]',b=>b.onclick=()=>{const[y,m]=calM.split('-').map(Number),d=new Date(y,m-1+ +b.dataset.cm,1);calM=iso(d).slice(0,7);render()});A('[data-gd]',b=>b.onclick=()=>{day=b.dataset.gd;render();window.scrollTo({top:0,behavior:'smooth'})});
@@ -1259,6 +1288,7 @@ chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
 boot();
+function reveal(){const sp=document.getElementById('splash');if(sp){sp.className='out';setTimeout(()=>{sp.remove();document.body.classList.remove('boot')},400)}}
 if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl&&!($('#q')&&$('#q').value)){rl=true;location.reload()}});
 window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})}).catch(()=>{}))}
 </script>
