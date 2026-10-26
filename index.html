@@ -421,7 +421,8 @@ const alertDone=a=>{const td=iso(new Date());return items.some(i=>i.c==='spray'&
 async function sysNotify(title,body,tag){try{if(!('Notification' in window)||Notification.permission!=='granted'||!navigator.serviceWorker)return;const reg=await navigator.serviceWorker.getRegistration();if(!reg)return;await reg.showNotification(title,{body:body||'',icon:'icon-192.png',badge:'badge-96.png',vibrate:[200,100,200],tag:tag||'hortlog-alert',renotify:true,data:{url:'./'}})}catch(e){}}
 function alertBar(){if(!ROLES||MEMBERS.length<2)return '';const A=ALERTS.filter(a=>!alertSeen[a.id]&&!alertGone(a));if(!A.length)return '';const g={};A.forEach(a=>{(g[a.kind]=g[a.kind]||[]).push(a)});
 return Object.keys(g).map(k=>{const bs=[...new Set(g[k].map(a=>a.block?bn(a.block):'all blocks'))];return `<div class="alertb cut" role="alert"><span><b>⚠ ${g[k].some(nowFor)?(k==='spread'?'Fertiliser or compost spreading now':'Spraying now'):k==='spread'?'Fertiliser or compost spreading today':'Spraying today'}</b>${esc(bs.join(', '))}. Take care in that area.</span><button data-adis="${g[k].map(a=>a.id).join(',')}" aria-label="Dismiss alert">✕</button></div>`}).join('')}
-async function alertsRefresh(quiet){if(!ROLES||!U||!OID)return;try{const r=await sb.rpc('todays_alerts',{o:OID});if(r.error)return;ALERTS=r.data||[];
+async function fixPushPrefs(){try{const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pushManager.getSubscription();if(!sub)return;const r=await sb.from('push_subs').select('prefs').eq('endpoint',sub.endpoint),p=r.data&&r.data[0]&&r.data[0].prefs;if(p&&p.alerts===undefined)await sb.from('push_subs').update({prefs:Object.assign({},p,{alerts:true})}).eq('endpoint',sub.endpoint)}catch(e){}}
+async function alertsRefresh(quiet){if(!ROLES||!U||!OID)return;if(!window.__fpp){window.__fpp=1;fixPushPrefs()}try{const r=await sb.rpc('todays_alerts',{o:OID});if(r.error)return;ALERTS=r.data||[];
 if(MEMBERS.length>1&&!quiet){const nw=ALERTS.filter(a=>!alertSeen[a.id]&&!toasted[a.id]&&!alertGone(a));nw.forEach(a=>toasted[a.id]=1);if(nw.length){toast('⚠ '+alertText(nw[0]));nw.forEach(a=>sysNotify('Hortlog: '+alertText(a),'Tap to open the app.','alert-'+a.id))}}
 if(view==='home'&&!busy())render()}catch(e){}}
 async function rolesRefresh(){if(!ROLES)return;try{const[m,p]=await Promise.all([sb.rpc('list_members',{o:OID}),sb.from('profiles').select('prefs').eq('user_id',U.id)]);
@@ -579,7 +580,7 @@ async function notifStatus(){if(!('serviceWorker' in navigator&&'PushManager' in
 const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pushManager.getSubscription();return sub&&Notification.permission==='granted'?'on':'off'}
 async function notifOn(){const perm=await Notification.requestPermission();if(perm!=='granted'){toast('Notifications are blocked. '+PHELP);return}
 const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID_PUBLIC)});
-const j=sub.toJSON(),r=await sb.from('push_subs').upsert({endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth,tz:Intl.DateTimeFormat().resolvedOptions().timeZone,user_id:U.id},{onConflict:'endpoint'});
+const j=sub.toJSON(),r=await sb.from('push_subs').upsert({endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth,tz:Intl.DateTimeFormat().resolvedOptions().timeZone,user_id:U.id,prefs:{due:true,spray:true,weekly:true,alerts:true}},{onConflict:'endpoint'});
 if(r.error){toast('Could not save notifications: '+r.error.message);return}toast('Notifications are on.')}
 async function notifOff(){const reg=await navigator.serviceWorker.getRegistration(),sub=reg&&await reg.pushManager.getSubscription();if(sub){await sb.from('push_subs').delete().eq('endpoint',sub.endpoint);await sub.unsubscribe()}toast('Notifications are off.')}
 async function notifTest(){const reg=await navigator.serviceWorker.ready;reg.showNotification('Hortlog',{body:'Notifications are working.',icon:'icon-192.png',badge:'badge-96.png',vibrate:[200,100,200],tag:'test',renotify:true})}
@@ -729,7 +730,7 @@ $('#spy').onclick=()=>{const T=iso(new Date());i.d=true;i.doneAt=new Date((i.due
 $('#spn').onclick=()=>{i.snooze=iso(new Date());save();e.remove();checkSprays()}}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkSprays();alertsRefresh()}});
 setInterval(()=>{if(U&&ROLES&&!document.hidden)alertsRefresh()},300000);
-const APP_VER='v41',WHATS_NEW=['Records can now be deleted from the edit screen.','Home shows one reminder at a time, with a break in between, and says Good morning with your name.','Adding a product from a spray now asks for its rate and water rate.'];
+const APP_VER='v42',WHATS_NEW=['Fixed how phones are signed up for spraying and spreading alerts, so alerts can reach everyone in the orchard.','Records can be deleted from the edit screen.','Home shows one reminder at a time and greets you by name.'];
 function showNew(){if($('#wnq'))return;seen.ver=APP_VER;wr(SK,seen);const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'wnq',className:'ov'}));
 e.innerHTML=`<div class="box cut"><h2>What’s new in ${APP_VER}</h2><ul style="margin:6px 0 10px;padding-left:20px;font-weight:600">${WHATS_NEW.map(x=>`<li style="margin:6px 0">${esc(x)}</li>`).join('')}</ul><div class="acts"><button class="btn" id="wnok">Got it</button></div></div>`;
 $('#wnok').onclick=()=>{seen.ver=APP_VER;wr(SK,seen);e.remove()}}
