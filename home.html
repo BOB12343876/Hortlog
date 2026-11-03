@@ -100,18 +100,6 @@ section{padding:84px 0}
 .pane.after li{color:var(--on-deep)}
 @media(max-width:760px){.ba{grid-template-columns:1fr}}
 
-/* week */
-.week{background:var(--deep);color:#fff;position:relative}
-.week .sub{color:var(--on-deep)}
-.days{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:44px;counter-reset:d}
-.day{background:var(--deep2);border-top:6px solid var(--c,var(--hot));padding:20px 18px 24px;position:relative;--cut:14px}
-.day small{display:block;font:600 14px/1 Barlow,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);margin-bottom:10px}
-.day h3{font-size:30px;text-transform:uppercase;margin-bottom:10px}
-.day p{margin:0;color:var(--on-deep);font-size:16.5px;line-height:1.5}
-@media(max-width:980px){.days{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.days{grid-template-columns:1fr}}
-.week .end{margin-top:40px;font:800 clamp(30px,4.5vw,50px)/1.05 'Barlow Condensed',sans-serif;text-transform:uppercase;color:var(--sun)}
-
 /* feature rows */
 .row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:44px 0}
 .row.flip .txt{order:2}
@@ -139,6 +127,11 @@ section{padding:84px 0}
 .role{background:var(--card);border:1px solid var(--line);padding:12px 18px;font:800 22px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;display:flex;align-items:center;gap:10px}
 .role i{width:10px;height:10px;background:var(--c,var(--hot));transform:rotate(45deg)}
 
+/* roles */
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:38px}
+.rcard{background:var(--card);border:1px solid var(--line);border-top:8px solid var(--c);padding:22px 20px 26px;--cut:14px}
+.rcard h3{font-size:32px;text-transform:uppercase;margin-bottom:8px}
+.rcard p{margin:0;color:var(--soft);font-size:17px;line-height:1.5}
 /* steps */
 .steps{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
 .steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);padding:26px 24px 28px;position:relative}
@@ -183,7 +176,7 @@ footer a{color:#fff}
 
 <header class="top"><div class="in">
   <a class="lg" href="home.html">Hort<i>log</i></a>
-  <nav class="nav" aria-label="Main"><a href="#week">A week with Hortlog</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="./?app=1" style="--cut:9px">Open Hortlog</a></nav>
+  <nav class="nav" aria-label="Main"><a href="#roles">Roles</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="./?app=1" style="--cut:9px">Open Hortlog</a></nav>
 </div></header>
 
 <div class="hero"><div class="wrap">
@@ -191,7 +184,7 @@ footer a{color:#fff}
     <p class="eyebrow" style="color:var(--sun)">For New Zealand kiwifruit growers</p>
     <h1>Stop carrying your orchard <span>in your head.</span></h1>
     <p class="lead">Hortlog is the orchard notebook that listens. Say what you see. It files the job, pins the PSA on your block map, tells the crew and keeps your audit records ready.</p>
-    <div class="acts"><a class="btn cut" href="./?app=1">Open Hortlog</a><a class="btn ghost cut" href="#week">See a week with it</a></div>
+    <div class="acts"><a class="btn cut" href="./?app=1">Open Hortlog</a><a class="btn ghost cut" href="#features">See what it does</a></div>
     <div class="proof"><span class="dia"></span><span><b>Built in a Hawke’s Bay orchard.</b> Tested on real phones, in real weather.</span></div>
   </div>
   <div class="stage" aria-hidden="false">
@@ -223,21 +216,7 @@ footer a{color:#fff}
   </div>
 </section>
 
-<section class="week" id="week">
-  <div class="wrap">
-    <p class="eyebrow rv" style="color:var(--sun)">A week with Hortlog</p>
-    <h2 class="h2 rv">Five days. No paperwork night.</h2>
-    <p class="sub rv">Here is what a normal week looks like when the notebook does the work.</p>
-    <div class="days">
-      <div class="day cut rv" style="--c:#E03131"><small>Monday</small><h3>Spot it. Say it.</h3><p>Leader bleeding in block 3. You say it. The pin lands on the map and the team can see it.</p></div>
-      <div class="day cut rv" style="--c:#A0643A"><small>Tuesday</small><h3>Plan the spray</h3><p>“Spray copper block 3 tomorrow.” Everyone is alerted, and it closes itself when you say it is done.</p></div>
-      <div class="day cut rv" style="--c:#1C7ED6"><small>Wednesday</small><h3>Hand out jobs</h3><p>Assign the stringing to Sam. He sees it under Assigned to you and gets a notification.</p></div>
-      <div class="day cut rv" style="--c:#7C4DFF"><small>Thursday</small><h3>Sign on the crew</h3><p>New contractors sign on one screen, in person. You get a signed PDF.</p></div>
-      <div class="day cut rv" style="--c:#0A9C82"><small>Friday</small><h3>Auditor rings</h3><p>One tap. Spray diary, monitoring and signed documents, zipped and ready to send.</p></div>
-    </div>
-    <p class="end rv">Your Sunday nights, back.</p>
-  </div>
-</section>
+
 
 <section id="features">
   <div class="wrap">
@@ -285,28 +264,29 @@ footer a{color:#fff}
 <section style="background:var(--card);border-block:1px solid var(--line)">
   <div class="wrap">
     <p class="eyebrow rv">Built for the orchard</p>
-    <h2 class="h2 rv">Made to survive a wet Tuesday.</h2>
+    <h2 class="h2 rv">Made for a real orchard.</h2>
     <div class="grid">
       <div class="card cut rv" style="--c:#FF6B2C"><h3>Works with patchy signal</h3><p>Hortlog opens fast and keeps working when the signal drops. It catches up when you are back in range.</p></div>
       <div class="card cut rv" style="--c:#0A9C82"><h3>On your Home Screen</h3><p>No app store needed. Open it in your phone’s browser and add it to your Home Screen.</p></div>
-      <div class="card cut rv" style="--c:#7C4DFF"><h3>Your records are yours</h3><p>Only people in your orchard see your records. Made under the New Zealand Privacy Act 2020, and you can delete your account any time.</p></div>
+      <div class="card cut rv" style="--c:#7C4DFF"><h3>Your records are yours</h3><p>Only people in your orchard see your records. Built to follow the New Zealand Privacy Act 2020.</p></div>
       <div class="card cut rv" style="--c:#1C7ED6"><h3>Alerts that matter</h3><p>The team is told when spraying is on, and the person who logged it is not pinged about their own entry.</p></div>
     </div>
-    <div class="roles rv" aria-label="Roles">
-      <span class="role"><i style="--c:#0F3D3E"></i>Owner</span><span class="role"><i style="--c:#FF6B2C"></i>Manager</span><span class="role"><i style="--c:#FFD23F"></i>Supervisor</span><span class="role"><i style="--c:#0A9C82"></i>Orchard worker</span><span class="role"><i style="--c:#7C4DFF"></i>Contractor</span>
-    </div>
+    
   </div>
 </section>
 
-<section>
+<section id="roles">
   <div class="wrap">
-    <p class="eyebrow rv">Getting started</p>
-    <h2 class="h2 rv">Up and running in minutes.</h2>
-    <ol class="steps">
-      <li class="rv"><b>Open Hortlog</b><span>On your phone, sign up with your email or Google. Add it to your Home Screen.</span></li>
-      <li class="rv"><b>Add your blocks</b><span>Choose each block on the aerial map in a few taps. Add the products you use.</span></li>
-      <li class="rv"><b>Start talking</b><span>Log your first job, spray or problem by voice. Then invite your team.</span></li>
-    </ol>
+    <p class="eyebrow rv">Everyone in the orchard</p>
+    <h2 class="h2 rv">The right access for every role.</h2>
+    <p class="sub rv">Invite your whole team. Each person sees what suits their job, and nothing more.</p>
+    <div class="rgrid">
+      <div class="rcard cut rv" style="--c:#0F3D3E"><h3>Owner</h3><p>Runs the orchard. Sets up blocks, invites and manages the team, and sees and exports every record.</p></div>
+      <div class="rcard cut rv" style="--c:#FF6B2C"><h3>Manager</h3><p>Looks after the day to day. Sets up blocks, manages the team and exports your records.</p></div>
+      <div class="rcard cut rv" style="--c:#FFD23F"><h3>Supervisor</h3><p>Leads a crew. Adds and assigns jobs, sets up blocks and exports records.</p></div>
+      <div class="rcard cut rv" style="--c:#0A9C82"><h3>Orchard worker</h3><p>Works in the blocks. Logs jobs, sprays, PSA and photos by voice and sees their own jobs.</p></div>
+      <div class="rcard cut rv" style="--c:#7C4DFF"><h3>Contractor</h3><p>Hired in for a job. Sees only the blocks they are given, and never your spray records.</p></div>
+    </div>
   </div>
 </section>
 
