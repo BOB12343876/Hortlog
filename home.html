@@ -103,7 +103,8 @@ section{padding:84px 0}
 /* feature rows */
 .row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:44px 0}
 .row.flip .txt{order:2}
-.row h3{font-size:clamp(36px,5vw,58px);text-transform:uppercase;margin-bottom:16px}
+.feat-h{font-size:clamp(34px,5vw,56px);max-width:none;margin-bottom:0}
+.row h3{font-size:clamp(30px,3.8vw,44px);text-transform:uppercase;margin-bottom:16px}
 .row p{margin:0 0 14px;color:var(--soft)}
 .row ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
 .row li{display:flex;gap:12px;align-items:flex-start;color:var(--ink)}
@@ -201,7 +202,7 @@ footer a{color:#fff}
   <div class="it"><b>Seconds</b><span>to log a job by voice</span></div>
   <div class="it"><b>One tap</b><span>to build your audit pack</span></div>
   <div class="it"><b>Patchy signal</b><span>no problem, it still opens</span></div>
-  <div class="it"><b>Your team</b><span>owner to contractor, one orchard</span></div>
+  <div class="it"><b>Your team</b><span>manager to contractor, one orchard</span></div>
 </div></div>
 
 <section>
@@ -223,7 +224,7 @@ footer a{color:#fff}
 <section id="features">
   <div class="wrap">
     <p class="eyebrow rv">What it does</p>
-    <h2 class="h2 rv">Everything the orchard needs. Nothing it doesn’t.</h2>
+    <h2 class="h2 rv feat-h">Everything the orchard needs.<br>Nothing it doesn’t.</h2>
 
     <div class="row">
       <div class="txt rv">
@@ -247,7 +248,7 @@ footer a{color:#fff}
       <div class="txt rv">
         <h3>Everyone knows the plan.</h3>
         <p>A calendar the whole orchard shares. Tap Overdue and it opens straight on the late jobs. Tap a day in Coming up and it jumps there.</p>
-        <ul><li>Assign a job to a team member. They get a notification.</li><li>Morning reminders at 8am New Zealand time.</li><li>Roles for Owner, Manager, Supervisor, Orchard worker and Contractor, so people see what they should.</li></ul>
+        <ul><li>Assign a job to a team member. They get a notification.</li><li>Morning reminders at 8am New Zealand time.</li><li>Roles for Manager, Supervisor, Orchard worker and Contractor, so people see what they should.</li></ul>
       </div>
       <div class="shot rv" style="--r:-2deg"><div class="phone"><img src="shot-calendar.webp" width="780" height="1688" loading="lazy" alt="Hortlog calendar with jobs on their days"></div></div>
     </div>
@@ -283,8 +284,7 @@ footer a{color:#fff}
     <h2 class="h2 rv">The right access for every role.</h2>
     <p class="sub rv">Invite your whole team. Each person sees what suits their job, and nothing more.</p>
     <div class="rgrid">
-      <div class="rcard cut rv" style="--c:#0F3D3E"><h3>Owner</h3><p>Runs the orchard. Sets up blocks, invites and manages the team, and sees and exports every record.</p></div>
-      <div class="rcard cut rv" style="--c:#FF6B2C"><h3>Manager</h3><p>Looks after the day to day. Sets up blocks, manages the team and exports your records.</p></div>
+      <div class="rcard cut rv" style="--c:#FF6B2C"><h3>Manager</h3><p>Runs the orchard. Sets up blocks, invites and manages the team, and sees and exports every record.</p></div>
       <div class="rcard cut rv" style="--c:#FFD23F"><h3>Supervisor</h3><p>Leads a crew. Adds and assigns jobs, sets up blocks and exports records.</p></div>
       <div class="rcard cut rv" style="--c:#0A9C82"><h3>Orchard worker</h3><p>Works in the blocks. Logs jobs, sprays, PSA and photos by voice and sees their own jobs.</p></div>
       <div class="rcard cut rv" style="--c:#7C4DFF"><h3>Contractor</h3><p>Hired in for a job. Sees only the blocks they are given, and never your spray records.</p></div>
