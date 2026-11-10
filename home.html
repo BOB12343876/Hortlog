@@ -46,6 +46,7 @@ h1,h2,h3{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-we
 
 /* hero */
 .hero{background:var(--deep);color:#fff;position:relative;overflow:hidden}
+.hero-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,29,30,.84) 0,rgba(10,29,30,.6) 55%,rgba(10,29,30,.4)),linear-gradient(180deg,transparent 55%,rgba(10,29,30,.7))}@media(max-width:700px){.hero-sh{background:rgba(10,29,30,.66)}}@media(prefers-reduced-motion:reduce){.hero-v{display:none}.hero{background:var(--deep) url(hero.jpg) center/cover}}
 .hero:before{content:"";position:absolute;inset:0;background:
  repeating-linear-gradient(100deg,rgba(255,255,255,.035) 0 2px,transparent 2px 34px);pointer-events:none}
 .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding-top:64px;padding-bottom:0;position:relative}
@@ -57,9 +58,9 @@ h1,h2,h3{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-we
 .hero .proof b{color:#fff}
 .dia{display:inline-block;width:11px;height:11px;background:var(--sun);transform:rotate(45deg);flex:none}
 .stage{position:relative;height:580px;align-self:end}
-.phone{position:absolute;background:#071a1b;padding:32px 9px 9px;border-radius:40px;box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 0 0 2px #1c3a3b}
+.phone{position:absolute;background:#071a1b;padding:9px;border-radius:40px;box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 0 0 2px #1c3a3b}
 .phone img{border-radius:32px;width:100%;height:auto}
-.phone:before{content:"";position:absolute;top:11px;left:50%;width:64px;height:13px;margin-left:-32px;background:#000;border-radius:8px;z-index:2}
+.phone:before{content:"";position:absolute;top:15px;left:50%;width:70px;height:19px;margin-left:-35px;background:#000;border-radius:12px;z-index:2}
 .ph-a{width:290px;left:6%;bottom:-86px;transform:rotate(-3deg);z-index:2}
 .ph-b{width:260px;right:0;bottom:-130px;transform:rotate(5deg);z-index:1;opacity:.96}
 .chip{position:absolute;z-index:3;background:var(--sun);color:#0B1F20;font:800 20px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.4px;padding:11px 16px 11px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 10px 24px rgba(0,0,0,.3);--cut:10px}
@@ -103,8 +104,8 @@ section{padding:84px 0}
 /* feature rows */
 .row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:44px 0}
 .row.flip .txt{order:2}
-.featband{background:linear-gradient(rgba(15,61,62,.80),rgba(10,29,30,.90)),url(orchard.jpg) center/cover,#0F3D3E;color:#fff;text-align:center;padding:84px 0 76px;margin-bottom:24px}
-.feat-h{font-size:clamp(34px,5.4vw,64px);max-width:none;margin:0 auto}.feat-h span{color:var(--sun)}
+.featband{background:var(--sun);color:#0B1F20;text-align:center;padding:84px 0 76px;margin-bottom:24px}
+.feat-h{font-size:clamp(34px,5.4vw,64px);max-width:none;margin:0 auto}.feat-h span{color:var(--deep)}
 .row h3{font-size:clamp(30px,3.8vw,44px);text-transform:uppercase;margin-bottom:16px}
 .row p{margin:0 0 14px;color:var(--soft)}
 .row ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
@@ -183,7 +184,7 @@ footer a{color:#fff}
   <nav class="nav" aria-label="Main"><a href="#roles">Roles</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="./?app=1" style="--cut:9px">Open Hortlog</a></nav>
 </div></header>
 
-<div class="hero"><div class="wrap">
+<div class="hero"><video class="hero-v" autoplay muted loop playsinline preload="auto" poster="hero.jpg" aria-hidden="true"><source src="hero-m.mp4" media="(max-width:700px)" type="video/mp4"><source src="hero.mp4" type="video/mp4"></video><div class="hero-sh"></div><div class="wrap">
   <div>
     <h1>Stop carrying your orchard <span>in your head.</span></h1>
     <p class="lead">Hortlog is the orchard notebook that listens. Say what you see. It files the job, pins the PSA on your block map, tells the crew and keeps your audit records ready.</p>
@@ -224,7 +225,7 @@ footer a{color:#fff}
 
 <section id="features" style="padding-top:0">
   <div class="featband"><div class="wrap">
-    <p class="eyebrow rv" style="justify-content:center;color:var(--sun)">What it does</p>
+    <p class="eyebrow rv" style="justify-content:center;color:var(--deep)">What it does</p>
     <h2 class="h2 rv feat-h">Everything the orchard needs.<br><span>Nothing it doesn’t.</span></h2>
   </div></div>
   <div class="wrap">
