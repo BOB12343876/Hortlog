@@ -45,12 +45,12 @@ h1,h2,h3{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-we
 @media(max-width:720px){.nav a:not(.btn){display:none}}
 
 /* hero */
-.hero{background:var(--deep);color:#fff;position:relative;overflow:hidden}
+.hero{background:var(--deep);color:#fff;position:relative;overflow:hidden;min-height:calc(100vh - var(--navh,66px));min-height:calc(100svh - var(--navh,66px));display:flex;align-items:center}.hero .wrap{width:100%;min-height:inherit}
 .hero-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,29,30,.84) 0,rgba(10,29,30,.6) 55%,rgba(10,29,30,.4)),linear-gradient(180deg,transparent 55%,rgba(10,29,30,.7))}@media(max-width:700px){.hero-sh{background:rgba(10,29,30,.66)}}@media(prefers-reduced-motion:reduce){.hero-v{display:none}.hero{background:var(--deep) url(hero.jpg) center/cover}}
 .hero:before{content:"";position:absolute;inset:0;background:
  repeating-linear-gradient(100deg,rgba(255,255,255,.035) 0 2px,transparent 2px 34px);pointer-events:none}
 .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding-top:64px;padding-bottom:0;position:relative}
-.hero h1{font-size:clamp(48px,6.6vw,90px);text-transform:uppercase;margin:0 0 20px}
+.hero h1{font-size:clamp(40px,min(6.6vw,9.4vh),90px);text-transform:uppercase;margin:0 0 20px}
 .hero h1 span{color:var(--sun)}
 .hero p.lead{font-size:clamp(19px,2.2vw,23px);color:var(--on-deep);max-width:560px;margin:0 0 28px}
 .hero .acts{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:66px}
@@ -225,7 +225,6 @@ footer a{color:#fff}
 
 <section id="features" style="padding-top:0">
   <div class="featband"><div class="wrap">
-    <p class="eyebrow rv" style="justify-content:center;color:var(--deep)">What it does</p>
     <h2 class="h2 rv feat-h">Everything the orchard needs.<br><span>Nothing it doesn’t.</span></h2>
   </div></div>
   <div class="wrap">
@@ -330,5 +329,5 @@ footer a{color:#fff}
   els.forEach(function(e,i){e.style.transitionDelay=(i%5)*60+'ms';io.observe(e)});
 })();
 </script>
-</body>
+<script>(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script></body>
 </html>
