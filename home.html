@@ -46,7 +46,7 @@ h1,h2,h3{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-we
 
 /* hero */
 .hero{background:var(--deep);color:#fff;position:relative;overflow:hidden;min-height:calc(100vh - var(--navh,66px));min-height:calc(100svh - var(--navh,66px));display:flex;align-items:center}.hero .wrap{width:100%;min-height:inherit}
-.hero-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,29,30,.84) 0,rgba(10,29,30,.6) 55%,rgba(10,29,30,.4)),linear-gradient(180deg,transparent 55%,rgba(10,29,30,.7))}@media(max-width:700px){.hero-sh{background:rgba(10,29,30,.66)}}@media(prefers-reduced-motion:reduce){.hero-v{display:none}.hero{background:var(--deep) url(hero.jpg) center/cover}}
+.hero-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,29,30,.84) 0,rgba(10,29,30,.6) 55%,rgba(10,29,30,.4)),linear-gradient(180deg,transparent 55%,rgba(10,29,30,.7))}@media(max-width:700px){.hero-sh{background:rgba(10,29,30,.66)}.hero{background:var(--deep) url(hero.jpg) center/cover}.strip{display:none}}@media(prefers-reduced-motion:reduce){.hero-v{display:none}.hero{background:var(--deep) url(hero.jpg) center/cover}}
 .hero:before{content:"";position:absolute;inset:0;background:
  repeating-linear-gradient(100deg,rgba(255,255,255,.035) 0 2px,transparent 2px 34px);pointer-events:none}
 .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding-top:64px;padding-bottom:0;position:relative}
@@ -184,7 +184,7 @@ footer a{color:#fff}
   <nav class="nav" aria-label="Main"><a href="#roles">Roles</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="./?app=1" style="--cut:9px">Open Hortlog</a></nav>
 </div></header>
 
-<div class="hero"><video class="hero-v" autoplay muted loop playsinline preload="auto" poster="hero.jpg" aria-hidden="true"><source src="hero-m.mp4" media="(max-width:700px)" type="video/mp4"><source src="hero.mp4" type="video/mp4"></video><div class="hero-sh"></div><div class="wrap">
+<div class="hero"><video class="hero-v" muted loop playsinline preload="none" poster="hero.jpg" aria-hidden="true"></video><div class="hero-sh"></div><div class="wrap">
   <div>
     <h1>Stop carrying your orchard <span>in your head.</span></h1>
     <p class="lead">Hortlog is the orchard notebook that listens. Say what you see. It files the job, pins the PSA on your block map, tells the crew and keeps your audit records ready.</p>
@@ -329,5 +329,6 @@ footer a{color:#fff}
   els.forEach(function(e,i){e.style.transitionDelay=(i%5)*60+'ms';io.observe(e)});
 })();
 </script>
-<script>(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script></body>
+<script>(function(){var v=document.querySelector('.hero-v');if(v){var wide=matchMedia('(min-width:701px)').matches,rm=matchMedia('(prefers-reduced-motion:reduce)').matches,sd=navigator.connection&&navigator.connection.saveData;if(!wide||rm||sd){v.remove()}else{v.src=innerWidth>=1100?'hero-hd.mp4':'hero.mp4';v.autoplay=true;v.addEventListener('canplay',function(){var p=v.play&&v.play();if(p&&p.catch)p.catch(function(){})});v.load()}}})();
+(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script></body>
 </html>
