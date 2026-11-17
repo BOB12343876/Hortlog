@@ -614,18 +614,7 @@ html:has(.st),html:has(.ob3){overflow:hidden}.st,.ob3-body,#auth{scrollbar-width
 
 </style>
 <style id="hortlog-brand-nav-polish">
-/* Brand-kit polish: orange is the selected mobile destination. */
-@media (max-width:899px){
-  .mnav-item.on{
-    background:var(--hot);
-    color:var(--ink);
-    border-radius:14px;
-  }
-  .mnav-item.on span{color:var(--ink);font-weight:800}
-  .mnav-item.on svg{color:var(--ink);stroke:var(--ink)}
-  .mnav-item.on[data-v="home"] svg path{fill:var(--ink);stroke:var(--ink)}
-}
-/* Remove the decorative drops beneath the teal page header. */
+/* Keep the app header edge clean; mobile selection styling lives in the glass dock. */
 header::before,header::after{display:none!important;content:none!important}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -636,28 +625,63 @@ header::before,header::after{display:none!important;content:none!important}
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f3d3e"><meta property="og:type" content="website"><meta property="og:site_name" content="Hortlog"><meta property="og:title" content="Hortlog: orchard records by voice"><meta property="og:description" content="Log jobs, sprays and problems by voice. Audit ready."><meta property="og:image" content="https://hortlog-nz.vercel.app/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta property="og:url" content="https://hortlog-nz.vercel.app/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://hortlog-nz.vercel.app/og-image.png"><link rel="image_src" href="https://hortlog-nz.vercel.app/og-image.png"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 
 <style id="hortlog-mobile-navigation">
-/* Mobile-first navigation refresh: desktop tabs and layout are intentionally unchanged. */
+/* Restrained frosted-glass mobile dock: four destinations together, separate add action. */
 #mobileNav{display:none}
 @media(max-width:899px){
-  #nudge{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+  #nudge{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
   header{padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px}
   .top{align-items:center;gap:10px;min-height:48px}
   .brand h1{font-size:35px}
   .hdr-r{align-items:center}
   #teamb,#recb{display:none!important}
   .tabs{display:none}
-  main{padding:16px 14px 132px}
-  #mobileNav{position:fixed;z-index:7;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(540px,calc(100% - 24px));height:76px;padding:7px 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) 72px repeat(2,minmax(0,1fr));align-items:center;background:var(--card);border:1px solid rgba(15,61,62,.08);border-radius:22px;box-shadow:0 8px 28px rgba(7,31,30,.18);overflow:visible}
-  .mnav-item{height:58px;min-width:0;padding:5px 2px 3px;border:0;background:transparent;color:#829894;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 11px/1 Barlow,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .mnav-item svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  main{padding:16px 14px 142px}
+
+  #mobileNav{
+    position:fixed;z-index:7;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    transform:translateX(-50%);width:min(620px,calc(100% - 24px));height:76px;
+    padding:6px 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) 58px;
+    gap:9px;align-items:center;background:transparent;border:0;border-radius:0;
+    box-shadow:none;overflow:visible;isolation:isolate
+  }
+  #mobileNav::before{
+    content:"";position:absolute;z-index:-1;left:0;top:0;bottom:0;width:calc(100% - 67px);
+    border-radius:27px;
+    background:rgba(15,61,62,.68);
+    border:1px solid rgba(255,255,255,.24);
+    -webkit-backdrop-filter:blur(22px) saturate(165%);
+    backdrop-filter:blur(22px) saturate(165%);
+    box-shadow:0 7px 20px rgba(11,31,32,.14),inset 0 1px 0 rgba(255,255,255,.18)
+  }
+  .mnav-item{
+    position:relative;height:64px;min-width:0;padding:6px 2px 5px;border:1px solid transparent;border-radius:19px;
+    background:transparent;color:rgba(251,253,252,.91);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;font:500 11px/1 Barlow,sans-serif;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .16s ease,border-color .16s ease,transform .16s ease
+  }
+  .mnav-item svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   .mnav-item[data-v="home"] svg path{fill:currentColor;stroke:currentColor}
-  .mnav-item.on{color:#176044}
-  .mnav-item.on span{font-weight:700}
-  #mobilePlus{width:68px;height:68px;justify-self:center;align-self:start;margin-top:-22px;display:grid;place-items:center;border:6px solid var(--card);border-radius:50%;background:var(--hot);color:#142321;box-shadow:0 5px 14px rgba(255,107,44,.32);cursor:pointer;-webkit-tap-highlight-color:transparent}
-  #mobilePlus svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round}
-  #mobilePlus:active{transform:scale(.95)}
+  .mnav-item.on{
+    background:rgba(255,107,44,.16);border-color:rgba(255,107,44,.28);color:var(--hot)
+  }
+  .mnav-item.on span{color:var(--hot);font-weight:700}
+  .mnav-item.on svg{color:var(--hot);stroke:var(--hot)}
+  .mnav-item:active{transform:scale(.97)}
+  #mobilePlus{
+    grid-column:5;width:58px;height:58px;justify-self:center;align-self:center;margin:0;display:grid;place-items:center;
+    border:1px solid rgba(255,255,255,.27);border-radius:50%;
+    background:rgba(15,61,62,.72);color:var(--hot);
+    -webkit-backdrop-filter:blur(22px) saturate(165%);
+    backdrop-filter:blur(22px) saturate(165%);
+    box-shadow:0 7px 16px rgba(11,31,32,.15),inset 0 1px 0 rgba(255,255,255,.2);
+    cursor:pointer;-webkit-tap-highlight-color:transparent
+  }
+  #mobilePlus svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+  #mobilePlus:active{transform:scale(.96)}
+  #mobilePlus:focus-visible,.mnav-item:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
   #plus{display:none!important}
-  #log{display:none;left:50%;right:auto;bottom:calc(146px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(520px,calc(100% - 24px));max-width:none;margin:0;padding:12px;background:var(--card);border:1px solid rgba(15,61,62,.12);border-radius:18px;box-shadow:0 8px 30px rgba(7,31,30,.20);z-index:8}
+
+  #log{display:none;left:50%;right:auto;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(520px,calc(100% - 24px));max-width:none;margin:0;padding:12px;background:var(--card);border:1px solid rgba(15,61,62,.12);border-radius:18px;box-shadow:0 8px 30px rgba(7,31,30,.20);z-index:8}
   #log.open{display:block}
   #log .qr{margin-bottom:9px}
   #log #q{border:2px solid var(--deep);border-radius:10px;min-height:48px;background:var(--bg);font-size:16px}
@@ -665,14 +689,45 @@ header::before,header::after{display:none!important;content:none!important}
   #log .lr{gap:9px}
   #log #mic{min-height:54px;border-radius:12px;clip-path:none;font-size:22px}
   #log #cam{width:64px;min-height:54px;border-radius:12px;clip-path:none}
-  #toast{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+  #toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:380px){
+  #mobileNav{width:calc(100% - 16px);height:70px;bottom:calc(7px + env(safe-area-inset-bottom,0px));grid-template-columns:repeat(4,minmax(0,1fr)) 52px;gap:6px;padding:5px}
+  #mobileNav::before{width:calc(100% - 58px);border-radius:24px}
+  .mnav-item{height:58px;font-size:10px;gap:3px}
+  .mnav-item svg{width:22px;height:22px}
+  #mobilePlus{width:52px;height:52px}
+  #mobilePlus svg{width:25px;height:25px}
+  #log{bottom:calc(94px + env(safe-area-inset-bottom,0px))}
 }
 @media(max-width:899px) and (orientation:landscape) and (max-height:520px){
-  #mobileNav{height:62px;bottom:calc(6px + env(safe-area-inset-bottom,0px));border-radius:17px}
-  .mnav-item{height:48px;flex-direction:row;gap:6px;font-size:12px}
-  #mobilePlus{width:58px;height:58px;margin-top:-15px}
-  #log{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  #mobileNav{height:64px;bottom:calc(5px + env(safe-area-inset-bottom,0px));width:min(600px,calc(100% - 24px))}
+  .mnav-item{height:52px;flex-direction:row;gap:6px;font-size:12px}
+  #mobilePlus{width:50px;height:50px}
+  #log{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
 }
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  @media(max-width:899px){#mobileNav::before,#mobilePlus{background:rgba(15,61,62,.94)}}
+}
+@media(prefers-reduced-motion:reduce){.mnav-item,#mobilePlus{transition:none}}
+</style>
+<style id="hortlog-mobile-nav-refinement">
+/* Active destination: light the icon only; remove the surrounding selected pill. */
+@media(max-width:899px){
+  .mnav-item{transition:color .16s ease,transform .16s ease}
+  .mnav-item.on{background:transparent!important;border-color:transparent!important;color:rgba(251,253,252,.91)!important}
+  .mnav-item.on span{color:rgba(251,253,252,.91)!important;font-weight:600!important}
+  .mnav-item.on svg{color:var(--hot)!important;stroke:var(--hot)!important}
+  /* A very soft teal fade takes the edge off the header without adding a wave or flap. */
+  header::after{
+    display:block!important;content:""!important;position:absolute!important;
+    top:100%!important;left:0!important;right:0!important;width:auto!important;
+    height:9px!important;margin:0!important;padding:0!important;
+    background:linear-gradient(180deg,rgba(15,61,62,.10) 0%,rgba(15,61,62,.035) 48%,transparent 100%)!important;
+    border:0!important;pointer-events:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){.mnav-item{transition:none!important}}
 </style>
 </head>
 <body class="boot">
@@ -749,9 +804,9 @@ P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.ge
 <nav id="mobileNav" aria-label="Main navigation">
   <button class="mnav-item on" data-v="home" type="button" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Home</span></button>
   <button class="mnav-item" data-v="cal" type="button" aria-label="Calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg><span>Calendar</span></button>
-  <button id="mobilePlus" type="button" aria-label="Add a record" aria-controls="log" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
   <button class="mnav-item" data-v="blocks" type="button" aria-label="Blocks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15M15 6v15"/></svg><span>Blocks</span></button>
   <button class="mnav-item" data-v="records" type="button" aria-label="Records"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 13h8M8 17h8"/></svg><span>Records</span></button>
+  <button id="mobilePlus" type="button" aria-label="Add a record" aria-controls="log" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
 </nav>
 <button id="plus" aria-label="Add a log">+</button>
 <div id="log"><input id="file" type="file" accept="image/*" capture="environment" hidden><input id="bfile" type="file" accept="image/*" hidden><input id="rfile" type="file" accept="image/*" hidden><input id="efile" type="file" accept="image/*" hidden><input id="avf" type="file" accept="image/*" hidden><div class="qr"><input id="q" type="text" placeholder="Type, or use your keyboard mic" enterkeyhint="send"><button id="go" aria-label="Add">→</button></div><div class="lr"><button id="mic"><svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 0 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.6a6 6 0 0 0 5-5.9z"/></svg><span id="ml">Tap and speak</span></button><button id="cam" aria-label="Add a photo"><svg viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-3.5L15 4zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg></button></div></div>
