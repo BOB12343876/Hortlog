@@ -77,7 +77,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--sun);outline-of
 .x{min-width:40px}
 .qr{display:flex;gap:8px;margin-bottom:8px}
 #q{flex:1;background:var(--card);min-width:0}
-#go{width:62px;border:0;background:var(--deep);color:#fff;font:800 30px 'Barlow Condensed',sans-serif}
+#go{width:62px;min-height:48px;align-self:stretch;display:grid;place-items:center;padding:0;line-height:1;border:0;background:var(--deep);color:#fff;font:800 30px/1 'Barlow Condensed',sans-serif}
 .dn{display:flex;align-items:center;justify-content:space-between;background:var(--deep);color:#fff;padding:4px 6px}
 .dn .hd{font-size:28px;font-weight:800}.dn .x{color:#fff;font-size:30px;min-width:56px;min-height:52px}
 .tip{background:var(--sun);color:#1c1600;padding:12px 46px 12px 14px;position:relative;margin-bottom:12px;font-weight:600}
@@ -200,7 +200,7 @@ svg.img{touch-action:manipulation}
 #camq{position:fixed;inset:0;z-index:99990;pointer-events:none}
 #camq .cm-bg{position:absolute;inset:0;background:rgba(8,24,25,.5);opacity:0;transition:opacity .35s;pointer-events:auto}
 #camq.up .cm-bg{opacity:1}
-#camq .cm-sheet{position:absolute;left:50%;bottom:0;width:min(560px,100%);height:clamp(340px,52vh,600px);background:#071a1b;transform:translate(-50%,100%);transition:transform .38s cubic-bezier(.2,.85,.2,1);clip-path:polygon(18px 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%,0 18px);overflow:hidden;pointer-events:auto}
+#camq .cm-sheet{position:absolute;left:50%;bottom:0;width:min(560px,100%);height:clamp(340px,52vh,600px);background:#071a1b;transform:translate(-50%,100%);transition:transform .38s cubic-bezier(.2,.85,.2,1);clip-path:none;border-radius:24px 24px 0 0;overflow:hidden;pointer-events:auto}
 #camq.up .cm-sheet{transform:translate(-50%,0)}
 #camq .cm-v,#camq .cm-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#071a1b}
 #camq .cm-msg{position:absolute;left:18px;right:18px;top:40%;text-align:center;color:#d7e7e2;font:600 18px/1.3 Barlow,sans-serif}
@@ -446,7 +446,7 @@ textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .tiles.mas{display:flex!important;gap:10px;align-items:flex-start}.tiles.mas .tcol{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
 .tiles.mas .tile{position:relative;overflow:hidden}.tiles.mas .tile .tx{position:relative;display:block;z-index:1}
 .tiles.mas .tile.ti{color:#fff;background:#173a3a}
-.tbg{position:absolute;inset:0;width:100%;height:100%}.tsh{position:absolute;inset:0;background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88))}
+.tbg{position:absolute;inset:0;width:100%;height:100%}.tsh{position:absolute;inset:0;background:linear-gradient(rgba(8,28,28,.06),rgba(8,28,28,.28))}
 #adjov{position:fixed;inset:0;z-index:8;background:var(--bg);display:flex;flex-direction:column;gap:2px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));overflow-y:auto}
 #adjov .adjh{display:flex;justify-content:space-between;align-items:center;gap:8px;font:800 18px 'Barlow Condensed',sans-serif;color:var(--soft);margin:0 0 4px}
 #adjov svg.img{width:100%;max-height:42vh;flex:none}
@@ -729,6 +729,46 @@ header::before,header::after{display:none!important;content:none!important}
 }
 @media(prefers-reduced-motion:reduce){.mnav-item{transition:none!important}}
 </style>
+
+<style id="hortlog-mobile-polish-v2">
+/* Small, shallow header wave: an organic transition, not a hanging banner. */
+@media(max-width:899px){
+  header::after{
+    height:8px!important;
+    background:linear-gradient(180deg,rgba(15,61,62,.24),rgba(15,61,62,.06))!important;
+    clip-path:ellipse(100% 100% at 50% 0%)!important;
+  }
+  /* Give the separate + action a clear breathing space from Records. */
+  #mobileNav{gap:14px!important;grid-template-columns:repeat(4,minmax(0,1fr)) 56px!important}
+  #mobileNav::before{width:calc(100% - 70px)!important}
+  #mobilePlus{width:56px!important;height:56px!important}
+  #mobilePlus svg{width:26px;height:26px}
+  #log #go{display:grid;place-items:center;align-self:stretch;min-height:48px;padding:0;line-height:1}
+  #log .qr{align-items:stretch}
+  #camq .cm-sheet{clip-path:none!important;border-radius:24px 24px 0 0!important}
+}
+@media(max-width:380px){
+  #mobileNav{width:calc(100% - 20px)!important;gap:12px!important;grid-template-columns:repeat(4,minmax(0,1fr)) 48px!important}
+  #mobileNav::before{width:calc(100% - 60px)!important;border-radius:23px}
+  #mobilePlus{width:48px!important;height:48px!important}
+  #mobilePlus svg{width:24px;height:24px}
+}
+/* Calendar mode switch is a full-width part of the calendar, not a detached card. */
+.cal-switch{
+  width:100%;max-width:none;margin:8px 0 16px;padding:4px;gap:4px;
+  background:var(--deep);border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;box-shadow:0 4px 12px rgba(7,31,30,.10)
+}
+.cal-mode{min-height:48px;color:rgba(251,253,252,.88);border-radius:10px}
+.cal-mode span{background:rgba(255,255,255,.13);color:#fff}
+.cal-mode.on{background:var(--hot);color:#0B1F20;box-shadow:none}
+.cal-mode.on span{background:rgba(11,31,32,.12);color:#0B1F20}
+@media(min-width:900px){main>.cal-switch{max-width:none!important;width:100%;margin:0 0 14px}}
+/* Keep light text readable over the now-lighter orchard photos. */
+.tile.ti .tx{text-shadow:0 1px 3px rgba(0,0,0,.34)}
+.st-ph small,.st-ph b{text-shadow:0 1px 3px rgba(0,0,0,.30)}
+</style>
+
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style></head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
@@ -1580,7 +1620,7 @@ catch(x){msg('Could not reach the server. Check your connection.')}}}
 const ST_POOL=[['#E03131','PSA','PSA','Block 3'],['#0A9C82','Compliance','Signed on','Crew · today'],['#A0643A','Spray','Copper','Block 2 · today'],['#1C7ED6','Dead vine','Dead vine','Block 1 · Row 4'],['#3A9D23','Biodiversity','Bees','Block 2'],['#7C4DFF','Job','Fix gate','Due Friday'],['#1D6B6C','Block map','Block 4','3 pins'],['#E6A700','Buy','Copper','Shopping list',1],['#FF6B2C','Audit','Audit pack','Ready'],['#6B8A86','Note','Gate','Neighbour chat'],['#17595A','Vine growth','Bloom','Block 1'],['#A0643A','Spray','Boron','Block 4'],['#7C4DFF','Job','Order bins','Due Monday'],['#E03131','PSA','PSA','Block 1'],['#3A9D23','Biodiversity','Hives','Block 2']];
 const ST_PH=[['psa.jpg','PSA','Block 3'],['apple.jpg','Orchard','Block 2'],['orchard.jpg','Canopy','Block 5']];
 const stTile=(c,k,t,mt,dk)=>`<div class="st-t" style="--c:${c};${dk?'color:#0B1F20;':''}"><small>${k}</small><b>${t}</b><span>${mt}</span></div>`;
-const stPhoto=(img,k,t)=>`<div class="st-t st-ph" style="background:linear-gradient(rgba(15,61,62,.2),rgba(15,61,62,.8)),url(${img}) center/cover,#1D6B6C"><small>${k}</small><b>${t}</b></div>`;
+const stPhoto=(img,k,t)=>`<div class="st-t st-ph" style="background:linear-gradient(rgba(15,61,62,.05),rgba(15,61,62,.24)),url(${img}) center/cover,#1D6B6C"><small>${k}</small><b>${t}</b></div>`;
 function stArt(nc){const dur=[34,24,41,28,31];return Array.from({length:nc},(_,c)=>{const list=[0,1,2,3,4].map(i=>{if((i+c)%4===1){const p=ST_PH[(c+i)%ST_PH.length];return stPhoto(p[0],p[1],p[2])}const q=(c*3+i*5+(i>2?1:0))%ST_POOL.length;return stTile(...ST_POOL[q])}).join('');return '<div class="st-c"><div class="st-ci" style="animation-duration:'+dur[c%5]+'s;animation-direction:'+(c%2?'reverse':'normal')+'">'+list+list+'</div></div>'}).join('')}
 function stBind(root){root.querySelectorAll('.st-c').forEach(c=>{const ci=c.querySelector('.st-ci');if(!ci)return;let tgt=1,cur=1,raf=0;const step=()=>{cur+=(tgt-cur)*.12;if(Math.abs(tgt-cur)<.01)cur=tgt;const a=ci.getAnimations&&ci.getAnimations()[0];if(a)a.playbackRate=cur;if(cur!==tgt)raf=requestAnimationFrame(step)},set=v=>{tgt=v;cancelAnimationFrame(raf);raf=requestAnimationFrame(step)};c.addEventListener('pointerenter',ev=>{if(ev.pointerType==='mouse')set(.12)});c.addEventListener('pointerleave',()=>set(1))})}
 const bsOf=i=>i.bs&&i.bs.length?i.bs:(i.b?[i.b]:[]);
@@ -1896,7 +1936,7 @@ $('#obl').onclick=()=>{if(ob===0)closeOb();else{ob--;showOb()}};$('#obn').onclic
 function closeOb(){const e=$('#ob');if(e)e.remove();if(OBT){OBT=0;SLD=slides();return}seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}
 $('#hb').onclick=()=>setView('settings');$('#teamb').onclick=()=>setView('team');
 $('#brand').onclick=()=>setView('home');$('#brand').onkeydown=e=>{if(e.key==='Enter')setView('home')};
-function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');if(opened)$('#q').focus()}
+function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');if(opened&&window.innerWidth>=900)$('#q').focus()}
 $('#plus').onclick=toggleQuickLog;$('#mobilePlus').onclick=toggleQuickLog;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false')}});
 const chips=()=>'<div class="chips">'+[['all','All']].concat(Object.entries(CATS).map(([k,v])=>[k,v[0]])).map(([k,n])=>{
@@ -1952,7 +1992,7 @@ const c=col[1].h<col[0].h-1e-6?col[1]:col[0];c.a.push(`<div class="tw2">${t}</di
 return '<div class="tiles mas">'+col.map(c=>'<div class="tcol">'+c.a.join('')+'</div>').join('')+'</div>'};
 const tiles=edit=>{if(edit&&window.innerWidth<900&&bl().length)return tilesMas();return tilesFlat(edit)};
 const tilesFlat=edit=>{const L=bl();if(!L.length)return '<p class="hint">No blocks yet. Add your first block on the Blocks tab.</p>';
-return '<div class="tiles">'+L.map(n=>{const l=items.filter(i=>inBlk(i,n)&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.3),rgba(8,28,28,.88)),url('${im}') center/cover;color:#fff"`:'';
+return '<div class="tiles">'+L.map(n=>{const l=items.filter(i=>inBlk(i,n)&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.06),rgba(8,28,28,.28)),url('${im}') center/cover;color:#fff"`:'';
 const t=`<button class="tile"${st} data-blk="${n}"><b>${esc(bn(n))} →</b><span class="dkonly tbig">${l.length}<small> open jobs</small></span>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}<span class="dk tmeta">${B[n].rows||'?'} rows · ${B[n].bays||'?'} bays · ${l.length} open</span></button>`;
 return edit?`<div class="tw2">${t}</div>`:t}).join('')+'</div>'};
 const recs=()=>items.filter(i=>i.c==='spray'&&i.d).sort((a,b)=>(b.doneAt||b.id)-(a.doneAt||a.id));
