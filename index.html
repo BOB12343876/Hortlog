@@ -601,6 +601,32 @@ html:has(.st),html:has(.ob3){overflow:hidden}.st,.ob3-body,#auth{scrollbar-width
 
 .pair>.blkl,.pair>.blkpick{grid-column:1/-1}
 @media(max-width:600px){.tm-row{flex-wrap:wrap}.tm-id{flex:1 1 calc(100% - 110px)}.tm-row>.x{order:2}.tm-sel,.tm-role{order:3;flex:1 1 140px;max-width:none;margin-left:52px}.tm-lk{order:4}}
+
+/* Calendar now contains both dated work and the former Lists view. */
+.cal-switch{display:flex;gap:6px;width:100%;margin:10px 0 14px;padding:5px;background:var(--card);border:1px solid var(--map);border-radius:14px;box-shadow:0 2px 8px rgba(7,31,30,.04)}
+.cal-mode{flex:1;min-width:0;min-height:46px;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 10px;border:0;border-radius:10px;background:transparent;color:var(--soft);font:700 16px Barlow,system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.cal-mode span{display:inline-grid;place-items:center;min-width:23px;height:23px;padding:0 6px;border-radius:20px;background:var(--bg);color:var(--soft);font:700 12px Barlow,sans-serif}
+.cal-mode.on{background:var(--deep);color:#fff;box-shadow:0 2px 6px rgba(15,61,62,.16)}
+.cal-mode.on span{background:rgba(255,255,255,.16);color:#fff}
+.cal-mode:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+@media(min-width:900px){main>.cal-switch{grid-column:1/-1;max-width:560px;margin:0 0 2px}.cal-mode{min-height:42px}}
+@media(max-width:380px){.cal-mode{font-size:14px;gap:6px;padding-inline:6px}}
+
+</style>
+<style id="hortlog-brand-nav-polish">
+/* Brand-kit polish: orange is the selected mobile destination. */
+@media (max-width:899px){
+  .mnav-item.on{
+    background:var(--hot);
+    color:var(--ink);
+    border-radius:14px;
+  }
+  .mnav-item.on span{color:var(--ink);font-weight:800}
+  .mnav-item.on svg{color:var(--ink);stroke:var(--ink)}
+  .mnav-item.on[data-v="home"] svg path{fill:var(--ink);stroke:var(--ink)}
+}
+/* Remove the decorative drops beneath the teal page header. */
+header::before,header::after{display:none!important;content:none!important}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -608,6 +634,46 @@ html:has(.st),html:has(.ob3){overflow:hidden}.st,.ob3-body,#auth{scrollbar-width
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f3d3e"><meta property="og:type" content="website"><meta property="og:site_name" content="Hortlog"><meta property="og:title" content="Hortlog: orchard records by voice"><meta property="og:description" content="Log jobs, sprays and problems by voice. Audit ready."><meta property="og:image" content="https://hortlog-nz.vercel.app/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta property="og:url" content="https://hortlog-nz.vercel.app/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://hortlog-nz.vercel.app/og-image.png"><link rel="image_src" href="https://hortlog-nz.vercel.app/og-image.png"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+
+<style id="hortlog-mobile-navigation">
+/* Mobile-first navigation refresh: desktop tabs and layout are intentionally unchanged. */
+#mobileNav{display:none}
+@media(max-width:899px){
+  #nudge{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+  header{padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px}
+  .top{align-items:center;gap:10px;min-height:48px}
+  .brand h1{font-size:35px}
+  .hdr-r{align-items:center}
+  #teamb,#recb{display:none!important}
+  .tabs{display:none}
+  main{padding:16px 14px 132px}
+  #mobileNav{position:fixed;z-index:7;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(540px,calc(100% - 24px));height:76px;padding:7px 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) 72px repeat(2,minmax(0,1fr));align-items:center;background:var(--card);border:1px solid rgba(15,61,62,.08);border-radius:22px;box-shadow:0 8px 28px rgba(7,31,30,.18);overflow:visible}
+  .mnav-item{height:58px;min-width:0;padding:5px 2px 3px;border:0;background:transparent;color:#829894;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 11px/1 Barlow,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .mnav-item svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .mnav-item[data-v="home"] svg path{fill:currentColor;stroke:currentColor}
+  .mnav-item.on{color:#176044}
+  .mnav-item.on span{font-weight:700}
+  #mobilePlus{width:68px;height:68px;justify-self:center;align-self:start;margin-top:-22px;display:grid;place-items:center;border:6px solid var(--card);border-radius:50%;background:var(--hot);color:#142321;box-shadow:0 5px 14px rgba(255,107,44,.32);cursor:pointer;-webkit-tap-highlight-color:transparent}
+  #mobilePlus svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round}
+  #mobilePlus:active{transform:scale(.95)}
+  #plus{display:none!important}
+  #log{display:none;left:50%;right:auto;bottom:calc(146px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(520px,calc(100% - 24px));max-width:none;margin:0;padding:12px;background:var(--card);border:1px solid rgba(15,61,62,.12);border-radius:18px;box-shadow:0 8px 30px rgba(7,31,30,.20);z-index:8}
+  #log.open{display:block}
+  #log .qr{margin-bottom:9px}
+  #log #q{border:2px solid var(--deep);border-radius:10px;min-height:48px;background:var(--bg);font-size:16px}
+  #log #go{width:52px;border-radius:10px}
+  #log .lr{gap:9px}
+  #log #mic{min-height:54px;border-radius:12px;clip-path:none;font-size:22px}
+  #log #cam{width:64px;min-height:54px;border-radius:12px;clip-path:none}
+  #toast{bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:899px) and (orientation:landscape) and (max-height:520px){
+  #mobileNav{height:62px;bottom:calc(6px + env(safe-area-inset-bottom,0px));border-radius:17px}
+  .mnav-item{height:48px;flex-direction:row;gap:6px;font-size:12px}
+  #mobilePlus{width:58px;height:58px;margin-top:-15px}
+  #log{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+}
+</style>
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style></head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
@@ -676,10 +742,17 @@ winter:[function(){rain(32)},function(){rain(60)},function(){drift(function(){re
 P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.getElementById('splash');if(s)s.className='out'},8000)</script>
 <header>
 <div class="top"><span class="brand" id="brand" role="button" tabindex="0" aria-label="Home"><h1>Hort<i>log</i></h1></span><span class="hdr-r"><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="teamb" class="recb teamb">Team</button><button id="recb" class="recb">Records</button></span></div>
-<div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab" data-v="lists">Lists</button><button class="tab tteam" data-v="team">Team</button></div>
+<div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab tteam" data-v="team">Team</button></div>
 </header>
 <main id="main"></main>
 <div id="toast"></div>
+<nav id="mobileNav" aria-label="Main navigation">
+  <button class="mnav-item on" data-v="home" type="button" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Home</span></button>
+  <button class="mnav-item" data-v="cal" type="button" aria-label="Calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg><span>Calendar</span></button>
+  <button id="mobilePlus" type="button" aria-label="Add a record" aria-controls="log" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+  <button class="mnav-item" data-v="blocks" type="button" aria-label="Blocks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15M15 6v15"/></svg><span>Blocks</span></button>
+  <button class="mnav-item" data-v="records" type="button" aria-label="Records"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 13h8M8 17h8"/></svg><span>Records</span></button>
+</nav>
 <button id="plus" aria-label="Add a log">+</button>
 <div id="log"><input id="file" type="file" accept="image/*" capture="environment" hidden><input id="bfile" type="file" accept="image/*" hidden><input id="rfile" type="file" accept="image/*" hidden><input id="efile" type="file" accept="image/*" hidden><input id="avf" type="file" accept="image/*" hidden><div class="qr"><input id="q" type="text" placeholder="Type, or use your keyboard mic" enterkeyhint="send"><button id="go" aria-label="Add">→</button></div><div class="lr"><button id="mic"><svg viewBox="0 0 24 24"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-6a3.5 3.5 0 0 0-7 0v6A3.5 3.5 0 0 0 12 15zm6-3.5a1 1 0 1 0-2 0 4 4 0 0 1-8 0 1 1 0 1 0-2 0 6 6 0 0 0 5 5.9V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.6a6 6 0 0 0 5-5.9z"/></svg><span id="ml">Tap and speak</span></button><button id="cam" aria-label="Add a photo"><svg viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-3.5L15 4zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg></button></div></div>
 <script>
@@ -690,7 +763,7 @@ const sb=window.supabase.createClient(SB_URL,SB_KEY);
 const VAPID_PUBLIC='BCfJDZtvSsJ70BqWbqitJ3C53ctfzCnZgPQHzvDroznZcFsiRa8GzSWxWrq4IMN32cPhaLeThuO83wyI2c4jgNw';
 const KEY='hortlog.v1',BK='hortlog.blocks',SK='hortlog.seen';
 const CATS={psa:['PSA','--psa'],dead:['Dead vine','--dead'],buy:['To buy','--buy'],todo:['To do','--todo'],crew:['Crew jobs','--crew'],meet:['Meetings','--bio'],spray:['Spray','--spray'],rec:['Record','--note'],note:['Note','--note']};
-const VER='30',NEWS=['New Team page: invite people, set roles, see who can do what.','Invitation emails now carry your orchard name and a Hortlog look.','Team button in the header on phones, a Team tab on computers.'];
+const VER='30',NEWS=['New Team page: invite people, set roles, see who can do what.','Invitation emails now carry your orchard name and a Hortlog look.','Team is available from Settings on phones and in the desktop navigation.'];
 const NUM={one:1,two:2,three:3,four:4};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -699,7 +772,7 @@ const DAYS=['sunday','monday','tuesday','wednesday','thursday','friday','saturda
 const rd=(k,d)=>{try{const s=localStorage.getItem(k);return s?JSON.parse(s):d}catch(e){return d}};
 const wr=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Storage is full. Delete some photos or block images.');return false}};
 function starter(){const t=new Date();t.setDate(t.getDate()+1);return [{id:1,c:'psa',t:'PSA on leader, block 3 row 49 bay 16',b:3,r:49,y:16},{id:2,c:'psa',t:'PSA block 3 row 51 bay 12',b:3,r:51,y:12},{id:3,c:'dead',t:'Dead vine block 1 row 12 bay 8',b:1,r:12,y:8},{id:4,c:'dead',t:'Dead vine block 2 row 30 bay 20',b:2,r:30,y:20},{id:5,c:'buy',t:'Need to buy Botector'},{id:6,c:'buy',t:'Irrigation pipe, 20 mm'},{id:7,c:'todo',t:'Fix gate, block 2',b:2},{id:8,c:'crew',t:'Stringing block 1',b:1,due:iso(t)},{id:9,c:'spray',t:'Spray Botector, block 2',b:2,due:iso(t)}]}
-let items=[],B={},seen=rd(SK,{}),U=null,synced={},syncedB={},pending=false,syncMsg='',view='home',filter='all',sel=null,last=null,blk=null,drawing=null,pts=[],day=iso(new Date()),AI=null,DL=null,canImg=false,tt,popId=null,imgSet=false,dropN=null,imgOpen=false,loaded=false,dmode='poly',recF={from:'',to:'',b:'',q:''},recFiltOpen=false,calM=iso(new Date()).slice(0,7),recCat='sf',recFolder='all',recForm=false,recPhoto=null,recDraft={},strPrev=null,moodPend=null,moodTimer=null,apSel={compliance:1,monitoring:1,induction:1,biodiversity:1},apFrom=iso(new Date(Date.now()-365*864e5)),apTo=iso(new Date());
+let items=[],B={},seen=rd(SK,{}),U=null,synced={},syncedB={},pending=false,syncMsg='',view='home',filter='all',sel=null,last=null,blk=null,drawing=null,pts=[],day=iso(new Date()),AI=null,DL=null,canImg=false,tt,popId=null,imgSet=false,dropN=null,imgOpen=false,loaded=false,dmode='poly',recF={from:'',to:'',b:'',q:''},recFiltOpen=false,calM=iso(new Date()).slice(0,7),calMode='scheduled',recCat='sf',recFolder='all',recForm=false,recPhoto=null,recDraft={},strPrev=null,moodPend=null,moodTimer=null,apSel={compliance:1,monitoring:1,induction:1,biodiversity:1},apFrom=iso(new Date(Date.now()-365*864e5)),apTo=iso(new Date());
 
 // ---- roles and orchards (active only after the Supabase migration has been run) ----
 let teamShown=false,openCounted=false,PREV='',ROLES=false,OID=null,ORCH=[],ROLE='',MEMBERS=[],ALERTS=[],PROF={},AUTH={},newOrchardName='',joinedMsg='',toasted={};
@@ -1135,7 +1208,7 @@ else if(id==='inv'){goInvite()}
 else if(id==='nm'){guide('team',['.tset input[type=text]','.tset summary','.tset'],'Add your name','Type your name here so your team knows who you are.',{pre:()=>{const d=document.querySelector('.tset');if(d)d.open=true}})}}
 function keepNudge(){const T=iso(new Date()),np=items.filter(i=>i.c==='spray'&&!i.prod&&fertKind(i)!=='ask'),od=items.filter(i=>!i.d&&i.due&&i.due<T&&i.c!=='rec'&&!(i.wk&&T<=i.wk));
 if(np.length)return {id:'np',html:`<div class="fi link" data-kp="${np[0].id}"><span class="sq" style="background:var(--spray)"></span><span>${np.length} spray${np.length>1?'s have':' has'} no product. Add ${np.length>1?'them':'it'} before your next audit.</span></div>`};
-if(od.length)return {id:'od',html:`<div class="fi link" data-nav="lists"><span class="sq" style="background:var(--psa)"></span><span>${od.length} job${od.length>1?'s are':' is'} overdue.</span></div>`};
+if(od.length)return {id:'od',html:`<div class="fi link" data-nav="cal"><span class="sq" style="background:var(--psa)"></span><span>${od.length} job${od.length>1?'s are':' is'} overdue.</span></div>`};
 const days=new Set(items.filter(i=>i.id>1e12).map(i=>iso(new Date(i.id))));let st=0;const d=new Date();if(!days.has(iso(d)))d.setDate(d.getDate()-1);while(days.has(iso(d))){st++;d.setDate(d.getDate()-1)}
 if(st>=3)return {id:'st',html:`<div class="fi"><span class="sq" style="background:var(--crew)"></span><span>Your orchard has been logged ${st} days in a row. Keep it going.</span></div>`};
 return null}
@@ -1608,7 +1681,7 @@ if(photo){if(it.c==='rec'){recCat=RMAP[it.rc]||it.rc;recFolder=it.rf;setView('re
 const loc=it.ab?' → All blocks':it.b?` → ${bn(it.b)}${it.r?' row '+it.r:''}${it.y?' bay '+it.y:''}`:'';
 toast('Logged: '+CATS[it.c][0]+loc+(it.due?' · '+dayLabel(it.due):'')+(it.d&&it.c==='spray'?' · in Records':''),()=>{items=items.filter(i=>i.id!==it.id);save();render()});
 maybeNotifAsk();if(it.b&&!B[it.b]&&!askedBlk[it.b]){askedBlk[it.b]=1;setTimeout(()=>askBlock(it.b),500)}else if((it.c==='psa'||it.c==='dead')&&!it.b&&!it.ab&&bl().length)setTimeout(()=>showBlockPick(it.id),500);else if((it.c==='psa'||it.c==='dead')&&it.b&&!it.r&&it.mx==null&&B[it.b]&&B[it.b].img)setTimeout(()=>showPlacePin(it.id),600);else if(it.ask2==='spraydone')setTimeout(()=>showSprayDone(it.id),500);else if(it.ask==='induct')setTimeout(()=>showIndAsk(it.id),500);else if(it.c==='spray'&&it.d&&fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),500);else if(it.c==='spray'&&!it.prod&&fertKind(it)!=='ask')setTimeout(()=>showProdPick(it.id),700);else if(it.c==='spray'&&it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),700);else if((it.c==='todo'||it.c==='crew')&&ROLES&&canBlk()&&MEMBERS.length>1)setTimeout(()=>showAssignAsk(it.id),700);else if((it.c==='todo'||it.c==='crew')&&ROLES&&isMgr()&&MEMBERS.length<2)setTimeout(showJobsTeam,900)}
-function sendQ(){const v=$('#q').value;$('#q').value='';$('#log').classList.remove('open');add(v)}
+function sendQ(){const v=$('#q').value;$('#q').value='';$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false');$('#plus').setAttribute('aria-expanded','false');add(v)}
 $('#q').onkeydown=e=>{if(e.key==='Enter')sendQ()};$('#go').onclick=sendQ;
 function toast(m,fn,label){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</span>'+(fn?'<button id="un">'+(label||'UNDO')+'</button>':'');t.style.display='flex';
 if(fn)$('#un').onclick=()=>{fn();t.style.display='none'};
@@ -1706,12 +1779,13 @@ $('#avf').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
 const recFile=f=>shrink(f,640,.6,c=>{recPhoto=c.toDataURL('image/jpeg',.6);render()});
 $('#rfile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)recFile(f)};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setView(b.dataset.v));
+document.querySelectorAll('#mobileNav [data-v]').forEach(b=>b.onclick=()=>setView(b.dataset.v));
 $('#recb').onclick=()=>setView('records');
 const FR_AWAY=45*864e5;let sessStart=Date.now(),visited=new Set(['home']),nudged=false,prevUse=0,nudgeK='';
 function nudgeKind(){if(!items.length)return 'new';const ref=prevUse||items.reduce((m,i)=>{const t=i.doneAt||i.id;return t>1e12&&t>m?t:m},0);return ref&&Date.now()-ref>FR_AWAY?'back':''}
 function nudgeCheck(v){nudgeK=nudgeKind();if(!U||!loaded||!nudgeK||nudged||busy()||(nudgeK==='new'&&(seen.nudgeN||0)>=3)||(nudgeK==='back'&&Date.now()-(seen.nudgeBk||0)<FR_AWAY))return;const long=Date.now()-sessStart>5*60e3;if((visited.size>=4&&v==='home')||(long&&v!=='home'))showNudge()}
-function showNudge(){nudged=true;if(nudgeK==='back')seen.nudgeBk=Date.now();else seen.nudgeN=(seen.nudgeN||0)+1;wr(SK,seen);const mob=window.innerWidth<900,ex=pick(['PSA block 3 row 49','dead vine block 2 row 12','sprayed block 1 with copper','need to buy pipe']),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'nudge'})),tgt=mob?$('#log'):$('#plus');
-e.innerHTML=`<div class="nbox cut"><h2>Record your first entry${nudgeK==='back'?' back':''}</h2><p>${nudgeK==='back'?'Good to see you back. ':''}${mob?'Type it, say it or snap it in the bar below. Try “'+ex+'”.':'Press the + button, then type it. Try “'+ex+'”.'}</p><div class="acts"><button class="btn" id="ngo">Got it</button></div><div class="narrow">▼</div></div>`;
+function showNudge(){nudged=true;if(nudgeK==='back')seen.nudgeBk=Date.now();else seen.nudgeN=(seen.nudgeN||0)+1;wr(SK,seen);const mob=window.innerWidth<900,ex=pick(['PSA block 3 row 49','dead vine block 2 row 12','sprayed block 1 with copper','need to buy pipe']),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'nudge'})),tgt=mob?$('#mobilePlus'):$('#plus');
+e.innerHTML=`<div class="nbox cut"><h2>Record your first entry${nudgeK==='back'?' back':''}</h2><p>${nudgeK==='back'?'Good to see you back. ':''}${mob?'Tap + to type, speak or take a photo. Try “'+ex+'”.':'Press + to open quick record, then type it. Try “'+ex+'”.'}</p><div class="acts"><button class="btn" id="ngo">Got it</button></div><div class="narrow">▼</div></div>`;
 tgt.classList.add('spot2');const done=()=>{e.remove();tgt.classList.remove('spot2')};$('#ngo').onclick=done;e.onclick=ev=>{if(ev.target===e)done()}}
 const AN={q:[],sid:Math.random().toString(36).slice(2,10),fail:0,seen:{}};
 const anOn=()=>{try{return localStorage.getItem('hl_noan')!=='1'}catch(e){return true}};
@@ -1720,12 +1794,12 @@ async function anFlush(){clearTimeout(AN.t);AN.t=0;if(!AN.q.length||!navigator.o
 function shownOnce(id,gap){if(!id)return;const n=Date.now();if(AN.seen[id]&&n-AN.seen[id]<(gap||6e5))return;AN.seen[id]=n;track('cta_shown',{id})}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)anFlush()});
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#tcta,#tctax,#insbar,#insnow,[data-su],[data-suhide],#fbk');if(!t)return;const m={tcta:'nudge_team',tctax:'nudge_team_dismiss',insbar:'nudge_install',insnow:'install_click',fbk:'feedback_open'};const id=t.id?m[t.id]:(t.hasAttribute('data-suhide')?'nudge_setup_hide':'nudge_setup');if(id)track('cta_click',{id})},true);
-function setView(v){view=v;blk=null;drawing=null;sprayEx=null;if(v==='settings')setSub=null;if(v==='home')mindDirty=true;render();window.scrollTo(0,0);visited.add(v);nudgeCheck(v);track('view',{v})}
-const TIPS={home:'Home shows what needs attention: jobs due today, each block’s open issues, and the map. Tap a block to see everything for it.',cal:'Jobs with a date appear here on their day. Use the arrows to look ahead, and tap Done when a job is finished. Jobs without a date live under Lists.',blocks:'Jobs and tasks that have a block appear under that block. Tap a block to see its jobs, spray records and imagery.',blockpage:'Everything for this block is here: coming up, open lists, spray records and your own imagery.',lists:'Jobs without a date and everything else you log are sorted here by type. Tap a type to filter.',records:'Records are grouped by type, then folder. Finished sprays land in Compliance automatically. Use + Folder to make your own, and export to Excel or a PDF of photos for audits.'};
-const demoEmpty=k=>k==='home'||k==='lists'?!items.length:k==='cal'?!items.some(i=>i.due):k==='records'?!recRows().length:false;
+function setView(v){if(v==='lists'){calMode='unscheduled';v='cal'}else if(v==='cal'){calMode='scheduled'}const ql=$('#log');if(ql)ql.classList.remove('open');const mp=$('#mobilePlus');if(mp)mp.setAttribute('aria-expanded','false');const dp=$('#plus');if(dp)dp.setAttribute('aria-expanded','false');view=v;blk=null;drawing=null;sprayEx=null;if(v==='settings')setSub=null;if(v==='home')mindDirty=true;render();window.scrollTo(0,0);visited.add(v);nudgeCheck(v);track('view',{v})}
+const TIPS={home:'Home shows what needs attention: jobs due today, each block’s open issues, and the map. Tap a block to see everything for it.',cal:'Scheduled jobs appear here on their day. Switch to Unscheduled for jobs and orchard notes that still need a date.',blocks:'Jobs and tasks that have a block appear under that block. Tap a block to see its jobs, spray records and imagery.',blockpage:'Everything for this block is here: coming up, open lists, spray records and your own imagery.',lists:'Jobs without a date and orchard notes are grouped here by type. Add a date to move a job into Scheduled. Tap a type to filter.',records:'Records are grouped by type, then folder. Finished sprays land in Compliance automatically. Use + Folder to make your own, and export to Excel or a PDF of photos for audits.'};
+const demoEmpty=k=>k==='home'?!items.length:k==='lists'?!items.some(i=>!i.due&&!vineNote(i)):k==='cal'?!items.some(i=>i.due):k==='records'?!recRows().length:false;
 const tip=k=>(seen[k]||(DEMOS[k]&&window.innerWidth<900&&!seen['d_'+k]&&demoEmpty(k)))?'':`<div class="tip">${TIPS[k]}<button data-tip="${k}" aria-label="Dismiss tip">✕</button></div>`;
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-function slides(){return [['Welcome to Hortlog','Hortlog is your all-in-one orchard diary. Spot something while you are out in the orchard? Log it in seconds. It appears in the app on your phone and your computer as lists, maps and records, ready for audits.'],['Log it in seconds',`Type in the bar, or tap the mic and say what you see, like “${pick(['PSA block 3 row 49','dead vine block 1 row 22 bay 8','broken irrigation line block 2','need to buy copper','wilting leader block 4 row 8'])}”. It is sorted for you.`],['Take a purposeful photo','Tap the camera and take one photo of one problem, close enough to see it clearly. Add a few words so it is filed in the right place.'],['Add a date or a block',`Say “${pick(['prune block 2 on Friday','fix the gate at block 4 tomorrow','crew thinning block 1 in 3 days','mow block 5 on Monday','order pipe for block 3 next week'])}”. Dated jobs go on the Calendar. No date? They go under Lists.`],['Sprays become records',`Say “${pick(['spray Botector, block 2, Friday','spray copper on block 3 tomorrow','spray seaweed block 1 on Monday','spray block 4 with Zivo on Thursday'])}”. Tap Done once it is sprayed and it is saved under Records for audits.`]]}
+function slides(){return [['Welcome to Hortlog','Hortlog is your all-in-one orchard diary. Spot something while you are out in the orchard? Log it in seconds. It appears in the app on your phone and your computer as lists, maps and records, ready for audits.'],['Log it in seconds',`Tap + to open quick record. Type it, or tap the mic and say what you see, like “${pick(['PSA block 3 row 49','dead vine block 1 row 22 bay 8','broken irrigation line block 2','need to buy copper','wilting leader block 4 row 8'])}”. It is sorted for you.`],['Take a purposeful photo','Tap the camera and take one photo of one problem, close enough to see it clearly. Add a few words so it is filed in the right place.'],['Add a date or a block',`Say “${pick(['prune block 2 on Friday','fix the gate at block 4 tomorrow','crew thinning block 1 in 3 days','mow block 5 on Monday','order pipe for block 3 next week'])}”. Dated jobs go on the Calendar. No date? They go under Calendar → Unscheduled.`],['Sprays become records',`Say “${pick(['spray Botector, block 2, Friday','spray copper on block 3 tomorrow','spray seaweed block 1 on Monday','spray block 4 with Zivo on Thursday'])}”. Tap Done once it is sprayed and it is saved under Records for audits.`]]}
 let ob=0,SLD=slides(),OBT=0;
 const PLAN={mine:['See your jobs','Jobs given to you sit at the top of Home. Open one, do it, then mark it done.'],voice:['Log by voice or photo','Tap and speak, or take a photo. Hortlog sorts it into the right record.'],audit:['Be audit-ready','Log sprays as you do them. Records file themselves, and one tap builds your audit pack.'],spray:['Keep your spray diary','Say “sprayed copper block 2”. Rates fill in from your products.'],psa:['Track PSA on the map','Say “PSA block 3 row 49”, then tap the spot on the block picture.'],crew:['Run your crew','Say a job with a day, then assign it to someone in Team. They get a notification.'],sign:['Sign people on','Under Records, Compliance, sign on contractors and visitors in person or by link.'],look:['Have a look around','Say “need to buy copper” and watch where it lands. Nothing to set up first.']};
 function showWelcome(){if($('#wlq'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'wlq',className:'ov'})),first=(myFullName()||'').split(/\s+/)[0],gl=(seen.goals&&seen.goals.length?seen.goals:['look']).filter(g=>PLAN[g]).slice(0,4);let p=0;
@@ -1740,7 +1814,7 @@ $('#nfn').onclick=()=>e.remove();$('#nfy').onclick=async()=>{e.remove();await as
 function showMicWhy(go){if($('#mwq'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'mwq',className:'ov'}));
 e.innerHTML=`<div class="box cut ob2-in"><h2>Quick heads-up</h2><p>Your phone is about to ask to use the microphone. It turns your words into text on the phone. Hortlog only receives the text and never stores your audio.</p><div class="acts"><button class="btn" id="mwg">Got it, start talking</button></div></div>`;
 $('#mwg').onclick=()=>{e.remove();go()}}
-const MAIN_TOUR=()=>[{v:'home',sel:['#mic'],pre:()=>$('#log').classList.add('open'),t:'Say it, do not type it',p:'Tap and speak, then say what you see, like “'+pick(['PSA block 3 row 49','dead vine block 1 row 22 bay 8','need to buy copper'])+'”. Hortlog files it for you.'},{sel:['#cam'],pre:()=>$('#log').classList.add('open'),t:'Photos that count',p:'Tap the camera and take one photo of one problem, close enough to see it clearly. Add a few words so it is filed in the right place.'},{sel:['#q'],pre:()=>$('#log').classList.add('open'),t:'Or just type',p:'Add a day and it goes on the Calendar, like “prune block 2 on Friday”. No day, and it goes under Lists.'},{v:'home',page:true,sel:['#main'],t:'Home',p:'Home shows what needs attention: jobs due today, each block’s open issues, and the map.'},{v:'cal',page:true,sel:['#main'],t:'Calendar',p:'Dated jobs and sprays live here. Tap a day, or a job under Coming up, to see it.'},{v:'lists',page:true,sel:['#main'],t:'Lists',p:'Every open job and note in one place. Filter by type, and tap Done to tick one off.'},{v:'blocks',page:true,sel:['#main'],t:'Blocks',p:'Each block has its own map, imagery and open problems. Tap one to open it.'},{sel:['#recb'],t:'Records',p:'Sprays become records when you tap Done. This is where your audit pack comes from.'},{sel:['#teamb'],t:'Your team',p:'Invite people, choose their roles, assign jobs and sign contractors on.'},{sel:['#hb'],t:'Settings and help',p:'Exports, notifications and this tutorial live here. Tap it any time.'}];
+const MAIN_TOUR=()=>[{v:'home',sel:['#mic'],pre:()=>$('#log').classList.add('open'),t:'Say it, do not type it',p:'Tap and speak, then say what you see, like “'+pick(['PSA block 3 row 49','dead vine block 1 row 22 bay 8','need to buy copper'])+'”. Hortlog files it for you.'},{sel:['#cam'],pre:()=>$('#log').classList.add('open'),t:'Photos that count',p:'Tap the camera and take one photo of one problem, close enough to see it clearly. Add a few words so it is filed in the right place.'},{sel:['#q'],pre:()=>$('#log').classList.add('open'),t:'Or just type',p:'Add a day and it goes on the Calendar, like “prune block 2 on Friday”. No day, and it goes under Calendar → Unscheduled.'},{v:'home',page:true,sel:['#main'],t:'Home',p:'Home shows what needs attention: jobs due today, each block’s open issues, and the map.'},{v:'cal',page:true,sel:['#main'],t:'Calendar',p:'Dated jobs and sprays live here. Tap a day, or a job under Coming up, to see it.'},{v:'lists',page:true,sel:['#main'],t:'Unscheduled',p:'Jobs without a date and orchard notes live here. Filter by type, add a date, or tap Done to tick one off.'},{v:'blocks',page:true,sel:['#main'],t:'Blocks',p:'Each block has its own map, imagery and open problems. Tap one to open it.'},{sel:['#mobileNav [data-v="records"]','#recb'],t:'Records',p:'Sprays become records when you tap Done. This is where your audit pack comes from.'},{sel:['#hb'],t:'Team and settings',p:'Tap your profile button to open Settings. If Team is enabled for your orchard, you can open Team there to invite people, choose roles and assign jobs. Exports, notifications and help are there too.'}];
 function openOb(){spotTour(MAIN_TOUR(),()=>{setView('home');if(!seen.ob){seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}try{sb.auth.updateUser({data:{onboarded:true}}).catch(()=>{})}catch(e){}})}
 let SPOT=null;
 const spW=ms=>new Promise(r=>setTimeout(r,ms));
@@ -1767,8 +1841,9 @@ $('#obl').onclick=()=>{if(ob===0)closeOb();else{ob--;showOb()}};$('#obn').onclic
 function closeOb(){const e=$('#ob');if(e)e.remove();if(OBT){OBT=0;SLD=slides();return}seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}
 $('#hb').onclick=()=>setView('settings');$('#teamb').onclick=()=>setView('team');
 $('#brand').onclick=()=>setView('home');$('#brand').onkeydown=e=>{if(e.key==='Enter')setView('home')};
-$('#plus').onclick=()=>{const l=$('#log');l.classList.toggle('open');if(l.classList.contains('open'))$('#q').focus()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#log').classList.remove('open')});
+function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');if(opened)$('#q').focus()}
+$('#plus').onclick=toggleQuickLog;$('#mobilePlus').onclick=toggleQuickLog;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false')}});
 const chips=()=>'<div class="chips">'+[['all','All']].concat(Object.entries(CATS).map(([k,v])=>[k,v[0]])).map(([k,n])=>{
 const cnt=items.filter(i=>!i.d&&(k==='all'||i.c===k)&&!vineNote(i)).length;
 return `<button class="chip ${filter===k?'on':''}" data-f="${k}">${k!=='all'?`<span class="sq" style="background:var(${CATS[k][1]})"></span>`:''}${n} ${cnt}</button>`}).join('')+'</div>';
@@ -1913,11 +1988,15 @@ function undatedCard(){const l=items.filter(i=>!i.d&&!i.due&&i.c!=='rec'&&i.c!==
 function agendaCard(){const T=iso(new Date()),end=iso(new Date(Date.now()+14*864e5)),l=items.filter(i=>!i.d&&i.due&&i.due>T&&i.due<=end).sort((a,b)=>a.due<b.due?-1:1);let body='',prev='';
 l.slice(0,12).forEach(i=>{const f=i.due!==prev;if(f){prev=i.due;body+=`<button class="ag agb" data-gd="${i.due}">${dayLabel(i.due)}<span>show on calendar →</span></button>`}body+=rowHtml(i,true)});
 return card('var(--crew)',`<h2>Coming up<em>next 14 days · ${l.length}</em></h2>`+(l.length?body:'<div class="empty">Nothing planned for the next two weeks.</div>'))}
-function calHtml(){const T=iso(new Date()),od=day===T?items.filter(i=>!i.d&&i.due&&i.due<T):[],l=items.filter(i=>i.due===day);
-return tip('cal')+demoFor('cal',!items.some(i=>i.due))+`<div class="calpg"><div class="cl"><div class="dn"><button class="x" data-day="-1" aria-label="Previous day">←</button><div class="hd">${dayLabel(day)}</div><button class="x" data-day="1" aria-label="Next day">→</button></div>`+(od.length?card('var(--psa)',`<h2>Overdue<em>${od.length}</em></h2>`+list(od)):'')+card('var(--hot)',`<h2>${dayLabel(day)}<em>${l.filter(i=>!i.d).length} to do</em></h2>`+(l.length?list(l):'<div class="empty">Nothing planned. Say “crew, prune block 2 on Friday”.</div>'))+`</div><div class="cm"><div class="dn dk"><button class="x" data-cm="-1" aria-label="Previous month">←</button><div class="hd">${monthLabel()}</div><button class="x" data-cm="1" aria-label="Next month">→</button></div>${monthCard()}</div><div class="cr"><div class="dn dk"><div class="hd" style="padding-left:12px">Coming up · next 14 days</div></div>${agendaCard()}${undatedCard()}</div></div><p class="hint">A job with a date is shown here on its day. Jobs without a date are kept under Lists.</p>`}
-function listsHtml(){let h=tip('lists')+demoFor('lists',!items.length)+chips();
-Object.keys(CATS).filter(k=>filter==='all'||k===filter).forEach(k=>{const l=items.filter(i=>i.c===k&&!vineNote(i));
-h+=card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))});return h}
+function calSwitchHtml(){
+const scheduled=items.filter(i=>!i.d&&!!i.due).length;
+const unscheduled=items.filter(i=>!i.d&&!i.due&&!vineNote(i)).length;
+return `<div class="cal-switch" role="tablist" aria-label="Calendar views"><button type="button" role="tab" aria-selected="${calMode==='scheduled'}" class="cal-mode ${calMode==='scheduled'?'on':''}" data-calmode="scheduled">Scheduled <span>${scheduled}</span></button><button type="button" role="tab" aria-selected="${calMode==='unscheduled'}" class="cal-mode ${calMode==='unscheduled'?'on':''}" data-calmode="unscheduled">Unscheduled <span>${unscheduled}</span></button></div>`}
+function calHtml(){
+if(calMode==='unscheduled')return tip('lists')+calSwitchHtml()+demoFor('lists',!items.some(i=>!i.due&&!vineNote(i)))+chips()+Object.keys(CATS).filter(k=>filter==='all'||k===filter).map(k=>{const l=items.filter(i=>i.c===k&&!i.due&&!vineNote(i));return card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))}).join('')+'<p class="hint">These jobs and orchard notes do not have a scheduled date. Add a date to move a job into Scheduled.</p>';
+const T=iso(new Date()),od=day===T?items.filter(i=>!i.d&&i.due&&i.due<T):[],l=items.filter(i=>i.due===day);
+return tip('cal')+calSwitchHtml()+demoFor('cal',!items.some(i=>i.due))+`<div class="calpg"><div class="cl"><div class="dn"><button class="x" data-day="-1" aria-label="Previous day">←</button><div class="hd">${dayLabel(day)}</div><button class="x" data-day="1" aria-label="Next day">→</button></div>`+(od.length?card('var(--psa)',`<h2>Overdue<em>${od.length}</em></h2>`+list(od)):'')+card('var(--hot)',`<h2>${dayLabel(day)}<em>${l.filter(i=>!i.d).length} to do</em></h2>`+(l.length?list(l):'<div class="empty">Nothing planned. Say “crew, prune block 2 on Friday”.</div>'))+`</div><div class="cm"><div class="dn dk"><button class="x" data-cm="-1" aria-label="Previous month">←</button><div class="hd">${monthLabel()}</div><button class="x" data-cm="1" aria-label="Next month">→</button></div>${monthCard()}</div><div class="cr"><div class="dn dk"><div class="hd" style="padding-left:12px">Coming up · next 14 days</div></div>${agendaCard()}</div></div><p class="hint">Scheduled jobs appear on their day. Use Unscheduled for jobs that still need a date.</p>`}
+function listsHtml(){return calHtml()}
 const normP=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const findProd=p=>{const n=normP(p);if(!n)return null;const L=(B[0]&&B[0].products)||[];return L.find(q=>normP(q.n)===n)||L.find(q=>{const m=normP(q.n);return m&&(m.includes(n)||n.includes(m))})||null};
 const lookupRate=p=>{const x=findProd(p);return (x&&x.r)||''},lookupWater=p=>{const x=findProd(p);return (x&&x.w)||''};
@@ -2104,6 +2183,7 @@ A('[data-adis]',b=>b.onclick=()=>{b.dataset.adis.split(',').forEach(id=>alertSee
 A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
 A('[data-d]',b=>b.onclick=()=>{const i=items.find(a=>a.id==b.dataset.d);if(!canEditI(i)){toast('Only the person who logged this, or a supervisor, can change it.');return}i.d=!i.d;i.doneAt=i.d?Date.now():null;popId=i.d?i.id:null;save();render();popId=null;if(i.d&&i.c==='spray'){toast('Saved to Records');if(fertKind(i)==='ask')setTimeout(()=>showFertAsk(i.id),500)}});
 A('[data-x]',b=>b.onclick=()=>{const k=items.findIndex(a=>a.id==b.dataset.x),it=items[k];if(!canDelI(it)){toast('You can only delete your own entries.');return}items.splice(k,1);save();sel=null;render();toast('Deleted: '+it.t.slice(0,40),()=>{items.splice(k,0,it);save();render()})});
+A('[data-calmode]',b=>b.onclick=()=>{const m=b.dataset.calmode;if(m==='scheduled'||m==='unscheduled'){calMode=m;render();track('calendar_mode',{mode:m})}});
 A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
 A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
 A('[data-nav]',b=>b.onclick=e=>{if(e.target.closest('button'))return;if(b.dataset.nav==='cal'&&/Overdue/.test(b.textContent)){goOverdue();return}setView(b.dataset.nav)});
@@ -2166,7 +2246,7 @@ let chipMem={},lastV='',lastC='';
 const chipKey=(v,c,i)=>v+':'+(v==='records'&&i>0?c:'')+':'+i;
 function chipSave(){if(!lastV)return;document.querySelectorAll('#main .chips').forEach((e,i)=>{chipMem[chipKey(lastV,lastC,i)]=e.scrollLeft})}
 function chipRestore(){document.querySelectorAll('#main .chips').forEach((e,i)=>{const m=chipMem[chipKey(view,recCat,i)];if(m)e.scrollLeft=m});lastV=view;lastC=recCat}
-function render(){try{setTimeout(()=>{if(view!=='home')return;if(document.querySelector('.nudge'))shownOnce('nudge_setup');if(document.querySelector('.teamcta')&&window.innerWidth<900)shownOnce('nudge_team');if(document.querySelector('.instbar'))shownOnce('nudge_install')},400)}catch(e){}syncCats();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
+function render(){try{setTimeout(()=>{if(view!=='home')return;if(document.querySelector('.nudge'))shownOnce('nudge_setup');if(document.querySelector('.teamcta')&&window.innerWidth<900)shownOnce('nudge_team');if(document.querySelector('.instbar'))shownOnce('nudge_install')},400)}catch(e){}syncCats();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));document.querySelectorAll('#mobileNav .mnav-item').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
 chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
 (async()=>{try{if(!window.claude)return;AI=await window.claude.use('sample');DL=await window.claude.use('downloads');
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
