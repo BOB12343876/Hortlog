@@ -857,6 +857,62 @@ header::before,header::after{display:none!important;content:none!important}
 }
 </style>
 
+
+<style id="hortlog-mobile-home-redesign">
+/* Mobile Home is a separate task-first layout. Desktop Home remains unchanged. */
+.mobile-home{display:none}
+@media(max-width:899px){
+  main>.desktop-home{display:none!important}
+  main>.mobile-home{display:flex!important;flex-direction:column;gap:14px;width:100%;padding:3px 0 24px}
+  .mh-welcome{padding:3px 2px 2px}
+  .mh-date{font:600 13px/1.2 Barlow,system-ui,sans-serif;letter-spacing:.045em;color:var(--soft)}
+  .mh-welcome h2{font:800 34px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:5px 0 0;letter-spacing:0}
+  .mh-orchard{margin:3px 0 0;color:var(--soft);font-size:15px;font-weight:600}
+  .mh-section{background:var(--card);color:var(--ink);border:1px solid var(--map);border-radius:16px;padding:13px 15px 5px;overflow:hidden;clip-path:none}
+  .mh-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 7px;min-height:34px}
+  .mh-section-head h2{font:800 23px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:0;letter-spacing:0}
+  .mh-eyebrow{display:block;font:700 11px/1.1 Barlow,system-ui,sans-serif;letter-spacing:.11em;color:var(--soft);margin:0 0 3px}
+  .mh-count{flex:none;min-width:30px;height:30px;padding:0 8px;border-radius:20px;background:var(--bg);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;font:700 15px Barlow,system-ui,sans-serif}
+  .mh-text-link,.mh-more{border:0;background:none;color:var(--deep);font:700 14px Barlow,system-ui,sans-serif;min-height:44px;padding:4px 0;cursor:pointer}
+  :root[data-theme="dark"] .mh-text-link,:root[data-theme="dark"] .mh-more{color:#cfe8e3}
+  .mh-section-note{margin:-4px 0 7px;color:var(--soft);font:500 13px Barlow,system-ui,sans-serif}
+  .mh-list .row{display:flex;align-items:center;gap:8px;padding:11px 0;border-top:1px solid var(--map);min-width:0}
+  .mh-list .row.first{border-top:0}
+  .mh-list .row .t{font-size:16px;line-height:1.25;min-width:0;overflow-wrap:anywhere}
+  .mh-list .row small{font-size:13px;line-height:1.3;margin-top:3px;color:var(--soft)}
+  .mh-list .dbtn{min-height:40px;padding:5px 9px;border-width:2px;font-size:14px;border-radius:9px;clip-path:none}
+  .mh-list .x{min-width:40px;min-height:40px;border-radius:9px}
+  .mh-list .x.ed{color:var(--soft)}
+  .mh-empty{display:flex;align-items:center;gap:12px;padding:12px 0 13px;color:var(--ink)}
+  .mh-empty-mark{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--crew);font:700 20px Barlow,sans-serif}
+  .mh-empty b,.mh-empty small{display:block}
+  .mh-empty b{font:700 16px Barlow,sans-serif}
+  .mh-empty small{color:var(--soft);font-size:14px;margin-top:2px}
+  .mh-more{width:100%;text-align:left;border-top:1px solid var(--map);margin-top:2px}
+  .mh-attention-list{margin:0 -2px}
+  .mh-attention-row{display:flex;align-items:center;gap:11px;width:100%;min-height:58px;padding:9px 3px;border:0;border-top:1px solid var(--map);background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+  .mh-attention-row:first-child{border-top:0}
+  .mh-dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--hot)}
+  .mh-dot.danger{background:var(--psa)}.mh-dot.psa{background:var(--psa)}.mh-dot.dead{background:var(--dead)}
+  .mh-attention-copy{flex:1;min-width:0}
+  .mh-attention-copy b,.mh-attention-copy small{display:block}
+  .mh-attention-copy b{font:700 15px/1.2 Barlow,sans-serif}
+  .mh-attention-copy small{font:500 13px/1.25 Barlow,sans-serif;color:var(--soft);margin-top:2px}
+  .mh-arrow{color:var(--soft);font:600 26px/1 Barlow,sans-serif;padding:0 4px}
+  .mh-activity-list{margin:0 -1px}
+  .mh-activity-row{display:flex;align-items:flex-start;gap:11px;padding:10px 1px;border-top:1px solid var(--map);font:600 15px/1.25 Barlow,sans-serif}
+  .mh-activity-row:first-child{border-top:0}
+  .mh-activity-row .sq{width:9px;height:9px;margin:5px 1px 0 2px}
+  .mh-activity-copy{flex:1;min-width:0;overflow-wrap:anywhere}
+  .mh-activity-copy small{display:block;color:var(--soft);font:500 13px/1.25 Barlow,sans-serif;margin-top:3px}
+  .mh-alerts{display:flex;flex-direction:column;gap:8px}
+  .mh-alerts .alertb{clip-path:none;border-radius:12px;margin:0;padding:12px 12px 12px 14px;min-height:60px;gap:10px}
+  .mh-alerts .alertb span{font:600 14px/1.3 Barlow,sans-serif}
+  .mh-alerts .alertb b{font:800 18px/1.1 'Barlow Condensed',sans-serif;margin-bottom:3px}
+  .mh-alerts .alertb .x,.mh-alerts .alertb button{min-width:40px;min-height:40px}
+}
+@media(min-width:900px){.mobile-home{display:none!important}}
+</style>
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style></head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
@@ -2191,11 +2247,39 @@ if(mindC&&mindC.k===k&&!mindDirty)return mindC;mindDirty=false;let pool=MINDP[k]
 let last='';try{last=localStorage.getItem('hl.mind')||''}catch(e){}const p2=pool.filter(x=>x!==last),l=(p2.length?p2:pool)[Math.floor(Math.random()*(p2.length||pool.length))],gs=MINDG[k],g=gs[Math.floor(Math.random()*gs.length)];try{localStorage.setItem('hl.mind',l)}catch(e){}mindC={k,l,g};return mindC}
 const heroHtml=()=>{const b=B[0]&&B[0].biz,d=new Date(),hr=d.getHours(),mind=MD(),g=mind.g,T=iso(d),du=items.filter(i=>!i.d&&i.due&&i.due<=T).length;
 const fn=myFullName().split(/\s+/)[0];return `<div class="hero"><b>${g}${fn?', '+esc(fn):''}</b><span class="dkonly">${d.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})} · ${du?du+' job'+(du>1?'s':'')+' due today':'nothing due today'}</span><span class="mbonly">${esc(mind.l)}</span></div>`};
-function homeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)),it=items.find(i=>i.id===sel),m=T.slice(0,7);
+function mobileHomeHtml(){
+const T=iso(new Date()),d=new Date(),endD=new Date();endD.setDate(endD.getDate()+7);const end=iso(endD);
+const due=items.filter(i=>!i.d&&i.due===T).sort((a,b)=>a.id-b.id);
+const overdue=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:a.id-b.id);
+const upcoming=items.filter(i=>!i.d&&i.due&&i.due>T&&i.due<=end).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:a.id-b.id);
+const psa=items.filter(i=>!i.d&&i.c==='psa'),dead=items.filter(i=>!i.d&&i.c==='dead'),psaBlockCount=new Set(psa.map(i=>i.b).filter(Boolean)).size;
+const mine=ROLES&&U?items.filter(i=>!i.d&&i.as===U.id&&!i.due):[];
+const recent=items.slice().sort((a,b)=>b.id-a.id).slice(0,3);
+const fn=myFullName().split(/\s+/)[0],hr=d.getHours(),greeting=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening';
+const orchard=B[0]&&B[0].biz?`<p class="mh-orchard">${esc(B[0].biz)}</p>`:'';
+const alerts=alertBar();
+const attention=[];
+if(overdue.length)attention.push(`<button class="mh-attention-row" type="button" data-go="overdue"><span class="mh-dot danger"></span><span class="mh-attention-copy"><b>${overdue.length} overdue ${overdue.length===1?'job':'jobs'}</b><small>Open the calendar to review</small></span><span class="mh-arrow">›</span></button>`);
+if(psa.length)attention.push(`<button class="mh-attention-row" type="button" data-go="blocks"><span class="mh-dot psa"></span><span class="mh-attention-copy"><b>${psa.length} open PSA ${psa.length===1?'finding':'findings'}</b><small>${psaBlockCount?psaBlockCount+' '+(psaBlockCount===1?'block':'blocks')+' to check':'Open the block list to review'}</small></span><span class="mh-arrow">›</span></button>`);
+if(dead.length)attention.push(`<button class="mh-attention-row" type="button" data-go="blocks"><span class="mh-dot dead"></span><span class="mh-attention-copy"><b>${dead.length} dead vine ${dead.length===1?'finding':'findings'}</b><small>Open the block list to review</small></span><span class="mh-arrow">›</span></button>`);
+const dueBody=due.length?`<div class="mh-list">${list(due.slice(0,4))}</div>${due.length>4?'<button class="mh-more" type="button" data-go="cal">View all '+due.length+' jobs →</button>':''}`:`<div class="mh-empty"><span class="mh-empty-mark">✓</span><span><b>Nothing due today</b><small>You’re clear for now.</small></span></div>`;
+const mineBody=mine.length?`<section class="mh-section"><div class="mh-section-head"><h2>Assigned to you</h2><span class="mh-count">${mine.length}</span></div><div class="mh-list">${list(mine.slice(0,3))}</div>${mine.length>3?'<button class="mh-more" type="button" data-go="lists">See unscheduled jobs →</button>':''}</section>`:'';
+const upBody=upcoming.length?`<section class="mh-section"><div class="mh-section-head"><h2>Coming up</h2><button class="mh-text-link" type="button" data-go="cal">Calendar →</button></div><p class="mh-section-note">Next 7 days</p><div class="mh-list">${list(upcoming.slice(0,3))}</div></section>`:'';
+const activityBody=recent.length?`<section class="mh-section"><div class="mh-section-head"><h2>Recent activity</h2></div><div class="mh-activity-list">${recent.map(i=>`<div class="mh-activity-row"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span class="mh-activity-copy">${esc(i.t)}<small>${CATS[i.c][0]}${i.id>1e12?' · '+dayLabel(iso(new Date(i.id))):''}</small></span></div>`).join('')}</div></section>`:'';
+return `<div class="mobile-home">
+  <section class="mh-welcome"><div class="mh-date">${d.toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long'})}</div><h2>${greeting}${fn?', '+esc(fn):''}</h2>${orchard}</section>
+  ${alerts?`<section class="mh-alerts" aria-label="Orchard safety alerts">${alerts}</section>`:''}
+  <section class="mh-section mh-due"><div class="mh-section-head"><div><span class="mh-eyebrow">YOUR DAY</span><h2>Due today</h2></div><span class="mh-count">${due.length}</span></div>${dueBody}</section>
+  ${attention.length?`<section class="mh-section mh-attention"><div class="mh-section-head"><h2>Needs attention</h2></div><div class="mh-attention-list">${attention.join('')}</div></section>`:''}
+  ${mineBody}${upBody}${activityBody}
+</div>`;
+}
+function homeHtml(){return window.innerWidth<900?mobileHomeHtml():desktopHomeHtml()}
+function desktopHomeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)),it=items.find(i=>i.id===sel),m=T.slice(0,7);
 const STNAV={'Open jobs':'lists','Due today':'cal','Overdue':'cal','Open PSA':'blocks','Records this month':'records'};const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i)).length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
 const AB=alertBar(),SC=setupCard(),KC=SC?'':keepCard();if([AB,SC,KC].filter(Boolean).length>=2){const k=st.findIndex(x=>x[0]==='Open PSA');if(k>=0)st.splice(k,1)}
 const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
-let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home">'+heroHtml()+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
+let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
 function monthCard(){const[y,m]=calM.split('-').map(Number),first=new Date(y,m-1,1),nd=new Date(y,m,0).getDate(),off=(first.getDay()+6)%7,T=iso(new Date());
 let s=`<div class="mh"><button class="x" data-cm="-1" aria-label="Previous month">←</button><b>${first.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</b><button class="x" data-cm="1" aria-label="Next month">→</button></div><div class="mg">`+['M','T','W','T','F','S','S'].map(d=>`<span class="wd">${d}</span>`).join('');
 for(let i=0;i<off;i++)s+='<span></span>';
