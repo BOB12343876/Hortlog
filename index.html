@@ -965,31 +965,6 @@ header::before,header::after{display:none!important;content:none!important}
 }
 @media(max-width:370px){.mh-quick-action{flex-basis:148px;min-width:148px}}
 </style>
-
-<style id="hortlog-mobile-home-header-and-section-contrast">
-@media(max-width:899px){
-  /* Keep the brand/profile bar on Home only; let it scroll away naturally. */
-  body:not(.mobile-home-view) > header{display:none!important}
-  body.mobile-home-view > header{display:block!important;position:relative!important;top:auto!important}
-
-  /* Give Quick Add the same clear outer alignment as the other Home sections. */
-  .mh-quick{
-    position:relative;background:var(--card);color:var(--ink);
-    padding:9px 15px 11px 19px;margin:0;overflow:hidden;
-    clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))
-  }
-  .mh-quick::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--hot)}
-  .mh-quick .mh-panel-title{margin:4px 0 8px}
-  .mh-quick-grid{margin-right:-15px!important;padding:1px 15px 7px 0!important}
-
-  /* Recent activity and the orchard now have clearly different visual identities. */
-  .mh-recent{background:var(--card)}
-  .mh-recent .mh-stripe{background:var(--hot)}
-  .mh-orchard{background:var(--map);border:1px solid var(--deep)}
-  .mh-orchard .mh-stripe{background:var(--deep)}
-}
-</style>
-
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -2646,7 +2621,7 @@ const chipKey=(v,c,i)=>v+':'+(v==='records'&&i>0?c:'')+':'+i;
 function chipSave(){if(!lastV)return;document.querySelectorAll('#main .chips').forEach((e,i)=>{chipMem[chipKey(lastV,lastC,i)]=e.scrollLeft})}
 function chipRestore(){document.querySelectorAll('#main .chips').forEach((e,i)=>{const m=chipMem[chipKey(view,recCat,i)];if(m)e.scrollLeft=m});lastV=view;lastC=recCat}
 function render(){try{setTimeout(()=>{if(view!=='home')return;if(document.querySelector('.nudge'))shownOnce('nudge_setup');if(document.querySelector('.teamcta')&&window.innerWidth<900)shownOnce('nudge_team');if(document.querySelector('.instbar'))shownOnce('nudge_install')},400)}catch(e){}syncCats();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));document.querySelectorAll('#mobileNav .mnav-item').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
-chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);document.body.classList.toggle('mobile-home-view',view==='home');$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
+chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
 (async()=>{try{if(!window.claude)return;AI=await window.claude.use('sample');DL=await window.claude.use('downloads');
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
