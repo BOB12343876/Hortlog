@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Hortlog: orchard records, by voice</title>
-<meta name="description" content="Hortlog is the orchard notebook that listens. Log jobs, sprays and PSA by voice, see them on your block map, warn the crew and have your audit records ready.">
+<meta name="description" content="Spend less time on orchard admin. Log jobs, sprays and PSA by voice, keep your crew in sync and build audit-ready records as you work.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hortlog: orchard records, by voice">
-<meta property="og:description" content="Say what you see. Hortlog files it, pins it on your block map, tells the crew and keeps your audit records ready.">
+<meta property="og:description" content="Spend less time writing things up and chasing updates. Hortlog helps capture orchard work as it happens.">
 <meta property="og:image" content="https://hortlog-nz.vercel.app/og-image.png"><meta property="og:url" content="https://hortlog-nz.vercel.app/home.html"><link rel="canonical" href="https://hortlog-nz.vercel.app/home.html">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -132,10 +132,20 @@ section{padding:84px 0}
 .role i{width:10px;height:10px;background:var(--c,var(--hot));transform:rotate(45deg)}
 
 /* roles */
-.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:38px}
-.rcard{background:var(--card);border:1px solid var(--line);border-top:8px solid var(--c);padding:22px 20px 26px;--cut:14px}
-.rcard h3{font-size:32px;text-transform:uppercase;margin-bottom:8px}
+.rgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:38px;align-items:stretch}
+.rcard{background:var(--card);border:1px solid var(--line);border-top:8px solid var(--c);padding:22px 20px 26px;--cut:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease}
+.rcard:hover{transform:translateY(-5px);box-shadow:0 16px 34px rgba(15,61,62,.12)}
+.rcard h3{font-size:32px;text-transform:uppercase;margin:0 0 8px}
 .rcard p{margin:0;color:var(--soft);font-size:17px;line-height:1.5}
+.role-art{height:190px;margin:-22px -20px 18px;position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;background:linear-gradient(145deg,rgba(212,227,222,.78),rgba(230,239,236,.24))}
+.role-art:before{content:"";position:absolute;width:178px;height:142px;left:50%;bottom:-54px;transform:translateX(-50%);border-radius:50%;background:var(--c);opacity:.13}
+.role-art:after{content:"";position:absolute;width:10px;height:10px;right:18%;top:24px;background:var(--c);transform:rotate(45deg);opacity:.8}
+.role-art img{position:relative;z-index:1;width:100%;height:100%;max-height:210px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 7px 5px rgba(11,31,32,.12));animation:roleFloat 5.8s ease-in-out infinite}
+.role-supervisor img{animation-delay:-1.4s}.role-worker img{animation-delay:-2.8s}.role-contractor img{animation-delay:-4.2s}
+@keyframes roleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media(max-width:980px){.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.rgrid{grid-template-columns:1fr}.role-art{height:205px}}
+@media(prefers-reduced-motion:reduce){.rcard{transition:none}.rcard:hover{transform:none;box-shadow:none}.role-art img{animation:none}}
 /* steps */
 .steps{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
 .steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);padding:26px 24px 28px;position:relative}
@@ -181,14 +191,14 @@ footer a{color:#fff}
 
 <header class="top"><div class="in">
   <a class="lg" href="home.html">Hort<i>log</i></a>
-  <nav class="nav" aria-label="Main"><a href="#roles">Roles</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="./?app=1" style="--cut:9px">Open Hortlog</a></nav>
+  <nav class="nav" aria-label="Main"><a href="#roles">Roles</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="/index.html?app=1" style="--cut:9px">Open Hortlog</a></nav>
 </div></header>
 
 <div class="hero"><video class="hero-v" muted loop playsinline preload="none" poster="hero.jpg" aria-hidden="true"></video><div class="hero-sh"></div><div class="wrap">
   <div>
     <h1>Stop carrying your orchard <span>in your head.</span></h1>
     <p class="lead">Hortlog is the orchard notebook that listens. Say what you see. It files the job, pins the PSA on your block map, tells the crew and keeps your audit records ready.</p>
-    <div class="acts"><a class="btn cut" href="./?app=1">Open Hortlog</a><a class="btn ghost cut" href="#features">See what it does</a></div>
+    <div class="acts"><a class="btn cut" href="/index.html?app=1">Open Hortlog</a><a class="btn ghost cut" href="#features">See what it does</a></div>
     
   </div>
   <div class="stage" aria-hidden="false">
@@ -209,14 +219,14 @@ footer a{color:#fff}
 
 <section>
   <div class="wrap">
-    <p class="eyebrow rv">What you get back</p>
-    <h2 class="h2 rv">Never lose a job again.</h2>
-    <p class="sub rv">Say it once, wherever you are in the orchard. Hortlog does the rest.</p>
+    <p class="eyebrow rv">More time back in the orchard</p>
+    <h2 class="h2 rv">Less admin. More time getting the work done.</h2>
+    <p class="sub rv">Hortlog captures the jobs, observations and spray details your team already talks about, so you spend less time remembering, rewriting and chasing updates later.</p>
     <div class="grid g4">
-      <div class="card cut rv" style="--c:#FF6B2C"><h3>Nothing gets forgotten</h3><p>Every job, spray and problem is filed and dated the moment you say it, and it waits on your calendar.</p></div>
-      <div class="card cut rv" style="--c:#E03131"><h3>Know exactly where</h3><p>Every PSA and dead vine is pinned on the aerial map of its block, so anyone can walk straight to it.</p></div>
-      <div class="card cut rv" style="--c:#0A9C82"><h3>Audit ready, any day</h3><p>Records are kept as you go. When the auditor rings, your audit pack is one tap away.</p></div>
-      <div class="card cut rv" style="--c:#1C7ED6"><h3>The whole crew in the loop</h3><p>Spray alerts, assigned jobs and morning reminders reach the right people before they walk in.</p></div>
+      <div class="card cut rv" style="--c:#FF6B2C"><h3>Capture it once</h3><p>Log jobs, sprays and observations as they happen. No scraps of paper to rewrite when you get back to the office.</p></div>
+      <div class="card cut rv" style="--c:#E03131"><h3>Go straight to the spot</h3><p>Pin PSA and dead vines to the block map, so the team knows where to look instead of searching block by block.</p></div>
+      <div class="card cut rv" style="--c:#0A9C82"><h3>Build records as you work</h3><p>Keep dated records moving in the background, with Excel and PDF exports and an audit pack ready when you need them.</p></div>
+      <div class="card cut rv" style="--c:#1C7ED6"><h3>Less chasing. Clearer days.</h3><p>Assign work and send useful reminders, so the right people know what is planned and who is doing it.</p></div>
     </div>
   </div>
 </section>
@@ -225,42 +235,42 @@ footer a{color:#fff}
 
 <section id="features" style="padding-top:0">
   <div class="featband"><div class="wrap">
-    <h2 class="h2 rv feat-h">Everything the orchard needs.<br><span>Nothing it doesn’t.</span></h2>
+    <h2 class="h2 rv feat-h">The orchard moves quickly.<br><span>Your admin should too.</span></h2>
   </div></div>
   <div class="wrap">
 
     <div class="row">
       <div class="txt rv">
-        <h3>Talk. Hortlog files it.</h3>
-        <p>Tap the orange button and say it the way you would say it to your foreman. Hortlog works out what it is, which block, and when.</p>
-        <ul><li>Jobs, sprays, fertiliser, PSA and dead vines are sorted for you.</li><li>Say a product name and its rate and water rate fill in.</li><li>“Spray block 2 tomorrow” closes itself when you later say it is done.</li><li>Prefer to type or snap a photo? That works too.</li></ul>
+        <h3>Say it once. Get back to work.</h3>
+        <p>Tap the orange button and speak naturally, just as you would to your foreman. Hortlog helps turn that quick update into a record, without stopping the job to write it all out.</p>
+        <ul><li>Log jobs, sprays, fertiliser, PSA, dead vines and observations.</li><li>Saved product details can fill in the product rate and water rate.</li><li>Schedule work by voice, then record when it has been completed.</li><li>Rather type or add a photo? Those options are there too.</li></ul>
       </div>
       <div class="shot rv" style="--r:2deg"><div class="phone"><img src="shot-home.webp" width="780" height="1688" loading="lazy" alt="The Tap and speak button on the Hortlog home screen"></div></div>
     </div>
 
     <div class="row flip">
       <div class="txt rv">
-        <h3>See every problem where it is.</h3>
-        <p>Your blocks sit on real LINZ aerial imagery. PSA and dead vines show as pins, so the whole team knows exactly where to look.</p>
-        <ul><li>Choose your block on the map in a few taps.</li><li>Tap roughly where a problem is and the pin stays there.</li><li>Open issues per block, at a glance, on Home.</li></ul>
+        <h3>Find the problem without the guesswork.</h3>
+        <p>Use your block map to show where PSA and dead vines have been spotted. The next person can head to the right place instead of asking around or walking the rows to find it.</p>
+        <ul><li>Choose the block and add a pin in a few taps.</li><li>Keep the location with the record, not just in someone's memory.</li><li>See open issues by block from Home.</li></ul>
       </div>
       <div class="shot rv"><div class="mapcard cut" style="--r:-2deg"><img src="shot-map.webp" width="900" height="718" loading="lazy" alt="Block map with PSA and dead vine pins on aerial imagery"><div class="mapcap"><span>Block 3</span><span>PSA and dead vine pins</span></div></div></div>
     </div>
 
     <div class="row">
       <div class="txt rv">
-        <h3>Everyone knows the plan.</h3>
-        <p>A calendar the whole orchard shares. Tap Overdue and it opens straight on the late jobs. Tap a day in Coming up and it jumps there.</p>
-        <ul><li>Assign a job to a team member. They get a notification.</li><li>Morning reminders at 8am New Zealand time.</li><li>Roles for Manager, Supervisor, Orchard worker and Contractor, so people see what they should.</li></ul>
+        <h3>Keep the crew moving. Not chasing.</h3>
+        <p>Put the plan in one shared calendar, so people can see what is due, what is overdue and what is coming up without a string of calls and messages.</p>
+        <ul><li>Assign a job to the person responsible and notify them.</li><li>Use the 8am New Zealand-time reminders to keep the day on track.</li><li>Give each role the access that matches their work.</li></ul>
       </div>
       <div class="shot rv" style="--r:-2deg"><div class="phone"><img src="shot-calendar.webp" width="780" height="1688" loading="lazy" alt="Hortlog calendar with jobs on their days"></div></div>
     </div>
 
     <div class="row flip">
       <div class="txt rv">
-        <h3>Audit ready before the auditor rings.</h3>
-        <p>Records are filed as you go, in the folders an auditor expects: Spray and Fert, Compliance, Monitoring, Biodiversity and Vine Development.</p>
-        <ul><li>Excel and PDF exports, and a one-tap audit pack zip.</li><li>Signed documents come inside the pack.</li><li>Send a contractor a signing link, or sign your crew on in person.</li></ul>
+        <h3>Stop rebuilding the paperwork at the end.</h3>
+        <p>Keep records organised as the work happens, in the folders you need for Spray and Fert, Compliance, Monitoring, Biodiversity and Vine Development.</p>
+        <ul><li>Export records to Excel or PDF, or create an audit pack zip.</li><li>Bring signed documents together with the rest of the pack.</li><li>Send contractors a signing link or sign your crew on in person.</li></ul>
       </div>
       <div class="shot rv" style="--r:2deg"><div class="phone"><img src="shot-records.webp" width="780" height="1688" loading="lazy" alt="Hortlog records organised by category and folder"></div></div>
     </div>
@@ -269,13 +279,13 @@ footer a{color:#fff}
 
 <section style="background:var(--card);border-block:1px solid var(--line)">
   <div class="wrap">
-    <p class="eyebrow rv">Built for the orchard</p>
-    <h2 class="h2 rv">Made for a real orchard.</h2>
+    <p class="eyebrow rv">Designed around orchard life</p>
+    <h2 class="h2 rv">Useful in the rows. Valuable back at the desk.</h2>
     <div class="grid g4">
-      <div class="card cut rv" style="--c:#FF6B2C"><h3>Works with patchy signal</h3><p>Hortlog opens fast and keeps working when the signal drops. It catches up when you are back in range.</p></div>
-      <div class="card cut rv" style="--c:#0A9C82"><h3>On your Home Screen</h3><p>No app store needed. Open it in your phone’s browser and add it to your Home Screen.</p></div>
-      <div class="card cut rv" style="--c:#7C4DFF"><h3>Your records are yours</h3><p>Only people in your orchard see your records. Built to follow the New Zealand Privacy Act 2020.</p></div>
-      <div class="card cut rv" style="--c:#1C7ED6"><h3>Alerts that matter</h3><p>The team is told when spraying is on, and the person who logged it is not pinged about their own entry.</p></div>
+      <div class="card cut rv" style="--c:#FF6B2C"><h3>Keep moving in patchy signal</h3><p>Hortlog is designed for orchard conditions. It can keep working through patchy reception and catch up when you are back in range.</p></div>
+      <div class="card cut rv" style="--c:#0A9C82"><h3>Ready on your phone</h3><p>Add Hortlog to your phone’s Home Screen. No app-store download or separate device needed.</p></div>
+      <div class="card cut rv" style="--c:#7C4DFF"><h3>Your orchard. Your records.</h3><p>Your invited team can access the records their role allows. Hortlog is built with New Zealand orchard privacy needs in mind.</p></div>
+      <div class="card cut rv" style="--c:#1C7ED6"><h3>Updates without the noise</h3><p>Send relevant spray and job alerts to the crew, without notifying someone about their own entry.</p></div>
     </div>
     
   </div>
@@ -283,14 +293,14 @@ footer a{color:#fff}
 
 <section id="roles">
   <div class="wrap">
-    <p class="eyebrow rv">Everyone in the orchard</p>
-    <h2 class="h2 rv">The right access for every role.</h2>
-    <p class="sub rv">Invite your whole team. Each person sees what suits their job, and nothing more.</p>
+    <p class="eyebrow rv">One orchard. One connected team.</p>
+    <h2 class="h2 rv">Everyone gets the right view.</h2>
+    <p class="sub rv">Give people the tools they need for their part of the day, without putting the whole orchard's admin on everyone's screen.</p>
     <div class="rgrid">
-      <div class="rcard cut rv" style="--c:#FF6B2C"><h3>Manager</h3><p>Runs the orchard. Sets up blocks, invites and manages the team, and sees and exports every record.</p></div>
-      <div class="rcard cut rv" style="--c:#FFD23F"><h3>Supervisor</h3><p>Leads a crew. Adds and assigns jobs, sets up blocks and exports records.</p></div>
-      <div class="rcard cut rv" style="--c:#0A9C82"><h3>Orchard worker</h3><p>Works in the blocks. Logs jobs, sprays, PSA and photos by voice and sees their own jobs.</p></div>
-      <div class="rcard cut rv" style="--c:#7C4DFF"><h3>Contractor</h3><p>Hired in for a job. Sees only the blocks they are given, and never your spray records.</p></div>
+      <div class="rcard cut rv" style="--c:#FF6B2C"><div class="role-art role-manager"><img src="assets/role-manager.png" alt="Illustration of an orchard manager holding a tablet" loading="lazy"></div><h3>Manager</h3><p>See the whole orchard. Set up blocks, manage people, review records and export what you need.</p></div>
+      <div class="rcard cut rv" style="--c:#FFD23F"><div class="role-art role-supervisor"><img src="assets/role-supervisor.png" alt="Illustration of an orchard supervisor with a radio and tablet" loading="lazy"></div><h3>Supervisor</h3><p>Keep the day moving. Organise the crew, assign jobs, set up blocks and export records.</p></div>
+      <div class="rcard cut rv" style="--c:#0A9C82"><div class="role-art role-worker"><img src="assets/role-worker.png" alt="Illustration of an orchard worker with a phone and pruning shears" loading="lazy"></div><h3>Orchard worker</h3><p>Record work from the block. Log jobs, sprays, PSA, dead vines and photos by voice.</p></div>
+      <div class="rcard cut rv" style="--c:#7C4DFF"><div class="role-art role-contractor"><img src="assets/role-contractor.png" alt="Illustration of an orchard contractor in safety gear carrying a tool bag" loading="lazy"></div><h3>Contractor</h3><p>See the work you are brought in for. Access assigned blocks without seeing the orchard's spray records.</p></div>
     </div>
   </div>
 </section>
@@ -298,23 +308,24 @@ footer a{color:#fff}
 <section id="faq" style="background:var(--card);border-top:1px solid var(--line)">
   <div class="wrap">
     <p class="eyebrow rv">Questions</p>
-    <h2 class="h2 rv">Straight answers.</h2>
+    <h2 class="h2 rv">A few practical answers.</h2>
     <div class="faq rv">
+      <details><summary>How much time will it save?</summary><p>That depends on how your orchard works today. Hortlog is designed to reduce double-handling: capture the job once, share the update with the right people and keep the record as you go. Try it with a real block and see where it saves your team time.</p></details>
       <details><summary>Do I need to download anything?</summary><p>No. Hortlog is a web app. Open it in your phone’s browser and add it to your Home Screen. It works like an app.</p></details>
-      <details><summary>Does it work without signal?</summary><p>It opens and keeps working with patchy signal. Voice logging uses your phone’s speech recognition, so that part needs a connection on most phones.</p></details>
+      <details><summary>Does it work with patchy signal?</summary><p>Hortlog is designed to keep working through patchy reception and catch up when you are back in range. Voice logging uses your phone’s speech recognition, which may need a connection depending on the phone.</p></details>
       <details><summary>Who can see my records?</summary><p>Only people you invite to your orchard, and each person only sees what their role allows. A contractor, for example, sees only the blocks they were given and no spray records.</p></details>
-      <details><summary>Will it help with audits?</summary><p>Yes. Records are filed into the usual folders as you go, and the audit pack gives you Excel files and your signed documents in one zip.</p></details>
-      <details><summary>Can I get my records out?</summary><p>Any time. Export to Excel or PDF, and you can delete your account yourself from Settings.</p></details>
-      <details><summary>Does it work on iPhone?</summary><p>Hortlog is built for Android first and tested most on Android. It runs in iPhone browsers too, and we are testing that now. Tell us how it goes.</p></details>
+      <details><summary>Will it make audit preparation easier?</summary><p>Records are filed into the usual folders as you go, and the audit pack brings together your exports and signed documents in one zip.</p></details>
+      <details><summary>Can I get my records out?</summary><p>Yes. Export to Excel or PDF, and you can delete your account yourself from Settings.</p></details>
+      <details><summary>Does it work on iPhone?</summary><p>Hortlog is built for Android first and tested most on Android. It runs in iPhone browsers too, and we are continuing to test it.</p></details>
     </div>
   </div>
 </section>
 
 <div class="cta"><div class="wrap">
   <div class="rv">
-    <h2>Try Hortlog on your orchard.</h2>
-    <p>It takes a few minutes to set up. Say your first job out loud and see where it lands.</p>
-    <div class="acts"><a class="btn cut" href="./?app=1">Open Hortlog</a><a class="btn ghost cut" href="mailto:pentreathliam@gmail.com">Ask Liam a question</a></div>
+    <h2>Make the admin take minutes, not your evenings.</h2>
+    <p>Start with a real block and a real day's work. Capture a job, pin an issue and see how much less there is to write up, track down and chase later.</p>
+    <div class="acts"><a class="btn cut" href="/index.html?app=1">Open Hortlog</a><a class="btn ghost cut" href="mailto:pentreathliam@gmail.com">Ask Liam a question</a></div>
   </div>
   <div class="qr" aria-hidden="true"><div class="phone"><img src="shot-home.webp" width="780" height="1688" loading="lazy" alt=""></div></div>
 </div></div>
