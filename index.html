@@ -859,59 +859,65 @@ header::before,header::after{display:none!important;content:none!important}
 
 
 <style id="hortlog-mobile-home-redesign">
-/* Mobile Home is a separate task-first layout. Desktop Home remains unchanged. */
+/* Mobile Home uses the same clipped, square-edged visual language as the rest of Hortlog. */
 .mobile-home{display:none}
 @media(max-width:899px){
   main>.desktop-home{display:none!important}
-  main>.mobile-home{display:flex!important;flex-direction:column;gap:14px;width:100%;padding:3px 0 24px}
-  .mh-welcome{padding:3px 2px 2px}
-  .mh-date{font:600 13px/1.2 Barlow,system-ui,sans-serif;letter-spacing:.045em;color:var(--soft)}
-  .mh-welcome h2{font:800 34px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:5px 0 0;letter-spacing:0}
-  .mh-orchard{margin:3px 0 0;color:var(--soft);font-size:15px;font-weight:600}
-  .mh-section{background:var(--card);color:var(--ink);border:1px solid var(--map);border-radius:16px;padding:13px 15px 5px;overflow:hidden;clip-path:none}
-  .mh-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 7px;min-height:34px}
-  .mh-section-head h2{font:800 23px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:0;letter-spacing:0}
-  .mh-eyebrow{display:block;font:700 11px/1.1 Barlow,system-ui,sans-serif;letter-spacing:.11em;color:var(--soft);margin:0 0 3px}
-  .mh-count{flex:none;min-width:30px;height:30px;padding:0 8px;border-radius:20px;background:var(--bg);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;font:700 15px Barlow,system-ui,sans-serif}
-  .mh-text-link,.mh-more{border:0;background:none;color:var(--deep);font:700 14px Barlow,system-ui,sans-serif;min-height:44px;padding:4px 0;cursor:pointer}
-  :root[data-theme="dark"] .mh-text-link,:root[data-theme="dark"] .mh-more{color:#cfe8e3}
-  .mh-section-note{margin:-4px 0 7px;color:var(--soft);font:500 13px Barlow,system-ui,sans-serif}
-  .mh-list .row{display:flex;align-items:center;gap:8px;padding:11px 0;border-top:1px solid var(--map);min-width:0}
-  .mh-list .row.first{border-top:0}
-  .mh-list .row .t{font-size:16px;line-height:1.25;min-width:0;overflow-wrap:anywhere}
-  .mh-list .row small{font-size:13px;line-height:1.3;margin-top:3px;color:var(--soft)}
-  .mh-list .dbtn{min-height:40px;padding:5px 9px;border-width:2px;font-size:14px;border-radius:9px;clip-path:none}
-  .mh-list .x{min-width:40px;min-height:40px;border-radius:9px}
-  .mh-list .x.ed{color:var(--soft)}
-  .mh-empty{display:flex;align-items:center;gap:12px;padding:12px 0 13px;color:var(--ink)}
-  .mh-empty-mark{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--bg);color:var(--crew);font:700 20px Barlow,sans-serif}
-  .mh-empty b,.mh-empty small{display:block}
-  .mh-empty b{font:700 16px Barlow,sans-serif}
-  .mh-empty small{color:var(--soft);font-size:14px;margin-top:2px}
-  .mh-more{width:100%;text-align:left;border-top:1px solid var(--map);margin-top:2px}
-  .mh-attention-list{margin:0 -2px}
-  .mh-attention-row{display:flex;align-items:center;gap:11px;width:100%;min-height:58px;padding:9px 3px;border:0;border-top:1px solid var(--map);background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
-  .mh-attention-row:first-child{border-top:0}
-  .mh-dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--hot)}
-  .mh-dot.danger{background:var(--psa)}.mh-dot.psa{background:var(--psa)}.mh-dot.dead{background:var(--dead)}
-  .mh-attention-copy{flex:1;min-width:0}
-  .mh-attention-copy b,.mh-attention-copy small{display:block}
-  .mh-attention-copy b{font:700 15px/1.2 Barlow,sans-serif}
-  .mh-attention-copy small{font:500 13px/1.25 Barlow,sans-serif;color:var(--soft);margin-top:2px}
-  .mh-arrow{color:var(--soft);font:600 26px/1 Barlow,sans-serif;padding:0 4px}
-  .mh-activity-list{margin:0 -1px}
-  .mh-activity-row{display:flex;align-items:flex-start;gap:11px;padding:10px 1px;border-top:1px solid var(--map);font:600 15px/1.25 Barlow,sans-serif}
+  main>.mobile-home{display:flex!important;flex-direction:column;gap:12px;width:100%;padding:3px 0 24px}
+  .mh-welcome{padding:2px 2px 3px;margin-bottom:1px}
+  .mh-date{font:600 14px/1.2 Barlow,system-ui,sans-serif;color:var(--soft);margin-bottom:5px}
+  .mh-welcome h2{font:800 34px/1.02 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:0;letter-spacing:0}
+  .mh-sub{font:500 16px/1.3 Barlow,system-ui,sans-serif;color:var(--soft);margin:4px 0 0}
+
+  .mh-panel{background:var(--card);color:var(--ink);padding:9px 15px 11px 19px;margin:0;position:relative;overflow:hidden;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+  .mh-stripe{position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--map)}
+  .mh-panel-title{font:800 24px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:4px 0 8px;letter-spacing:0}
+  .mh-work-summary{display:flex;align-items:center;gap:18px;min-height:42px;padding:1px 0 8px}
+  .mh-due-count{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+  .mh-due-count b{font:800 29px/1 'Barlow Condensed',Impact,sans-serif;color:var(--ink)}
+  .mh-due-count span{font:600 16px/1 Barlow,system-ui,sans-serif;color:var(--soft)}
+  .mh-work-divider{width:1px;height:30px;background:var(--map);flex:none}
+  .mh-attention-link{display:flex;align-items:center;gap:8px;min-height:38px;padding:4px 0;border:0;background:none;color:var(--ink);text-align:left;font:600 15px/1.2 Barlow,system-ui,sans-serif;cursor:pointer}
+  .mh-attention-mark{width:9px;height:9px;background:var(--hot);transform:rotate(45deg);flex:none}
+  .mh-ok{font:500 15px/1.25 Barlow,system-ui,sans-serif;color:var(--soft)}
+  .mh-panel-link{display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:43px;padding:7px 0 1px;border:0;border-top:1px solid var(--map);background:none;color:var(--deep);font:700 16px/1.2 Barlow,system-ui,sans-serif;text-align:left;cursor:pointer}
+  :root[data-theme="dark"] .mh-panel-link{color:#cfe8e3}
+
+  .mh-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mh-quick-action{display:flex;align-items:center;gap:10px;min-height:62px;padding:10px 12px;border:2px solid var(--deep);background:var(--card);color:var(--ink);font:700 17px/1.15 Barlow,system-ui,sans-serif;text-align:left;cursor:pointer;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+  .mh-quick-action:active{background:var(--blk)}
+  .mh-quick-icon{display:grid;place-items:center;width:30px;height:30px;flex:none;background:var(--hot);color:#1a0d05;clip-path:polygon(0 0,100% 0,100% 75%,75% 100%,0 100%)}
+  .mh-quick-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  .mh-activity-list{margin:0}
+  .mh-activity-row{display:flex;align-items:center;gap:11px;min-height:55px;padding:9px 1px;border-top:2px dashed var(--map);font:600 16px/1.2 Barlow,system-ui,sans-serif}
   .mh-activity-row:first-child{border-top:0}
-  .mh-activity-row .sq{width:9px;height:9px;margin:5px 1px 0 2px}
+  .mh-activity-row .sq{width:10px;height:10px;margin:0 2px 0 1px}
   .mh-activity-copy{flex:1;min-width:0;overflow-wrap:anywhere}
-  .mh-activity-copy small{display:block;color:var(--soft);font:500 13px/1.25 Barlow,sans-serif;margin-top:3px}
+  .mh-activity-copy b{display:block;font:700 16px/1.2 Barlow,system-ui,sans-serif;color:var(--ink)}
+  .mh-activity-copy small{display:block;color:var(--soft);font:500 14px/1.2 Barlow,system-ui,sans-serif;margin-top:4px}
+  .mh-empty-line{padding:5px 0 8px;color:var(--soft);font:500 15px/1.3 Barlow,system-ui,sans-serif}
+
+  .mh-blocks{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0 4px}
+  .mh-block-total{display:flex;align-items:baseline;gap:8px}
+  .mh-block-total b{font:800 31px/1 'Barlow Condensed',Impact,sans-serif;color:var(--ink)}
+  .mh-block-total span{font:600 16px/1 Barlow,system-ui,sans-serif;color:var(--soft)}
+  .mh-blocks .mh-panel-link{width:auto;min-height:38px;padding:4px 0;border:0;white-space:nowrap}
+
   .mh-alerts{display:flex;flex-direction:column;gap:8px}
-  .mh-alerts .alertb{clip-path:none;border-radius:12px;margin:0;padding:12px 12px 12px 14px;min-height:60px;gap:10px}
-  .mh-alerts .alertb span{font:600 14px/1.3 Barlow,sans-serif}
+  .mh-alerts .alertb{clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));border-radius:0;margin:0;padding:11px 12px 11px 14px;min-height:58px;gap:10px}
+  .mh-alerts .alertb span{font:600 14px/1.3 Barlow,system-ui,sans-serif}
   .mh-alerts .alertb b{font:800 18px/1.1 'Barlow Condensed',sans-serif;margin-bottom:3px}
   .mh-alerts .alertb .x,.mh-alerts .alertb button{min-width:40px;min-height:40px}
 }
 @media(min-width:900px){.mobile-home{display:none!important}}
+@media(max-width:370px){
+  .mh-quick-grid{gap:7px}
+  .mh-quick-action{padding:9px 8px;gap:7px;font-size:15px}
+  .mh-work-summary{gap:11px}
+  .mh-attention-link{font-size:14px}
+  .mh-blocks .mh-panel-link{font-size:14px}
+}
 </style>
 </head>
 <body class="boot">
@@ -1920,7 +1926,7 @@ if(photo){if(it.c==='rec'){recCat=RMAP[it.rc]||it.rc;recFolder=it.rf;setView('re
 const loc=it.ab?' → All blocks':it.b?` → ${bn(it.b)}${it.r?' row '+it.r:''}${it.y?' bay '+it.y:''}`:'';
 toast('Logged: '+CATS[it.c][0]+loc+(it.due?' · '+dayLabel(it.due):'')+(it.d&&it.c==='spray'?' · in Records':''),()=>{items=items.filter(i=>i.id!==it.id);save();render()});
 maybeNotifAsk();if(it.b&&!B[it.b]&&!askedBlk[it.b]){askedBlk[it.b]=1;setTimeout(()=>askBlock(it.b),500)}else if((it.c==='psa'||it.c==='dead')&&!it.b&&!it.ab&&bl().length)setTimeout(()=>showBlockPick(it.id),500);else if((it.c==='psa'||it.c==='dead')&&it.b&&!it.r&&it.mx==null&&B[it.b]&&B[it.b].img)setTimeout(()=>showPlacePin(it.id),600);else if(it.ask2==='spraydone')setTimeout(()=>showSprayDone(it.id),500);else if(it.ask==='induct')setTimeout(()=>showIndAsk(it.id),500);else if(it.c==='spray'&&it.d&&fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),500);else if(it.c==='spray'&&!it.prod&&fertKind(it)!=='ask')setTimeout(()=>showProdPick(it.id),700);else if(it.c==='spray'&&it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),700);else if((it.c==='todo'||it.c==='crew')&&ROLES&&canBlk()&&MEMBERS.length>1)setTimeout(()=>showAssignAsk(it.id),700);else if((it.c==='todo'||it.c==='crew')&&ROLES&&isMgr()&&MEMBERS.length<2)setTimeout(showJobsTeam,900)}
-function sendQ(){const v=$('#q').value;$('#q').value='';$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false');$('#plus').setAttribute('aria-expanded','false');add(v)}
+function sendQ(){const v=$('#q').value;$('#q').value='';$('#q').placeholder='Type, or use your keyboard mic';$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false');$('#plus').setAttribute('aria-expanded','false');add(v)}
 $('#q').onkeydown=e=>{if(e.key==='Enter')sendQ()};$('#go').onclick=sendQ;
 function toast(m,fn,label){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</span>'+(fn?'<button id="un">'+(label||'UNDO')+'</button>':'');t.style.display='flex';
 if(fn)$('#un').onclick=()=>{fn();t.style.display='none'};
@@ -2080,7 +2086,7 @@ $('#obl').onclick=()=>{if(ob===0)closeOb();else{ob--;showOb()}};$('#obn').onclic
 function closeOb(){const e=$('#ob');if(e)e.remove();if(OBT){OBT=0;SLD=slides();return}seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}
 $('#hb').onclick=()=>setView('settings');$('#teamb').onclick=()=>setView('team');
 $('#brand').onclick=()=>setView('home');$('#brand').onkeydown=e=>{if(e.key==='Enter')setView('home')};
-function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');if(opened&&window.innerWidth>=900)$('#q').focus()}
+function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');if(!opened)$('#q').placeholder='Type, or use your keyboard mic';if(opened&&window.innerWidth>=900)$('#q').focus()}
 $('#plus').onclick=toggleQuickLog;$('#mobilePlus').onclick=toggleQuickLog;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false')}});
 const chips=()=>'<div class="chips">'+[['all','All']].concat(Object.entries(CATS).map(([k,v])=>[k,v[0]])).map(([k,n])=>{
@@ -2248,30 +2254,40 @@ let last='';try{last=localStorage.getItem('hl.mind')||''}catch(e){}const p2=pool
 const heroHtml=()=>{const b=B[0]&&B[0].biz,d=new Date(),hr=d.getHours(),mind=MD(),g=mind.g,T=iso(d),du=items.filter(i=>!i.d&&i.due&&i.due<=T).length;
 const fn=myFullName().split(/\s+/)[0];return `<div class="hero"><b>${g}${fn?', '+esc(fn):''}</b><span class="dkonly">${d.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})} · ${du?du+' job'+(du>1?'s':'')+' due today':'nothing due today'}</span><span class="mbonly">${esc(mind.l)}</span></div>`};
 function mobileHomeHtml(){
-const T=iso(new Date()),d=new Date(),endD=new Date();endD.setDate(endD.getDate()+7);const end=iso(endD);
+const T=iso(new Date()),d=new Date();
 const due=items.filter(i=>!i.d&&i.due===T).sort((a,b)=>a.id-b.id);
 const overdue=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:a.id-b.id);
-const upcoming=items.filter(i=>!i.d&&i.due&&i.due>T&&i.due<=end).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:a.id-b.id);
-const psa=items.filter(i=>!i.d&&i.c==='psa'),dead=items.filter(i=>!i.d&&i.c==='dead'),psaBlockCount=new Set(psa.map(i=>i.b).filter(Boolean)).size;
-const mine=ROLES&&U?items.filter(i=>!i.d&&i.as===U.id&&!i.due):[];
-const recent=items.slice().sort((a,b)=>b.id-a.id).slice(0,3);
-const fn=myFullName().split(/\s+/)[0],hr=d.getHours(),greeting=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening';
-const orchard=B[0]&&B[0].biz?`<p class="mh-orchard">${esc(B[0].biz)}</p>`:'';
+const recent=items.filter(i=>Number(i.id)>1e12&&(i.d||['note','psa','dead','rec'].includes(i.c))&&!(i.due&&i.due>T&&!i.d)).sort((a,b)=>b.id-a.id).slice(0,2);
+const blockCount=bl().length,hr=d.getHours(),greeting=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening';
+const weekday=d.toLocaleDateString('en-NZ',{weekday:'long'}),month=d.toLocaleDateString('en-NZ',{month:'long'}),n=d.getDate(),suffix=n%10===1&&n!==11?'st':n%10===2&&n!==12?'nd':n%10===3&&n!==13?'rd':'th';
+const dateLine=`${weekday} the ${n}${suffix} of ${month}`;
 const alerts=alertBar();
-const attention=[];
-if(overdue.length)attention.push(`<button class="mh-attention-row" type="button" data-go="overdue"><span class="mh-dot danger"></span><span class="mh-attention-copy"><b>${overdue.length} overdue ${overdue.length===1?'job':'jobs'}</b><small>Open the calendar to review</small></span><span class="mh-arrow">›</span></button>`);
-if(psa.length)attention.push(`<button class="mh-attention-row" type="button" data-go="blocks"><span class="mh-dot psa"></span><span class="mh-attention-copy"><b>${psa.length} open PSA ${psa.length===1?'finding':'findings'}</b><small>${psaBlockCount?psaBlockCount+' '+(psaBlockCount===1?'block':'blocks')+' to check':'Open the block list to review'}</small></span><span class="mh-arrow">›</span></button>`);
-if(dead.length)attention.push(`<button class="mh-attention-row" type="button" data-go="blocks"><span class="mh-dot dead"></span><span class="mh-attention-copy"><b>${dead.length} dead vine ${dead.length===1?'finding':'findings'}</b><small>Open the block list to review</small></span><span class="mh-arrow">›</span></button>`);
-const dueBody=due.length?`<div class="mh-list">${list(due.slice(0,4))}</div>${due.length>4?'<button class="mh-more" type="button" data-go="cal">View all '+due.length+' jobs →</button>':''}`:`<div class="mh-empty"><span class="mh-empty-mark">✓</span><span><b>Nothing due today</b><small>You’re clear for now.</small></span></div>`;
-const mineBody=mine.length?`<section class="mh-section"><div class="mh-section-head"><h2>Assigned to you</h2><span class="mh-count">${mine.length}</span></div><div class="mh-list">${list(mine.slice(0,3))}</div>${mine.length>3?'<button class="mh-more" type="button" data-go="lists">See unscheduled jobs →</button>':''}</section>`:'';
-const upBody=upcoming.length?`<section class="mh-section"><div class="mh-section-head"><h2>Coming up</h2><button class="mh-text-link" type="button" data-go="cal">Calendar →</button></div><p class="mh-section-note">Next 7 days</p><div class="mh-list">${list(upcoming.slice(0,3))}</div></section>`:'';
-const activityBody=recent.length?`<section class="mh-section"><div class="mh-section-head"><h2>Recent activity</h2></div><div class="mh-activity-list">${recent.map(i=>`<div class="mh-activity-row"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span class="mh-activity-copy">${esc(i.t)}<small>${CATS[i.c][0]}${i.id>1e12?' · '+dayLabel(iso(new Date(i.id))):''}</small></span></div>`).join('')}</div></section>`:'';
+const attentionLine=overdue.length
+  ?`<button class="mh-attention-link" type="button" data-home-nav="overdue"><span class="mh-attention-mark"></span><span>${overdue.length} task${overdue.length===1?'':'s'} need attention</span></button>`
+  :`<span class="mh-ok">No tasks need attention</span>`;
+const dueCount=`${due.length} due`;
+const recentTitle=i=>{
+  if(i.c==='spray')return 'Spray application';
+  if(i.c==='note')return 'Orchard observation';
+  if(i.c==='psa')return 'PSA observation';
+  if(i.c==='dead')return 'Dead vine observation';
+  if(i.c==='rec'){const cat=RC[i.rc]&&RC[i.rc][0];return i.rf||cat||'Orchard record'};
+  if(i.c==='buy')return 'Purchase recorded';
+  return 'Job completed';
+};
+const recentRows=recent.map(i=>{
+  const stamp=new Date(Number(i.id)),when=iso(stamp)===T?stamp.toLocaleTimeString('en-NZ',{hour:'numeric',minute:'2-digit'}).toLowerCase():dayLabel(iso(stamp));
+  const place=i.ab?'All blocks':(i.bs&&i.bs.length>1)?blab(i):i.b?bn(i.b):'';
+  const meta=[when,place].filter(Boolean).join(' · ');
+  return `<div class="mh-activity-row"><span class="sq" style="background:var(${(CATS[i.c]||CATS.note)[1]})"></span><span class="mh-activity-copy"><b>${esc(recentTitle(i))}</b><small>${esc(meta)}</small></span></div>`;
+}).join('');
 return `<div class="mobile-home">
-  <section class="mh-welcome"><div class="mh-date">${d.toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long'})}</div><h2>${greeting}${fn?', '+esc(fn):''}</h2>${orchard}</section>
-  ${alerts?`<section class="mh-alerts" aria-label="Orchard safety alerts">${alerts}</section>`:''}
-  <section class="mh-section mh-due"><div class="mh-section-head"><div><span class="mh-eyebrow">YOUR DAY</span><h2>Due today</h2></div><span class="mh-count">${due.length}</span></div>${dueBody}</section>
-  ${attention.length?`<section class="mh-section mh-attention"><div class="mh-section-head"><h2>Needs attention</h2></div><div class="mh-attention-list">${attention.join('')}</div></section>`:''}
-  ${mineBody}${upBody}${activityBody}
+  <section class="mh-welcome"><div class="mh-date">${dateLine}</div><h2>${greeting}</h2><p class="mh-sub">Your orchard at a glance.</p></section>
+  ${alerts?`<section class="mh-alerts" aria-label="Orchard alerts">${alerts}</section>`:''}
+  <section class="mh-panel mh-work"><span class="mh-stripe" style="background:var(--hot)"></span><h2 class="mh-panel-title">Today's work</h2><div class="mh-work-summary"><div class="mh-due-count"><b>${due.length}</b><span>due</span></div><span class="mh-work-divider"></span>${attentionLine}</div><button class="mh-panel-link" type="button" data-home-nav="today">View today's tasks →</button></section>
+  ${canWrite()?`<section class="mh-quick"><h2 class="mh-panel-title">Quick add</h2><div class="mh-quick-grid"><button class="mh-quick-action" type="button" data-home-action="record"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>New record</span></button><button class="mh-quick-action" type="button" data-home-action="note"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v13H9l-4 3zM8 8h8M8 12h6"/></svg></span><span>Quick note</span></button></div></section>`:''}
+  <section class="mh-panel mh-recent"><span class="mh-stripe"></span><h2 class="mh-panel-title">Recently recorded</h2>${recentRows?`<div class="mh-activity-list">${recentRows}</div>`:'<div class="mh-empty-line">Nothing recorded yet.</div>'}</section>
+  <section class="mh-panel mh-orchard"><span class="mh-stripe"></span><h2 class="mh-panel-title">Your orchard</h2><div class="mh-blocks"><div class="mh-block-total"><b>${blockCount}</b><span>blocks</span></div><button class="mh-panel-link" type="button" data-home-nav="blocks">Access your orchard blocks →</button></div></section>
 </div>`;
 }
 function homeHtml(){return window.innerWidth<900?mobileHomeHtml():desktopHomeHtml()}
@@ -2489,6 +2505,8 @@ A('[data-calmode]',b=>b.onclick=()=>{const m=b.dataset.calmode;if(m==='scheduled
 A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
 A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
 A('[data-nav]',b=>b.onclick=e=>{if(e.target.closest('button'))return;if(b.dataset.nav==='cal'&&/Overdue/.test(b.textContent)){goOverdue();return}setView(b.dataset.nav)});
+A('[data-home-nav]',b=>b.onclick=()=>{const v=b.dataset.homeNav;if(v==='today'){day=iso(new Date());setView('cal')}else if(v==='overdue')goOverdue();else if(v==='blocks')setView('blocks')});
+A('[data-home-action]',b=>b.onclick=()=>{if(!canWrite()){toast('Your role is view-only. Ask your manager to change it.');return}if(b.dataset.homeAction==='record'){if(!$('#log').classList.contains('open'))toggleQuickLog()}else if(b.dataset.homeAction==='note'){const q=$('#q'),l=$('#log');q.placeholder='Write a quick note…';if(!l.classList.contains('open'))toggleQuickLog();setTimeout(()=>q.focus(),60)}});
 A('[data-blk]',b=>b.onclick=()=>{blk=+b.dataset.blk||null;drawing=null;imgSet=false;imgOpen=false;strPrev=null;view='blocks';render();window.scrollTo(0,0);if(blk&&B[blk]&&!B[blk].cfg&&!B[blk].img&&canBlk())showBlockCfg(blk)});
 A('[data-tip]',b=>b.onclick=()=>{const t=b.closest('.tip');if(t)t.classList.add('fade');setTimeout(()=>{seen[b.dataset.tip]=1;wr(SK,seen);render()},330)});
 A('.pin',c=>c.onclick=e=>{e.stopPropagation();sel=+c.dataset.id;render()});
