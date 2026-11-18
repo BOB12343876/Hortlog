@@ -626,7 +626,7 @@ header::before,header::after{display:none!important;content:none!important}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#e6efec"><meta property="og:type" content="website"><meta property="og:site_name" content="Hortlog"><meta property="og:title" content="Hortlog: orchard records by voice"><meta property="og:description" content="Log jobs, sprays and problems by voice. Audit ready."><meta property="og:image" content="https://hortlog-nz.vercel.app/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta property="og:url" content="https://hortlog-nz.vercel.app/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://hortlog-nz.vercel.app/og-image.png"><link rel="image_src" href="https://hortlog-nz.vercel.app/og-image.png"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f3d3e"><meta property="og:type" content="website"><meta property="og:site_name" content="Hortlog"><meta property="og:title" content="Hortlog: orchard records by voice"><meta property="og:description" content="Log jobs, sprays and problems by voice. Audit ready."><meta property="og:image" content="https://hortlog-nz.vercel.app/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta property="og:url" content="https://hortlog-nz.vercel.app/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://hortlog-nz.vercel.app/og-image.png"><link rel="image_src" href="https://hortlog-nz.vercel.app/og-image.png"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 
 <style id="hortlog-mobile-navigation">
 /* Restrained frosted-glass mobile dock: four destinations together, separate add action. */
@@ -1012,6 +1012,13 @@ header::before,header::after{display:none!important;content:none!important}
     background:color-mix(in srgb,var(--dead) 10%,var(--card))!important;
     border:1px solid color-mix(in srgb,var(--dead) 34%,var(--map))
   }
+  .mh-recent .mh-stripe{background:var(--dead)!important}
+}
+</style>
+<style id="hortlog-mobile-recent-neutral-and-splash-brand">
+@media(max-width:899px){
+  /* Keep Recently recorded neutral; use blue only as its slim leading marker. */
+  .mh-recent{background:var(--card)!important;border:1px solid var(--map)!important}
   .mh-recent .mh-stripe{background:var(--dead)!important}
 }
 </style>
@@ -1595,7 +1602,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkSpra
 setInterval(()=>{if(U&&ROLES&&!document.hidden)alertsRefresh()},300000);
 (function(){try{var t=localStorage.getItem('hortlog.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
 const themeNow=()=>{try{return localStorage.getItem('hortlog.theme')||'auto'}catch(e){return 'auto'}};
-const syncThemeColor=()=>{const t=themeNow(),dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches),m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',dark?'#0a1718':'#e6efec')};
+const syncThemeColor=()=>{const m=document.querySelector('meta[name="theme-color"]'),sp=document.getElementById('splash');if(sp&&!sp.classList.contains('out')){const deep=getComputedStyle(document.documentElement).getPropertyValue('--deep').trim()||'#0f3d3e';if(m)m.setAttribute('content',deep);return}const t=themeNow(),dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(m)m.setAttribute('content',dark?'#0a1718':'#e6efec')};
 syncThemeColor();
 try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(themeNow()==='auto')syncThemeColor()})}catch(e){}
 function setTheme(t){try{if(t==='auto'){localStorage.removeItem('hortlog.theme');document.documentElement.removeAttribute('data-theme')}else{localStorage.setItem('hortlog.theme',t);document.documentElement.setAttribute('data-theme',t)}}catch(e){}syncThemeColor()}
@@ -2679,7 +2686,7 @@ chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
 boot();
-function reveal(){const sp=document.getElementById('splash');if(sp){sp.className='out';setTimeout(()=>{sp.remove();document.body.classList.remove('boot')},400)}}
+function reveal(){const sp=document.getElementById('splash');if(sp){sp.className='out';setTimeout(()=>{sp.remove();document.body.classList.remove('boot');syncThemeColor()},400)}}
 if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl&&!($('#q')&&$('#q').value)){rl=true;location.reload()}});
 window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})}).catch(()=>{}))}
 </script>
