@@ -919,9 +919,58 @@ header::before,header::after{display:none!important;content:none!important}
   .mh-blocks .mh-panel-link{font-size:14px}
 }
 </style>
+<style id="hortlog-mobile-quick-add-and-dock-motion">
+@media(max-width:899px){
+  /* Quick Add is a sideways-scrolling action rail, not a grid of cards. */
+  .mh-quick-grid{
+    display:flex;gap:9px;overflow-x:auto;overflow-y:hidden;
+    margin-right:-14px;padding:1px 14px 7px 0;
+    scroll-snap-type:x proximity;scroll-padding-inline:14px;
+    -webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;
+    scrollbar-width:none
+  }
+  .mh-quick-grid::-webkit-scrollbar{display:none}
+  .mh-quick-action{flex:0 0 158px;min-width:158px;scroll-snap-align:start;min-height:62px}
+
+  .mh-recent-link{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,border-color .16s ease}
+  .mh-recent-link:active{transform:scale(.992)}
+  .mh-recent-link:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+
+  /* The centre + lifts and turns as the capture tools unfold from it. */
+  #mobileNav .mnav-item{transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .24s ease}
+  #mobileNav.quick-open .mnav-item{transform:scale(.91);opacity:.68}
+  #mobilePlus{position:relative;overflow:visible;transition:transform .34s cubic-bezier(.2,.9,.25,1.25),background-color .24s ease,color .24s ease}
+  #mobilePlus svg{transition:transform .32s cubic-bezier(.2,.9,.25,1.25)}
+  #mobilePlus::after{content:"";position:absolute;inset:-5px;border:2px solid var(--sun);border-radius:50%;opacity:0;pointer-events:none}
+  #mobilePlus[aria-expanded="true"]{transform:translateY(-8px) scale(1.06);background:var(--deep)!important;color:var(--sun)!important}
+  #mobilePlus[aria-expanded="true"] svg{transform:rotate(45deg)}
+  #mobilePlus[aria-expanded="true"]::after{animation:mhDockBurst .48s ease-out both}
+
+  #log.open{transform:translateX(-50%);transform-origin:50% 100%;animation:mhDockPanel .34s cubic-bezier(.2,.85,.25,1) both}
+  #log.open #q,#log.open #go,#log.open #mic,#log.open #cam{
+    animation:mhDockTool .42s cubic-bezier(.18,.9,.28,1.18) both;will-change:transform,opacity
+  }
+  #log.open #q{animation-delay:.025s}
+  #log.open #go{animation-delay:.065s}
+  #log.open #mic{animation-delay:.105s}
+  #log.open #cam{animation-delay:.15s}
+}
+@keyframes mhDockBurst{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.65);opacity:0}}
+@keyframes mhDockPanel{0%{opacity:0;transform:translate(-50%,18px) scale(.94)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes mhDockTool{0%{opacity:0;transform:translateY(22px) scale(.72)}70%{opacity:1;transform:translateY(-2px) scale(1.035)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){
+  #mobileNav .mnav-item,#mobilePlus,#mobilePlus svg,.mh-recent-link{transition:none!important}
+  #mobilePlus[aria-expanded="true"]::after{animation:none!important;opacity:0}
+  #log.open,#log.open #q,#log.open #go,#log.open #mic,#log.open #cam{animation:none!important;will-change:auto}
+}
+@media(max-width:370px){.mh-quick-action{flex-basis:148px;min-width:148px}}
+</style>
 </head>
 <body class="boot">
-<script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style></head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
+<script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
+
+
+</head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
 function say(t,h){m.innerHTML='<div class="card"><h1>'+h+'</h1><p>'+t+'</p></div>'}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function call(b){b.token=T;return fetch(U,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json()})}
@@ -1907,7 +1956,7 @@ const prompt='You sort quick notes from a kiwifruit orchard grower into a notebo
 try{const o={modelTier:blob?'default':'quick'};if(blob)o.images=[blob];const r=await AI.json(prompt,o);
 const x={c:CATS[r.category]?r.category:base.c,t:String(r.text||text||'Photo').slice(0,140),b:r.block||base.b,r:r.row||base.r,y:r.bay||base.y,due:r.due||base.due};if(!x.b&&base.ab)x.ab=true;
 if(base.c==='rec'){return base}if(r.done===true||base.d){x.d=true;x.doneAt=Date.now()}if(x.c==='spray'){const rw=(text||'').toLowerCase();['prod','rate','water'].forEach(k=>{if(base[k])x[k]=base[k]});if(!x.prod)sprayDetail(rw,nums(rw),x)}return x}catch(e){return base}}
-function tidyText(t){t=String(t||'').replace(/\s+/g,' ').trim();if(!t||/^Photo \(/.test(t))return t;
+function tidyText(t){t=fixMowWords(String(t||'').replace(/\s+/g,' ').trim());if(!t||/^Photo \(/.test(t))return t;
 const DAYS='monday|tuesday|wednesday|thursday|friday|saturday|sunday',MONS='january|february|march|april|june|july|august|september|october|november|december';
 t=t.replace(/\bi\b/g,'I').replace(/\bI(['’])(m|ll|ve|d)\b/gi,(m,q,x)=>'I'+q+x.toLowerCase());
 t=t.replace(new RegExp('\\b('+DAYS+'|'+MONS+')\\b','gi'),m=>m.charAt(0).toUpperCase()+m.slice(1).toLowerCase()).replace(/\bmay (\d)/gi,'May $1');
@@ -1926,7 +1975,7 @@ if(photo){if(it.c==='rec'){recCat=RMAP[it.rc]||it.rc;recFolder=it.rf;setView('re
 const loc=it.ab?' → All blocks':it.b?` → ${bn(it.b)}${it.r?' row '+it.r:''}${it.y?' bay '+it.y:''}`:'';
 toast('Logged: '+CATS[it.c][0]+loc+(it.due?' · '+dayLabel(it.due):'')+(it.d&&it.c==='spray'?' · in Records':''),()=>{items=items.filter(i=>i.id!==it.id);save();render()});
 maybeNotifAsk();if(it.b&&!B[it.b]&&!askedBlk[it.b]){askedBlk[it.b]=1;setTimeout(()=>askBlock(it.b),500)}else if((it.c==='psa'||it.c==='dead')&&!it.b&&!it.ab&&bl().length)setTimeout(()=>showBlockPick(it.id),500);else if((it.c==='psa'||it.c==='dead')&&it.b&&!it.r&&it.mx==null&&B[it.b]&&B[it.b].img)setTimeout(()=>showPlacePin(it.id),600);else if(it.ask2==='spraydone')setTimeout(()=>showSprayDone(it.id),500);else if(it.ask==='induct')setTimeout(()=>showIndAsk(it.id),500);else if(it.c==='spray'&&it.d&&fertKind(it)==='ask')setTimeout(()=>showFertAsk(it.id),500);else if(it.c==='spray'&&!it.prod&&fertKind(it)!=='ask')setTimeout(()=>showProdPick(it.id),700);else if(it.c==='spray'&&it.prod&&!seen.prodq&&!((B[0]&&B[0].products)||[]).some(p=>p.n.toLowerCase()===it.prod.toLowerCase()))setTimeout(()=>showProd(it.prod),700);else if((it.c==='todo'||it.c==='crew')&&ROLES&&canBlk()&&MEMBERS.length>1)setTimeout(()=>showAssignAsk(it.id),700);else if((it.c==='todo'||it.c==='crew')&&ROLES&&isMgr()&&MEMBERS.length<2)setTimeout(showJobsTeam,900)}
-function sendQ(){const v=$('#q').value;$('#q').value='';$('#q').placeholder='Type, or use your keyboard mic';$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false');$('#plus').setAttribute('aria-expanded','false');add(v)}
+function sendQ(){const v=$('#q').value;$('#q').value='';$('#q').placeholder='Type, or use your keyboard mic';$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false');$('#plus').setAttribute('aria-expanded','false');const nav=$('#mobileNav');if(nav)nav.classList.remove('quick-open');add(v)}
 $('#q').onkeydown=e=>{if(e.key==='Enter')sendQ()};$('#go').onclick=sendQ;
 function toast(m,fn,label){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</span>'+(fn?'<button id="un">'+(label||'UNDO')+'</button>':'');t.style.display='flex';
 if(fn)$('#un').onclick=()=>{fn();t.style.display='none'};
@@ -1934,9 +1983,10 @@ clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',6000)}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,listening=false,micErr=false,base='',curFin='',curInt='',silT=null,maxT=null;
 const ERR={'not-allowed':'Mic permission was refused, or this page is not allowed to use it.','service-not-allowed':'Voice is not allowed on this page.','network':'Voice needs an internet connection.','no-speech':'Heard nothing. Tap and try again.','audio-capture':'No microphone found.'};
 const norm=x=>x.toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+function fixMowWords(t){return String(t||'').replace(/\bm[\s-]*o[\s-]*v\b/gi,'mow').replace(/\bmove(?=\s+(?:the\s+)?(?:grass|lawn|headlands?|verges?))\b/gi,'mow').replace(/\bmoved(?=\s+(?:the\s+)?(?:grass|lawn|headlands?|verges?))\b/gi,'mowed')}
 function collapseRep(x){let p;do{p=x;x=x.replace(/(?<!\S)(\S.{4,}?)(?:\s+\1){1,3}(?=\s|$)/gi,'$1')}while(x!==p);return x}
 function fixIn(x){return x.replace(/\b(and|an|end)\s+(?=(?:block|blocks|row|bay|all blocks|every block|each block|the whole orchard|the entire orchard)\b)/gi,(m,w,off)=>/\b(block|row|bay)\b/i.test(x.slice(0,off))?m:'in ')}
-const liveTxt=()=>{const f=curFin,i=curInt,nf=norm(f),ni=norm(i);let t;if(!i)t=f;else if(!f)t=i;else if(ni.startsWith(nf))t=i;else if(nf.includes(ni))t=f;else t=f+' '+i;return fixIn(collapseRep((base+' '+t).replace(/\s+/g,' ').trim()))};
+const liveTxt=()=>{const f=curFin,i=curInt,nf=norm(f),ni=norm(i);let t;if(!i)t=f;else if(!f)t=i;else if(ni.startsWith(nf))t=i;else if(nf.includes(ni))t=f;else t=f+' '+i;return fixMowWords(fixIn(collapseRep((base+' '+t).replace(/\s+/g,' ').trim())))};
 let lastVoice={n:'',ts:0},restarts=0;
 function micUI(on){$('#mic').classList.toggle('live',on);$('#ml').textContent=on?'Listening… tap to finish':'Tap and speak'}
 function armSil(ms){clearTimeout(silT);silT=setTimeout(()=>stopRec(),ms)}
@@ -2039,7 +2089,7 @@ async function anFlush(){clearTimeout(AN.t);AN.t=0;if(!AN.q.length||!navigator.o
 function shownOnce(id,gap){if(!id)return;const n=Date.now();if(AN.seen[id]&&n-AN.seen[id]<(gap||6e5))return;AN.seen[id]=n;track('cta_shown',{id})}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)anFlush()});
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#tcta,#tctax,#insbar,#insnow,[data-su],[data-suhide],#fbk');if(!t)return;const m={tcta:'nudge_team',tctax:'nudge_team_dismiss',insbar:'nudge_install',insnow:'install_click',fbk:'feedback_open'};const id=t.id?m[t.id]:(t.hasAttribute('data-suhide')?'nudge_setup_hide':'nudge_setup');if(id)track('cta_click',{id})},true);
-function setView(v){if(v==='lists'){calMode='unscheduled';v='cal'}else if(v==='cal'){calMode='scheduled'}const ql=$('#log');if(ql)ql.classList.remove('open');const mp=$('#mobilePlus');if(mp)mp.setAttribute('aria-expanded','false');const dp=$('#plus');if(dp)dp.setAttribute('aria-expanded','false');view=v;blk=null;drawing=null;sprayEx=null;if(v==='settings')setSub=null;if(v==='home')mindDirty=true;render();window.scrollTo(0,0);visited.add(v);nudgeCheck(v);track('view',{v})}
+function setView(v){if(v==='lists'){calMode='unscheduled';v='cal'}else if(v==='cal'){calMode='scheduled'}const ql=$('#log');if(ql)ql.classList.remove('open');const mp=$('#mobilePlus');if(mp)mp.setAttribute('aria-expanded','false');const dp=$('#plus');if(dp)dp.setAttribute('aria-expanded','false');const mn=$('#mobileNav');if(mn)mn.classList.remove('quick-open');view=v;blk=null;drawing=null;sprayEx=null;if(v==='settings')setSub=null;if(v==='home')mindDirty=true;render();window.scrollTo(0,0);visited.add(v);nudgeCheck(v);track('view',{v})}
 const TIPS={home:'Home shows what needs attention: jobs due today, each block’s open issues, and the map. Tap a block to see everything for it.',cal:'Scheduled jobs appear here on their day. Switch to Unscheduled for jobs and orchard notes that still need a date.',blocks:'Jobs and tasks that have a block appear under that block. Tap a block to see its jobs, spray records and imagery.',blockpage:'Everything for this block is here: coming up, open lists, spray records and your own imagery.',lists:'Jobs without a date and orchard notes are grouped here by type. Add a date to move a job into Scheduled. Tap a type to filter.',records:'Records are grouped by type, then folder. Finished sprays land in Compliance automatically. Use + Folder to make your own, and export to Excel or a PDF of photos for audits.'};
 const demoEmpty=k=>k==='home'?!items.length:k==='lists'?!items.some(i=>!i.due&&!vineNote(i)):k==='cal'?!items.some(i=>i.due):k==='records'?!recRows().length:false;
 const tip=k=>(seen[k]||(DEMOS[k]&&window.innerWidth<900&&!seen['d_'+k]&&demoEmpty(k)))?'':`<div class="tip">${TIPS[k]}<button data-tip="${k}" aria-label="Dismiss tip">✕</button></div>`;
@@ -2086,12 +2136,16 @@ $('#obl').onclick=()=>{if(ob===0)closeOb();else{ob--;showOb()}};$('#obn').onclic
 function closeOb(){const e=$('#ob');if(e)e.remove();if(OBT){OBT=0;SLD=slides();return}seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}
 $('#hb').onclick=()=>setView('settings');$('#teamb').onclick=()=>setView('team');
 $('#brand').onclick=()=>setView('home');$('#brand').onkeydown=e=>{if(e.key==='Enter')setView('home')};
-function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');if(!opened)$('#q').placeholder='Type, or use your keyboard mic';if(opened&&window.innerWidth>=900)$('#q').focus()}
+function toggleQuickLog(){const l=$('#log');l.classList.toggle('open');const opened=l.classList.contains('open');$('#mobilePlus').setAttribute('aria-expanded',opened?'true':'false');$('#plus').setAttribute('aria-expanded',opened?'true':'false');const nav=$('#mobileNav');if(nav)nav.classList.toggle('quick-open',opened);if(!opened)$('#q').placeholder='Type, or use your keyboard mic';if(opened&&window.innerWidth>=900)$('#q').focus()}
 $('#plus').onclick=toggleQuickLog;$('#mobilePlus').onclick=toggleQuickLog;
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false')}});
-const chips=()=>'<div class="chips">'+[['all','All']].concat(Object.entries(CATS).map(([k,v])=>[k,v[0]])).map(([k,n])=>{
-const cnt=items.filter(i=>!i.d&&(k==='all'||i.c===k)&&!vineNote(i)).length;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#log').classList.remove('open');$('#mobilePlus').setAttribute('aria-expanded','false');const nav=$('#mobileNav');if(nav)nav.classList.remove('quick-open')}});
+const chips=(unscheduledOnly=false)=>{
+let cats=Object.entries(CATS).map(([k,v])=>[k,v[0]]);
+if(unscheduledOnly)cats.sort(([a],[b])=>items.filter(i=>!i.d&&!i.due&&i.c===b&&!vineNote(i)).length-items.filter(i=>!i.d&&!i.due&&i.c===a&&!vineNote(i)).length||CATS[a][0].localeCompare(CATS[b][0]));
+return '<div class="chips">'+[['all','All']].concat(cats).map(([k,n])=>{
+const cnt=items.filter(i=>!i.d&&(k==='all'||i.c===k)&&!vineNote(i)&&(!unscheduledOnly||!i.due)).length;
 return `<button class="chip ${filter===k?'on':''}" data-f="${k}">${k!=='all'?`<span class="sq" style="background:var(${CATS[k][1]})"></span>`:''}${n} ${cnt}</button>`}).join('')+'</div>';
+};
 function nextBanner(){const o=items.filter(i=>!i.d&&i.c==='psa'&&i.b),cnt={};o.forEach(i=>cnt[i.b]=(cnt[i.b]||0)+1);
 const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
 return top?`<button class="next cut" data-go="psa"><div><b>${esc(bn(top[0]))} has the most PSA</b>${top[1]} open. Show them.</div><span class="ar">→</span></button>`:''}
@@ -2258,7 +2312,7 @@ const T=iso(new Date()),d=new Date();
 const due=items.filter(i=>!i.d&&i.due===T).sort((a,b)=>a.id-b.id);
 const overdue=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:a.id-b.id);
 const recent=items.filter(i=>Number(i.id)>1e12&&(i.d||['note','psa','dead','rec'].includes(i.c))&&!(i.due&&i.due>T&&!i.d)).sort((a,b)=>b.id-a.id).slice(0,2);
-const blockCount=bl().length,hr=d.getHours(),greeting=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening';
+const blockCount=bl().length,hr=d.getHours(),greeting=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening',firstName=myFullName().trim().split(/\s+/)[0];
 const weekday=d.toLocaleDateString('en-NZ',{weekday:'long'}),month=d.toLocaleDateString('en-NZ',{month:'long'}),n=d.getDate(),suffix=n%10===1&&n!==11?'st':n%10===2&&n!==12?'nd':n%10===3&&n!==13?'rd':'th';
 const dateLine=`${weekday} the ${n}${suffix} of ${month}`;
 const alerts=alertBar();
@@ -2282,11 +2336,11 @@ const recentRows=recent.map(i=>{
   return `<div class="mh-activity-row"><span class="sq" style="background:var(${(CATS[i.c]||CATS.note)[1]})"></span><span class="mh-activity-copy"><b>${esc(recentTitle(i))}</b><small>${esc(meta)}</small></span></div>`;
 }).join('');
 return `<div class="mobile-home">
-  <section class="mh-welcome"><div class="mh-date">${dateLine}</div><h2>${greeting}</h2><p class="mh-sub">Your orchard at a glance.</p></section>
+  <section class="mh-welcome"><div class="mh-date">${dateLine}</div><h2>${greeting}${firstName?', '+esc(firstName):''}</h2><p class="mh-sub">Your orchard at a glance.</p></section>
   ${alerts?`<section class="mh-alerts" aria-label="Orchard alerts">${alerts}</section>`:''}
   <section class="mh-panel mh-work"><span class="mh-stripe" style="background:var(--hot)"></span><h2 class="mh-panel-title">Today's work</h2><div class="mh-work-summary"><div class="mh-due-count"><b>${due.length}</b><span>due</span></div><span class="mh-work-divider"></span>${attentionLine}</div><button class="mh-panel-link" type="button" data-home-nav="today">View today's tasks →</button></section>
-  ${canWrite()?`<section class="mh-quick"><h2 class="mh-panel-title">Quick add</h2><div class="mh-quick-grid"><button class="mh-quick-action" type="button" data-home-action="record"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>New record</span></button><button class="mh-quick-action" type="button" data-home-action="note"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v13H9l-4 3zM8 8h8M8 12h6"/></svg></span><span>Quick note</span></button></div></section>`:''}
-  <section class="mh-panel mh-recent"><span class="mh-stripe"></span><h2 class="mh-panel-title">Recently recorded</h2>${recentRows?`<div class="mh-activity-list">${recentRows}</div>`:'<div class="mh-empty-line">Nothing recorded yet.</div>'}</section>
+  ${canWrite()?`<section class="mh-quick"><h2 class="mh-panel-title">Quick add</h2><div class="mh-quick-grid" aria-label="Quick add actions"><button class="mh-quick-action" type="button" data-home-action="record"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>New record</span></button><button class="mh-quick-action" type="button" data-home-action="note"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v13H9l-4 3zM8 8h8M8 12h6"/></svg></span><span>Quick note</span></button><button class="mh-quick-action" type="button" data-home-action="product"><span class="mh-quick-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8M9 4v4l-3 3v8h12v-8l-3-3V4M8 13h8M12 10v6M9 16h6"/></svg></span><span>Add product</span></button></div></section>`:''}
+  <section class="mh-panel mh-recent mh-recent-link" role="button" tabindex="0" aria-label="Open Unscheduled tasks and notes" data-home-nav="unscheduled"><span class="mh-stripe"></span><h2 class="mh-panel-title">Recently recorded</h2>${recentRows?`<div class="mh-activity-list">${recentRows}</div>`:'<div class="mh-empty-line">Nothing recorded yet.</div>'}</section>
   <section class="mh-panel mh-orchard"><span class="mh-stripe"></span><h2 class="mh-panel-title">Your orchard</h2><div class="mh-blocks"><div class="mh-block-total"><b>${blockCount}</b><span>blocks</span></div><button class="mh-panel-link" type="button" data-home-nav="blocks">Access your orchard blocks →</button></div></section>
 </div>`;
 }
@@ -2311,7 +2365,7 @@ const scheduled=items.filter(i=>!i.d&&!!i.due).length;
 const unscheduled=items.filter(i=>!i.d&&!i.due&&!vineNote(i)).length;
 return `<div class="cal-switch" role="tablist" aria-label="Calendar views"><button type="button" role="tab" aria-selected="${calMode==='scheduled'}" class="cal-mode ${calMode==='scheduled'?'on':''}" data-calmode="scheduled">Scheduled <span>${scheduled}</span></button><button type="button" role="tab" aria-selected="${calMode==='unscheduled'}" class="cal-mode ${calMode==='unscheduled'?'on':''}" data-calmode="unscheduled">Unscheduled <span>${unscheduled}</span></button></div>`}
 function calHtml(){
-if(calMode==='unscheduled')return tip('lists')+calSwitchHtml()+demoFor('lists',!items.some(i=>!i.due&&!vineNote(i)))+chips()+Object.keys(CATS).filter(k=>filter==='all'||k===filter).map(k=>{const l=items.filter(i=>i.c===k&&!i.due&&!vineNote(i));return card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))}).join('')+'<p class="hint">These jobs and orchard notes do not have a scheduled date. Add a date to move a job into Scheduled.</p>';
+if(calMode==='unscheduled'){const groups=Object.keys(CATS).filter(k=>filter==='all'||k===filter).map(k=>({k,l:items.filter(i=>i.c===k&&!i.due&&!vineNote(i))})).sort((a,b)=>b.l.filter(i=>!i.d).length-a.l.filter(i=>!i.d).length||CATS[a.k][0].localeCompare(CATS[b.k][0]));return tip('lists')+calSwitchHtml()+demoFor('lists',!items.some(i=>!i.due&&!vineNote(i)))+chips(true)+groups.map(({k,l})=>card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))).join('')+'<p class="hint">These jobs and orchard notes do not have a scheduled date. Add a date to move a job into Scheduled.</p>'};
 const T=iso(new Date()),od=day===T?items.filter(i=>!i.d&&i.due&&i.due<T):[],l=items.filter(i=>i.due===day);
 return tip('cal')+calSwitchHtml()+demoFor('cal',!items.some(i=>i.due))+`<div class="calpg"><div class="cl"><div class="dn"><button class="x" data-day="-1" aria-label="Previous day">←</button><div class="hd">${dayLabel(day)}</div><button class="x" data-day="1" aria-label="Next day">→</button></div>`+(od.length?card('var(--psa)',`<h2>Overdue<em>${od.length}</em></h2>`+list(od)):'')+card('var(--hot)',`<h2>${dayLabel(day)}<em>${l.filter(i=>!i.d).length} to do</em></h2>`+(l.length?list(l):'<div class="empty">Nothing planned. Say “crew, prune block 2 on Friday”.</div>'))+`</div><div class="cm"><div class="dn dk"><button class="x" data-cm="-1" aria-label="Previous month">←</button><div class="hd">${monthLabel()}</div><button class="x" data-cm="1" aria-label="Next month">→</button></div>${monthCard()}</div><div class="cr"><div class="dn dk"><div class="hd" style="padding-left:12px">Coming up · next 14 days</div></div>${agendaCard()}</div></div><p class="hint">Scheduled jobs appear on their day. Use Unscheduled for jobs that still need a date.</p>`}
 function listsHtml(){return calHtml()}
@@ -2505,8 +2559,8 @@ A('[data-calmode]',b=>b.onclick=()=>{const m=b.dataset.calmode;if(m==='scheduled
 A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
 A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
 A('[data-nav]',b=>b.onclick=e=>{if(e.target.closest('button'))return;if(b.dataset.nav==='cal'&&/Overdue/.test(b.textContent)){goOverdue();return}setView(b.dataset.nav)});
-A('[data-home-nav]',b=>b.onclick=()=>{const v=b.dataset.homeNav;if(v==='today'){day=iso(new Date());setView('cal')}else if(v==='overdue')goOverdue();else if(v==='blocks')setView('blocks')});
-A('[data-home-action]',b=>b.onclick=()=>{if(!canWrite()){toast('Your role is view-only. Ask your manager to change it.');return}if(b.dataset.homeAction==='record'){if(!$('#log').classList.contains('open'))toggleQuickLog()}else if(b.dataset.homeAction==='note'){const q=$('#q'),l=$('#log');q.placeholder='Write a quick note…';if(!l.classList.contains('open'))toggleQuickLog();setTimeout(()=>q.focus(),60)}});
+A('[data-home-nav]',b=>{const go=()=>{const v=b.dataset.homeNav;if(v==='today'){day=iso(new Date());setView('cal')}else if(v==='overdue')goOverdue();else if(v==='blocks')setView('blocks');else if(v==='unscheduled')setView('lists')};b.onclick=go;if(b.tagName!=='BUTTON')b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
+A('[data-home-action]',b=>b.onclick=()=>{if(!canWrite()){toast('Your role is view-only. Ask your manager to change it.');return}if(b.dataset.homeAction==='record'){if(!$('#log').classList.contains('open'))toggleQuickLog()}else if(b.dataset.homeAction==='note'){const q=$('#q'),l=$('#log');q.placeholder='Write a quick note…';if(!l.classList.contains('open'))toggleQuickLog();setTimeout(()=>q.focus(),60)}else if(b.dataset.homeAction==='product'){showProd()}});
 A('[data-blk]',b=>b.onclick=()=>{blk=+b.dataset.blk||null;drawing=null;imgSet=false;imgOpen=false;strPrev=null;view='blocks';render();window.scrollTo(0,0);if(blk&&B[blk]&&!B[blk].cfg&&!B[blk].img&&canBlk())showBlockCfg(blk)});
 A('[data-tip]',b=>b.onclick=()=>{const t=b.closest('.tip');if(t)t.classList.add('fade');setTimeout(()=>{seen[b.dataset.tip]=1;wr(SK,seen);render()},330)});
 A('.pin',c=>c.onclick=e=>{e.stopPropagation();sel=+c.dataset.id;render()});
