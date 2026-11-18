@@ -132,6 +132,10 @@ section{padding:84px 0}
 .role{background:var(--card);border:1px solid var(--line);padding:12px 18px;font:800 22px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;display:flex;align-items:center;gap:10px}
 .role i{width:10px;height:10px;background:var(--c,var(--hot));transform:rotate(45deg)}
 
+/* Role section: a restrained warm neutral to separate it from the surrounding green/white sections */
+#roles{background:#F0EFE7;border-block:1px solid #DEDDD3}
+@media(prefers-color-scheme:dark){#roles{background:#122425;border-color:#254244}}
+
 /* Interactive illustrated role cards */
 .rgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:34px;align-items:stretch}
 .rcard{appearance:none;width:100%;min-width:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--c);padding:0 18px 22px;display:flex;flex-direction:column;transition:border-color .18s ease,background .18s ease,transform .18s ease;}
@@ -214,7 +218,7 @@ footer a{color:#fff}
 <div class="hero"><video class="hero-v" muted loop playsinline preload="none" poster="hero.jpg" aria-hidden="true"></video><div class="hero-sh"></div><div class="wrap">
   <div>
     <h1>Stop carrying your orchard <span>in your head.</span></h1>
-    <p class="lead">Hortlog is the orchard notebook that listens. Say what you see. It files the job, pins the PSA on your block map, tells the crew and keeps your audit records ready.</p>
+    <p class="lead">Say what you see. Hortlog logs the job, pins PSA on your block map and keeps your crew and records up to date.</p>
     <div class="acts"><a class="btn cut" href="/index.html?app=1">Try Hortlog</a><a class="btn ghost cut" href="#features">See what it does</a></div>
     
   </div>
