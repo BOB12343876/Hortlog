@@ -1050,6 +1050,73 @@ header::before,header::after{display:none!important;content:none!important}
   .mh-recent .mh-stripe{background:var(--dead)!important}
 }
 </style>
+
+<style id="hortlog-mobile-safe-area-recent-and-calendar-final">
+@media (max-width:899px){
+  /* A persistent Hortlog-green strip at the very top of the phone, above the app header. */
+  html{background:var(--deep)!important}
+  body::before{
+    content:"";position:fixed;top:0;left:0;right:0;
+    height:env(safe-area-inset-top,0px);background:var(--deep);
+    z-index:9999;pointer-events:none
+  }
+
+  /* Recently recorded floats on the page. No card, border, stripe, or blue category marker. */
+  .mh-recent{
+    background:transparent!important;border:0!important;outline:0!important;
+    box-shadow:none!important;padding:0 0 8px!important;margin:0!important;
+    clip-path:none!important;color:var(--ink)!important;overflow:visible!important
+  }
+  .mh-recent>.mh-stripe{display:none!important;background:transparent!important}
+  .mh-recent .mh-activity-row .sq,
+  .mh-recent [style*="--dead"],
+  .mh-recent [style*="#1c7ed6"]{
+    background:var(--map)!important;border:1px solid var(--soft)!important;
+    color:var(--soft)!important
+  }
+  .mh-recent .mh-activity-row{background:transparent!important}
+  .mh-recent .mh-activity-copy b{color:var(--ink)!important}
+  .mh-recent .mh-activity-copy small{color:var(--soft)!important}
+
+  /* Two-tab calendar with one continuous green selection that physically slides between sides. */
+  .cal-switch{
+    position:relative!important;display:grid!important;grid-template-columns:1fr 1fr!important;
+    align-items:stretch!important;gap:0!important;width:100%!important;max-width:none!important;
+    margin:8px 0 16px!important;padding:4px!important;overflow:hidden!important;isolation:isolate;
+    background:var(--map)!important;border:1px solid color-mix(in srgb,var(--deep) 24%,var(--map))!important;
+    border-radius:12px!important;box-shadow:none!important
+  }
+  .cal-switch::before{
+    content:"";position:absolute;z-index:0;left:4px;top:4px;bottom:4px;
+    width:calc(50% - 4px);border-radius:9px;background:var(--deep);
+    box-shadow:0 2px 7px rgba(11,31,32,.18);
+    transform:translateX(var(--cal-switch-x,0%))!important;
+    transition:transform .58s cubic-bezier(.18,.82,.22,1)!important;
+    will-change:transform;pointer-events:none
+  }
+  .cal-switch .cal-mode,
+  .cal-switch .cal-mode.on{
+    position:relative!important;z-index:1;display:flex!important;align-items:center!important;
+    justify-content:center!important;gap:7px!important;width:100%!important;min-width:0!important;
+    min-height:48px!important;padding:7px 9px!important;margin:0!important;
+    border:0!important;border-radius:9px!important;background:transparent!important;
+    box-shadow:none!important;color:var(--ink)!important;
+    font:700 15px Barlow,system-ui,sans-serif!important;
+    transition:color .28s ease!important
+  }
+  .cal-switch .cal-mode.on{color:#fff!important}
+  .cal-switch .cal-mode span{
+    display:inline-grid!important;place-items:center!important;min-width:23px!important;height:23px!important;
+    padding:0 6px!important;border:0!important;border-radius:20px!important;
+    background:color-mix(in srgb,var(--card) 72%,transparent)!important;
+    color:var(--soft)!important;font:700 12px Barlow,sans-serif!important
+  }
+  .cal-switch .cal-mode.on span{background:rgba(255,255,255,.18)!important;color:#fff!important}
+}
+@media(prefers-reduced-motion:reduce){
+  @media(max-width:899px){.cal-switch::before{transition:none!important}}
+}
+</style>
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1060,10 +1127,17 @@ header::before,header::after{display:none!important;content:none!important}
 /* Use the Hortlog header green for the browser's top/safe-area strip on phones. */
 @media(max-width:899px){
   html{background:var(--deep)!important}
-  /* Recently recorded should read as a simple activity list, not another coloured card. */
+  body::before{content:"";position:fixed;z-index:9999;top:0;left:0;right:0;
+    height:env(safe-area-inset-top,0px);background:var(--deep);pointer-events:none}
+  /* Recently recorded is a floating neutral activity list: no card, border,
+     stripe or category-colour marker (including the blue dead-vine colour). */
   .mh-recent{background:transparent!important;border:0!important;box-shadow:none!important;
     padding:0 0 8px!important;clip-path:none!important;color:var(--ink)}
-  .mh-recent .mh-stripe{display:none!important}
+  .mh-recent .mh-stripe{display:none!important;background:transparent!important}
+  .mh-recent .mh-activity-row .sq{background:var(--map)!important;border:1px solid var(--soft)!important}
+  .mh-recent .mh-activity-row,.mh-recent .mh-activity-copy,.mh-recent .mh-activity-copy b,
+  .mh-recent .mh-activity-copy small{color:var(--ink)}
+  .mh-recent .mh-activity-copy small{color:var(--soft)}
 
   /* Calendar: give the two choices a little context and a single fluid selector. */
   .cal-intro{margin:6px 0 10px;display:flex;flex-direction:column;gap:2px}
@@ -1090,6 +1164,10 @@ header::before,header::after{display:none!important;content:none!important}
   .cal-mode.on{background:transparent!important;color:#fff!important;box-shadow:none!important}
   .cal-mode span{background:color-mix(in srgb,var(--card) 70%,transparent)!important;color:var(--soft)!important}
   .cal-mode.on span{background:rgba(255,255,255,.18)!important;color:#fff!important}
+  /* The moving green selection is driven by --cal-switch-x. Using one transform
+     avoids the competing :not() selector specificity that stopped the old motion. */
+  .cal-switch::before{transform:translateX(var(--cal-switch-x,0%))!important;
+    transition:transform .56s cubic-bezier(.18,.82,.22,1)!important;will-change:transform}
 
   /* Let Quick Add animate away when the same New record action is tapped again. */
   #log.closing{display:block!important;pointer-events:none;transform:translateX(-50%);
@@ -1676,7 +1754,13 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkSpra
 setInterval(()=>{if(U&&ROLES&&!document.hidden)alertsRefresh()},300000);
 (function(){try{var t=localStorage.getItem('hortlog.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
 const themeNow=()=>{try{return localStorage.getItem('hortlog.theme')||'auto'}catch(e){return 'auto'}};
-const syncThemeColor=()=>{const m=document.querySelector('meta[name="theme-color"]'),sp=document.getElementById('splash');if(sp&&!sp.classList.contains('out')){const deep=getComputedStyle(document.documentElement).getPropertyValue('--deep').trim()||'#0f3d3e';if(m)m.setAttribute('content',deep);return}const t=themeNow(),dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(m)m.setAttribute('content',dark?'#0a1718':'#e6efec')};
+const syncThemeColor=()=>{const m=document.querySelector('meta[name="theme-color"]');if(!m)return;
+const deep=getComputedStyle(document.documentElement).getPropertyValue('--deep').trim()||'#0f3d3e';
+/* On phones, keep the very top system/browser strip matched to Hortlog's header
+   green even after the splash screen disappears. Desktop keeps its normal theme. */
+if(window.matchMedia&&window.matchMedia('(max-width:899px)').matches){m.setAttribute('content',deep);return}
+const sp=document.getElementById('splash');if(sp&&!sp.classList.contains('out')){m.setAttribute('content',deep);return}
+const t=themeNow(),dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);m.setAttribute('content',dark?'#0a1718':'#e6efec')};
 syncThemeColor();
 try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(themeNow()==='auto')syncThemeColor()})}catch(e){}
 function setTheme(t){try{if(t==='auto'){localStorage.removeItem('hortlog.theme');document.documentElement.removeAttribute('data-theme')}else{localStorage.setItem('hortlog.theme',t);document.documentElement.setAttribute('data-theme',t)}}catch(e){}syncThemeColor()}
@@ -2531,7 +2615,10 @@ return card('var(--crew)',`<h2>Coming up<em>next 14 days · ${l.length}</em></h2
 function calSwitchHtml(){
 const scheduled=items.filter(i=>!i.d&&!!i.due).length;
 const unscheduled=items.filter(i=>!i.d&&!i.due&&!vineNote(i)).length;
-const moveClass=calSwitchFrom&&calSwitchFrom!==calMode?(calMode==='unscheduled'?'move-right':'move-left'):'';return `<div class="cal-intro"><b>Orchard work</b><span>${calMode==='scheduled'?'Jobs with a date, laid out on your calendar.':'Jobs and notes still waiting for a date.'}</span></div><div class="cal-switch ${calMode==='unscheduled'?'unscheduled':'scheduled'} ${moveClass}" role="tablist" aria-label="Calendar views"><button type="button" role="tab" aria-selected="${calMode==='scheduled'}" class="cal-mode ${calMode==='scheduled'?'on':''}" data-calmode="scheduled">Scheduled <span>${scheduled}</span></button><button type="button" role="tab" aria-selected="${calMode==='unscheduled'}" class="cal-mode ${calMode==='unscheduled'?'on':''}" data-calmode="unscheduled">Unscheduled <span>${unscheduled}</span></button></div>`}
+const moving=!!(calSwitchFrom&&calSwitchFrom!==calMode);
+const startX=moving?(calSwitchFrom==='unscheduled'?'100%':'0%'):(calMode==='unscheduled'?'100%':'0%');
+const moveClass=moving?(calMode==='unscheduled'?'move-right':'move-left'):'';
+return `<div class="cal-intro"><b>Orchard work</b><span>${calMode==='scheduled'?'Jobs with a date, laid out on your calendar.':'Jobs and notes still waiting for a date.'}</span></div><div class="cal-switch ${calMode==='unscheduled'?'unscheduled':'scheduled'} ${moveClass}" style="--cal-switch-x:${startX}" role="tablist" aria-label="Calendar views"><button type="button" role="tab" aria-selected="${calMode==='scheduled'}" class="cal-mode ${calMode==='scheduled'?'on':''}" data-calmode="scheduled">Scheduled <span>${scheduled}</span></button><button type="button" role="tab" aria-selected="${calMode==='unscheduled'}" class="cal-mode ${calMode==='unscheduled'?'on':''}" data-calmode="unscheduled">Unscheduled <span>${unscheduled}</span></button></div>`}
 function calHtml(){
 if(calMode==='unscheduled'){const groups=Object.keys(CATS).filter(k=>filter==='all'||k===filter).map(k=>({k,l:items.filter(i=>i.c===k&&!i.due&&!vineNote(i))})).sort((a,b)=>b.l.filter(i=>!i.d).length-a.l.filter(i=>!i.d).length||CATS[a.k][0].localeCompare(CATS[b.k][0]));return tip('lists')+calSwitchHtml()+demoFor('lists',!items.some(i=>!i.due&&!vineNote(i)))+chips(true)+groups.map(({k,l})=>card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))).join('')+'<p class="hint">These jobs and orchard notes do not have a scheduled date. Add a date to move a job into Scheduled.</p>'};
 const T=iso(new Date()),od=day===T?items.filter(i=>!i.d&&i.due&&i.due<T):[],l=items.filter(i=>i.due===day);
@@ -2723,7 +2810,16 @@ A('[data-adis]',b=>b.onclick=()=>{b.dataset.adis.split(',').forEach(id=>alertSee
 A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
 A('[data-d]',b=>b.onclick=()=>{const i=items.find(a=>a.id==b.dataset.d);if(!canEditI(i)){toast('Only the person who logged this, or a supervisor, can change it.');return}i.d=!i.d;i.doneAt=i.d?Date.now():null;popId=i.d?i.id:null;save();render();popId=null;if(i.d&&i.c==='spray'){toast('Saved to Records');if(fertKind(i)==='ask')setTimeout(()=>showFertAsk(i.id),500)}});
 A('[data-x]',b=>b.onclick=()=>{const k=items.findIndex(a=>a.id==b.dataset.x),it=items[k];if(!canDelI(it)){toast('You can only delete your own entries.');return}items.splice(k,1);save();sel=null;render();toast('Deleted: '+it.t.slice(0,40),()=>{items.splice(k,0,it);save();render()})});
-A('[data-calmode]',b=>b.onclick=()=>{const m=b.dataset.calmode;if((m==='scheduled'||m==='unscheduled')&&m!==calMode){calSwitchFrom=calMode;calMode=m;render();requestAnimationFrame(()=>{const sw=$('.cal-switch');if(sw)sw.classList.add('settled')});clearTimeout(calSwitchTimer);calSwitchTimer=setTimeout(()=>{calSwitchFrom=null},520);track('calendar_mode',{mode:m})}});
+A('[data-calmode]',b=>b.onclick=()=>{const m=b.dataset.calmode;if((m==='scheduled'||m==='unscheduled')&&m!==calMode){
+  const from=calMode;calSwitchFrom=from;calMode=m;render();
+  const sw=$('.cal-switch');
+  if(sw){const start=from==='unscheduled'?'100%':'0%',end=m==='unscheduled'?'100%':'0%';
+    sw.style.setProperty('--cal-switch-x',start);
+    void sw.getBoundingClientRect();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(sw.isConnected)sw.style.setProperty('--cal-switch-x',end)}));
+  }
+  clearTimeout(calSwitchTimer);calSwitchTimer=setTimeout(()=>{calSwitchFrom=null},620);track('calendar_mode',{mode:m})
+}});
 A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
 A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
 A('[data-nav]',b=>b.onclick=e=>{if(e.target.closest('button'))return;if(b.dataset.nav==='cal'&&/Overdue/.test(b.textContent)){goOverdue();return}setView(b.dataset.nav)});
