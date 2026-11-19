@@ -616,6 +616,34 @@ html:has(.st),html:has(.ob3){overflow:hidden}.st,.ob3-body,#auth{scrollbar-width
 @media(max-width:899px){
   .mobile-page-title{font:800 32px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink);margin:2px 0 10px;padding:0 2px}
 }
+
+/* Logged-out orchard photo cards: use real local imagery and a warm, brighter Hawke's Bay tone. */
+.st-t.st-ph{position:relative;isolation:isolate;background:#8b8a48!important;padding:9px}
+.st-t.st-ph>img{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;filter:brightness(1.28) saturate(1.22) sepia(.19) hue-rotate(-7deg) contrast(1.04);transform:scale(1.025)}
+.st-t.st-ph:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(12,31,23,.02) 30%,rgba(9,29,22,.58) 100%);pointer-events:none}
+.st-t.st-ph small,.st-t.st-ph b{position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.52)}
+.sp-card{max-height:calc(100dvh - 20px);overflow-y:auto;overscroll-behavior:contain}
+.sp-progress{height:4px;background:var(--map);margin:-16px -18px 12px;overflow:hidden}
+.sp-progress i{display:block;height:100%;background:var(--hot);transition:width .25s ease}
+.sp-ex{margin:4px 0 14px;padding:10px;background:var(--blk);border:1px solid var(--map)}
+.sp-ex-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:9px}
+.sp-ex-tabs button{min-height:36px;border:1px solid var(--map);background:var(--card);color:var(--ink);font:700 13px Barlow,system-ui,sans-serif;cursor:pointer}
+.sp-ex-tabs button.on{background:var(--deep);color:#fff;border-color:var(--deep)}
+.sp-ex-work{display:grid;gap:5px}
+.sp-ex-label{font:700 10px Barlow,system-ui,sans-serif;letter-spacing:.1em;color:var(--soft)}
+.sp-ex-work>b{font:700 18px/1.2 Barlow,sans-serif;color:var(--ink)}
+.sp-ex-down{text-align:center;color:var(--hot);font:800 20px/1 Barlow,sans-serif}
+.sp-ex-result{display:grid;gap:3px;padding:9px 10px;background:var(--card);border-left:4px solid var(--hot);color:var(--ink)}
+.sp-ex-result small{font:700 10px Barlow,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.sp-ex-result b{font:800 18px/1.1 'Barlow Condensed',sans-serif;text-transform:uppercase}
+.sp-ex-result span{font:500 13px/1.2 Barlow,sans-serif;color:var(--soft)}
+.sp-ex-result .sp-ex-dest{justify-self:start;margin-top:3px;padding:3px 7px;background:var(--map);color:var(--ink);font-weight:700}
+.ob-welcome .ob-welcome-points{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:14px 0}
+.ob-welcome .ob-welcome-points span{display:grid;gap:4px;padding:9px;background:var(--blk);font:700 12px/1.15 Barlow,sans-serif;color:var(--ink)}
+.ob-welcome .ob-welcome-points b{font:800 18px/1 'Barlow Condensed',sans-serif;color:var(--hot)}
+@media(max-width:390px){.ob-welcome .ob-welcome-points{grid-template-columns:1fr}.ob-welcome .ob-welcome-points span{grid-template-columns:30px 1fr;align-items:center}}
+@media(prefers-reduced-motion:reduce){.sp-progress i{transition:none}.st-t.st-ph>img{transform:none}}
+
 </style>
 <style id="hortlog-brand-nav-polish">
 /* Keep the app header edge clean; mobile selection styling lives in the glass dock. */
@@ -1022,78 +1050,6 @@ header::before,header::after{display:none!important;content:none!important}
   .mh-recent .mh-stripe{background:var(--dead)!important}
 }
 </style>
-
-<style id="hortlog-onboarding-refresh">
-#ob-role-prime{position:fixed;left:-10000px;top:0;width:220px;height:180px;display:flex;gap:8px;opacity:.001;pointer-events:none;overflow:visible}
-#ob-role-prime span{display:block;width:48px;height:48px}
-#ob-role-prime svg{width:48px;height:48px}
-.ob3-progress-wrap{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px}
-.ob3-progress-label{font:700 11px/1 Barlow,system-ui,sans-serif;letter-spacing:.12em;color:var(--soft);text-align:right}
-.ob3-welcome{padding-top:3vh}
-.ob3-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:26px 0 18px}
-.ob3-benefits span{display:flex;flex-direction:column;gap:7px;background:var(--card);border:1px solid var(--map);border-top:4px solid var(--deep);padding:12px 10px;font:700 13px/1.25 Barlow,sans-serif;color:var(--ink)}
-.ob3-benefits b{font:800 21px/1 'Barlow Condensed',sans-serif;color:var(--hot)}
-.ob3-helper{font:500 14px/1.45 Barlow,sans-serif;color:var(--soft);margin:12px 0 0}
-.ob3-label{display:block;font:700 13px/1.2 Barlow,sans-serif;color:var(--ink);margin:0 0 7px;letter-spacing:.02em}
-.ob3 input{width:100%;box-sizing:border-box;min-height:50px}
-.ob3-role-preview{margin-top:24px;padding-top:16px;border-top:1px solid var(--map)}
-.ob3-preview-label{display:block;font:700 10px/1 Barlow,sans-serif;letter-spacing:.14em;color:var(--soft);margin-bottom:12px}
-.ob3-role-preview>div{display:flex;align-items:center;gap:22px}
-.ob3-role-preview>div>span{width:40px;height:40px;display:grid;place-items:center}
-.ob3-role-preview svg{width:40px!important;height:40px!important;overflow:visible}
-.ob3-role-list{display:grid;gap:9px;margin-top:18px}
-.ob3 .surole{position:relative;margin:0;min-height:74px;padding:10px 13px;border:1px solid var(--map);border-left:4px solid var(--deep);background:var(--card);gap:13px;animation:obRoleEnter .42s cubic-bezier(.2,.75,.25,1) both;animation-delay:calc(var(--role-i,0)*55ms)}
-.ob3 .surole .em{width:48px;height:48px}
-.ob3 .surole .em svg{width:46px;height:46px}
-.ob3 .surole .ob3-role-copy{display:block;flex:1;min-width:0}
-.ob3 .surole b{font:800 21px/1.05 'Barlow Condensed',sans-serif}
-.ob3 .surole small{display:block;font:500 13px/1.3 Barlow,sans-serif;opacity:.76;margin-top:3px}
-.ob3 .surole.on{background:var(--deep);color:#fff;border-color:var(--hot);border-left-color:var(--hot)}
-.ob3-role-check{width:22px;height:22px;border:1px solid currentColor;display:grid;place-items:center;font:800 13px/1 Barlow,sans-serif;opacity:0;transform:scale(.75);transition:.18s}
-.ob3 .surole.on .ob3-role-check{opacity:1;transform:scale(1)}
-@keyframes obRoleEnter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.ob3-other{margin:10px 0 0}
-.ob3-setup-fields{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(145px,.75fr);gap:12px;margin:6px 0 22px}
-.ob3-block-field{min-width:0}
-.ob3-block-field small{display:block;font:500 11px/1.3 Barlow,sans-serif;color:var(--soft);margin-top:5px}
-.ob3 .ob3-block-field .ob3-step{justify-content:flex-start;gap:9px;margin:0}
-.ob3 .ob3-block-field .ob3-step button{width:35px;height:42px;font-size:25px}
-.ob3 .ob3-block-field .ob3-step b{font-size:36px;min-width:32px}
-.ob3-goal-wrap{margin-top:18px}
-.ob3-goal-wrap .ob3-helper{margin:0 0 10px}
-.ob3-goal-wrap .ob2-goal{min-height:46px;margin-bottom:7px}
-.ob3-demo-tabs{display:flex;gap:7px;margin:0 0 12px}
-.ob3-demo-tabs button{flex:1;background:var(--card);border:1px solid var(--map);color:var(--ink);padding:10px 8px;font:800 14px/1 Barlow Condensed,sans-serif;text-transform:uppercase;cursor:pointer}
-.ob3-demo-tabs button.on{background:var(--deep);color:#fff;border-color:var(--deep);box-shadow:inset 0 -3px 0 var(--hot)}
-.ob3-demo-phone{background:var(--card);border:1px solid var(--map);border-top:5px solid var(--deep);padding:13px}
-.ob3-demo-top{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.ob3-demo-top span{width:9px;height:9px;background:var(--hot);transform:rotate(45deg)}
-.ob3-demo-top b{font:800 13px/1 'Barlow Condensed',sans-serif;letter-spacing:.08em}
-.ob3-demo-top small{margin-left:auto;font:700 10px/1 Barlow,sans-serif;color:var(--soft);letter-spacing:.1em}
-.ob3 .ob3-say{min-height:78px;background:var(--deep);font-size:17px}
-.ob3 .ob3-card{min-height:104px;margin-top:10px;border-left-width:5px}
-.ob3 .ob3-card strong{display:block;margin-top:8px;color:var(--crew);font:700 13px/1.3 Barlow,sans-serif}
-.ob3 .ob3-replay{background:none;border:0;color:var(--deep);font:700 14px Barlow,sans-serif;text-decoration:underline;text-underline-offset:3px;padding:9px 0;cursor:pointer}
-.ob3-account-summary,.ob3-ready-summary{display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px;background:var(--card);border:1px solid var(--map);border-left:4px solid var(--deep);padding:11px 13px;margin:0 0 15px;font:600 13px/1.3 Barlow,sans-serif}
-.ob3-account-summary span:first-child,.ob3-ready-summary b{font-weight:800;color:var(--ink)}
-.ob3-account-summary b,.ob3-account-summary small,.ob3-ready-summary span{color:var(--soft);font-weight:500}
-.ob3-login{margin:14px 0 0;text-align:center;font:500 14px/1.4 Barlow,sans-serif;color:var(--soft)}
-.ob3-login .lnk{font:700 14px Barlow,sans-serif}
-.ob3-legal{margin:10px 0 0;text-align:center;font:400 11px/1.45 Barlow,sans-serif;color:var(--soft)}
-@media(max-width:430px){.ob3-setup-fields{grid-template-columns:1fr}.ob3 .ob3-block-field .ob3-step{justify-content:flex-start}.ob3-benefits span{font-size:12px;padding:10px 8px}.ob3-body{padding-top:18px}}
-@media(prefers-reduced-motion:reduce){.ob3 .surole{animation:none}#ob-role-prime .hdf,.ob3-role-preview .hdf{animation:none!important;opacity:1!important}.ob3-demo-tabs button,.ob3 .ob3-card{transition:none}}
-</style>
-
-<link rel="preload" as="image" href="assets/hortlog-orchard-aerial.webp" fetchpriority="high">
-
-<style id="hortlog-aerial-cycle-photo">
-.st-t.st-ph{position:relative;isolation:isolate;background:#355d43!important;overflow:hidden}
-.st-t.st-ph:before{content:"";position:absolute;inset:0;z-index:0;background-image:var(--st-photo);background-position:center;background-size:cover;filter:brightness(1.34) saturate(1.18) sepia(.20) hue-rotate(-7deg) contrast(1.04);transform:scale(1.035)}
-.st-t.st-ph:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(15,61,62,.08),rgba(15,61,62,.34))}
-.st-t.st-ph>*{position:relative;z-index:1}
-@media(prefers-reduced-motion:reduce){.st-t.st-ph:before{filter:brightness(1.26) saturate(1.12) sepia(.17)}}
-</style>
-
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1270,7 +1226,7 @@ else{$('#orchk').onclick=async()=>{const r=await sb.rpc('accept_invites');if(r.d
 function showSetPw(){if($('#spw'))return;const me=MEMBERS.find(m=>m.user_id===U.id)||{},o=ORCH.find(x=>x.orchard_id===OID)||{};
 const e=modal('spw',`<div class="box cut"><h2>Welcome to ${esc(o.name||'the orchard')}</h2><p>You have been added as <b>${RLAB[ROLE]||''}</b>. Choose your name and a password so you can log in next time.</p><div class="edf"><label>Your name<input id="spn" type="text" value="${esc(me.full_name||'')}" autocomplete="name"></label><label>Password<input id="spp" type="password" placeholder="6+ characters" autocomplete="new-password"></label></div><div id="spm" class="hint"></div><div class="acts"><button class="btn" id="sps">Save and continue</button></div></div>`);
 $('#sps').onclick=async()=>{const n=$('#spn').value.trim(),p=$('#spp').value;if(!n){$('#spm').textContent='Add your name.';return}if(p.length<6){$('#spm').textContent='Use at least 6 characters.';return}
-const r=await sb.auth.updateUser({password:p,data:{full_name:n}});if(r.error){$('#spm').textContent=r.error.message;return}await sb.rpc('set_my_name',{o:OID,n});seen.pwset=1;seen.nameAsked=1;wr(SK,seen);e.remove();await rolesRefresh();render();toast('You are all set.')}}
+const r=await sb.auth.updateUser({password:p,data:{full_name:n}});if(r.error){$('#spm').textContent=r.error.message;return}await sb.rpc('set_my_name',{o:OID,n});seen.pwset=1;seen.nameAsked=1;wr(SK,seen);e.remove();await rolesRefresh();render();toast('You are all set.');const m=(U&&U.user_metadata)||{};if(m.hortlog_tour_pending&&!m.hortlog_tour_complete)setTimeout(showFirstWin,700)}}
 function goInvite(){setView('team');setTimeout(()=>{const x=$('#iem');if(x){x.scrollIntoView({block:'center'});x.focus()}},1200)}
 function teamWelcome(needName){if(teamShown)return;teamShown=true;const me=ORCH.find(x=>x.orchard_id===OID)||{};
 const e=modal('nmq',`<div class="box cut"><h2>Bring your team in</h2><p>Hortlog works best when everyone logs to the same orchard.</p><ul class="tw"><li><b>Invite people</b> by email or a link.</li><li><b>Give each person a role:</b> Manager, Supervisor, Worker or Contractor.</li><li><b>Everyone is alerted</b> when spraying is happening today.</li></ul>${needName?'<input id="nmi" type="text" placeholder="Your name" autocomplete="name">':''}<div class="acts"><button class="btn" id="nmt">Invite my team</button><button class="btn alt" id="nmk">Later</button></div><p class="hint">You are the Manager of <b>${esc(me.name||'your orchard')}</b>. You can find this any time under Team.</p></div>`);
@@ -1363,7 +1319,7 @@ try{localStorage.setItem(KEY+'.'+scope(),JSON.stringify(items));localStorage.set
 setSync('Saved ✓');if(ROLES)await rolesRefresh();loaded=true;render();checkAssigned();maybeSetup();checkSprays()}
 async function enter(u){U=u;const st=await rolesInit(u);if(st==='wait')return;items=rd(KEY+'.'+scope(),rd(KEY+'.'+u.id,[]));B=rd(BK+'.'+scope(),rd(BK+'.'+u.id,{}));items.forEach(migrate);prevUse=seen.lu||0;seen.lu=Date.now();if(!openCounted){openCounted=true;seen.opens=(seen.opens||0)+1}wr(SK,seen);pending=rd(PK(),false)===true;synced={};syncedB={};loaded=false;
 const a=$('#auth');if(a)a.remove();view='home';blk=null;render();try{localStorage.setItem('hl.acct','1')}catch(e){}if(!seen.goals){try{const g=JSON.parse(localStorage.getItem('hl.goals')||'null');if(g){seen.goals=g;localStorage.removeItem('hl.goals');wr(SK,seen)}}catch(e){}}if(!seen.ob){const pb0=pendingOb(U);if(pb0&&(pb0.orch||pb0.role)){seen.ob=1;seen.micAsk=0;seen.notifAsk=0;try{localStorage.setItem('hortlog.ver',VER)}catch(e){}if(!(seen.goals&&seen.goals.length)&&pb0.goals)seen.goals=pb0.goals.slice();wr(SK,seen)}}if(seen.ob&&seen.micAsk===undefined){seen.micAsk=1;seen.notifAsk=1;wr(SK,seen)}let pv=null;try{pv=localStorage.getItem('hortlog.ver')}catch(e){}try{localStorage.setItem('hortlog.ver',VER)}catch(e){}if((pv&&pv!==VER)||(!pv&&seen.ob))afterSplash(showUpd);
-if(WK)WK.set('Fetching your records','Getting your orchard, blocks and jobs');await pull();if(!seen.ob){const known=(U.user_metadata&&U.user_metadata.onboarded)||(items.length>0&&!INVITED);if(known){seen.ob=1;seen.micAsk=1;seen.notifAsk=1;seen.fw=1;wr(SK,seen)}else afterSplash(openOb)}if(ROLES){if(newOrchardName){const B0=B[0]=B[0]||{};B0.biz=newOrchardName;newOrchardName='';const pb=pendingOb(U);if(pb){const nb=Math.min(40,Math.max(0,+pb.nb||0));for(let k=1;k<=nb;k++)if(!B[k])B[k]={rows:60,bays:30};seen.biz=1;wr(SK,seen);try{localStorage.removeItem(OB_KEY)}catch(e){}const fn0=(myFullName()||'').split(/\s+/)[0];afterSplash(()=>showSuccess({title:'Your orchard is ready.',sub:(fn0?fn0+', ':'')+(B0.biz||'your orchard')+' is set up and waiting. Say your first job out loud.',done:()=>setTimeout(showFirstWin,500)}))}saveB()}else if(OID&&pendingOb(U)){try{localStorage.removeItem(OB_KEY)}catch(e){}}if(joinedMsg){toast('You joined '+joinedMsg+'.');joinedMsg=''}if(INVITED&&!seen.pwset)showSetPw();else{maybeAskName();maybeInviteNudge()}}}
+if(WK)WK.set('Fetching your records','Getting your orchard, blocks and jobs');await pull();const um=(U&&U.user_metadata)||{},tourPending=!!um.hortlog_tour_pending&&!um.hortlog_tour_complete,hadNewOrchard=!!newOrchardName;if(tourPending){seen.fw=0;wr(SK,seen)}if(!seen.ob){const known=(U.user_metadata&&U.user_metadata.onboarded)||(items.length>0&&!INVITED);if(known){seen.ob=1;seen.micAsk=1;seen.notifAsk=1;if(!tourPending)seen.fw=1;wr(SK,seen)}else afterSplash(openOb)}if(ROLES){if(newOrchardName){const B0=B[0]=B[0]||{};B0.biz=newOrchardName;newOrchardName='';const pb=pendingOb(U);if(pb){const nb=Math.min(40,Math.max(0,+pb.nb||0));for(let k=1;k<=nb;k++)if(!B[k])B[k]={rows:60,bays:30};seen.biz=1;wr(SK,seen);try{localStorage.removeItem(OB_KEY)}catch(e){}const fn0=(myFullName()||'').split(/\s+/)[0];afterSplash(()=>showSuccess({title:'Your orchard is ready.',sub:(fn0?fn0+', ':'')+(B0.biz||'your orchard')+' is set up and waiting. Say your first job out loud.',done:()=>setTimeout(showFirstWin,500)}))}saveB()}else if(OID&&pendingOb(U)){try{localStorage.removeItem(OB_KEY)}catch(e){}}if(joinedMsg){toast('You joined '+joinedMsg+'.');joinedMsg=''}if(INVITED&&!seen.pwset)showSetPw();else{maybeAskName();maybeInviteNudge()}}if(tourPending&&!hadNewOrchard&&!(INVITED&&!seen.pwset))afterSplash(()=>setTimeout(showFirstWin,700))}
 function coach(n,t){const tile=document.querySelector('.tw2 .tile[data-blk="'+n+'"]');if(!tile)return;const w=tile.closest('.tw2'),o=document.body.appendChild(Object.assign(document.createElement('div'),{id:'coach'}));
 o.innerHTML=`<div class="cbox cut"><b>${esc(t)}</b><div class="acts"><button class="btn alt" id="cok">Got it</button></div></div>`;w.classList.add('spot');if(w.scrollIntoView)w.scrollIntoView({block:'center'});
 const done=()=>{o.remove();w.classList.remove('spot')};$('#cok').onclick=done;o.onclick=e=>{if(e.target===o)done()};tile.addEventListener('click',done,{once:true})}
@@ -1691,6 +1647,7 @@ const draw=()=>{e.innerHTML=`<div class="box cut"><h2>Set up your blocks</h2><p>
 $('#m1').onclick=()=>{n=Math.max(1,n-1);draw()};$('#p1').onclick=()=>{n=Math.min(40,n+1);draw()};$('#lat').onclick=()=>e.remove();
 $('#mk').onclick=()=>{for(let k=1;k<=n;k++)B[k]={rows:60,bays:30};saveB();e.remove();view='blocks';blk=null;render();coach(1,'Your blocks are ready. Tap Block 1 to add imagery and set it up.')}};draw()}
 let mode='start',sentTo='';
+let suStep=1,su={em:'',pw:'',fn:'',rl:'',rlo:'',gl:[]};
 /* Hand-drawn animated role icons: three sketched frames per role, redrawn with a little pencil wobble */
 function hdIcon(k){
 const R=Math.PI/180;
@@ -1881,169 +1838,93 @@ const goalsFor=r=>(!r||r==='manager'||r==='owner')?GOALS:(GOALS_ROLE[r]||null);
 const GBTN='<button class="btn" id="agg" type="button" style="width:100%;margin-top:10px;background:#fff;color:#1f1f1f;border:1px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:10px"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span>Continue with Google</span></button>';
 /* ---- Onboarding v60: value first, account last ---- */
 const OB_KEY='hl.ob';
-let OBW=(function(){let p=null;try{p=JSON.parse(localStorage.getItem(OB_KEY)||'null')}catch(e){}return Object.assign({s:'name',fn:'',role:'',goals:[],how:'',orch:'',nb:4},p||{})})();
+let OBW=(function(){let p=null;try{p=JSON.parse(localStorage.getItem(OB_KEY)||'null')}catch(e){}return Object.assign({s:'hello',fn:'',role:'',goals:[],how:'',orch:'',nb:4},p||{})})();
 let OBTM=[],OBdir=1;
 function obSave(){try{localStorage.setItem(OB_KEY,JSON.stringify(OBW))}catch(e){}}
 function obClear(t){OBTM.forEach(clearTimeout);OBTM=[]}
 const obLater=(f,ms)=>{OBTM.push(setTimeout(f,ms))};
 const obOwner=()=>OBW.role==='owner'||OBW.role==='manager';
-function obOrder(){return ['name','role','setup','demo'].concat(OBW.authed?['ready']:['acct'])}
-function obPrimeRoleArt(){
-  let p=document.getElementById('ob-role-prime');
-  if(p)return;
-  p=document.createElement('div');p.id='ob-role-prime';p.setAttribute('aria-hidden','true');
-  p.innerHTML=SU_ROLES.filter(r=>r[0]!=='other').map(r=>`<span>${r[1]}</span>`).join('');
-  document.body.appendChild(p);
-}
-function obGoalChoices(){
-  if(OBW.role==='contractor')return [['mine','See jobs assigned to me'],['sign','Complete sign-on forms'],['voice','Add a note or photo']];
-  if(OBW.role==='other')return [['look','Explore Hortlog']];
-  return goalsFor(OBW.role)||[];
-}
-function showOnb(){
-const e=$('#auth')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'auth'}));
-obClear();obPrimeRoleArt();
-const ord=obOrder();if(!ord.includes(OBW.s))OBW.s='name';
-const i=ord.indexOf(OBW.s),pct=Math.round(8+i/(ord.length-1)*92),prev=OBW._pct||0;OBW._pct=pct;
-const first=(OBW.fn||'').trim().split(/\s+/)[0]||'';
-const go=(d)=>{const o2=obOrder(),j=o2.indexOf(OBW.s)+d;if(j<0){OBW.s='name';mode='start';obSave();showAuth();return}OBW.s=o2[j];OBdir=d;obSave();showOnb()};
-const nm=t=>{const m=$('#obm');if(m)m.textContent=t};
-let h='',cta='Next',chk=null,after=null,nocta=false;
-if(OBW.s==='name'){
-  h=`<p class="ob3-k">YOUR PROFILE</p><h2 class="ob3-h">What should we <i>call you?</i></h2>
-    <p class="ob3-p">Your first name is perfect.</p>
-    <label class="ob3-label" for="obfn">Your name</label><input id="obfn" type="text" placeholder="e.g. Liam" autocomplete="given-name" value="${esc(OBW.fn)}">
-    <div class="ob3-role-preview"><span class="ob3-preview-label">MADE FOR THE WHOLE ORCHARD TEAM</span><div>${SU_ROLES.filter(r=>r[0]!=='other').map(r=>`<span title="${r[2]}">${r[1]}</span>`).join('')}</div></div>
-    <p id="obm" class="hint"></p>`;
-  chk=()=>{const v=$('#obfn').value.trim();if(!v){nm('Add your name to continue.');return false}OBW.fn=v;return true};
-  after=()=>{const f=$('#obfn');if(f){f.focus();f.onkeydown=ev=>{if(ev.key==='Enter')$('#obnext').click()}}};
-}
-else if(OBW.s==='role'){
-  h=`<p class="ob3-k">YOUR PROFILE</p><h2 class="ob3-h">What is your role <i>in the orchard?</i></h2>
-    <p class="ob3-p">We’ll shape your Hortlog view around the work you do.</p>
-    <div class="ob3-role-list">${SU_ROLES.map((r,k)=>`<button class="surole ${OBW.role===r[0]?'on':''}" data-r="${r[0]}" style="--role-i:${k}"><span class="em">${r[1]}</span><span class="ob3-role-copy"><b>${r[2]}</b><small>${r[3]}</small></span><span class="ob3-role-check" aria-hidden="true">✓</span></button>`).join('')}</div>
-    <div id="obro" class="obro ob3-other" ${OBW.role==='other'?'':'hidden'}><label class="ob3-label" for="obroi">Tell us your role</label><input id="obroi" type="text" maxlength="60" placeholder="e.g. Agronomist or packhouse manager" value="${esc(OBW.roleOther||'')}"></div>
-    <p class="ob3-helper">Not sure? Choose the closest match — permissions can be adjusted later.</p><p id="obm" class="hint"></p>`;
-  chk=()=>{if(!OBW.role){nm('Choose the role that best describes your work.');return false}if(OBW.role==='other'&&!String(OBW.roleOther||'').trim()){nm('Add a short description of your role.');return false}return true};
-  after=()=>{document.querySelectorAll('#auth [data-r]').forEach(b=>b.onclick=()=>{
-    OBW.role=b.dataset.r;const gf=obGoalChoices();OBW.goals=(OBW.goals||[]).filter(g=>gf.some(x=>x[0]===g));
-    if(!OBW.goals.length&&OBW.role==='other')OBW.goals=['look'];
-    obSave();document.querySelectorAll('#auth [data-r]').forEach(x=>x.classList.toggle('on',x===b));
-    nm('');const ro=$('#obro');if(ro){ro.hidden=OBW.role!=='other';if(!ro.hidden){const x=$('#obroi');if(x)x.focus()}}
-  });const ri=$('#obroi');if(ri)ri.oninput=()=>{OBW.roleOther=ri.value.trim();obSave()}};
-}
-else if(OBW.s==='setup'){
-  const choices=obGoalChoices();
-  const ownerFields=obOwner()?`<div class="ob3-setup-fields">
-      <div><label class="ob3-label" for="obor">Orchard name</label><input id="obor" type="text" placeholder="e.g. Green Acres" autocomplete="organization" value="${esc(OBW.orch)}"></div>
-      <div class="ob3-block-field"><span class="ob3-label">Number of blocks</span><div class="ob3-step"><button id="obm1" aria-label="Fewer blocks">−</button><b id="obn">${Math.max(1,Math.min(30,+OBW.nb||1))}</b><button id="obp1" aria-label="More blocks">+</button></div><small>You can add or rename blocks later.</small></div>
-    </div>`:'';
-  h=`<p class="ob3-k">PERSONALISE YOUR SETUP</p><h2 class="ob3-h">Let’s set up <i>your view.</i></h2>
-    <p class="ob3-p">${obOwner()?'Add the basics for your orchard.':'Choose what you’ll use most. Your manager can invite you to the orchard.'}</p>
-    ${ownerFields}
-    ${choices.length?`<div class="ob3-goal-wrap"><div class="ob3-label">${obOwner()?'What matters most?':'What will you use Hortlog for?'}</div><p class="ob3-helper">Choose any that apply. This just helps tailor your starting view.</p>${choices.map(g=>`<button class="ob2-goal ${OBW.goals.includes(g[0])?'on':''}" data-g="${g[0]}"><span class="ck"></span><span>${g[1]}</span></button>`).join('')}</div>`:''}
-    <p id="obm" class="hint"></p>`;
-  chk=()=>{if(obOwner()){const v=$('#obor').value.trim();if(!v){nm('Add your orchard name to continue.');return false}OBW.orch=v;OBW.nb=Math.max(1,Math.min(30,+OBW.nb||1))}return true};
-  after=()=>{
-    const f=$('#obor');if(f){f.oninput=()=>{OBW.orch=f.value;obSave()};f.onkeydown=ev=>{if(ev.key==='Enter')$('#obnext').click()}}
-    const set=n=>{OBW.nb=Math.max(1,Math.min(30,n));obSave();const v=$('#obn');if(v)v.textContent=OBW.nb};
-    const m=$('#obm1'),p=$('#obp1');if(m)m.onclick=()=>set((+OBW.nb||1)-1);if(p)p.onclick=()=>set((+OBW.nb||1)+1);
-    document.querySelectorAll('#auth [data-g]').forEach(b=>b.onclick=()=>{const g=b.dataset.g,k=OBW.goals.indexOf(g);if(k>=0)OBW.goals.splice(k,1);else{if(g==='look')OBW.goals=[];else OBW.goals=OBW.goals.filter(x=>x!=='look');OBW.goals.push(g)}obSave();document.querySelectorAll('#auth [data-g]').forEach(x=>x.classList.toggle('on',OBW.goals.includes(x.dataset.g)));nm('')});
-  };
-}
-else if(OBW.s==='demo'){
-  const samples=[
-    {id:'psa',label:'PSA',say:`PSA block ${Math.max(1,Math.min(30,+OBW.nb||3))} row 49`,kind:'PSA finding',meta:`Block ${Math.max(1,Math.min(30,+OBW.nb||3))} · Row 49`,result:'Pinned to the block map'},
-    {id:'spray',label:'Spray',say:`Sprayed copper on block ${Math.max(1,Math.min(30,+OBW.nb||2))}`,kind:'Spray application',meta:`Block ${Math.max(1,Math.min(30,+OBW.nb||2))} · Copper`,result:'Added to the spray diary'},
-    {id:'job',label:'Job',say:'Fix the gate on Friday',kind:'Orchard job',meta:'Due Friday · Assigned to crew',result:'Added to the work calendar'}
-  ];
-  let active=OBW.goals.includes('spray')?'spray':OBW.goals.includes('crew')?'job':'psa';
-  h=`<p class="ob3-k">A QUICK LOOK</p><h2 class="ob3-h">See how a note becomes <i>orchard work.</i></h2>
-    <p class="ob3-p">Choose an example. Hortlog turns a simple voice note into a useful record.</p>
-    <div class="ob3-demo-tabs">${samples.map(x=>`<button type="button" data-example="${x.id}" class="${x.id===active?'on':''}">${x.label}</button>`).join('')}</div>
-    <div class="ob3-demo-phone"><div class="ob3-demo-top"><span></span><b>QUICK RECORD</b><small>EXAMPLE</small></div>
-      <div class="ob3-say" id="obs"><span class="ob3-mic" aria-hidden="true"></span><span id="obst" aria-live="polite">Listening…</span></div>
-      <div class="ob3-card" id="obc" aria-live="polite"><small>YOUR RECORD</small><b>Preparing example…</b><span></span></div>
-    </div>
-    <p class="ob3-helper">This is a preview only — it won’t use your microphone or save anything.</p>
-    <button class="ob3-replay" type="button" id="obagain">↻ Replay example</button>`;
-  cta='Continue';
-  after=()=>{
-    const play=(key)=>{
-      obClear();active=key;const x=samples.find(s=>s.id===key)||samples[0];
-      document.querySelectorAll('#auth [data-example]').forEach(b=>b.classList.toggle('on',b.dataset.example===key));
-      const st=$('#obst'),card=$('#obc');if(!st||!card)return;st.textContent='';card.classList.remove('on');card.innerHTML='<small>YOUR RECORD</small><b>Preparing example…</b><span></span>';
-      let k=0;const type=()=>{if(!$('#obst'))return;st.textContent='“'+x.say.slice(0,k)+(k<x.say.length?'':'”');if(k<x.say.length){k++;obLater(type,24)}else{obLater(()=>{const c=$('#obc');if(c){c.innerHTML=`<small>YOUR RECORD</small><b>${x.kind}</b><span>${x.meta}</span><strong>${x.result}</strong>`;c.classList.add('on')}},360)}};
-      obLater(type,180);
-    };
-    document.querySelectorAll('#auth [data-example]').forEach(b=>b.onclick=()=>play(b.dataset.example));
-    const again=$('#obagain');if(again)again.onclick=()=>play(active);play(active);
-  };
-}
-else if(OBW.s==='ready'){
-  h=`<p class="ob3-k">ALL SET</p><h2 class="ob3-h">Your profile is <i>ready.</i></h2><p class="ob3-p">Your details are saved. Let’s take you into Hortlog.</p><div class="ob3-ready-summary"><b>${esc(OBW.fn||'Your profile')}</b><span>${esc((SU_ROLES.find(r=>r[0]===OBW.role)||[])[2]||'Orchard team')}</span>${obOwner()?`<span>${esc(OBW.orch)} · ${OBW.nb} blocks</span>`:''}</div>`;
-  cta='Open Hortlog';
-}
-else{
-  h=`<p class="ob3-k">FINAL STEP · ACCOUNT</p><h2 class="ob3-h">Save your <i>profile.</i></h2>
-    <p class="ob3-p">Create your account and keep your setup saved across devices.</p>
-    <div class="ob3-account-summary"><span>${esc(OBW.fn||'Your profile')}</span><b>${esc((SU_ROLES.find(r=>r[0]===OBW.role)||[])[2]||'Orchard team')}</b>${obOwner()?`<small>${esc(OBW.orch)} · ${OBW.nb} blocks</small>`:''}</div>
-    ${GBTN}<div class="ob2-or"><span>or use your email</span></div>
-    <label class="ob3-label" for="em">Email address</label><input id="em" type="email" placeholder="you@example.com" autocomplete="email" value="${esc(OBW.em||'')}" spellcheck="false">
-    <div style="height:10px"></div><label class="ob3-label" for="pw">Password</label><input id="pw" type="password" placeholder="At least 6 characters" autocomplete="new-password">
-    <div id="obm" class="hint" aria-live="polite"></div>
-    <button class="btn" id="obcreate" style="width:100%;margin-top:10px">Create my account</button>
-    <p class="ob3-login">Already have an account? <button class="lnk" id="obin">Log in</button></p>
-    <p class="ob3-legal">By continuing, you agree to the Hortlog <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a>.</p>`;
-  nocta=true;
-  after=()=>{
-    const g=$('#agg');if(g)g.addEventListener('click',()=>obSave(),true);
-    const login=$('#obin');if(login)login.onclick=()=>{mode='in';showAuth()};
-    const create=$('#obcreate');if(!create)return;
-    create.onclick=async()=>{
-      const em=$('#em').value.trim(),pw=$('#pw').value;
-      if(!em){nm('Enter your email address.');$('#em').focus();return}
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){nm('Check that your email address is correct.');$('#em').focus();return}
-      if(pw.length<6){nm('Your password needs at least 6 characters.');$('#pw').focus();return}
-      OBW.em=em;obSave();nm('');create.disabled=true;
-      const wk=working('Creating your account',obOwner()?'Setting up '+(OBW.orch||'your orchard'):'Setting up your profile');
-      const meta={full_name:OBW.fn,requested_role:OBW.role,requested_role_other:OBW.role==='other'?(OBW.roleOther||''):'',goals:OBW.goals.join(','),ob_orch:obOwner()?OBW.orch:'',ob_blocks:obOwner()?String(OBW.nb):'',onboarded:true};
-      try{
-        const r=await sb.auth.signUp({email:em,password:pw,options:{data:meta}});
-        if(r.error){nm(netMsg(r.error.message));create.disabled=false}
-        else if(r.data.session){seen.goals=OBW.goals.slice();seen.ob=1;seen.micAsk=0;seen.notifAsk=0;seen.how=OBW.how;wr(SK,seen);try{localStorage.setItem('hortlog.ver',VER)}catch(x){}await enter(r.data.user)}
-        else{nm('Check your email to confirm your account. Then log in and your setup will be waiting.');create.disabled=false}
-      }catch(x){nm(netMsg('Could not reach the server'));create.disabled=false}
-      finally{wk.done()}
-    };
-  };
-}
-const total=ord.length,showBack=!OBW.authed||i>0;
-e.innerHTML=`<div class="ob3 ${OBdir<0?'ob3-back':''}"><div class="ob3-main">
-  <div class="ob3-top">${showBack?'<button class="ob3-bk" id="obback" aria-label="Back">←</button>':''}
-    <div class="ob3-progress-wrap"><div class="ob3-bar"><i class="ob3-fill" style="width:${prev}%" data-to="${pct}"></i></div><span class="ob3-progress-label">STEP ${i+1} OF ${total}</span></div>
-  </div><div class="ob3-body ob2-in">${h}</div>
-  ${nocta?'':`<div class="ob3-foot"><button class="btn" id="obnext" style="width:100%">${cta}</button></div>`}
-</div></div>`;
-stBind(e);
+function obOrder(){return ['hello','name','role'].concat(goalsFor(OBW.role)?['goals']:[]).concat(['how']).concat(obOwner()?['orch','blocks']:[]).concat(['demo','build','ready']).concat(OBW.authed?[]:['acct'])}
+const OB_HOW=[['paper','A paper diary or notebook','Paper gets lost in the ute. Voice fixes that.'],['phone','Notes and photos on my phone','Good start. Hortlog files those for you, dated and by block.'],['sheet','A spreadsheet','Hortlog keeps one too, and builds the Excel for you.'],['head','In my head, honestly','That is the riskiest place for it. Let us fix that.'],['app','Another app','Fair enough. Hortlog is built for kiwifruit and audits.']];
+const OB_EX={mine:['Prune block #3, rows 1 to 20','Job','Block #3 · due Friday','Shows under Assigned to you, and you get a notification.'],voice:['Pruned rows 1 to 10 in block #2','Note','Block #2 · today','Filed in your records with the time and date.'],spray:['Sprayed copper on block #2','Spray and fertiliser','Block #2 · Copper · today','Added to your spray diary. Crew alerted.'],psa:['PSA on block #3, row 12','PSA','Block #3 · Row 12','Pinned on your block map.'],crew:['Fix the gate on Friday','Job','Due Friday','On the calendar for your crew.'],audit:['Inducted three pruners today','Compliance record','Staff induction · today','Filed for your audit pack.'],sign:['New contractor needs to sign on','Job','Sign on · today','Ready under Records, Compliance.'],look:['Sprayed copper on block #2','Spray and fertiliser','Block #2 · Copper · today','Added to your spray diary.']};
+function obEx(){const g=(OBW.goals&&OBW.goals.length?OBW.goals:['spray','psa','crew']).filter(x=>OB_EX[x]);const a=g.slice(0,3);if(a.length<2)['spray','psa','crew'].forEach(x=>{if(!a.includes(x)&&a.length<3)a.push(x)});const b2=Math.min(2,Math.max(1,OBW.nb||1)),b3=Math.min(3,Math.max(1,OBW.nb||1));return a.map(k=>OB_EX[k].map(t=>t.replace('#2',b2).replace('#3',b3)))}
+function showOnb(){const e=$('#auth')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'auth'}));obClear();const ord=obOrder();if(!ord.includes(OBW.s))OBW.s='hello';const i=ord.indexOf(OBW.s),pct=Math.round(8+i/(ord.length-1)*92),prev=OBW._pct||0;OBW._pct=pct;
+const first=(OBW.fn||'').trim().split(/\s+/)[0]||'';const go=(d)=>{const o2=obOrder(),j=o2.indexOf(OBW.s)+d;if(j<0){OBW.s='hello';mode='start';obSave();showAuth();return}OBW.s=o2[j];OBdir=d;obSave();showOnb()};
+const nm=t=>{const m=$('#obm');if(m)m.textContent=t};let h='',cta='Next',chk=null,after=null,nocta=false;
+if(OBW.s==='hello'){h=`<div class="ob3-hero"><p class="ob3-k">Welcome</p><h2 class="ob3-h">Let’s get you <i>growing.</i></h2><p class="ob3-p">Your orchard records, done by voice. A few quick taps and your orchard will be set up and waiting for you.</p></div>`;cta='Let’s go'}
+else if(OBW.s==='name'){h=`<h2 class="ob3-h">First things first. What should we <i>call you?</i></h2><p class="ob3-p">Just your first name is fine.</p><input id="obfn" type="text" placeholder="Your name" autocomplete="name" value="${esc(OBW.fn)}"><p id="obm" class="hint"></p>`;chk=()=>{const v=$('#obfn').value.trim();if(!v){nm('Tell us what to call you.');return false}OBW.fn=v;return true};after=()=>{const f=$('#obfn');if(f){f.focus();f.onkeydown=ev=>{if(ev.key==='Enter')$('#obnext').click()}}}}
+else if(OBW.s==='role'){h=`<h2 class="ob3-h">Nice to meet you, <i>${esc(first||'friend')}.</i></h2><p class="ob3-p">What is your role in the orchard?</p>${SU_ROLES.map(r=>`<button class="surole ${OBW.role===r[0]?'on':''}" data-r="${r[0]}"><span class="em">${r[1]}</span><span><b>${r[2]}</b>${r[3]}</span></button>`).join('')}<div id="obro" class="obro" ${OBW.role==='other'?'':'hidden'}><input id="obroi" type="text" maxlength="60" placeholder="Tell us your role, e.g. orchard owner or agronomist" value="${esc(OBW.roleOther||'')}"></div><p id="obm" class="hint"></p>`;chk=()=>{if(!OBW.role){nm('Choose your role.');return false}return true};after=()=>{document.querySelectorAll('#auth [data-r]').forEach(b=>b.onclick=()=>{OBW.role=b.dataset.r;{const gf=goalsFor(OBW.role);OBW.goals=gf?(OBW.goals||[]).filter(g=>gf.some(x=>x[0]===g)):(GOALS_DEF[OBW.role]||['look']).slice()}obSave();document.querySelectorAll('#auth [data-r]').forEach(x=>x.classList.toggle('on',x===b));nm('');const ro=$('#obro');if(ro){ro.hidden=OBW.role!=='other';if(!ro.hidden)setTimeout(()=>{const x=$('#obroi');if(x)x.focus()},60)}});const ri=$('#obroi');if(ri)ri.oninput=()=>{OBW.roleOther=ri.value.trim();obSave()}}}
+else if(OBW.s==='goals'){h=`<h2 class="ob3-h">What would you like Hortlog <i>to do for you?</i></h2><p class="ob3-p">Pick everything that matters. Your plan is built around it.</p>${(goalsFor(OBW.role)||GOALS).map(g=>`<button class="ob2-goal ${OBW.goals.includes(g[0])?'on':''}" data-g="${g[0]}"><span class="ck"></span><span>${g[1]}</span></button>`).join('')}<p id="obm" class="hint"></p>`;chk=()=>{if(!OBW.goals.length){nm((goalsFor(OBW.role)||GOALS).some(g=>g[0]==='look')?'Pick at least one, or choose Just having a look.':'Pick at least one.');return false}return true};after=()=>{document.querySelectorAll('#auth [data-g]').forEach(b=>b.onclick=()=>{const g=b.dataset.g,k=OBW.goals.indexOf(g);if(k>=0)OBW.goals.splice(k,1);else{if(g==='look')OBW.goals=[];else OBW.goals=OBW.goals.filter(x=>x!=='look');OBW.goals.push(g)}obSave();document.querySelectorAll('#auth [data-g]').forEach(x=>x.classList.toggle('on',OBW.goals.includes(x.dataset.g)));nm('')})}}
+else if(OBW.s==='how'){h=`<h2 class="ob3-h">How do you keep records <i>today?</i></h2><p class="ob3-p">No wrong answers. It helps us set things up.</p>${OB_HOW.map(r=>`<button class="ob2-goal ${OBW.how===r[0]?'on':''}" data-h="${r[0]}"><span class="ck"></span><span>${r[1]}</span></button>`).join('')}<p id="obm" class="ob3-refl">${esc((OB_HOW.find(r=>r[0]===OBW.how)||[])[2]||'')}</p>`;chk=()=>{if(!OBW.how){nm('Pick the closest one.');return false}return true};after=()=>{document.querySelectorAll('#auth [data-h]').forEach(b=>b.onclick=()=>{OBW.how=b.dataset.h;obSave();document.querySelectorAll('#auth [data-h]').forEach(x=>x.classList.toggle('on',x===b));nm(OB_HOW.find(r=>r[0]===OBW.how)[2])})}}
+else if(OBW.s==='orch'){h=`<h2 class="ob3-h">What is your orchard <i>called?</i></h2><p class="ob3-p">This is the name your team will see.</p><input id="obor" type="text" placeholder="e.g. Green Acres Kiwifruit" autocomplete="organization" value="${esc(OBW.orch)}"><p id="obm" class="hint"></p>`;chk=()=>{const v=$('#obor').value.trim();if(!v){nm('Give your orchard a name.');return false}OBW.orch=v;return true};after=()=>{const f=$('#obor');if(f){f.focus();f.onkeydown=ev=>{if(ev.key==='Enter')$('#obnext').click()}}}}
+else if(OBW.s==='blocks'){const tiles=n=>Array.from({length:n},(_,k)=>`<span class="ob3-tile" style="animation-delay:${Math.min(k,12)*40}ms">Block ${k+1}</span>`).join('');h=`<h2 class="ob3-h">How many <i>blocks</i> do you have?</h2><p class="ob3-p">A rough number is fine. You can add or rename them any time.</p><div class="ob3-step"><button id="obm1" aria-label="Fewer blocks">−</button><b id="obn">${OBW.nb}</b><button id="obp1" aria-label="More blocks">+</button></div><div class="ob3-tiles" id="obt">${tiles(OBW.nb)}</div>`;after=()=>{const set=n=>{OBW.nb=Math.max(1,Math.min(30,n));obSave();$('#obn').textContent=OBW.nb;$('#obt').innerHTML=tiles(OBW.nb)};$('#obm1').onclick=()=>set(OBW.nb-1);$('#obp1').onclick=()=>set(OBW.nb+1)}}
+else if(OBW.s==='demo'){const ex=obEx();h=`<h2 class="ob3-h">Here is <i>the magic.</i></h2><p class="ob3-p">Say it the way you would say it to your foreman. Hortlog does the filing.</p><div class="ob3-say" id="obs"><span class="ob3-mic"></span><span id="obst">Listening…</span></div><div class="ob3-card" id="obc"></div><button class="btn alt" id="obagain" style="margin-top:12px">Try another</button>`;cta='Sounds good';let n=0;
+const play=()=>{obClear();const x=ex[n%ex.length];const st=$('#obst'),c=$('#obc');if(!st)return;c.className='ob3-card';c.innerHTML='';st.textContent='';let k=0;const typ=()=>{if(!$('#obst'))return;st.textContent='“'+x[0].slice(0,k)+(k<x[0].length?'':'”');if(k++<x[0].length)obLater(typ,34);else obLater(()=>{const c2=$('#obc');if(!c2)return;c2.innerHTML=`<small>${x[1]}</small><b>${x[2]}</b><span>${x[3]}</span>`;c2.className='ob3-card on'},350)};obLater(typ,400)};
+after=()=>{play();$('#obagain').onclick=()=>{n++;play()}}}
+else if(OBW.s==='build'){const nb=OBW.nb,gl=(OBW.goals||[]).filter(g=>PLAN[g]);const steps=obOwner()?['Creating '+(OBW.orch||'your orchard'),'Adding '+nb+' block'+(nb===1?'':'s'),gl.length&&gl[0]!=='look'?'Setting up '+PLAN[gl[0]][0].toLowerCase():'Getting your records ready','Building your setup checklist']:['Setting up your profile','Choosing what you will see','Getting your checklist ready'];
+h=`<h2 class="ob3-h">Setting things up <i>for you…</i></h2><div class="ob3-ring"><b id="obpc">0%</b></div><ul class="ob3-do">${steps.map((t,k)=>`<li id="obd${k}">${esc(t)}</li>`).join('')}</ul>`;nocta=true;
+after=()=>{let pc=0;const tick=()=>{const p=$('#obpc');if(!p)return;pc=Math.min(100,pc+Math.round(1+Math.random()*13));p.textContent=pc+'%';const r=document.querySelector('.ob3-ring');if(r)r.style.setProperty('--p',pc+'%');steps.forEach((t,k)=>{if(pc>=Math.round((k+1)/steps.length*100)-3){const l=$('#obd'+k);if(l)l.classList.add('on')}});if(pc>=100){obLater(()=>{OBdir=1;OBW.s='ready';obSave();showOnb()},700);return}obLater(tick,Math.random()<.25?450+Math.random()*500:70+Math.random()*340)};obLater(tick,500)}}
+else if(OBW.s==='ready'){const gl=(OBW.goals||[]).filter(g=>PLAN[g]);h=obOwner()?`<p class="ob3-k">All set</p><h2 class="ob3-h">${esc(OBW.orch||'Your orchard')} is <i>ready.</i></h2><p class="ob3-p">Your orchard is set up and your ${OBW.nb} block${OBW.nb===1?' is':'s are'} waiting.</p><div class="ob3-tiles" style="margin:0 0 14px">${Array.from({length:Math.min(OBW.nb,12)},(_,k)=>`<span class="ob3-tile on" style="animation-delay:${k*50}ms">Block ${k+1}</span>`).join('')}${OBW.nb>12?`<span class="ob3-tile on">+${OBW.nb-12}</span>`:''}</div><ul class="ob2-plan">${gl.slice(0,3).map(g=>`<li><b>${PLAN[g][0]}</b><span>${PLAN[g][1]}</span></li>`).join('')}</ul>`:`<p class="ob3-k">All set</p><h2 class="ob3-h">Your profile is <i>ready.</i></h2><p class="ob3-p">Create your account, then ask your manager to invite you. You will see what your role allows.</p>`;cta=OBW.authed?'Finish setup':'Create account to continue'}
+else{h=`<h2 class="ob3-h">Save your <i>${obOwner()?'orchard':'profile'}.</i></h2><p class="ob3-p">Last step. Then you are in.</p>${GBTN}<div class="ob2-or"><span>or use your email</span></div><input id="em" type="email" placeholder="Email" autocomplete="email" value="${esc(OBW.em||'')}"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="new-password"><div id="obm" class="hint"></div><button class="btn" id="obcreate" style="width:100%">Create my account</button><p class="ob3-p" style="text-align:center;margin:12px 0 0">Already have an account? <button class="lnk" id="obin">Log in</button></p><p class="ob3-legal" style="margin:16px 0 0">By continuing, you agree to the Hortlog <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a>.</p>`;nocta=true;after=()=>{const g=$('#agg');if(g)g.addEventListener('click',()=>obSave(),true);$('#obin').onclick=()=>{mode='in';showAuth()};
+$('#obcreate').onclick=async()=>{const em=$('#em').value.trim(),pw=$('#pw').value;if(!em){nm('Type your email address first.');return}if(pw.length<6){nm('Your password needs at least 6 characters.');return}OBW.em=em;obSave();nm('');$('#obcreate').disabled=true;const wk=working('Creating your account',obOwner()?'Setting up '+(OBW.orch||'your orchard'):'Setting up your profile');
+const meta={full_name:OBW.fn,requested_role:OBW.role,requested_role_other:OBW.role==='other'?(OBW.roleOther||''):'',goals:OBW.goals.join(','),ob_orch:obOwner()?OBW.orch:'',ob_blocks:obOwner()?String(OBW.nb):'',onboarded:true,hortlog_tour_pending:true,hortlog_tour_complete:false};
+try{const r=await sb.auth.signUp({email:em,password:pw,options:{data:meta}});if(r.error){nm(netMsg(r.error.message));$('#obcreate').disabled=false}else if(r.data.session){seen.goals=OBW.goals.slice();seen.ob=1;seen.micAsk=0;seen.notifAsk=0;seen.how=OBW.how;wr(SK,seen);try{localStorage.setItem('hortlog.ver',VER)}catch(x){}await enter(r.data.user)}else{nm('Check your email to confirm your account. Then log in and your orchard will be waiting.');$('#obcreate').disabled=false}}
+catch(x){nm(netMsg('Could not reach the server'));$('#obcreate').disabled=false}finally{wk.done()}}}}
+const n=ord.length,showBack=!OBW.authed||i>0;
+e.innerHTML=`<div class="ob3 ${OBdir<0?'ob3-back':''}"><div class="ob3-main"><div class="ob3-top">${showBack?'<button class="ob3-bk" id="obback" aria-label="Back">←</button>':''}<div class="ob3-bar"><i class="ob3-fill" style="width:${prev}%" data-to="${pct}"></i></div></div><div class="ob3-body ob2-in">${h}</div>${nocta?'':`<div class="ob3-foot"><button class="btn" id="obnext" style="width:100%">${cta}</button></div>`}</div></div>`;stBind(e);
 const fl=e.querySelector('.ob3-fill');if(fl)requestAnimationFrame(()=>requestAnimationFrame(()=>{fl.style.width=fl.dataset.to+'%'}));
-const bk=$('#obback');if(bk)bk.onclick=()=>go(-1);
-const nx=$('#obnext');if(nx)nx.onclick=()=>{if(chk&&!chk())return;if(OBW.authed&&OBW.s==='ready'){obFinishAuthed();return}go(1)};
-if(after)after();
-}
+const bk=$('#obback');if(bk)bk.onclick=()=>go(-1);const nx=$('#obnext');if(nx)nx.onclick=()=>{if(chk&&!chk())return;if(OBW.authed&&OBW.s==='ready'){obFinishAuthed();return}go(1)};if(after)after()}
 let OBDONE=null;
-function obAuthed(u,res){if(WK)WK.done();OBDONE=res;const m=(u&&u.user_metadata)||{};OBW.authed=true;OBW.s='name';if(!OBW.fn)OBW.fn=String(m.full_name||m.name||'').trim();OBdir=1;obSave();showOnb();const au=$('#auth');if(au)au.style.zIndex=400;const sp=document.getElementById('splash');if(sp)sp.classList.add('out')}
-async function obFinishAuthed(){const a=$('#auth');if(a)a.remove();OBW.authed=false;seen.goals=OBW.goals.slice();seen.ob=1;seen.micAsk=0;seen.notifAsk=0;seen.how=OBW.how;wr(SK,seen);try{localStorage.setItem('hortlog.ver',VER)}catch(x){}obSave();try{await sb.auth.updateUser({data:{full_name:OBW.fn,requested_role:OBW.role,requested_role_other:OBW.role==='other'?(OBW.roleOther||''):'',goals:OBW.goals.join(','),ob_orch:obOwner()?OBW.orch:'',ob_blocks:obOwner()?String(OBW.nb):'',onboarded:true}})}catch(x){}const f=OBDONE;OBDONE=null;if(f)f()}
+function obAuthed(u,res){if(WK)WK.done();OBDONE=res;const m=(u&&u.user_metadata)||{};OBW.authed=true;OBW.s='hello';if(!OBW.fn)OBW.fn=String(m.full_name||m.name||'').trim();OBdir=1;obSave();showOnb();const au=$('#auth');if(au)au.style.zIndex=400;const sp=document.getElementById('splash');if(sp)sp.classList.add('out')}
+async function obFinishAuthed(){const a=$('#auth');if(a)a.remove();OBW.authed=false;seen.goals=OBW.goals.slice();seen.ob=1;seen.micAsk=0;seen.notifAsk=0;seen.how=OBW.how;wr(SK,seen);try{localStorage.setItem('hortlog.ver',VER)}catch(x){}obSave();try{await sb.auth.updateUser({data:{full_name:OBW.fn,requested_role:OBW.role,requested_role_other:OBW.role==='other'?(OBW.roleOther||''):'',goals:OBW.goals.join(','),ob_orch:obOwner()?OBW.orch:'',ob_blocks:obOwner()?String(OBW.nb):'',onboarded:true,hortlog_tour_pending:true,hortlog_tour_complete:false}})}catch(x){}const f=OBDONE;OBDONE=null;if(f)f()}
 function pendingOb(u){let p=null;try{p=JSON.parse(localStorage.getItem(OB_KEY)||'null')}catch(e){}const m=(u&&u.user_metadata)||{};if((!p||!p.orch)&&m.ob_orch)p={orch:m.ob_orch,role:m.requested_role,fn:m.full_name,nb:+m.ob_blocks||0,goals:(m.goals||'').split(',').filter(Boolean)};return p}
-function showFirstWin(n){n=n||0;if(seen.fw||!U||!loaded)return;if(splashUp()){afterSplash(()=>showFirstWin(n));return}if(modalBusy()||$('#fwq')){if(n<8)setTimeout(()=>showFirstWin(n+1),2000);return}seen.fw=1;wr(SK,seen);
-const gl=(seen.goals||[]),ex=gl.includes('psa')?['PSA on block 1, row 12','Sprayed copper on block 1','Fix the gate on Friday']:gl.includes('crew')?['Fix the gate on Friday','Sprayed copper on block 1','Need to buy copper']:['Sprayed copper on block 1','Fix the gate on Friday','PSA on block 1, row 12'];const first=(myFullName()||'').split(/\s+/)[0];
-const e=modal('fwq',`<div class="box cut ob2-in"><h2>${first?esc(first)+', you':'You'} are set up.</h2><p>Now the fun part. Tap and speak, or type, and say something real. For example:</p><div class="ob3-chips">${ex.map(t=>`<button class="ob2-goal" data-x="${esc(t)}"><span class="ck"></span><span>${esc(t)}</span></button>`).join('')}</div><div class="acts"><button class="btn alt" id="fwx">I will do my own</button></div></div>`);
-e.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{e.remove();const q=$('#q');if(q){q.value=b.dataset.x;q.focus()}toast('Press the arrow to log it, or tap and speak.')});$('#fwx').onclick=()=>e.remove()}
+function showFirstWin(n){
+n=n||0;
+if(!U||!loaded||SPOT||$('#fwq'))return;
+const meta=(U&&U.user_metadata)||{};
+const pendingTour=!!meta.hortlog_tour_pending&&!meta.hortlog_tour_complete;
+if(seen.fw&&!pendingTour)return;
+if(splashUp()){afterSplash(()=>showFirstWin(n));return}
+if(modalBusy()){
+  if(n<40)setTimeout(()=>showFirstWin(n+1),1500);
+  return;
+}
+const first=(myFullName()||meta.full_name||'').trim().split(/\s+/)[0];
+const e=modal('fwq',`<div class="box cut ob2-in ob-welcome"><p class="ob3-k">YOUR ORCHARD IS READY</p><h2>${first?'Welcome, '+esc(first)+'.':'Welcome to Hortlog.'}</h2><p>Let’s take a quick look around. You’ll see how to capture orchard work, find it again and keep your records together.</p><div class="ob-welcome-points"><span><b>01</b> Record work</span><span><b>02</b> Find it later</span><span><b>03</b> Keep your team in sync</span></div><p class="hint">The tour is optional. Skip any time, or replay it later from Settings → Tutorial.</p><div class="acts"><button class="btn alt" id="fwx">I’ll explore myself</button><button class="btn" id="fwt">Show me around →</button></div></div>`);
+const finish=async completed=>{
+  seen.fw=1;wr(SK,seen);e.remove();
+  try{await sb.auth.updateUser({data:{hortlog_tour_pending:false,hortlog_tour_complete:!!completed,hortlog_tour_skipped:!completed}})}catch(x){}
+};
+$('#fwx').onclick=()=>finish(false);
+$('#fwt').onclick=()=>{e.remove();openOb()};
+}
 
+function showSignup(){const e=$('#auth')||document.body.appendChild(Object.assign(document.createElement('div'),{id:'auth'}));
+const N=4,left=['about a minute','about 40 seconds','about 20 seconds','last one'][suStep-1],msg=t=>{const m=$('#am');if(m)m.textContent=netMsg(t)};
+const prog=`<div class="ob2-prog"><div class="ob2-bar"><i class="ob2-fill" style="width:${Math.round((suStep-1)/N*100)}%" data-to="${Math.round((suStep-.35)/N*100)}"></i></div><div class="ob2-meta"><span>Step ${suStep} of ${N}</span><span>${left}</span></div></div>`;
+const sw='<button class="back" id="asw" style="font-size:17px">I already have an account</button>';let h='';
+if(suStep===1)h=`${prog}<h2 class="suh">What would make Hortlog <i>worth it?</i></h2><p class="sup">Pick everything that matters to you. We will set things up around it.</p>${GOALS.map(g=>`<button class="ob2-goal ${su.gl.includes(g[0])?'on':''}" data-g="${g[0]}"><span class="ck"></span><span>${g[1]}</span></button>`).join('')}<div class="acts" style="margin-top:12px"><button class="btn alt" id="sub">← Back</button><button class="btn" id="sun">Next →</button></div>${sw}`;
+else if(suStep===2)h=`${prog}<h2 class="suh">Good. Let’s save <i>your spot.</i></h2><p class="sup">Your email and a password, so your records are safe and follow you to any phone.</p><input id="em" type="email" placeholder="Email" autocomplete="email" value="${esc(su.em)}"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="new-password" value="${esc(su.pw)}"><div id="am" class="hint"></div><div class="acts"><button class="btn alt" id="sub">← Back</button><button class="btn" id="sun">Next →</button></div>${GBTN}`;
+else if(suStep===3)h=`${prog}<h2 class="suh">What should we <i>call you?</i></h2><p class="sup">Just your first name is fine. I am Liam, by the way. I built this.</p><input id="fn" type="text" placeholder="Your name" autocomplete="name" value="${esc(su.fn)}"><div id="am" class="hint"></div><div class="acts"><button class="btn alt" id="sub">← Back</button><button class="btn" id="sun">Next →</button></div>`;
+else h=`${prog}<h2 class="suh">Nice to meet you, <i>${esc((su.fn||'').split(/\s+/)[0]||'friend')}!</i></h2><p class="sup">Last one. What is your role in the orchard?</p>${SU_ROLES.map(r=>`<button class="surole ${su.rl===r[0]?'on':''}" data-r="${r[0]}"><span class="em">${r[1]}</span><span><b>${r[2]}</b>${r[3]}</span></button>`).join('')}<input id="rlo" type="text" placeholder="Your role (for example: packhouse)" value="${esc(su.rlo)}" style="display:${su.rl==='other'?'block':'none'};margin:0 0 8px"><p class="hint" style="margin:0 0 6px">Owners and managers set up the orchard. Everyone else is invited by email.</p><div id="am" class="hint"></div><div class="acts"><button class="btn alt" id="sub">← Back</button><button class="btn" id="sugo">Create my account</button></div>`;
+e.innerHTML=`<div class="box cut sustep ob2-in">${h}</div>`;
+const fl=e.querySelector('.ob2-fill');if(fl)requestAnimationFrame(()=>requestAnimationFrame(()=>{fl.style.width=fl.dataset.to+'%'}));
+const asw=$('#asw');if(asw)asw.onclick=()=>{mode='in';suStep=1;showAuth()};
+e.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{const g=b.dataset.g,k=su.gl.indexOf(g);if(k>=0)su.gl.splice(k,1);else{if(g==='look')su.gl=[];else su.gl=su.gl.filter(x=>x!=='look');su.gl.push(g)}showSignup()});
+const bk=$('#sub');if(bk)bk.onclick=()=>{if(suStep===1){mode='start';showAuth();return}if(suStep===3)su.fn=$('#fn').value;if(suStep===4)su.rlo=$('#rlo').value;if(suStep===2){su.em=$('#em').value.trim();su.pw=$('#pw').value}suStep--;showSignup()};
+const nx=$('#sun');if(nx)nx.onclick=()=>{if(suStep===1){suStep=2;showSignup()}else if(suStep===2){const em=$('#em').value.trim(),pw=$('#pw').value;if(!em||pw.length<6){msg('Enter your email and a password of at least 6 characters.');return}su.em=em;su.pw=pw;suStep=3;showSignup();const f=$('#fn');if(f)f.focus()}else{const fn=$('#fn').value.trim();if(!fn){msg('Tell us what to call you.');return}su.fn=fn;suStep=4;showSignup()}};
+const fi=$('#fn');if(fi)fi.onkeydown=ev=>{if(ev.key==='Enter')$('#sun').click()};
+const gg=$('#agg');if(gg)gg.addEventListener('click',()=>{try{localStorage.setItem('hl.goals',JSON.stringify(su.gl))}catch(x){}},true);
+e.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{su.rlo=$('#rlo').value;su.rl=b.dataset.r;showSignup()});
+const go=$('#sugo');if(go)go.onclick=async()=>{if(!su.rl){msg('Choose your role.');return}su.rlo=$('#rlo').value.trim();
+const meta={full_name:su.fn,requested_role:su.rl,requested_role_other:su.rl==='other'?su.rlo:'',goals:su.gl.join(',')};msg('One moment…');
+try{const r=await sb.auth.signUp({email:su.em,password:su.pw,options:{data:meta}});if(r.error)msg(r.error.message);else if(r.data.session){const u=r.data.user;seen.goals=su.gl.slice();wr(SK,seen);su={em:'',pw:'',fn:'',rl:'',rlo:'',gl:[]};suStep=1;await enter(u)}else msg('Check your email to confirm your account, then log in.')}
+catch(x){msg('Could not reach the server. Check your connection.')}}}
 const ST_POOL=[['#E03131','PSA','PSA','Block 3'],['#0A9C82','Compliance','Signed on','Crew · today'],['#A0643A','Spray','Copper','Block 2 · today'],['#1C7ED6','Dead vine','Dead vine','Block 1 · Row 4'],['#3A9D23','Biodiversity','Bees','Block 2'],['#7C4DFF','Job','Fix gate','Due Friday'],['#1D6B6C','Block map','Block 4','3 pins'],['#E6A700','Buy','Copper','Shopping list',1],['#FF6B2C','Audit','Audit pack','Ready'],['#6B8A86','Note','Gate','Neighbour chat'],['#17595A','Vine growth','Bloom','Block 1'],['#A0643A','Spray','Boron','Block 4'],['#7C4DFF','Job','Order bins','Due Monday'],['#E03131','PSA','PSA','Block 1'],['#3A9D23','Biodiversity','Hives','Block 2']];
-const ST_PH=[['psa.jpg','PSA','Block 3'],['apple.jpg','Orchard','Block 2'],['orchard.jpg','Canopy','Block 5'],['assets/hortlog-orchard-aerial.webp','Orchard','Block 3']];
+const ST_PH=[['assets/hortlog-orchard-rows.webp','Orchard rows','Block 3'],['apple.jpg','Fruit','Block 2'],['assets/hortlog-orchard-road.webp','Orchard lanes','Block 4'],['assets/hortlog-orchard-canopy.webp','Canopy','Block 5']];
+ST_PH.forEach(p=>{if(p[0].startsWith('assets/')){const im=new Image();im.decoding='async';im.src=p[0]}});
 const stTile=(c,k,t,mt,dk)=>`<div class="st-t" style="--c:${c};${dk?'color:#0B1F20;':''}"><small>${k}</small><b>${t}</b><span>${mt}</span></div>`;
-const stPhoto=(img,k,t)=>`<div class="st-t st-ph" style="--st-photo:url(${img})"><small>${k}</small><b>${t}</b></div>`;
+const stPhoto=(img,k,t)=>`<div class="st-t st-ph"><img src="${img}" alt="" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/hortlog-orchard-aerial.webp'"><small>${k}</small><b>${t}</b></div>`;
 function stArt(nc){const dur=[34,24,41,28,31];return Array.from({length:nc},(_,c)=>{const list=[0,1,2,3,4].map(i=>{if((i+c)%4===1){const p=ST_PH[(c+i)%ST_PH.length];return stPhoto(p[0],p[1],p[2])}const q=(c*3+i*5+(i>2?1:0))%ST_POOL.length;return stTile(...ST_POOL[q])}).join('');return '<div class="st-c"><div class="st-ci" style="animation-duration:'+dur[c%5]+'s;animation-direction:'+(c%2?'reverse':'normal')+'">'+list+list+'</div></div>'}).join('')}
 function stBind(root){root.querySelectorAll('.st-c').forEach(c=>{const ci=c.querySelector('.st-ci');if(!ci)return;let tgt=1,cur=1,raf=0;const step=()=>{cur+=(tgt-cur)*.12;if(Math.abs(tgt-cur)<.01)cur=tgt;const a=ci.getAnimations&&ci.getAnimations()[0];if(a)a.playbackRate=cur;if(cur!==tgt)raf=requestAnimationFrame(step)},set=v=>{tgt=v;cancelAnimationFrame(raf);raf=requestAnimationFrame(step)};c.addEventListener('pointerenter',ev=>{if(ev.pointerType==='mouse')set(.12)});c.addEventListener('pointerleave',()=>set(1))})}
 const bsOf=i=>i.bs&&i.bs.length?i.bs:(i.b?[i.b]:[]);
@@ -2064,11 +1945,11 @@ if(mode==='reset'){e.innerHTML=`<div class="box cut"><h2>New password</h2><p>Cho
 $('#nps').onclick=async()=>{const p=$('#np').value;if(p.length<6){$('#am').textContent='Use at least 6 characters.';return}$('#am').textContent='One moment…';
 try{const r=await sb.auth.updateUser({password:p});if(r.error){$('#am').textContent=r.error.message;return}mode='in';const a=$('#auth');if(a)a.remove();showSuccess({title:'Password changed.',sub:'You are logged in and ready to go.',cta:'Continue'});if(!U){const s=await sb.auth.getSession();if(s.data.session)await enter(s.data.session.user)}}catch(x){$('#am').textContent='Could not reach the server.'}};return}
 if(mode==='up'){showOnb();return}
-if(mode==='start'){e.innerHTML=`<div class="st"><div class="st-art" aria-hidden="true">${stArt(4)}</div><div class="st-tx"><a class="st-logo lgl" href="home.html" aria-label="Hortlog home page">Hort<i>log</i></a><h2>Your orchard, <i>better organised.</i></h2><p>Record work by voice, pin issues to a block and keep your crew up to date.</p><button class="btn" id="a-up">Get started</button><button class="btn sec" id="a-cont">Log in</button></div></div>`;
-stBind(e);$('#a-cont').onclick=()=>{mode='in';showAuth()};$('#a-up').onclick=()=>{mode='up';OBdir=1;obPrimeRoleArt();showAuth()};return}
+if(mode==='start'){e.innerHTML=`<div class="st"><div class="st-art" aria-hidden="true">${stArt(4)}</div><div class="st-tx"><a class="st-logo lgl" href="home.html" aria-label="Hortlog home page">Hort<i>log</i></a><h2>Save hours <i>on orchard records.</i></h2><p>Say it once in the orchard. Hortlog files it, and your audit pack is ready when you need it.</p><button class="btn" id="a-up">Get started</button><button class="btn sec" id="a-cont">Login</button></div></div>`;
+stBind(e);$('#a-cont').onclick=()=>{mode='in';showAuth()};$('#a-up').onclick=()=>{mode='up';OBdir=1;showAuth()};return}
 e.innerHTML=`<div class="box cut"><h2><a class="lgl" href="home.html" aria-label="Hortlog home page">Hort<i>log</i></a></h2><p>${mode==='in'?'Log in to your orchard notebook.':'Create your account.'}</p><input id="em" type="email" placeholder="Email" autocomplete="email"><div style="height:10px"></div><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="${mode==='in'?'current-password':'new-password'}">${mode==='up'?'<div style="height:10px"></div><input id="fn" type="text" placeholder="Your name" autocomplete="name"><div style="height:10px"></div><select id="rl" style="width:100%" aria-label="Your role"><option value="">Your role…</option><option value="manager">Manager</option><option value="supervisor">Supervisor</option><option value="worker">Orchard worker</option><option value="contractor">Contractor</option><option value="other">Other</option></select><input id="rlo" type="text" placeholder="Your role (for example: packhouse)" style="display:none;margin-top:10px"><p class="hint" style="margin:6px 0 0">Owners and managers set up the orchard. Everyone else is invited by email.</p>':''}<div id="am" class="hint"></div><div class="acts"><button class="btn" id="ago">${mode==='in'?'Log in':'Sign up'}</button><button class="btn alt" id="asw">${mode==='in'?'Create account':'I have an account'}</button></div><button class="btn" id="agg" type="button" style="width:100%;margin-top:10px;background:#fff;color:#1f1f1f;border:1px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:10px"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span>Continue with Google</span></button>${mode==='in'?'<button class="btn alt fgp" id="afg" type="button">Forgot your password?</button>':''}</div>`;
 const msg=t=>{const m=$('#am');m.textContent=netMsg(t);m.classList.remove('warn')};const rlS=$('#rl');if(rlS)rlS.onchange=()=>{$('#rlo').style.display=rlS.value==='other'?'block':'none'};
-$('#asw').onclick=()=>{const em=$('#em').value.trim();mode=mode==='in'?'up':'in';suStep=1;OBdir=1;if(mode==='up')obPrimeRoleArt();showAuth();$('#em').value=em;setTimeout(()=>{const t=$(em?'#pw':'#em');if(t)t.focus()},50)};
+$('#asw').onclick=()=>{const em=$('#em').value.trim();mode=mode==='in'?'up':'in';suStep=1;OBdir=1;showAuth();$('#em').value=em;setTimeout(()=>{const t=$(em?'#pw':'#em');if(t)t.focus()},50)};
 if($('#afg'))$('#afg').onclick=async()=>{const em=$('#em').value.trim();if(!em){msg('Type your email in the box above first, then tap Forgot your password.');const f=$('#em');$('#am').classList.add('warn');f.classList.remove('shk');void f.offsetWidth;f.classList.add('shk','needs');f.focus();f.oninput=()=>{f.classList.remove('needs');$('#am').classList.remove('warn')};return}$('#afg').disabled=true;msg('Sending…');
 try{const r=await sb.auth.resetPasswordForEmail(em);if(r.error){msg(r.error.message);$('#afg').disabled=false}else{sentTo=em;mode='sent';showAuth()}}catch(x){msg('Could not reach the server.');$('#afg').disabled=false}};
 $('#ago').onclick=async()=>{const em=$('#em').value.trim(),pw=$('#pw').value;if(!em){msg('Type your email address first.');return}if(pw.length<6){msg('Your password needs at least 6 characters.');return}
@@ -2333,8 +2214,23 @@ $('#nfn').onclick=()=>e.remove();$('#nfy').onclick=async()=>{e.remove();await as
 function showMicWhy(go){if($('#mwq'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'mwq',className:'ov'}));
 e.innerHTML=`<div class="box cut ob2-in"><h2>Quick heads-up</h2><p>Your phone is about to ask to use the microphone. It turns your words into text on the phone. Hortlog only receives the text and never stores your audio.</p><div class="acts"><button class="btn" id="mwg">Got it, start talking</button></div></div>`;
 $('#mwg').onclick=()=>{e.remove();go()}}
-const MAIN_TOUR=()=>[{v:'home',sel:['#mic'],pre:()=>$('#log').classList.add('open'),t:'Say it, do not type it',p:'Tap and speak, then say what you see, like “'+pick(['PSA block 3 row 49','dead vine block 1 row 22 bay 8','need to buy copper'])+'”. Hortlog files it for you.'},{sel:['#cam'],pre:()=>$('#log').classList.add('open'),t:'Photos that count',p:'Tap the camera and take one photo of one problem, close enough to see it clearly. Add a few words so it is filed in the right place.'},{sel:['#q'],pre:()=>$('#log').classList.add('open'),t:'Or just type',p:'Add a day and it goes on the Calendar, like “prune block 2 on Friday”. No day, and it goes under Calendar → Unscheduled.'},{v:'home',page:true,sel:['#main'],t:'Home',p:'Home shows what needs attention: jobs due today, each block’s open issues, and the map.'},{v:'cal',page:true,sel:['#main'],t:'Calendar',p:'Dated jobs and sprays live here. Tap a day, or a job under Coming up, to see it.'},{v:'lists',page:true,sel:['#main'],t:'Unscheduled',p:'Jobs without a date and orchard notes live here. Filter by type, add a date, or tap Done to tick one off.'},{v:'blocks',page:true,sel:['#main'],t:'Blocks',p:'Each block has its own map, imagery and open problems. Tap one to open it.'},{sel:['#mobileNav [data-v="records"]','#recb'],t:'Records',p:'Sprays become records when you tap Done. This is where your audit pack comes from.'},{sel:['#hb'],t:'Team and settings',p:'Tap your profile button to open Settings. If Team is enabled for your orchard, you can open Team there to invite people, choose roles and assign jobs. Exports, notifications and help are there too.'}];
-function openOb(){spotTour(MAIN_TOUR(),()=>{setView('home');if(!seen.ob){seen.ob=1;wr(SK,seen);maybeSetup();checkSprays()}try{sb.auth.updateUser({data:{onboarded:true}}).catch(()=>{})}catch(e){}})}
+const SPOT_EXAMPLES={
+  psa:{label:'PSA',say:'“PSA block 3 row 49”',kind:'PSA finding',where:'Block 3 · Row 49',result:'Pinned to the block map',dest:'Blocks'},
+  spray:{label:'Spray',say:'“Sprayed copper on block 2 today”',kind:'Spray application',where:'Block 2 · Copper',result:'Filed in the spray diary',dest:'Records'},
+  job:{label:'Job',say:'“Prune block 2 on Friday”',kind:'Orchard job',where:'Block 2 · Friday',result:'Added to scheduled work',dest:'Calendar'}
+};
+function spotExampleHtml(){return `<div class="sp-ex" aria-label="Example of a note becoming orchard work"><div class="sp-ex-tabs" role="group" aria-label="Choose an example">${Object.entries(SPOT_EXAMPLES).map(([k,v],i)=>`<button type="button" data-sp-ex="${k}" aria-pressed="${i===0?'true':'false'}" class="${i===0?'on':''}">${v.label}</button>`).join('')}</div><div class="sp-ex-work" aria-live="polite"><span class="sp-ex-label">SAY OR TYPE</span><b id="sp-ex-say">${SPOT_EXAMPLES.psa.say}</b><span class="sp-ex-down">↓</span><div class="sp-ex-result"><small id="sp-ex-kind">${SPOT_EXAMPLES.psa.kind}</small><b id="sp-ex-result">${SPOT_EXAMPLES.psa.result}</b><span id="sp-ex-where">${SPOT_EXAMPLES.psa.where}</span><span class="sp-ex-dest" id="sp-ex-dest">${SPOT_EXAMPLES.psa.dest}</span></div></div></div>`}
+const MAIN_TOUR=()=>[
+ {v:'home',page:true,sel:['#main'],t:'Welcome to Hortlog',p:'Your home screen brings today’s work, recent orchard activity and your blocks together. This is your starting point.'},
+ {v:'home',page:true,sel:['.mh-work','#main'],t:'Start with today’s work',p:'See what is due and what needs attention. Tap “View today’s tasks” to open the jobs behind the count.'},
+ {v:'home',pre:()=>{const l=$('#log');if(l&&!l.classList.contains('open'))toggleQuickLog()},sel:['#mic'],t:'Quick add: capture work your way',p:'Open Quick Add with the central +. Speak when your hands are busy, use the camera when a photo helps, or type a note. From Home you can also start a new record, quick note or add a product.'},
+ {v:'home',pre:()=>{const l=$('#log');if(l&&l.classList.contains('open'))toggleQuickLog()},example:true,t:'See how a note becomes orchard work',p:'Choose an example. The same simple note can become a map pin, a spray record or a scheduled job. This is a preview only — it will not add anything to your orchard.'},
+ {v:'cal',page:true,sel:['#main'],t:'Calendar keeps dated work in view',p:'Use Scheduled for jobs with a date and Unscheduled for notes and work that still needs a date. You can move work between the two as plans change.'},
+ {v:'blocks',page:true,sel:['#main'],t:'Your blocks are the orchard map',p:'Open a block to add its image, set up rows and bays, and see the issues pinned to that area.'},
+ {v:'records',page:true,sel:['#main'],t:'Records are ready when you need them',p:'Spray applications and other saved records live here. Use the export options to prepare information for an audit or share it with the right people.'},
+ {v:'settings',sel:['#tut'],t:'Your team, settings and help',p:'Open your profile to manage your account and preferences. Managers can also open Team to invite people and set their access. You can replay this tutorial from here any time.'}
+].filter(st=>!st.when||st.when());
+function openOb(){spotTour(MAIN_TOUR(),()=>{setView('home');seen.fw=1;if(!seen.ob){seen.ob=1;maybeSetup();checkSprays()}wr(SK,seen);try{sb.auth.updateUser({data:{onboarded:true,hortlog_tour_pending:false,hortlog_tour_complete:true}}).catch(()=>{})}catch(e){}})}
 let SPOT=null;
 const spW=ms=>new Promise(r=>setTimeout(r,ms));
 function spotFind(st){for(const q of [].concat(st.sel||[])){const el=document.querySelector(q);if(el){const r=el.getBoundingClientRect();if(r.width>4&&r.height>4&&getComputedStyle(el).visibility!=='hidden')return st.card?(el.closest('.card,.nudge')||el):el}}return null}
@@ -2346,8 +2242,8 @@ const ex=$('#spot');if(ex)ex.classList.add('sp-wait');
 if(st.v&&view!==st.v)setView(st.v);if(st.pre){try{st.pre()}catch(e){}}
 await spW(st.v?420:140);if(!SPOT)return;for(let k=0;k<20&&!spotFind(st);k++)await spW(120);if(!SPOT)return;if(st.wait){for(let k=0;k<24&&!document.querySelector(st.wait);k++)await spW(150);if(!SPOT)return}const el=spotFind(st);if(el&&!st.page){el.scrollIntoView({block:'center',inline:'nearest'});await spW(260);if(!SPOT)return}
 let e=$('#spot');if(!e){e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'spot'}));e.innerHTML='<i class="sp-d" id="spt"></i><i class="sp-d" id="spl"></i><i class="sp-d" id="spr"></i><i class="sp-d" id="spb"></i><i class="sp-ring" id="spg"></i><div class="sp-card" id="spc" role="dialog"></div>';window.addEventListener('resize',spotPos);document.addEventListener('keydown',spotKey)}
-const n=SPOT.steps.length,i=SPOT.i;$('#spc').innerHTML='<div class="sp-n">'+(i+1)+' of '+n+'</div><h3>'+st.t+'</h3><p>'+st.p+'</p><div class="sp-a"><button class="btn alt" id="spk">'+(i?'← Back':'Skip')+'</button><button class="btn" id="spn">'+(i===n-1?'Done':'Next →')+'</button></div>';
-$('#spk').onclick=()=>{if(i===0)spotEnd();else{SPOT.i--;spotShow()}};$('#spn').onclick=()=>{if(i===n-1)spotEnd();else{SPOT.i++;spotShow()}};spotPos();const sw=$('#spot');if(sw)sw.classList.remove('sp-wait');$('#spn').focus()}
+const n=SPOT.steps.length,i=SPOT.i;$('#spc').innerHTML='<div class="sp-progress"><i style="width:'+Math.round((i+1)/n*100)+'%"></i></div><div class="sp-n">Step '+(i+1)+' of '+n+'</div><h3>'+st.t+'</h3><p>'+st.p+'</p>'+(st.example?spotExampleHtml():'')+'<div class="sp-a"><button class="btn alt" id="spk">'+(i?'← Back':'Skip tour')+'</button><button class="btn" id="spn">'+(i===n-1?'Finish tour':'Next →')+'</button></div>';
+if(st.example){$('#spc').querySelectorAll('[data-sp-ex]').forEach(b=>b.onclick=()=>{const x=SPOT_EXAMPLES[b.dataset.spEx];if(!x)return;$('#spc').querySelectorAll('[data-sp-ex]').forEach(q=>{q.classList.toggle('on',q===b);q.setAttribute('aria-pressed',q===b?'true':'false')});$('#sp-ex-say').textContent=x.say;$('#sp-ex-kind').textContent=x.kind;$('#sp-ex-result').textContent=x.result;$('#sp-ex-where').textContent=x.where;$('#sp-ex-dest').textContent=x.dest})}$('#spk').onclick=()=>{if(i===0)spotEnd();else{SPOT.i--;spotShow()}};$('#spn').onclick=()=>{if(i===n-1)spotEnd();else{SPOT.i++;spotShow()}};spotPos();const sw=$('#spot');if(sw)sw.classList.remove('sp-wait');$('#spn').focus()}
 function spotPos(){if(!SPOT)return;const st=SPOT.steps[SPOT.i],el=spotFind(st),vw=innerWidth,vh=innerHeight,set=(id,l,t,w,h)=>{const e=$('#'+id);if(!e)return;e.style.left=Math.max(0,l)+'px';e.style.top=Math.max(0,t)+'px';e.style.width=Math.max(0,w)+'px';e.style.height=Math.max(0,h)+'px'};const c=$('#spc');if(!c)return;
 if(!el){set('spt',0,0,vw,vh);set('spl',0,0,0,0);set('spr',0,0,0,0);set('spb',0,0,0,0);set('spg',0,0,0,0);c.style.left=Math.max(12,(vw-Math.min(340,vw-24))/2)+'px';c.style.top=Math.max(12,vh/2-c.offsetHeight/2)+'px';return}
 if(st.page){const r=el.getBoundingClientRect(),T=Math.max(0,r.top),Bt=Math.min(vh,r.bottom),L=Math.max(0,r.left),Rr=Math.min(vw,r.right),cw=Math.min(340,vw-24),ch=c.offsetHeight;set('spt',0,0,vw,T);set('spb',0,Bt,vw,vh-Bt);set('spl',0,T,L,Bt-T);set('spr',Rr,T,vw-Rr,Bt-T);$('#spg').style.display='none';c.style.left=(vw-cw)/2+'px';c.style.top=Math.max(10,vh-ch-16)+'px';return}
