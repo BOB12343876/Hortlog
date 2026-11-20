@@ -1119,10 +1119,11 @@ header::before,header::after{display:none!important;content:none!important}
 </style>
 <style id="hortlog-mobile-top-strip-per-page">
 @media(max-width:899px){
-  /* The phone's very top strip follows the page: brand green on Home, white elsewhere. */
-  html{background:#fff!important}
+  /* The phone's very top strip follows the page: brand green on Home,
+     and the same surface colour as the page background everywhere else. */
+  html{background:var(--bg,#E6EFEC)!important}
   html.mobile-home-view{background:var(--deep,#0F3D3E)!important}
-  body::before{background:#fff!important}
+  body::before{background:var(--bg,#E6EFEC)!important}
   body.mobile-home-view::before{background:var(--deep,#0F3D3E)!important}
 }
 </style>
@@ -1766,10 +1767,11 @@ const themeNow=()=>{try{return localStorage.getItem('hortlog.theme')||'auto'}cat
 const syncThemeColor=()=>{const m=document.querySelector('meta[name="theme-color"]');if(!m)return;
 const deep=getComputedStyle(document.documentElement).getPropertyValue('--deep').trim()||'#0f3d3e';
 /* On phones, match the system/browser strip to the active page: green on Home,
-   white on Calendar, Blocks, Records, Settings and other app pages. */
+   and the active app background surface on all other pages (including dark mode). */
 if(window.matchMedia&&window.matchMedia('(max-width:899px)').matches){
   const onHome=document.body.classList.contains('mobile-home-view');
-  m.setAttribute('content',onHome?deep:'#ffffff');return
+  const bg=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#E6EFEC';
+  m.setAttribute('content',onHome?deep:bg);return
 }
 const sp=document.getElementById('splash');if(sp&&!sp.classList.contains('out')){m.setAttribute('content',deep);return}
 const t=themeNow(),dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);m.setAttribute('content',dark?'#0a1718':'#e6efec')};
