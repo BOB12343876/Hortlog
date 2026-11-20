@@ -644,104 +644,6 @@ html:has(.st),html:has(.ob3){overflow:hidden}.st,.ob3-body,#auth{scrollbar-width
 @media(max-width:390px){.ob-welcome .ob-welcome-points{grid-template-columns:1fr}.ob-welcome .ob-welcome-points span{grid-template-columns:30px 1fr;align-items:center}}
 @media(prefers-reduced-motion:reduce){.sp-progress i{transition:none}.st-t.st-ph>img{transform:none}}
 
-
-/* Desktop home dashboard refresh — scoped so the mobile Home stays unchanged. */
-@media (min-width:900px){
-  main>.dh-home{display:flex;flex-direction:column;gap:16px;min-height:0;width:100%;max-width:1560px;margin:0 auto;}
-  .dh-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:4px 2px 2px;}
-  .dh-head-copy{min-width:0}
-  .dh-eyebrow,.dh-section-label{display:block;color:var(--soft);font:800 12px/1.2 Barlow,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
-  .dh-head h2{font:800 34px/1.05 'Barlow Condensed',sans-serif;color:var(--ink);margin:0 0 5px}
-  .dh-head p{margin:0;color:var(--soft);font-size:14px;font-weight:600}
-  .dh-head p span{color:var(--map);padding:0 4px}
-  .dh-actions{display:flex;align-items:center;gap:8px;flex:none}
-  .dh-actions .btn,.dh-secondary{font:700 14px Barlow,sans-serif;min-height:38px;padding:8px 13px;clip-path:none;border:1px solid var(--map);}
-  .dh-actions .dh-primary{background:var(--hot);color:#1a0d05;border:1px solid var(--hot);font-weight:700}
-  .dh-primary span{font:700 18px Barlow,sans-serif;vertical-align:-1px;margin-right:3px}
-  .dh-secondary{background:var(--card);color:var(--ink);cursor:pointer}
-  .dh-secondary:hover,.dh-text-link:hover{border-color:var(--deep);color:var(--deep)}
-  .dh-alert:empty{display:none}
-  .dh-alert .alertb{display:flex!important;margin:0;width:100%}
-  .dh-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-  .dh-kpi{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;min-height:104px;text-align:left;padding:13px 16px 12px;background:var(--card);color:var(--ink);border:1px solid var(--map);border-top:3px solid var(--deep);cursor:pointer;transition:border-color .15s,transform .15s,background .15s}
-  .dh-kpi:first-child{border-top-color:var(--hot)}
-  .dh-kpi:nth-child(2){border-top-color:var(--psa)}
-  .dh-kpi:nth-child(3){border-top-color:var(--bio)}
-  .dh-kpi:nth-child(4){border-top-color:var(--deep)}
-  .dh-kpi:hover{transform:translateY(-2px);border-color:var(--deep)}
-  .dh-kpi-label{font:700 13px Barlow,sans-serif;color:var(--soft)}
-  .dh-kpi b{font:800 34px/.95 'Barlow Condensed',sans-serif;color:var(--ink)}
-  .dh-kpi b.dh-red{color:var(--psa)}
-  .dh-kpi small{font-size:12px;color:var(--soft);font-weight:500}
-  .dh-kpis .dh-kpi small span{padding:0 4px;color:var(--map)}
-  .dh-grid{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(360px,.92fr);gap:16px;align-items:start}
-  .dh-column{display:flex;flex-direction:column;gap:14px;min-width:0}
-  .dh-panel{min-width:0;background:var(--card);border:1px solid var(--map);color:var(--ink)}
-  .dh-panel-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;padding:13px 16px 11px;border-bottom:1px solid var(--map)}
-  .dh-panel-head h3{font:800 22px/1 'Barlow Condensed',sans-serif;margin:0;color:var(--ink)}
-  .dh-panel-head .dh-section-label{font-size:10px;margin:0 0 4px}
-  .dh-text-link{border:0;background:none;color:var(--deep);font:700 12px Barlow,sans-serif;padding:5px 0;white-space:nowrap;cursor:pointer}
-  .dh-panel-body{padding:0 14px 8px}
-  .dh-list-body{padding-top:2px}
-  .dh-week-chart{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;padding:14px 2px 0}
-  .dh-chart-axis{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;height:112px;padding:0 0 20px;color:var(--soft);font-size:10px;font-variant-numeric:tabular-nums}
-  .dh-chart-days{height:112px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:stretch;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(50% - .5px),var(--map) calc(50% - .5px),var(--map) 50%,transparent 50%,transparent calc(100% - 1px),var(--map) calc(100% - 1px),var(--map) 100%)}
-  .dh-chart-day{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;gap:2px}
-  .dh-chart-day>b{font:700 11px Barlow,sans-serif;color:var(--soft);height:13px;line-height:13px}
-  .dh-chart-bar{display:block;width:min(25px,70%);height:var(--bar-height);min-height:0;background:var(--deep);opacity:.82;transition:height .25s ease;}
-  .dh-chart-bar.today{background:var(--hot);opacity:1}
-  .dh-chart-day>small{font:600 10px Barlow,sans-serif;color:var(--soft);margin-top:4px}
-  .dh-chart-day>i{font:500 10px Barlow,sans-serif;color:var(--soft);font-style:normal}
-  .dh-chart-caption{font-size:10px;color:var(--soft);padding:7px 2px 8px}
-  .dh-upcoming-list{border-top:1px solid var(--map);margin-top:3px;padding-top:2px}
-  .dh-empty-compact{padding:8px 2px 10px}
-  .dh-group{padding:5px 0 0}
-  .dh-group+.dh-group{border-top:1px solid var(--map);margin-top:4px}
-  .dh-group-head{display:flex;align-items:center;justify-content:space-between;color:var(--soft);font:800 11px Barlow,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:6px 0 2px}
-  .dh-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:20px;padding:0 6px;background:var(--bg);color:var(--ink);font:700 12px Barlow,sans-serif}
-  .dh-count.dh-warn{background:color-mix(in srgb,var(--psa) 12%,var(--card));color:var(--psa)}
-  .dh-panel .row{gap:10px;padding:8px 0;border-top:1px solid var(--map);font-size:13px}
-  .dh-panel .row.first{border-top:0}
-  .dh-panel .row .t{font-size:13px;line-height:1.25}
-  .dh-panel .row small{font-size:11px;line-height:1.25}
-  .dh-panel .row .dbtn{font-size:12px;min-height:28px;padding:3px 8px;border-width:1px}
-  .dh-panel .row .x{min-width:28px;min-height:28px;font-size:17px}
-  .dh-empty{display:flex;flex-direction:column;gap:3px;padding:15px 2px 13px;color:var(--soft);font-size:13px}
-  .dh-empty b{color:var(--ink);font-size:14px}
-  .dh-empty .btn{align-self:flex-start;margin-top:8px;min-height:32px;font-size:13px;padding:6px 12px}
-  .dh-record-row{display:flex;align-items:center;gap:11px;padding:10px 2px;border-top:1px solid var(--map);min-width:0}
-  .dh-record-row:first-child{border-top:0}
-  .dh-record-mark{width:8px;height:8px;flex:none;background:var(--deep);transform:rotate(45deg)}
-  .dh-record-copy{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
-  .dh-record-copy b{font-size:13px;line-height:1.2;color:var(--ink);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dh-record-copy small{font-size:11px;color:var(--soft)}
-  .dh-record-row time{flex:none;color:var(--soft);font-size:11px;font-weight:600}
-  .dh-watch-row{display:flex;width:100%;align-items:center;gap:10px;text-align:left;padding:11px 2px;background:none;border:0;border-bottom:1px solid var(--map);color:var(--ink);cursor:pointer}
-  .dh-watch-row:last-child{border-bottom:0}
-  .dh-watch-row:hover .dh-watch-name b{color:var(--deep);text-decoration:underline}
-  .dh-watch-name{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
-  .dh-watch-name b{font-size:13px;font-weight:700}
-  .dh-watch-name small{font-size:11px;color:var(--soft)}
-  .dh-watch-total{font:800 22px 'Barlow Condensed',sans-serif;color:var(--ink)}
-  .dh-watch-arrow{font-size:20px;color:var(--soft);padding-left:4px}
-  .dh-panel-foot{border-top:1px solid var(--map);padding:8px 16px;color:var(--soft);font-size:11px}
-  .dh-map-wrap{padding:10px 14px;background:var(--blk)}
-  .dh-map-wrap svg.m{width:100%;max-width:none;max-height:260px;height:auto;object-fit:contain;background:var(--blk)}
-  .dh-map-foot{display:flex;justify-content:space-between;gap:12px;padding:8px 14px;color:var(--soft);font-size:11px;border-top:1px solid var(--map)}
-  .dh-audit-strip{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--map);background:var(--bg);padding:11px 14px}
-  .dh-audit-strip span{display:flex;flex-direction:column;gap:2px}.dh-audit-strip b{font:800 16px 'Barlow Condensed',sans-serif}.dh-audit-strip small{font-size:11px;color:var(--soft)}
-  .dh-audit-strip .dh-secondary{min-height:30px;padding:5px 10px;font-size:12px;white-space:nowrap}
-  .dh-panel .hint{font-size:12px}
-}
-@media(max-width:1120px) and (min-width:900px){.dh-chart-days{gap:3px}.dh-chart-bar{width:min(20px,72%)}}
-@media(min-width:1300px){
-  .dh-grid{grid-template-columns:minmax(0,1.35fr) minmax(390px,.9fr);gap:18px}
-  .dh-kpis{gap:14px}
-  .dh-column{gap:16px}
-  .dh-map-wrap svg.m{max-height:300px}
-}
-@media(max-width:899px){.dh-home{display:none!important}}
-
 </style>
 <style id="hortlog-brand-nav-polish">
 /* Keep the app header edge clean; mobile selection styling lives in the glass dock. */
@@ -1215,136 +1117,15 @@ header::before,header::after{display:none!important;content:none!important}
   @media(max-width:899px){.cal-switch::before{transition:none!important}}
 }
 </style>
-
-<style id="hortlog-desktop-design-system">
-/* Hortlog desktop app shell — same visual language as mobile, reorganised for a wide workspace. */
-@media (min-width:900px){
-  html,body.hortlog-app{width:100%;max-width:none;min-height:100%;margin:0;padding:0;background:var(--bg);overflow-x:hidden}
-  body.hortlog-app{display:block;font:500 15px/1.45 Barlow,system-ui,sans-serif;color:var(--ink)}
-  /* Desktop uses one permanent left rail. The old full-width header is removed. */
-  body.hortlog-app>header{position:static;inset:auto;height:auto;min-height:0;margin:0;padding:0;background:transparent;color:inherit;z-index:auto;border:0;box-shadow:none}
-  body.hortlog-app>header::before,body.hortlog-app>header::after{display:none}
-  body.hortlog-app .top{display:none!important}
-  body.hortlog-app #teamb,body.hortlog-app #recb,body.hortlog-app #hb{display:none!important}
-
-  body.hortlog-app #desktopSidebar.tabs{position:fixed;top:0;left:0;bottom:0;width:248px;height:100vh;height:100dvh;min-height:0;margin:0;padding:16px 14px 14px;display:flex;flex-direction:column;align-items:stretch;gap:5px;background:#101916;border:0;border-right:1px solid #293631;overflow-y:auto;overflow-x:hidden;z-index:50;box-shadow:2px 0 10px rgba(5,20,16,.08)}
-  body.hortlog-app #desktopSidebar .ds-brand{height:58px;min-height:58px;flex:none;display:flex;align-items:center;gap:11px;margin:0 3px 18px;padding:0 7px;border:0;border-bottom:1px solid rgba(214,232,225,.12);border-radius:0;clip-path:none;background:transparent;color:#eff8f4;text-align:left;cursor:pointer}
-  body.hortlog-app #desktopSidebar .ds-brand-mark{width:34px;height:34px;display:grid;place-items:center;flex:none;border:1px solid #418d79;border-radius:7px;color:#a8e0cc;font:800 21px/1 'Barlow Condensed',sans-serif;box-shadow:inset 0 0 0 3px rgba(65,141,121,.12)}
-  body.hortlog-app #desktopSidebar .ds-brand-name{font:800 23px/1 'Barlow Condensed',sans-serif;letter-spacing:.01em;color:#e9f5ef}
-  body.hortlog-app #desktopSidebar .ds-brand-name span{color:#62c995}
-  body.hortlog-app #desktopSidebar .ds-brand:hover .ds-brand-mark{background:rgba(98,201,149,.1)}
-  body.hortlog-app .ds-nav-label{display:block;padding:12px 12px 6px;color:#82958d;font:700 11px/1.2 Barlow,sans-serif;letter-spacing:.14em;text-transform:uppercase}
-  body.hortlog-app .ds-nav-divider{height:1px;flex:none;margin:12px 7px 7px;background:rgba(207,232,227,.12)}
-  body.hortlog-app #desktopSidebar .tab{box-sizing:border-box;width:100%;height:44px;min-height:44px;flex:none;display:flex;align-items:center;justify-content:flex-start;gap:13px;margin:0;padding:0 13px;border:0;border-left:3px solid transparent;clip-path:none;background:transparent;color:#b8c8c1;text-align:left;font:600 14px/1 Barlow,system-ui,sans-serif;border-radius:5px;letter-spacing:0;cursor:pointer;transition:color .16s ease,background-color .16s ease,border-color .16s ease}
-  body.hortlog-app #desktopSidebar .tab svg{display:block;width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.94}
-  body.hortlog-app #desktopSidebar .tab .ds-label{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  body.hortlog-app #desktopSidebar .tab:hover:not(.on){background:rgba(255,255,255,.065);color:#f4faf7}
-  body.hortlog-app #desktopSidebar .tab.on{background:rgba(98,201,149,.12);border-left-color:#62c995;color:#82dfae;z-index:1}
-  body.hortlog-app #desktopSidebar .tab.on svg{color:#82dfae}
-  body.hortlog-app #desktopSidebar .tab:focus-visible{outline:2px solid var(--sun);outline-offset:-3px}
-  body.hortlog-app:not(.roles) #desktopSidebar .tab.tteam{display:none!important}
-  body.hortlog-app.roles #desktopSidebar .tab.tteam{display:flex!important}
-  body.hortlog-app #desktopSidebar .ds-nav-spacer{flex:1 0 18px;min-height:18px}
-  body.hortlog-app #desktopSidebar .ds-account{width:100%;min-height:58px;flex:none;display:flex;align-items:center;gap:10px;margin:8px 0 0;padding:9px 8px;border:1px solid rgba(214,232,225,.14);border-radius:6px;clip-path:none;background:rgba(255,255,255,.035);color:#dcebe4;text-align:left;cursor:pointer;transition:background .16s ease,border-color .16s ease}
-  body.hortlog-app #desktopSidebar .ds-account:hover{background:rgba(255,255,255,.075);border-color:rgba(214,232,225,.28)}
-  body.hortlog-app #desktopSidebar .ds-account-avatar{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:6px;background:#23845f;color:#f4fff9;font:700 15px Barlow,sans-serif;background-size:cover;background-position:center}
-  body.hortlog-app #desktopSidebar .ds-account-copy{min-width:0;display:flex;flex:1;flex-direction:column;gap:2px}
-  body.hortlog-app #desktopSidebar .ds-account-copy b{font:600 13px Barlow,sans-serif;color:#edf7f2}
-  body.hortlog-app #desktopSidebar .ds-account-copy small{font:500 11px Barlow,sans-serif;color:#91a69d}
-  body.hortlog-app #desktopSidebar .ds-account-chevron{width:16px;height:16px;flex:none;fill:none;stroke:#91a69d;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-
-  body.hortlog-app>main#main{box-sizing:border-box;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-flow:row;align-items:start;gap:18px 20px;width:calc(100% - 248px);max-width:none;min-height:100vh;margin:0 0 0 248px;padding:30px clamp(24px,2.7vw,44px) 56px;background:var(--bg)}
-  body.hortlog-app>main#main>*{grid-column:1/-1;min-width:0}
-  body.hortlog-app #mobileNav{display:none!important}
-  body.hortlog-app #plus{right:30px;bottom:28px;box-shadow:0 5px 16px rgba(11,31,32,.18);transition:transform .16s ease,box-shadow .16s ease}
-  body.hortlog-app #plus:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(11,31,32,.22)}
-  body.hortlog-app #log{right:26px;bottom:90px;width:min(440px,calc(100vw - 300px));border:1px solid var(--map);box-shadow:0 8px 28px rgba(11,31,32,.16)}
-  body.hortlog-app #toast{left:auto;right:24px;bottom:24px;max-width:460px;margin:0;box-shadow:0 5px 18px rgba(11,31,32,.14)}
-
-  /* Shared component language across every desktop workspace page. */
-  body.hortlog-app main#main h1,body.hortlog-app main#main h2,body.hortlog-app main#main h3{font-family:'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em}
-  body.hortlog-app main#main .card{background:var(--card);color:var(--ink);border:1px solid color-mix(in srgb,var(--map) 82%,var(--soft));box-shadow:0 1px 2px rgba(11,31,32,.035);margin-top:0;padding:12px 16px 14px;min-width:0}
-  body.hortlog-app main#main .card h2{font-size:23px;line-height:1.1;margin:3px 0 7px;color:var(--ink)}
-  body.hortlog-app main#main .card p,body.hortlog-app main#main .hint{line-height:1.4}
-  body.hortlog-app main#main .row{padding:8px 0;border-bottom:1px solid color-mix(in srgb,var(--map) 70%,transparent)}
-  body.hortlog-app main#main .row:last-child{border-bottom:0}
-  body.hortlog-app main#main .chip{min-height:34px;padding:6px 12px;background:var(--card);border:1px solid var(--map);clip-path:none;font:700 14px/1.1 Barlow,sans-serif}
-  body.hortlog-app main#main .chip.on{background:var(--deep);border-color:var(--deep);color:#fff}
-  body.hortlog-app main#main .btn,body.hortlog-app main#main button.btn{min-height:38px;padding:8px 15px;font:700 15px/1.2 Barlow,sans-serif;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:transform .14s ease,filter .14s ease}
-  body.hortlog-app main#main .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
-  body.hortlog-app main#main input:not([type=checkbox]):not([type=radio]),body.hortlog-app main#main select,body.hortlog-app main#main textarea{min-height:38px;border:1px solid color-mix(in srgb,var(--soft) 32%,var(--map));background:var(--card);color:var(--ink);font:500 15px Barlow,sans-serif;padding:8px 10px;max-width:100%}
-  body.hortlog-app main#main input:focus,body.hortlog-app main#main select:focus,body.hortlog-app main#main textarea:focus{outline:2px solid var(--hot);outline-offset:1px;border-color:var(--hot)}
-  body.hortlog-app main#main .acts{gap:9px;padding:10px 0 5px}
-  body.hortlog-app main#main .dn{min-height:42px}
-  body.hortlog-app main#main .tip{border-left:3px solid var(--sun);background:var(--card);padding:10px 13px;margin:0 0 4px;color:var(--soft)}
-  body.hortlog-app main#main .empty{padding:16px 12px;background:var(--blk);border:1px dashed var(--map);color:var(--soft)}
-  body.hortlog-app main#main .tiles{gap:14px}
-  body.hortlog-app main#main .tile{border:1px solid var(--map);box-shadow:0 1px 2px rgba(11,31,32,.04);transition:transform .16s ease,border-color .16s ease}
-  body.hortlog-app main#main .tile:hover{transform:translateY(-2px);border-color:var(--deep)}
-  body.hortlog-app main#main .teampg,body.hortlog-app main#main .bp,body.hortlog-app main#main .rec,body.hortlog-app main#main .setpg,body.hortlog-app main#main .calpg,body.hortlog-app main#main .home{min-width:0}
-  body.hortlog-app main#main .teamhero{padding:13px 17px;margin:0 0 12px}
-  body.hortlog-app main#main .teamhero h2{font-size:28px}
-  body.hortlog-app main#main .teamcta{padding:12px 16px;margin:0 0 10px}
-  body.hortlog-app main#main .teamcta b{font-size:22px}
-  body.hortlog-app main#main .recl .chip{justify-content:flex-start;text-align:left}
-  body.hortlog-app main#main .recr .tw{min-width:0}
-  body.hortlog-app main#main .bp>.imgcard{min-width:0}
-  body.hortlog-app main#main svg.m{max-width:100%}
-  body.hortlog-app main#main .setpg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 18px;columns:unset}
-  body.hortlog-app main#main .setpg .card{break-inside:avoid;margin:0;display:block}
-
-  /* Home: compact but not cramped; the existing desktop operational overview remains data-driven. */
-  body.hortlog-app main#main>.home{grid-column:1/-1;display:flex;flex-direction:column;min-height:calc(100vh - 120px);gap:16px}
-  body.hortlog-app main#main .dh-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:0 2px 4px}
-  body.hortlog-app main#main .dh-head h2{font-size:34px;line-height:1;margin:2px 0 5px}
-  body.hortlog-app main#main .dh-head p{font-size:14px;color:var(--soft);margin:0}
-  body.hortlog-app main#main .dh-head .dh-eyebrow{font:700 11px Barlow,sans-serif;letter-spacing:.14em;color:var(--soft)}
-  body.hortlog-app main#main .dh-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-  body.hortlog-app main#main .dh-grid,body.hortlog-app main#main .dash{gap:16px}
-  body.hortlog-app main#main .dh-panel{min-width:0}
-
-  /* Calendar and other operational workspaces use the full content width. */
-  body.hortlog-app main#main>.calpg{grid-template-columns:minmax(230px,.9fr) minmax(280px,1.02fr) minmax(280px,1.08fr);gap:18px;min-height:calc(100vh - 150px)}
-  body.hortlog-app main#main>.calpg .cl,body.hortlog-app main#main>.calpg .cm,body.hortlog-app main#main>.calpg .cr{min-width:0;gap:14px}
-  body.hortlog-app main#main>.rec{grid-template-columns:270px minmax(0,1fr);gap:18px;min-height:calc(100vh - 150px)}
-  body.hortlog-app main#main>.tiles{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))!important;gap:16px;grid-auto-rows:minmax(230px,1fr);min-height:0}
-  body.hortlog-app main#main>.tiles .tile{min-height:230px;padding:20px}
-  body.hortlog-app main#main>.tiles .tile b{font-size:34px}
-  body.hortlog-app main#main>.bp{grid-template-columns:minmax(0,1.2fr) minmax(330px,.9fr);gap:18px}
-}
-
-/* On compact laptops, keep the same destinations but collapse the sidebar to an icon rail. */
-@media (min-width:900px) and (max-width:1199px){
-  body.hortlog-app #desktopSidebar.tabs{width:78px;padding:12px 9px}
-  body.hortlog-app #desktopSidebar .ds-brand{height:54px;min-height:54px;justify-content:center;margin:0 0 12px;padding:0;border-bottom:1px solid rgba(214,232,225,.12)}
-  body.hortlog-app #desktopSidebar .ds-brand-name,body.hortlog-app .ds-nav-label,body.hortlog-app .ds-label,body.hortlog-app .ds-account-copy,body.hortlog-app .ds-account-chevron{display:none!important}
-  body.hortlog-app .ds-nav-divider{margin:10px 8px}
-  body.hortlog-app #desktopSidebar .tab{width:48px;height:46px;min-height:46px;margin:0 auto;padding:0;justify-content:center;border-left:0;border-bottom:3px solid transparent}
-  body.hortlog-app #desktopSidebar .tab.on{border-bottom-color:#62c995;background:rgba(98,201,149,.12)}
-  body.hortlog-app #desktopSidebar .tab svg{width:21px;height:21px}
-  body.hortlog-app #desktopSidebar .ds-account{min-height:48px;justify-content:center;margin:8px 0 0;padding:5px;border-color:transparent;background:transparent}
-  body.hortlog-app #desktopSidebar .ds-account-avatar{width:36px;height:36px}
-  body.hortlog-app>main#main{width:calc(100% - 78px);margin-left:78px;padding:24px 20px 48px}
-  body.hortlog-app main#main>.calpg{grid-template-columns:minmax(230px,1fr) minmax(280px,1fr);gap:14px}
-  body.hortlog-app main#main>.calpg .cr{grid-column:1/-1}
-  body.hortlog-app main#main>.calpg .cr>.card{min-height:180px}
-  body.hortlog-app main#main>.rec{grid-template-columns:230px minmax(0,1fr);gap:14px}
-  body.hortlog-app main#main>.bp{grid-template-columns:minmax(0,1fr) minmax(290px,.85fr)}
-  body.hortlog-app main#main .setpg{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (min-width:900px) and (max-width:1020px){
-  body.hortlog-app main#main>.rec{grid-template-columns:1fr}
-  body.hortlog-app main#main>.rec .recl{display:flex;flex-direction:row;flex-wrap:wrap;align-items:flex-start}
-  body.hortlog-app main#main>.rec .recl .chips{flex-direction:row;flex-wrap:wrap}
-  body.hortlog-app main#main>.rec .recl .card{flex:1 1 220px}
-  body.hortlog-app main#main>.bp{grid-template-columns:1fr}
-  body.hortlog-app main#main>.bp>.imgcard,body.hortlog-app main#main>.bp>*:not(.imgcard){grid-column:1;grid-row:auto}
-}
-@media (prefers-reduced-motion:reduce){
-  body.hortlog-app #desktopSidebar .tab,body.hortlog-app #plus,body.hortlog-app main#main .tile,body.hortlog-app main#main .btn{transition:none!important}
+<style id="hortlog-mobile-top-strip-per-page">
+@media(max-width:899px){
+  /* The phone's very top strip follows the page: brand green on Home, white elsewhere. */
+  html{background:#fff!important}
+  html.mobile-home-view{background:var(--deep,#0F3D3E)!important}
+  body::before{background:#fff!important}
+  body.mobile-home-view::before{background:var(--deep,#0F3D3E)!important}
 }
 </style>
-
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1407,104 +1188,7 @@ header::before,header::after{display:none!important;content:none!important}
   #log.closing{animation:none!important;opacity:0}
 }
 </style>
-
-<style id="hortlog-desktop-sidebar-plain-text">
-/* Desktop: keep Hortlog's existing workspace styling and move navigation to a true left sidebar. */
-@media (min-width:900px){
-  body{max-width:none!important;margin:0!important;}
-  body>header{
-    position:static!important;top:auto!important;left:auto!important;right:auto!important;
-    height:0!important;min-height:0!important;margin:0!important;padding:0!important;
-    background:transparent!important;color:inherit!important;border:0!important;box-shadow:none!important;
-    overflow:visible!important;z-index:auto!important;
-  }
-  body>header::before,body>header::after{display:none!important;content:none!important;}
-  body>header .top{display:none!important;}
-  body>header #teamb,body>header #recb,body>header #hb{display:none!important;}
-
-  body>header #desktopSidebar.tabs{
-    position:fixed!important;top:0!important;left:0!important;bottom:0!important;
-    width:232px!important;height:100vh!important;height:100dvh!important;min-height:0!important;
-    box-sizing:border-box!important;margin:0!important;padding:20px 13px 14px!important;
-    display:flex!important;flex-direction:column!important;align-items:stretch!important;
-    gap:4px!important;overflow-y:auto!important;overflow-x:hidden!important;
-    background:#0F3030!important;border:0!important;border-right:1px solid #24504D!important;
-    box-shadow:2px 0 12px rgba(3,18,18,.14)!important;z-index:40!important;
-  }
-  body>header #desktopSidebar .ds-brand{
-    display:flex!important;align-items:center!important;justify-content:flex-start!important;
-    width:100%!important;height:56px!important;min-height:56px!important;flex:none!important;
-    margin:0 0 20px!important;padding:0 10px 15px!important;
-    border:0!important;border-bottom:1px solid rgba(230,239,236,.16)!important;
-    border-radius:0!important;clip-path:none!important;background:transparent!important;
-    color:#E6EFEC!important;text-align:left!important;box-shadow:none!important;
-  }
-  body>header #desktopSidebar .ds-brand-mark{display:none!important;}
-  body>header #desktopSidebar .ds-brand-name{
-    display:block!important;font:800 29px/1 'Barlow Condensed',Impact,sans-serif!important;
-    letter-spacing:.01em!important;color:#F4F8F5!important;
-  }
-  body>header #desktopSidebar .ds-brand-name span{color:#FFD23F!important;}
-  body>header #desktopSidebar .ds-nav-label{
-    display:block!important;padding:15px 10px 7px!important;margin:0!important;
-    color:#8CAAA3!important;font:700 10px/1.2 Barlow,system-ui,sans-serif!important;
-    letter-spacing:.15em!important;text-transform:uppercase!important;
-  }
-  body>header #desktopSidebar .ds-nav-divider{
-    display:block!important;height:1px!important;min-height:1px!important;flex:none!important;
-    margin:11px 8px 4px!important;background:rgba(220,239,232,.13)!important;
-  }
-  body>header #desktopSidebar .tab{
-    display:flex!important;align-items:center!important;justify-content:flex-start!important;
-    box-sizing:border-box!important;width:100%!important;height:42px!important;min-height:42px!important;
-    flex:none!important;margin:0!important;padding:0 12px!important;gap:0!important;
-    border:0!important;border-left:3px solid transparent!important;border-radius:0!important;
-    clip-path:none!important;background:transparent!important;color:#C2D5CF!important;
-    text-align:left!important;font:600 15px/1.15 Barlow,system-ui,sans-serif!important;
-    letter-spacing:0!important;box-shadow:none!important;cursor:pointer!important;
-    transition:background-color .15s ease,color .15s ease,border-color .15s ease!important;
-  }
-  body>header #desktopSidebar .tab svg{display:none!important;}
-  body>header #desktopSidebar .tab .ds-label{display:block!important;white-space:nowrap!important;}
-  body>header #desktopSidebar .tab:hover:not(.on){background:rgba(230,239,236,.065)!important;color:#FFFFFF!important;}
-  body>header #desktopSidebar .tab.on{
-    background:rgba(255,107,44,.12)!important;border-left-color:#FF6B2C!important;
-    color:#FFFFFF!important;z-index:1!important;
-  }
-  body:not(.roles)>header #desktopSidebar .tab.tteam{display:none!important;}
-  body.roles>header #desktopSidebar .tab.tteam{display:flex!important;}
-  body>header #desktopSidebar .ds-nav-spacer{display:block!important;flex:1 0 20px!important;min-height:20px!important;}
-  body>header #desktopSidebar .ds-account{
-    display:flex!important;align-items:center!important;justify-content:flex-start!important;
-    width:100%!important;min-height:54px!important;flex:none!important;margin:12px 0 0!important;
-    padding:9px 11px!important;border:1px solid rgba(220,239,232,.16)!important;
-    border-radius:0!important;clip-path:none!important;background:rgba(230,239,236,.045)!important;
-    color:#E6EFEC!important;text-align:left!important;box-shadow:none!important;
-  }
-  body>header #desktopSidebar .ds-account-avatar,body>header #desktopSidebar .ds-account-chevron{display:none!important;}
-  body>header #desktopSidebar .ds-account-copy{display:flex!important;min-width:0!important;flex:1!important;flex-direction:column!important;gap:2px!important;}
-  body>header #desktopSidebar .ds-account-copy b{color:#F4F8F5!important;font:700 14px Barlow,system-ui,sans-serif!important;}
-  body>header #desktopSidebar .ds-account-copy small{color:#9BB8B0!important;font:500 11px Barlow,system-ui,sans-serif!important;}
-
-  body>main#main{
-    box-sizing:border-box!important;width:calc(100% - 232px)!important;max-width:none!important;
-    min-height:100vh!important;margin:0 0 0 232px!important;
-    padding:16px 24px 70px!important;flex:1 1 auto!important;
-  }
-  body>#mobileNav{display:none!important;}
-}
-@media (min-width:900px) and (max-width:1120px){
-  body>header #desktopSidebar.tabs{width:204px!important;padding:16px 10px 12px!important;}
-  body>main#main{width:calc(100% - 204px)!important;margin-left:204px!important;padding-left:18px!important;padding-right:18px!important;}
-}
-@media (max-width:899px){
-  body>header #desktopSidebar{display:none!important;}
-}
-@media (prefers-reduced-motion:reduce){
-  body>header #desktopSidebar .tab{transition:none!important;}
-}
-</style>
-</head><body class="hortlog-app"><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
+</head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
 function say(t,h){m.innerHTML='<div class="card"><h1>'+h+'</h1><p>'+t+'</p></div>'}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function call(b){b.token=T;return fetch(U,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json()})}
@@ -1570,27 +1254,7 @@ winter:[function(){rain(32)},function(){rain(60)},function(){drift(function(){re
 P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.getElementById('splash');if(s)s.className='out'},8000)</script>
 <header>
 <div class="top"><span class="brand" id="brand" role="button" tabindex="0" aria-label="Home"><h1>Hort<i>log</i></h1></span><span class="hdr-r"><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="teamb" class="recb teamb">Team</button><button id="recb" class="recb">Records</button></span></div>
-<nav class="tabs" id="desktopSidebar" aria-label="Main navigation">
-  <button class="ds-brand" id="dsHome" type="button" aria-label="Hortlog home">
-    <span class="ds-brand-name">Hort<span>log</span></span>
-  </button>
-  <div class="ds-nav-label">WORKSPACE</div>
-  <button class="tab on" data-v="home" type="button" title="Home" aria-label="Home"><span class="ds-label">Home</span></button>
-  <button class="tab" data-v="cal" type="button" title="Calendar" aria-label="Calendar"><span class="ds-label">Calendar</span></button>
-  <div class="ds-nav-divider"></div>
-  <div class="ds-nav-label">ORCHARD</div>
-  <button class="tab" data-v="blocks" type="button" title="Blocks" aria-label="Blocks"><span class="ds-label">Blocks</span></button>
-  <button class="tab" data-v="records" type="button" title="Records" aria-label="Records"><span class="ds-label">Records</span></button>
-  <div class="ds-nav-divider"></div>
-  <div class="ds-nav-label">MANAGE</div>
-  <button class="tab tteam" data-v="team" type="button" title="Team" aria-label="Team"><span class="ds-label">Team</span></button>
-  <button class="tab" data-v="settings" type="button" title="Settings" aria-label="Settings"><span class="ds-label">Settings</span></button>
-  <div class="ds-nav-spacer"></div>
-  <button class="ds-account" id="dsAccount" type="button" aria-label="My account and settings" title="My account and settings">
-    <span class="ds-account-copy"><b>My Account</b><small>Profile &amp; settings</small></span>
-    
-  </button>
-</nav>
+<div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab tteam" data-v="team">Team</button></div>
 </header>
 <main id="main"></main>
 <div id="toast"></div>
@@ -2101,9 +1765,12 @@ setInterval(()=>{if(U&&ROLES&&!document.hidden)alertsRefresh()},300000);
 const themeNow=()=>{try{return localStorage.getItem('hortlog.theme')||'auto'}catch(e){return 'auto'}};
 const syncThemeColor=()=>{const m=document.querySelector('meta[name="theme-color"]');if(!m)return;
 const deep=getComputedStyle(document.documentElement).getPropertyValue('--deep').trim()||'#0f3d3e';
-/* On phones, keep the very top system/browser strip matched to Hortlog's header
-   green even after the splash screen disappears. Desktop keeps its normal theme. */
-if(window.matchMedia&&window.matchMedia('(max-width:899px)').matches){m.setAttribute('content',deep);return}
+/* On phones, match the system/browser strip to the active page: green on Home,
+   white on Calendar, Blocks, Records, Settings and other app pages. */
+if(window.matchMedia&&window.matchMedia('(max-width:899px)').matches){
+  const onHome=document.body.classList.contains('mobile-home-view');
+  m.setAttribute('content',onHome?deep:'#ffffff');return
+}
 const sp=document.getElementById('splash');if(sp&&!sp.classList.contains('out')){m.setAttribute('content',deep);return}
 const t=themeNow(),dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);m.setAttribute('content',dark?'#0a1718':'#e6efec')};
 syncThemeColor();
@@ -2654,8 +2321,6 @@ $('#avf').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
 const recFile=f=>shrink(f,640,.6,c=>{recPhoto=c.toDataURL('image/jpeg',.6);render()});
 $('#rfile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)recFile(f)};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setView(b.dataset.v));
-$('#dsHome').onclick=()=>setView('home');
-$('#dsAccount').onclick=()=>setView('settings');
 document.querySelectorAll('#mobileNav [data-v]').forEach(b=>b.onclick=()=>setView(b.dataset.v));
 $('#recb').onclick=()=>setView('records');
 const FR_AWAY=45*864e5;let sessStart=Date.now(),visited=new Set(['home']),nudged=false,prevUse=0,nudgeK='';
@@ -2944,72 +2609,11 @@ return `<div class="mobile-home">
 </div>`;
 }
 function homeHtml(){return window.innerWidth<900?mobileHomeHtml():desktopHomeHtml()}
-function desktopHomeHtml(){
-const T=iso(new Date()),month=T.slice(0,7),endDate=iso(new Date(Date.now()+7*864e5)),today=new Date(),first=myFullName().trim().split(/\s+/)[0],greet=MD().g,orchard=(B[0]&&B[0].biz)||'Your orchard',blockCount=bl().length;
-const openWork=items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i));
-const dueToday=openWork.filter(i=>i.due===T).sort((a,b)=>a.id-b.id);
-const overdue=openWork.filter(i=>i.due&&i.due<T&&!(i.wk&&T<=i.wk)).sort((a,b)=>(a.due||'').localeCompare(b.due||'')||a.id-b.id);
-const upcoming=openWork.filter(i=>i.due&&i.due>T&&i.due<=endDate).sort((a,b)=>(a.due||'').localeCompare(b.due||'')||a.id-b.id).slice(0,5);
-const weekDays=Array.from({length:7},(_,k)=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+k);const key=iso(d);return{key,label:k===0?'Today':d.toLocaleDateString('en-NZ',{weekday:'short'}),date:d.getDate(),count:openWork.filter(i=>i.due===key).length}});const weekPeak=Math.max(1,...weekDays.map(x=>x.count));const weekTotal=weekDays.reduce((n,x)=>n+x.count,0);
-const issues=openWork.filter(i=>i.c==='psa'||i.c==='dead');
-const psa=issues.filter(i=>i.c==='psa').length,dead=issues.filter(i=>i.c==='dead').length;
-const monthRecords=recRows().filter(r=>r.date&&r.date.slice(0,7)===month).length;
-const records=recRows().filter(r=>r.date).sort((a,b)=>(b.id||0)-(a.id||0)||String(b.date).localeCompare(String(a.date))).slice(0,5);
-const issueBlocks={};issues.forEach(i=>{if(i.b==null)return;const k=String(i.b);(issueBlocks[k]||(issueBlocks[k]={psa:0,dead:0,total:0}))[i.c==='psa'?'psa':'dead']++;issueBlocks[k].total++});
-const watch=Object.entries(issueBlocks).sort((a,b)=>b[1].total-a[1].total||Number(a[0])-Number(b[0])).slice(0,5);
-const rowSet=(arr)=>arr.map((i,k)=>rowHtml(i,k===0)).join('');
-const duePanel=overdue.length||dueToday.length
- ?`${overdue.length?`<div class="dh-group"><div class="dh-group-head"><span>Overdue</span><b class="dh-count dh-warn">${overdue.length}</b></div>${rowSet(overdue.slice(0,4))}</div>`:''}${dueToday.length?`<div class="dh-group"><div class="dh-group-head"><span>Due today</span><b class="dh-count">${dueToday.length}</b></div>${rowSet(dueToday.slice(0,5))}</div>`:''}`
- :'<div class="dh-empty"><b>Nothing due today.</b><span>Your work queue is clear for now.</span></div>';
-const weekChart=weekTotal?`<div class="dh-week-chart" role="img" aria-label="${weekTotal} open jobs scheduled over the next seven days"><div class="dh-chart-axis"><span>${weekPeak}</span><span>${weekPeak>1?Math.ceil(weekPeak/2):''}</span><span>0</span></div><div class="dh-chart-days">${weekDays.map(x=>`<div class="dh-chart-day" title="${x.count} open job${x.count===1?'':'s'} · ${x.label} ${x.date}"><b>${x.count||''}</b><span class="dh-chart-bar ${x.key===T?'today':''}" style="--bar-height:${x.count?Math.max(4,x.count/weekPeak*60):0}px"></span><small>${x.label}</small><i>${x.date}</i></div>`).join('')}</div></div><div class="dh-chart-caption">Open jobs by due date · ${weekTotal} in the next seven days</div>`:'';
-const upcomingHtml=weekChart+(upcoming.length?`<div class="dh-upcoming-list">${rowSet(upcoming.slice(0,3))}</div>`:'<div class="dh-empty dh-empty-compact"><b>No later-dated jobs.</b><span>New scheduled work will show here.</span></div>');
-const recentHtml=records.length?records.map((r,k)=>{const where=r.ab?'All blocks':r.bs&&r.bs.length>1?blab(r):r.b?bn(r.b):'No block';const title=r.t||r.rf||'Orchard record';const kind=r.rf||((RC[r.rc]&&RC[r.rc][0])||'Record');return `<div class="dh-record-row"><span class="dh-record-mark"></span><span class="dh-record-copy"><b>${esc(title)}</b><small>${esc(kind)} · ${esc(where)}</small></span><time>${esc(dayLabel(r.date))}</time></div>`}).join(''):'<div class="dh-empty"><b>No records yet.</b><span>New spray applications, observations and notes will appear here.</span></div>';
-const watchHtml=watch.length?watch.map(([n,c])=>`<button class="dh-watch-row" type="button" data-blk="${esc(n)}"><span class="dh-watch-name"><b>${esc(bn(n))}</b><small>${c.psa?c.psa+' PSA':''}${c.psa&&c.dead?' · ':''}${c.dead?c.dead+' dead vine'+(c.dead===1?'':'s'):''}</small></span><b class="dh-watch-total">${c.total}</b><span class="dh-watch-arrow">›</span></button>`).join(''):'<div class="dh-empty"><b>No open block issues.</b><span>PSA and dead-vine observations will be grouped here by block.</span></div>';
-const alert=alertBar();
-const dateLine=today.toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-return `<div class="home desktop-home dh-home">
-  <div class="dh-head">
-    <div class="dh-head-copy"><div class="dh-eyebrow">ORCHARD OVERVIEW</div><h2>${esc(greet)}${first?', '+esc(first):''}</h2><p>${esc(orchard)} <span>·</span> ${blockCount} block${blockCount===1?'':'s'} <span>·</span> ${esc(dateLine)}</p></div>
-    <div class="dh-actions">${canWrite()?`<button class="btn dh-primary" type="button" data-home-action="record"><span aria-hidden="true">＋</span> New record</button>`:''}<button class="dh-secondary" type="button" data-dash-nav="cal">Plan work</button><button class="dh-secondary" type="button" data-dash-nav="blocks">View blocks</button></div>
-  </div>
-  ${alert?`<div class="dh-alert">${alert}</div>`:''}
-  <div class="dh-kpis" aria-label="Orchard overview metrics">
-    <button class="dh-kpi" type="button" data-dash-nav="cal"><span class="dh-kpi-label">Due today</span><b>${dueToday.length}</b><small>Jobs scheduled for today</small></button>
-    <button class="dh-kpi" type="button" data-dash-nav="overdue"><span class="dh-kpi-label">Overdue</span><b class="${overdue.length?'dh-red':''}">${overdue.length}</b><small>${overdue.length?'Needs follow-up':'Nothing overdue'}</small></button>
-    <button class="dh-kpi" type="button" data-dash-nav="blocks"><span class="dh-kpi-label">Open block issues</span><b>${issues.length}</b><small>${psa} PSA <span>·</span> ${dead} dead vine${dead===1?'':'s'}</small></button>
-    <button class="dh-kpi" type="button" data-dash-nav="records"><span class="dh-kpi-label">Records this month</span><b>${monthRecords}</b><small>Saved orchard records</small></button>
-  </div>
-  <div class="dh-grid">
-    <div class="dh-column dh-primary-column">
-      <section class="dh-panel dh-work-panel">
-        <div class="dh-panel-head"><div><span class="dh-section-label">ACTION LIST</span><h3>Today's priorities</h3></div><button class="dh-text-link" type="button" data-dash-nav="cal">Open calendar →</button></div>
-        <div class="dh-panel-body">${duePanel}</div>
-      </section>
-      <section class="dh-panel">
-        <div class="dh-panel-head"><div><span class="dh-section-label">NEXT 7 DAYS</span><h3>Coming up</h3></div><button class="dh-text-link" type="button" data-dash-nav="cal">See schedule →</button></div>
-        <div class="dh-panel-body dh-list-body">${upcomingHtml}</div>
-      </section>
-      <section class="dh-panel dh-records-panel">
-        <div class="dh-panel-head"><div><span class="dh-section-label">FIELD NOTES & LOGS</span><h3>Recently recorded</h3></div><button class="dh-text-link" type="button" data-dash-nav="records">View records →</button></div>
-        <div class="dh-panel-body">${recentHtml}</div>
-      </section>
-    </div>
-    <div class="dh-column dh-side-column">
-      <section class="dh-panel">
-        <div class="dh-panel-head"><div><span class="dh-section-label">BLOCK WATCH</span><h3>Needs a look</h3></div><button class="dh-text-link" type="button" data-dash-nav="blocks">Open blocks →</button></div>
-        <div class="dh-panel-body">${watchHtml}</div>
-        ${issues.length?`<div class="dh-panel-foot">${psa} PSA issue${psa===1?'':'s'} and ${dead} dead vine${dead===1?'':'s'} currently open.</div>`:''}
-      </section>
-      <section class="dh-panel dh-map-panel">
-        <div class="dh-panel-head"><div><span class="dh-section-label">YOUR ORCHARD</span><h3>Block map</h3></div><button class="dh-text-link" type="button" data-dash-nav="blocks">Explore map →</button></div>
-        <div class="dh-map-wrap">${blockCount?mapSvg():`<div class="dh-empty"><b>Your blocks will appear here.</b><span>Add your first block to start building the orchard map.</span><button class="btn" type="button" data-dash-nav="blocks">Set up blocks</button></div>`}</div>
-        <div class="dh-map-foot"><span>${blockCount} block${blockCount===1?'':'s'} mapped</span><span>${issues.length} open issue${issues.length===1?'':'s'}</span></div>
-      </section>
-
-    </div>
-  </div>
-</div>`
-}
+function desktopHomeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)),it=items.find(i=>i.id===sel),m=T.slice(0,7);
+const STNAV={'Open jobs':'lists','Due today':'cal','Overdue':'cal','Open PSA':'blocks','Records this month':'records'};const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i)).length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
+const AB=alertBar(),SC=setupCard(),KC=SC?'':keepCard();if([AB,SC,KC].filter(Boolean).length>=2){const k=st.findIndex(x=>x[0]==='Open PSA');if(k>=0)st.splice(k,1)}
+const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
+let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
 function monthCard(){const[y,m]=calM.split('-').map(Number),first=new Date(y,m-1,1),nd=new Date(y,m,0).getDate(),off=(first.getDay()+6)%7,T=iso(new Date());
 let s=`<div class="mh"><button class="x" data-cm="-1" aria-label="Previous month">←</button><b>${first.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</b><button class="x" data-cm="1" aria-label="Next month">→</button></div><div class="mg">`+['M','T','W','T','F','S','S'].map(d=>`<span class="wd">${d}</span>`).join('');
 for(let i=0;i<off;i++)s+='<span></span>';
@@ -3233,7 +2837,6 @@ A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
 A('[data-nav]',b=>b.onclick=e=>{if(e.target.closest('button'))return;if(b.dataset.nav==='cal'&&/Overdue/.test(b.textContent)){goOverdue();return}setView(b.dataset.nav)});
 A('[data-home-nav]',b=>{const go=()=>{const v=b.dataset.homeNav;if(v==='today'){day=iso(new Date());setView('cal')}else if(v==='overdue')goOverdue();else if(v==='blocks')setView('blocks');else if(v==='unscheduled')setView('lists')};b.onclick=go;if(b.tagName!=='BUTTON')b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
 A('[data-home-action]',b=>b.onclick=()=>{if(!canWrite()){toast('Your role is view-only. Ask your manager to change it.');return}if(b.dataset.homeAction==='record'){toggleQuickLog()}else if(b.dataset.homeAction==='note'){const q=$('#q'),l=$('#log');q.placeholder='Write a quick note…';if(!l.classList.contains('open'))toggleQuickLog();setTimeout(()=>q.focus(),60)}else if(b.dataset.homeAction==='product'){showProd()}});
-A('[data-dash-nav]',b=>b.onclick=()=>{const k=b.dataset.dashNav;if(k==='overdue'){goOverdue();return}if(k==='cal')day=iso(new Date());setView(k)});
 A('[data-blk]',b=>b.onclick=()=>{blk=+b.dataset.blk||null;drawing=null;imgSet=false;imgOpen=false;strPrev=null;view='blocks';render();window.scrollTo(0,0);if(blk&&B[blk]&&!B[blk].cfg&&!B[blk].img&&canBlk())showBlockCfg(blk)});
 A('[data-tip]',b=>b.onclick=()=>{const t=b.closest('.tip');if(t)t.classList.add('fade');setTimeout(()=>{seen[b.dataset.tip]=1;wr(SK,seen);render()},330)});
 A('.pin',c=>c.onclick=e=>{e.stopPropagation();sel=+c.dataset.id;render()});
@@ -3254,7 +2857,7 @@ const sv=document.getElementById('bsvg');if(sv&&drawing)sv.onclick=e=>{if(dmode=
 on('logout',async()=>{await sb.auth.signOut()});on('fbk',()=>openFeedback());on('delacct',()=>openDelete());on('tut',()=>openOb());on('tips',()=>{Object.keys(TIPS).forEach(k=>{delete seen[k];delete seen['d_'+k]});wr(SK,seen);toast('Tips will show again on each tab.')});
 on('npb',async()=>{const p=$('#npw').value;if(p.length<6){toast('Use at least 6 characters.');return}try{const r=await sb.auth.updateUser({password:p});toast(r.error?r.error.message:'Password changed.')}catch(e){toast('Could not reach the server.')}});
 A('[data-mood]',b=>b.onclick=()=>{const v=+b.dataset.mood,cd=b.closest('.card');if(cd)cd.classList.add('zout');setTimeout(()=>{const P0=meP(),c=P0.checkins=P0.checkins||[],T=iso(new Date());if(c.length&&c[c.length-1].d===T)c[c.length-1].v=v;else c.push({d:T,v});P0.checkins=c.slice(-60);saveMe();render();toast(v>=3?'Great, see you next week.':v===2?'That’s okay, a busy week. Thanks for checking in.':'That’s okay. Thanks for telling us. See you next week.')},450)});
-A('[data-ap]',b=>b.onchange=()=>{apSel[b.dataset.ap]=b.checked});if(view==='records')signWire($('#main'));if(view==='home'&&document.querySelector('.cta-wrap'))startSlides();
+A('[data-ap]',b=>b.onchange=()=>{apSel[b.dataset.ap]=b.checked});if(view==='records')signWire($('#main'));if(view==='home')startSlides();
 A('[data-th]',b=>b.onclick=()=>{setTheme(b.dataset.th);render()});A('[data-su]',b=>b.onclick=()=>suGo(b.dataset.su));A('[data-suhide]',b=>b.onclick=()=>{seen.suHide=1;wr(SK,seen);render()});A('[data-kp]',b=>b.onclick=()=>showProdPick(+b.dataset.kp));
 A('[data-del]',b=>b.onclick=e=>{e.stopPropagation();confirmDel(+b.dataset.del)});
 A('[data-try]',b=>b.onclick=()=>{const q=$('#q');q.value=b.dataset.try;if(window.innerWidth>=900)$('#log').classList.add('open');q.focus();toast('Now press → to log it.')});
@@ -3294,12 +2897,11 @@ const chipKey=(v,c,i)=>v+':'+(v==='records'&&i>0?c:'')+':'+i;
 function chipSave(){if(!lastV)return;document.querySelectorAll('#main .chips').forEach((e,i)=>{chipMem[chipKey(lastV,lastC,i)]=e.scrollLeft})}
 function chipRestore(){document.querySelectorAll('#main .chips').forEach((e,i)=>{const m=chipMem[chipKey(view,recCat,i)];if(m)e.scrollLeft=m});lastV=view;lastC=recCat}
 function render(){try{setTimeout(()=>{if(view!=='home')return;if(document.querySelector('.nudge'))shownOnce('nudge_setup');if(document.querySelector('.teamcta')&&window.innerWidth<900)shownOnce('nudge_team');if(document.querySelector('.instbar'))shownOnce('nudge_install')},400)}catch(e){}syncCats();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));document.querySelectorAll('#mobileNav .mnav-item').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
-chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):'<h2 class="mobile-page-title">Blocks</h2>'+tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);document.body.classList.toggle('mobile-home-view',view==='home');$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar,ini=U&&U.email?U.email[0].toUpperCase():'•',da=$('#dsAvatar');if(hb){if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=ini}}if(da){if(av){da.style.backgroundImage="url('"+av+"')";da.textContent=''}else{da.style.backgroundImage='';da.textContent=ini}}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
+chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):'<h2 class="mobile-page-title">Blocks</h2>'+tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);document.body.classList.toggle('mobile-home-view',view==='home');document.documentElement.classList.toggle('mobile-home-view',view==='home');syncThemeColor();$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
 (async()=>{try{if(!window.claude)return;AI=await window.claude.use('sample');DL=await window.claude.use('downloads');
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
 boot();
-try{const layoutMq=window.matchMedia('(min-width:900px)');layoutMq.addEventListener('change',()=>{render();});}catch(e){}
 function reveal(){const sp=document.getElementById('splash');if(sp){sp.className='out';setTimeout(()=>{sp.remove();document.body.classList.remove('boot');syncThemeColor()},400)}}
 if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl&&!($('#q')&&$('#q').value)){rl=true;location.reload()}});
 window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})}).catch(()=>{}))}
