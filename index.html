@@ -1415,6 +1415,56 @@ header::before,header::after{display:none!important;content:none!important}
 .tm-av .tm-initials{position:relative;z-index:0}
 .tm-av.has-photo .tm-initials{display:none}
 </style>
+
+<style id="hortlog-desktop-final-task-polish">
+@media(min-width:900px){
+  /* Records toolbar: filters stay left, count and primary action sit at the far right. */
+  .recr>.rfhead{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+  .recr>.rfhead #rftog{flex:0 0 auto}
+  .recr>.rfhead .rcount{margin-left:auto!important;white-space:nowrap}
+  .recr>.rfhead #addr{flex:0 0 auto;margin-left:4px!important;white-space:nowrap}
+  .recr>.rfhead #vtl{flex:0 0 auto}
+  .recr>.rfhead:has(#vtl) #vtl{order:2}
+  .recr>.rfhead:has(#vtl) .rcount{order:3}
+  .recr>.rfhead:has(#vtl) #addr{order:4}
+  .recr>.rfhead:not(:has(#vtl)) .rcount{order:2}
+  .recr>.rfhead:not(:has(#vtl)) #addr{order:3}
+
+  /* Clear separation between the purple Documents to Sign panel and the
+     manually added compliance records below it. */
+  .compliance-signing-card{margin:0 0 34px!important;padding-bottom:22px;border-bottom:1px solid var(--map)}
+  .compliance-signing-card>.card{margin:0!important}
+  .compliance-signing-card+#compliance-records{margin-top:10px}
+
+  /* Saved PDFs: make View/Open read as a clear secondary action beside Delete. */
+  .dfi{gap:12px;padding:10px 2px}
+  .dfo{min-height:42px;padding:6px 10px;gap:14px}
+  .dfg{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 13px;background:var(--map);color:var(--deep);border:1px solid color-mix(in srgb,var(--deep) 18%,var(--map));font:700 13px Barlow,system-ui,sans-serif;text-decoration:none;white-space:nowrap}
+  .dfo:hover .dfg{background:var(--deep);color:#fff}
+  .dfi>.x{flex:0 0 38px}
+
+  /* Team profiles: show a real profile image cleanly when one is available. */
+  #teampg .tm-av{position:relative;overflow:hidden;background:var(--deep);color:var(--sun)}
+  #teampg .tm-av .tm-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit;z-index:1}
+  #teampg .tm-av.has-photo .tm-initials{display:none}
+
+  /* Home dashboard: align the three content columns and stretch card surfaces
+     consistently without forcing empty/conditional cards to occupy space. */
+  .home>.dash{align-items:stretch!important}
+  .home>.dash>.dl,.home>.dash>.dm,.home>.dash>.dr{min-width:0;align-self:stretch}
+  .home>.dash .card{box-sizing:border-box;min-width:0}
+  .home>.dash .grow>.card{height:100%}
+  .home>.desk-quick-card{box-sizing:border-box;min-width:0}
+  .home>.desk-quick-card .desk-quick-actions{min-width:0}
+  .home>.desk-quick-card .desk-quick-buttons>button{min-width:0;min-height:66px}
+}
+@media(min-width:900px) and (max-width:1199px){
+  .recr>.rfhead{flex-wrap:wrap}
+  .recr>.rfhead .rcount{margin-left:auto!important}
+  .home>.dash{gap:14px}
+}
+@media(prefers-reduced-motion:reduce){.dfo .dfg{transition:none!important}}
+</style>
 </head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
 function say(t,h){m.innerHTML='<div class="card"><h1>'+h+'</h1><p>'+t+'</p></div>'}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -1650,7 +1700,7 @@ const mem=await sb.rpc('list_members',{o:OID}),inv=mg?await sb.rpc('list_invites
 const memberPrefs=Object.create(null);try{const ids=MEMBERS.map(m=>m.user_id).filter(Boolean);if(ids.length){const pr=await sb.from('profiles').select('user_id,prefs').in('user_id',ids);if(!pr.error)(pr.data||[]).forEach(v=>{memberPrefs[v.user_id]=v.prefs||{}})}}catch(e){}
 const RO=(sel,own)=>['owner','manager','supervisor','worker','contractor','other'].filter(r=>own||r!=='owner').map(r=>`<option value="${r}" ${r===sel?'selected':''}>${r==='owner'?'Manager (orchard owner)':RLAB[r]}</option>`).join(''),me=MEMBERS.find(m=>m.user_id===U.id)||{},nOwn=MEMBERS.filter(m=>m.role==='owner').length,solo=MEMBERS.length<2;
 const initials=nm=>String(nm||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase(),RR=['manager','supervisor','worker','contractor','other'];
-const photoFor=m=>{const pr=memberPrefs[m.user_id]||{},v=m.avatar_url||m.photo_url||m.avatar||(m.prefs&&m.prefs.avatar)||pr.avatar||pr.avatar_url||(m.user_id===U.id&&PROF.avatar)||'';return typeof v==='string'&&/^(https?:\/\/|data:image\/|\/)/i.test(v)?v:''};
+const photoFor=m=>{const pr=memberPrefs[m.user_id]||{},mp=m.prefs||{},v=m.avatar_url||m.photo_url||m.profile_photo_url||m.picture_url||m.avatar||(mp.avatar||mp.avatar_url||mp.photo||mp.photo_url||mp.profile_photo_url||mp.picture||mp.image)||(pr.avatar||pr.avatar_url||pr.photo||pr.photo_url||pr.profile_photo_url||pr.picture||pr.image)||(m.user_id===U.id&&(PROF.avatar||PROF.avatar_url||PROF.photo||PROF.photo_url))||'';return typeof v==='string'&&/^(https?:\/\/|data:image\/|\/)/i.test(v)?v:''};
 const rows=MEMBERS.map(m=>{const self=m.user_id===U.id,canEd=mg&&!(R()==='manager'&&m.role==='owner')&&!(m.role==='owner'&&nOwn<2),nm=m.full_name||(m.email||'').split('@')[0]||'Unnamed',photo=photoFor(m);
 return `<div class="tm-row"><span class="tm-av" aria-hidden="true">${photo?`<img class="tm-photo" src="${esc(photo)}" alt="">`:''}<span class="tm-initials">${esc(initials(nm))}</span></span><span class="tm-id"><b>${esc(nm)}${self?' (you)':''}</b><small>${esc(m.email||'')}${m.role==='contractor'&&m.blocks&&m.blocks.length?' · blocks '+m.blocks.join(', '):''}</small></span>${canEd?`<select class="tm-sel" data-mrole="${m.user_id}" aria-label="Role">${RO(m.role,R()==='owner')}</select>`:`<span class="tm-role">${RLAB[m.role]}</span>`}${m.role==='contractor'&&canEd?`<button class="tm-lk" type="button" data-mblk="${m.user_id}">Blocks</button>`:''}${mg&&!self&&!(R()==='manager'&&m.role==='owner')?`<button class="x" type="button" data-mrm="${m.user_id}" aria-label="Remove">&times;</button>`:''}</div>`}).join('');
 const waiting=(inv.data||[]).length?'<div class="tm-lab">Waiting to join</div>'+inv.data.map(v=>`<div class="tm-row"><span class="tm-av" aria-hidden="true">@</span><span class="tm-id"><b>${esc(v.email)}</b><small>${RLAB[v.role]} · expires ${vfmt(String(v.expires_at).slice(0,10))}</small></span><button class="tm-lk" type="button" data-ires="${esc(v.email)}|${v.role}|${(v.blocks||[]).join('.')}">Resend</button><button class="x" type="button" data-irev="${v.id}" aria-label="Cancel invitation">&times;</button></div>`).join(''):'';
@@ -1748,7 +1798,7 @@ const m1=()=>{mode='group';q('#sgm1').className='btn';q('#sgm2').className='btn 
 const m2=()=>{mode='link';q('#sgm2').className='btn';q('#sgm1').className='btn alt';q('#sgh').textContent='Best for one-off jobs, like hedge trimming or a single spray. You send a link and they sign on their own phone.';q('#sgnl').textContent='Who needs to sign it?';q('#sgkl').style.display='';bt.textContent='Create link'};
 q('#sgm1').onclick=m1;q('#sgm2').onclick=m2;m1();
 const libRender=async()=>{const el=q('#sgd');if(!el)return;let all=[];try{all=(await DOCDB.all()).filter(d=>d.oid===OID)}catch(e){}
-el.innerHTML=all.length?'<div class="rlabel">Saved documents</div>'+all.map(d=>`<div class="dfi"><button class="dfo" type="button" data-dv="${esc(d.id)}"><span class="dfn"><b>${capN(d.title||d.name,30)}</b><small>${capN(d.name,34)} · ${Math.max(1,Math.round(d.size/1024))} KB</small></span><span class="dfg">Open</span></button><button class="x" type="button" data-dx="${esc(d.id)}" aria-label="Delete saved document">&times;</button></div>`).join('')+'<p class="hint">Saved on this device, so you do not have to upload them again.</p>':'';
+el.innerHTML=all.length?'<div class="rlabel">Saved documents</div>'+all.map(d=>`<div class="dfi"><button class="dfo" type="button" data-dv="${esc(d.id)}"><span class="dfn"><b>${capN(d.title||d.name,30)}</b><small>${capN(d.name,34)} · ${Math.max(1,Math.round(d.size/1024))} KB</small></span><span class="dfg">View / Open</span></button><button class="x" type="button" data-dx="${esc(d.id)}" aria-label="Delete saved document">&times;</button></div>`).join('')+'<p class="hint">Saved on this device, so you do not have to upload them again.</p>':'';
 el.querySelectorAll('[data-dv]').forEach(x=>x.onclick=()=>docPreview(all.find(d=>d.id===x.dataset.dv)));
 el.querySelectorAll('[data-dx]').forEach(x=>x.onclick=async()=>{const d=all.find(y=>y.id===x.dataset.dx);if(d&&confirm('Delete "'+(d.title||d.name)+'" from your saved documents? Sign-on sheets you already made are not affected.')){await DOCDB.del(d.id);libRender()}})};
 const docPreview=d=>{if(!d)return;const old=$('#dpv');if(old)old.remove();const url=URL.createObjectURL(d.blob),isImg=/^image\//.test(d.type),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'dpv',className:'ov'}));
@@ -2922,7 +2972,7 @@ let s=tip('records')+brandStrip()+demoFor('records',!recRows().length)+'<div cla
 s+=`<div class="rlabel">Folder in ${esc(RC[recCat][0])}</div><div class="chips wrap"><button class="chip ${recFolder==='all'?'on':''}" data-rf="all">All</button>${F.map(f=>`<button class="chip ${recFolder===f?'on':''}" data-rf="${esc(f)}">${esc(f)} ${cat.filter(r=>r.rf===f).length}</button>`).join('')}${canBlk()?'<button class="chip" id="addf">+ Folder</button>':''}</div>`;
 const fon=!!(recF.from||recF.to||recF.b||recF.q);
 const addable=canWrite()&&(recCat!=='sf'||seesSpray()),timeline=canExp()&&recCat==='vine';
-s+=`<div class="rfhead"><button class="btn alt" id="rftog" aria-expanded="${recFiltOpen?'true':'false'}">${recFiltOpen?'Hide filters':'Advanced filters'}${fon?' (on)':''}</button>${addable?'<button class="btn" id="addr">+ Add record</button>':''}${timeline?'<button class="btn alt" id="vtl">Timeline PDF</button>':''}<div class="rcount">${rows.length} record${rows.length===1?'':'s'}${fon?' (filtered)':''}</div></div><div class="rfilt${recFiltOpen?' open':''}"><label>From<input type="date" data-rfl="from" value="${recF.from}"></label><label>To<input type="date" data-rfl="to" value="${recF.to}"></label><label>Block<select data-rfl="b"><option value="">All blocks</option>${bl().map(n=>`<option value="${n}" ${recF.b===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><label class="grow2">Search<input type="text" data-rfl="q" placeholder="Product, details…" value="${esc(recF.q)}"></label>${fon?'<button class="btn alt" id="rfclr">Clear filters</button>':''}</div>`;
+s+=`<div class="rfhead"><button class="btn alt" id="rftog" aria-expanded="${recFiltOpen?'true':'false'}">${recFiltOpen?'Hide filters':'Advanced filters'}${fon?' (on)':''}</button>${timeline?'<button class="btn alt" id="vtl">Timeline PDF</button>':''}<div class="rcount">${rows.length} record${rows.length===1?'':'s'}${fon?' (filtered)':''}</div>${addable?'<button class="btn" id="addr">+ Add record</button>':''}</div><div class="rfilt${recFiltOpen?' open':''}"><label>From<input type="date" data-rfl="from" value="${recF.from}"></label><label>To<input type="date" data-rfl="to" value="${recF.to}"></label><label>Block<select data-rfl="b"><option value="">All blocks</option>${bl().map(n=>`<option value="${n}" ${recF.b===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><label class="grow2">Search<input type="text" data-rfl="q" placeholder="Product, details…" value="${esc(recF.q)}"></label>${fon?'<button class="btn alt" id="rfclr">Clear filters</button>':''}</div>`;
 if(recForm)s+=card(RC[recCat][1],`<h2>New ${RC[recCat][0].toLowerCase()} record</h2><div class="acts"><select id="rf2">${F.map(f=>`<option ${f===(dr.rf||(recFolder!=='all'?recFolder:F[0]))?'selected':''}>${esc(f)}</option>`).join('')}</select><input id="rd" type="date" value="${dr.rd||iso(new Date())}"><select id="rb"><option value="">No block</option>${bl().map(n=>`<option value="${n}" ${String(dr.rb)===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></div><div style="padding:0 0 6px"><input id="rt" type="text" placeholder="Details, e.g. PSA monitoring, 12 vines checked, no symptoms" value="${esc(dr.t||'')}"></div><div class="acts"><button class="btn alt" id="rph">${recPhoto?'Change photo':'Add photo'}</button>${recPhoto?'<img class="thumb" src="'+recPhoto+'" alt="Photo">':''}<button class="btn" id="rsave">Save record</button><button class="btn alt" id="rcancel">Cancel</button></div>`);
 const sfc=recCat==='sf';if(recCat==='compliance'&&canBlk())s+=`<div class="compliance-signing-card">${signCard()}</div>`;if(recCat==='vine')s+=vineCard();
 s+=`<div class="tw"><table class="rt"><thead><tr><th>Date</th><th>Folder</th><th>Block</th>${sfc?'<th>Product</th><th>Rate</th><th>Water rate</th>':''}<th>Details</th><th>Photo</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.date}</td><td>${esc(r.rf||'')}</td><td>${esc(blab(r))}</td>${sfc?`<td>${esc(r.prod||'')}</td><td>${esc(r.rate||'')}</td><td>${esc(r.water||'')}</td>`:''}<td>${esc(r.t)}</td><td>${r.p?`<img class="thumb" data-pid="${r.id}" src="${r.p}" alt="Photo">`:''}</td><td class="acell">${canEditId(r.id)?`<button class="edb" data-ed="${r.id}">✎ Edit</button>`:''}${canDelId(r.id)?`<button class="x" data-x="${r.id}" aria-label="Delete">✕</button>`:''}</td></tr>`).join('')||`<tr><td colspan="${sfc?9:6}" class="empty">Nothing in this folder yet. Tap + Add record, or log one by typing, like “monitoring PSA block 3, no symptoms”.</td></tr>`}</tbody></table></div>`;
