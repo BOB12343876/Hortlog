@@ -1127,38 +1127,6 @@ header::before,header::after{display:none!important;content:none!important}
   body.mobile-home-view::before{background:var(--deep,#0F3D3E)!important}
 }
 </style>
-
-<style id="hortlog-calendar-heading-and-profile-polish">
-@media(max-width:899px){
-  /* A deliberate page heading, rather than a loose sentence above the tabs. */
-  .cal-intro{
-    display:flex!important;flex-direction:column!important;align-items:flex-start!important;
-    gap:2px!important;margin:2px 0 12px!important;padding:0 0 10px!important;
-    border-bottom:1px solid var(--map)!important;
-  }
-  .cal-intro b{
-    display:block!important;margin:0!important;padding:0!important;
-    color:var(--ink)!important;font:800 30px/1.05 'Barlow Condensed',sans-serif!important;
-    letter-spacing:.01em!important;
-  }
-  .cal-intro span{
-    display:block!important;margin:0!important;padding:0!important;
-    color:var(--soft)!important;font:500 14px/1.35 Barlow,system-ui,sans-serif!important;
-  }
-  /* Profile photos are clean circles, with no stacked yellow/white focus boxes. */
-  #hb.av,#hb.av:hover,#hb.av:active,#hb.av.on{
-    width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;
-    padding:0!important;border:0!important;border-radius:50%!important;
-    outline:0!important;box-shadow:none!important;background-color:transparent!important;
-    background-size:cover!important;background-position:center!important;
-    color:transparent!important;
-  }
-  #hb.av:focus,#hb.av:focus-visible,#hb.av.on:focus,#hb.av.on:focus-visible{
-    outline:0!important;box-shadow:none!important;border:0!important;
-  }
-}
-</style>
-
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1210,6 +1178,14 @@ header::before,header::after{display:none!important;content:none!important}
      avoids the competing :not() selector specificity that stopped the old motion. */
   .cal-switch::before{transform:translateX(var(--cal-switch-x,0%))!important;
     transition:transform .56s cubic-bezier(.18,.82,.22,1)!important;will-change:transform}
+  /* Fluid selection: a soft waterline lifts into the moving green segment, then settles. */
+  .cal-switch::after{content:"";position:absolute;z-index:0;left:4px;top:4px;bottom:4px;
+    width:calc(50% - 4px);border-radius:9px;pointer-events:none;opacity:0;
+    transform:translateX(var(--cal-switch-x,0%));
+    background:radial-gradient(ellipse 24px 7px at 24px 0,rgba(230,239,236,.26) 98%,transparent 100%) 0 0/48px 12px repeat-x,linear-gradient(180deg,rgba(230,239,236,.08),rgba(230,239,236,.18));
+    transition:transform .56s cubic-bezier(.18,.82,.22,1),opacity .2s ease}
+  .cal-switch.liquid::after{opacity:1;animation:calWaterRise .7s cubic-bezier(.25,.72,.22,1) both}
+  @keyframes calWaterRise{0%{clip-path:inset(78% 0 0);background-position:0 20px}55%{clip-path:inset(18% 0 0);background-position:20px 0}100%{clip-path:inset(0);background-position:0 0}}
 
   /* Let Quick Add animate away when the same New record action is tapped again. */
   #log.closing{display:block!important;pointer-events:none;transform:translateX(-50%);
@@ -2664,7 +2640,7 @@ const unscheduled=items.filter(i=>!i.d&&!i.due&&!vineNote(i)).length;
 const moving=!!(calSwitchFrom&&calSwitchFrom!==calMode);
 const startX=moving?(calSwitchFrom==='unscheduled'?'100%':'0%'):(calMode==='unscheduled'?'100%':'0%');
 const moveClass=moving?(calMode==='unscheduled'?'move-right':'move-left'):'';
-return `<div class="cal-intro"><b>Calendar</b><span>Scheduled and unscheduled orchard work</span></div><div class="cal-switch ${calMode==='unscheduled'?'unscheduled':'scheduled'} ${moveClass}" style="--cal-switch-x:${startX}" role="tablist" aria-label="Calendar views"><button type="button" role="tab" aria-selected="${calMode==='scheduled'}" class="cal-mode ${calMode==='scheduled'?'on':''}" data-calmode="scheduled">Scheduled <span>${scheduled}</span></button><button type="button" role="tab" aria-selected="${calMode==='unscheduled'}" class="cal-mode ${calMode==='unscheduled'?'on':''}" data-calmode="unscheduled">Unscheduled <span>${unscheduled}</span></button></div>`}
+return `<div class="cal-switch ${calMode==='unscheduled'?'unscheduled':'scheduled'} ${moveClass}" style="--cal-switch-x:${startX}" role="tablist" aria-label="Calendar views"><button type="button" role="tab" aria-selected="${calMode==='scheduled'}" class="cal-mode ${calMode==='scheduled'?'on':''}" data-calmode="scheduled">Scheduled <span>${scheduled}</span></button><button type="button" role="tab" aria-selected="${calMode==='unscheduled'}" class="cal-mode ${calMode==='unscheduled'?'on':''}" data-calmode="unscheduled">Unscheduled <span>${unscheduled}</span></button></div>`}
 function calHtml(){
 if(calMode==='unscheduled'){const groups=Object.keys(CATS).filter(k=>filter==='all'||k===filter).map(k=>({k,l:items.filter(i=>i.c===k&&!i.due&&!vineNote(i))})).sort((a,b)=>b.l.filter(i=>!i.d).length-a.l.filter(i=>!i.d).length||CATS[a.k][0].localeCompare(CATS[b.k][0]));return tip('lists')+calSwitchHtml()+demoFor('lists',!items.some(i=>!i.due&&!vineNote(i)))+chips(true)+groups.map(({k,l})=>card(`var(${CATS[k][1]})`,`<h2>${CATS[k][0]}<em>${l.filter(i=>!i.d).length} open</em></h2>`+(l.length?list(l):'<div class="empty">Nothing here yet.</div>'))).join('')+'<p class="hint">These jobs and orchard notes do not have a scheduled date. Add a date to move a job into Scheduled.</p>'};
 const T=iso(new Date()),od=day===T?items.filter(i=>!i.d&&i.due&&i.due<T):[],l=items.filter(i=>i.due===day);
@@ -2857,14 +2833,14 @@ A('[data-f]',b=>b.onclick=()=>{filter=b.dataset.f;render()});
 A('[data-d]',b=>b.onclick=()=>{const i=items.find(a=>a.id==b.dataset.d);if(!canEditI(i)){toast('Only the person who logged this, or a supervisor, can change it.');return}i.d=!i.d;i.doneAt=i.d?Date.now():null;popId=i.d?i.id:null;save();render();popId=null;if(i.d&&i.c==='spray'){toast('Saved to Records');if(fertKind(i)==='ask')setTimeout(()=>showFertAsk(i.id),500)}});
 A('[data-x]',b=>b.onclick=()=>{const k=items.findIndex(a=>a.id==b.dataset.x),it=items[k];if(!canDelI(it)){toast('You can only delete your own entries.');return}items.splice(k,1);save();sel=null;render();toast('Deleted: '+it.t.slice(0,40),()=>{items.splice(k,0,it);save();render()})});
 A('[data-calmode]',b=>b.onclick=()=>{const m=b.dataset.calmode;if((m==='scheduled'||m==='unscheduled')&&m!==calMode){
-  const from=calMode;calSwitchFrom=from;calMode=m;render();
+  const from=calMode;calSwitchFrom=from;calMode=m;render();const liquidSwitch=$('.cal-switch');if(liquidSwitch)liquidSwitch.classList.add('liquid');
   const sw=$('.cal-switch');
   if(sw){const start=from==='unscheduled'?'100%':'0%',end=m==='unscheduled'?'100%':'0%';
     sw.style.setProperty('--cal-switch-x',start);
     void sw.getBoundingClientRect();
     requestAnimationFrame(()=>requestAnimationFrame(()=>{if(sw.isConnected)sw.style.setProperty('--cal-switch-x',end)}));
   }
-  clearTimeout(calSwitchTimer);calSwitchTimer=setTimeout(()=>{calSwitchFrom=null},620);track('calendar_mode',{mode:m})
+  clearTimeout(calSwitchTimer);calSwitchTimer=setTimeout(()=>{calSwitchFrom=null;const live=$('.cal-switch');if(live)live.classList.remove('liquid')},760);track('calendar_mode',{mode:m})
 }});
 A('[data-day]',b=>b.onclick=()=>{const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+ +b.dataset.day);day=iso(d);render()});
 A('[data-go]',b=>b.onclick=()=>{filter=b.dataset.go;setView('lists')});
