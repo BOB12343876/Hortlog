@@ -2409,7 +2409,8 @@ function closeOb(){const e=$('#ob');if(e)e.remove();if(OBT){OBT=0;SLD=slides();r
 $('#hb').onclick=()=>setView('settings');$('#teamb').onclick=()=>setView('team');
 $('#brand').onclick=()=>setView('home');$('#brand').onkeydown=e=>{if(e.key==='Enter')setView('home')};
 let quickCloseTimer=0;
-function setQuickLog(open){const l=$('#log');if(!l)return;clearTimeout(quickCloseTimer);if(open){l.classList.remove('closing');l.classList.add('open')}else if(l.classList.contains('open')){l.classList.remove('open');l.classList.add('closing');quickCloseTimer=setTimeout(()=>l.classList.remove('closing'),240)}else{l.classList.remove('closing')}const opened=l.classList.contains('open');const mp=$('#mobilePlus'),dp=$('#plus');if(mp)mp.setAttribute('aria-expanded',opened?'true':'false');if(dp)dp.setAttribute('aria-expanded',opened?'true':'false');const nav=$('#mobileNav');if(nav)nav.classList.toggle('quick-open',opened);if(!opened){const q=$('#q');if(q)q.placeholder='Type, or use your keyboard mic'}}
+function quickAddBackdrop(){let d=$('#quickAddDismiss');if(!d){d=document.createElement('div');d.id='quickAddDismiss';d.setAttribute('aria-hidden','true');document.body.appendChild(d);d.addEventListener('click',()=>setQuickLog(false));}return d}
+function setQuickLog(open){const l=$('#log');if(!l)return;clearTimeout(quickCloseTimer);const backdrop=quickAddBackdrop();if(open){l.classList.remove('closing');l.classList.add('open');backdrop.classList.add('open')}else if(l.classList.contains('open')){l.classList.remove('open');l.classList.add('closing');backdrop.classList.remove('open');quickCloseTimer=setTimeout(()=>l.classList.remove('closing'),240)}else{l.classList.remove('closing');backdrop.classList.remove('open')}const opened=l.classList.contains('open');const mp=$('#mobilePlus'),dp=$('#plus');if(mp)mp.setAttribute('aria-expanded',opened?'true':'false');if(dp)dp.setAttribute('aria-expanded',opened?'true':'false');const nav=$('#mobileNav');if(nav)nav.classList.toggle('quick-open',opened);if(!opened){const q=$('#q');if(q)q.placeholder='Type, or use your keyboard mic'}}
 function toggleQuickLog(){const l=$('#log');if(!l)return;const opening=!l.classList.contains('open');setQuickLog(opening);if(opening&&window.innerWidth>=900){const q=$('#q');if(q)q.focus()}}
 $('#plus').onclick=toggleQuickLog;$('#mobilePlus').onclick=toggleQuickLog;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setQuickLog(false)});
@@ -2916,5 +2917,13 @@ function reveal(){const sp=document.getElementById('splash');if(sp){sp.className
 if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!rl&&!($('#q')&&$('#q').value)){rl=true;location.reload()}});
 window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})}).catch(()=>{}))}
 </script>
+
+<style id="hortlog-quickadd-focus-dismiss">
+  #quickAddDismiss{position:fixed;inset:0;background:transparent;z-index:6;display:none;touch-action:manipulation}
+  #quickAddDismiss.open{display:block}
+  #log{z-index:10}
+  @media(max-width:899px){#quickAddDismiss{z-index:8}#mobilePlus{position:relative;z-index:9}}
+</style>
+
 </body>
 </html>
