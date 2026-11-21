@@ -1127,6 +1127,68 @@ header::before,header::after{display:none!important;content:none!important}
   body.mobile-home-view::before{background:var(--deep,#0F3D3E)!important}
 }
 </style>
+
+<style id="hortlog-desktop-sidebar-navigation">
+/* Desktop-only navigation refresh. Page content and mobile navigation remain unchanged. */
+#desktopSidebar{display:none}
+@media(min-width:900px){
+  body{max-width:none;margin:0;width:100%;min-height:100vh}
+  body>header{display:none!important}
+  #desktopSidebar{
+    position:fixed;inset:0 auto 0 0;z-index:8;width:248px;
+    display:flex;flex-direction:column;gap:0;padding:27px 17px 18px;
+    background:var(--deep);color:#f7fbf9;border-right:1px solid rgba(255,255,255,.08);
+    overflow-y:auto;overscroll-behavior:contain
+  }
+  .desk-brand{padding:3px 10px 27px;display:flex;flex-direction:column;gap:5px}
+  .desk-brand-word{font:800 34px/.95 'Barlow Condensed',Impact,sans-serif;letter-spacing:-.025em;color:#fff}
+  .desk-brand-word>span{color:var(--sun)}
+  .desk-brand-sub{font:600 10px/1.2 Barlow,system-ui,sans-serif;letter-spacing:.15em;color:#a9c9c3}
+  .desk-nav-label{padding:0 11px 9px;color:#9fc5c0;font:700 10px/1.2 Barlow,system-ui,sans-serif;letter-spacing:.15em}
+  .desk-nav{display:flex;flex-direction:column;gap:5px}
+  #desktopSidebar .desk-tab{
+    appearance:none;-webkit-appearance:none;flex:none;width:100%;min-height:47px;
+    display:flex;align-items:center;justify-content:flex-start;gap:13px;
+    margin:0;padding:0 12px;border:0;border-left:3px solid transparent;border-radius:0;
+    clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,0 100%);
+    background:transparent;color:#d8e8e3;text-align:left;cursor:pointer;
+    font:600 15px/1.2 Barlow,system-ui,sans-serif;letter-spacing:0;
+    transition:background .16s ease,color .16s ease,border-color .16s ease
+  }
+  #desktopSidebar .desk-tab svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+  #desktopSidebar .desk-tab:hover{background:rgba(255,255,255,.075);color:#fff}
+  #desktopSidebar .desk-tab.on{
+    background:rgba(255,107,44,.14);border-left-color:var(--hot);color:#fff;
+    box-shadow:none;z-index:auto
+  }
+  #desktopSidebar .desk-tab.on svg{color:var(--hot);opacity:1}
+  #desktopSidebar .desk-tab:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+  #desktopSidebar .desk-tab.tteam{display:none}
+  body.roles #desktopSidebar .desk-tab.tteam{display:flex}
+  .desk-sidebar-bottom{margin-top:auto;padding-top:22px}
+  .desk-sidebar-rule{height:1px;background:rgba(207,232,227,.18);margin:0 5px 13px}
+  #desktopSidebar .desk-settings{min-height:58px;gap:11px;padding:7px 10px}
+  #desktopSidebar .desk-settings svg{width:19px;height:19px}
+  .desk-settings-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .desk-settings-copy b{font:600 14px/1.15 Barlow,system-ui,sans-serif;color:inherit}
+  .desk-settings-copy small{font:500 11px/1.2 Barlow,system-ui,sans-serif;color:#a9c9c3}
+  #desktopSidebar .desk-settings.on .desk-settings-copy small{color:#f1c1ab}
+  .desk-sidebar-foot{padding:14px 10px 0;color:#8fb4ad;font:500 11px/1.3 Barlow,system-ui,sans-serif}
+  main#main{
+    width:calc(100% - 248px);max-width:1680px;min-height:100vh;
+    margin:0 0 0 248px;padding:27px 32px 80px;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
+    gap:0 20px;align-items:start
+  }
+  #plus{right:30px;bottom:28px}
+}
+@media(min-width:900px) and (max-width:1199px){
+  #desktopSidebar{width:224px;padding-inline:14px}
+  main#main{width:calc(100% - 224px);margin-left:224px;padding:22px 22px 76px;grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){#desktopSidebar .desk-tab{transition:none}}
+</style>
+
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1265,6 +1327,38 @@ P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.ge
 <div class="top"><span class="brand" id="brand" role="button" tabindex="0" aria-label="Home"><h1>Hort<i>log</i></h1></span><span class="hdr-r"><button id="hb" class="recb" aria-label="Profile and settings">•</button><button id="teamb" class="recb teamb">Team</button><button id="recb" class="recb">Records</button></span></div>
 <div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab tteam" data-v="team">Team</button></div>
 </header>
+<aside id="desktopSidebar" aria-label="Desktop navigation">
+  <div class="desk-brand" aria-label="Hortlog">
+    <span class="desk-brand-word">Hort<span>log</span></span>
+    <span class="desk-brand-sub">ORCHARD WORKSPACE</span>
+  </div>
+  <div class="desk-nav-label">WORKSPACE</div>
+  <nav class="desk-nav" aria-label="Main navigation">
+    <button type="button" class="tab desk-tab" data-v="home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Home</span>
+    </button>
+    <button type="button" class="tab desk-tab" data-v="cal">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg><span>Calendar</span>
+    </button>
+    <button type="button" class="tab desk-tab" data-v="blocks">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15M15 6v15"/></svg><span>Blocks</span>
+    </button>
+    <button type="button" class="tab desk-tab" data-v="records">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 13h8M8 17h8"/></svg><span>Records</span>
+    </button>
+    <button type="button" class="tab desk-tab tteam" data-v="team">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.5-5.7 6-5.7s6 2.3 6 5.7M16 5.5a3 3 0 0 1 0 5.8M17 14.5c2.5.4 4 2.1 4 4.7"/></svg><span>Team</span>
+    </button>
+  </nav>
+  <div class="desk-sidebar-bottom">
+    <div class="desk-sidebar-rule"></div>
+    <button type="button" class="tab desk-tab desk-settings" data-v="settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.2a7.6 7.6 0 0 0 0-2.4l1.4-1.1-1.8-3.1-1.7.7a7.8 7.8 0 0 0-2.1-1.2L14.9 4h-3.6l-.3 2.1a7.8 7.8 0 0 0-2.1 1.2l-1.7-.7-1.8 3.1 1.4 1.1a7.6 7.6 0 0 0 0 2.4l-1.4 1.1 1.8 3.1 1.7-.7a7.8 7.8 0 0 0 2.1 1.2l.3 2.1h3.6l.3-2.1a7.8 7.8 0 0 0 2.1-1.2l1.7.7 1.8-3.1z"/></svg>
+      <span class="desk-settings-copy"><b>Settings &amp; account</b><small>Profile and preferences</small></span>
+    </button>
+    <div class="desk-sidebar-foot">Made for the work in your orchard.</div>
+  </div>
+</aside>
 <main id="main"></main>
 <div id="toast"></div>
 <nav id="mobileNav" aria-label="Main navigation">
