@@ -1290,65 +1290,35 @@ header::before,header::after{display:none!important;content:none!important}
   .desk-quick-heading{flex-basis:165px}
   .desk-quick-buttons>button{gap:7px;padding:7px}
 }
+
+  /* Records: filters stay left, Add Record sits on the far right of that row. */
+  .rfhead{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;flex-wrap:wrap!important}
+  .rfhead-left{display:flex;align-items:center;gap:14px;min-width:0}
+  .rfhead>#addr{margin-left:auto;flex:none}
+  /* Document lists: separate manually-added compliance entries from the purple sign banner. */
+  #sgl{margin-top:22px!important;padding-top:4px;margin-bottom:26px!important}
+  #sgl>.fi{margin-top:10px}
+  .recr #tm-sign{margin-bottom:14px!important}
+  /* Team avatars use real profile photos when list_members supplies one. */
+  #teampg .tm-av{position:relative;overflow:hidden;display:grid;place-items:center}
+  #teampg .tm-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  #teampg .tm-initials{position:relative;z-index:0;place-items:center;width:100%;height:100%}
+  #teampg .tm-photo:not([src]),#teampg .tm-photo[src=""]{display:none}
+  /* Keep the dashboard balanced: equal-height columns/cards and no oversized product panel. */
+  .dash{align-items:stretch!important}
+  .dash>.dl,.dash>.dm,.dash>.dr{min-width:0;align-self:stretch}
+  .dash .o8.feed,.dash .o5,.dash .o7a,.dash .o7c{min-height:0}
+  .dash .o8.feed>.card,.dash .o5>.card{height:100%}
+  .dash .o7a .card{max-height:420px;overflow:auto}
+  .dash .o8c:empty,.dash .o6:empty,.dash .o7b:empty,.dash .o7a:empty,.dash .o7c:empty,.dash .o0:empty{display:none}
+  .dash .card{min-width:0}
+  @media(min-width:900px){.rfhead{margin-top:12px}}
 @media(prefers-reduced-motion:reduce){#sidebarResizeGrip::after,.desk-quick-buttons>button{transition:none!important}}
 </style>
 
-
-<style id="hortlog-requested-desktop-mobile-final-polish">
-/* Logo is just the Hortlog wordmark; the whole mark returns to Home. */
-@media(min-width:900px){
-  #desktopSidebar .desk-brand-sub{display:none!important}
-  #desktopSidebar .desk-brand{padding-bottom:25px}
-
-  /* Quick actions: no enclosing card, only the familiar Hortlog orange lead-in. */
-  .home>.desk-quick-card{display:contents!important}
-  .home>.desk-quick-actions{order:-5!important;grid-column:1/-1}
-  .desk-quick-actions{
-    display:grid;grid-template-columns:minmax(175px,205px) minmax(0,1fr);
-    align-items:center;gap:20px;min-width:0;margin:0 0 14px;padding:12px 0 12px 18px;
-    border:0;border-left:4px solid var(--hot);background:transparent;box-shadow:none
-  }
-  .desk-quick-buttons>button{border-left:3px solid var(--hot)}
-
-  /* Keep Add Record directly beside Advanced Filters, leaving the count to the far edge. */
-  .recr>.rfhead{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-  .recr>.rfhead #rftog{order:1;flex:0 0 auto}
-  .recr>.rfhead #addr{order:2;flex:0 0 auto;margin:0 5px 0 0!important}
-  .recr>.rfhead #vtl{order:3;flex:0 0 auto}
-  .recr>.rfhead .rcount{order:4;margin-left:auto!important;white-space:nowrap}
-
-  /* Equal, tidy dashboard columns and aligned card edges. */
-  .home>.dash{display:grid;align-items:stretch;align-content:stretch;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-  .home>.dash>.dl,.home>.dash>.dm,.home>.dash>.dr{display:flex;flex-direction:column;gap:16px;min-width:0;align-self:stretch}
-  .home>.dash>.dl>*,.home>.dash>.dm>*,.home>.dash>.dr>*{min-width:0;box-sizing:border-box}
-  .home>.dash .grow{flex:1 1 auto;min-height:0}
-  .home>.dash .grow>.card{height:100%;box-sizing:border-box}
-  .home>.dash .card{width:100%;box-sizing:border-box}
-}
-@media(min-width:900px) and (max-width:1199px){
-  .desk-quick-actions{grid-template-columns:minmax(145px,170px) minmax(0,1fr);gap:13px}
-  .home>.dash{gap:14px}
-}
-
-/* Saved PDFs: an explicit Open / View button sits beside Delete at every size. */
-.dfi{display:flex;align-items:center;gap:10px;min-width:0;padding:9px 0}
-.dfi>.dfn{flex:1;min-width:0}
-.dfi .df-open{display:inline-flex;align-items:center;justify-content:center;flex:none;min-height:36px;padding:0 12px;border:1px solid var(--map);border-left:3px solid var(--deep);border-radius:0;background:var(--bg);color:var(--deep);font:700 13px Barlow,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
-.dfi .df-open:hover{background:var(--map)}
-.dfi>.x{flex:none;width:36px;min-width:36px;min-height:36px}
-
-/* Purple signing panel is visually separated from manually added compliance items. */
-.compliance-signing-card{margin:0 0 28px!important;padding-bottom:18px;border-bottom:1px solid var(--map)}
-.compliance-signing-card+#compliance-records{margin-top:12px!important}
-
-@media(max-width:899px){
-  .dfi{gap:8px;align-items:center}
-  .dfi .df-open{min-height:34px;padding:0 9px;font-size:12px}
-  .dfi>.x{width:34px;min-width:34px;min-height:34px}
-}
-@media(prefers-reduced-motion:reduce){.dfi .df-open{transition:none!important}}
+<style id="hortlog-document-view-mobile">
+@media(max-width:899px){#sgl .acts{display:flex;flex-wrap:wrap;gap:7px}#sgl .acts .btn{min-height:38px;padding:8px 11px;font-size:14px}#sgl>.fi{align-items:flex-start}}
 </style>
-
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1419,108 +1389,6 @@ header::before,header::after{display:none!important;content:none!important}
   #log.closing{animation:none!important;opacity:0}
 }
 </style>
-
-<style id="hortlog-desktop-home-records-final-polish">
-@media(min-width:900px){
-  /* Logo is a navigation control, not just decoration. */
-  #desktopSidebar button.desk-brand{appearance:none;-webkit-appearance:none;width:100%;min-height:0;height:auto;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:3px 10px 27px;margin:0;border:0;border-radius:0;background:transparent;color:inherit;text-align:left;cursor:pointer;clip-path:none;box-shadow:none}
-  #desktopSidebar button.desk-brand:hover{background:rgba(255,255,255,.055)}
-  #desktopSidebar button.desk-brand:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
-  /* Quick actions now sit in the same card system as the rest of the dashboard. */
-  .home>.desk-quick-card{order:-5!important;grid-column:1/-1;margin:0 0 14px!important;padding:15px 18px 15px 22px!important;min-width:0}
-  .desk-quick-actions{display:grid;grid-template-columns:minmax(175px,205px) minmax(0,1fr);align-items:center;gap:20px;min-width:0}
-  .desk-quick-heading{display:flex;flex-direction:column;gap:4px;min-width:0}
-  .desk-quick-heading b{font:800 21px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink)}
-  .desk-quick-heading span{font:500 12px/1.25 Barlow,system-ui,sans-serif;color:var(--soft)}
-  .desk-quick-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;min-width:0}
-  .desk-quick-buttons>button{display:flex;align-items:center;gap:10px;min-width:0;min-height:64px;padding:9px 12px;border:1px solid var(--map);border-left:3px solid var(--deep);background:var(--bg);color:var(--ink);text-align:left;cursor:pointer;font:600 14px/1.2 Barlow,system-ui,sans-serif;transition:background .15s,border-color .15s,transform .15s}
-  .desk-quick-buttons>button:hover{background:color-mix(in srgb,var(--map) 55%,var(--card));border-color:var(--soft);transform:translateY(-1px)}
-  .desk-qa-icon{display:grid;place-items:center;flex:none;width:36px;height:36px;background:var(--map);color:var(--deep)}
-  .desk-qa-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .desk-qa-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
-  .desk-quick-buttons>button b{font:700 14px/1.1 Barlow,system-ui,sans-serif;white-space:nowrap}
-  .desk-quick-buttons>button small{font:500 11px/1.2 Barlow,system-ui,sans-serif;color:var(--soft);white-space:normal}
-  /* The controls sit on one line; result count remains at the far right. */
-  .recr>.rfhead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:7px 0 8px}
-  .recr>.rfhead .rcount{margin:0 0 0 auto;font-size:13px}
-  .recr>.rfhead #addr{white-space:nowrap;border-color:var(--hot)}
-  .recr>.rfhead #vtl{white-space:nowrap}
-  .recr>.rfilt{margin-top:7px;margin-bottom:10px}
-  .recr>.tw{margin-top:5px}
-  .rt tbody tr{transition:background .14s ease}
-  .rt tbody tr:hover{background:color-mix(in srgb,var(--map) 30%,var(--card))}
-  .compliance-signing-card{margin:0 0 23px}
-  .compliance-signing-card>.card{margin:0}
-  /* All block cards in the grid stretch to an equal row height. */
-  main>.tiles{align-items:stretch;grid-auto-rows:minmax(320px,1fr)}
-  main>.tiles>.tw2{display:flex;height:100%;min-height:320px;align-self:stretch}
-  main>.tiles>.tw2>.tile{display:flex;flex-direction:column;align-items:flex-start;width:100%;height:100%;min-height:320px;box-sizing:border-box}
-  main>.tiles>.tw2>.tile .tmeta{margin-top:auto}
-}
-@media(min-width:900px) and (max-width:1199px){
-  .desk-quick-actions{grid-template-columns:minmax(145px,170px) minmax(0,1fr);gap:13px}
-  .desk-quick-buttons{gap:7px}
-  .desk-quick-buttons>button{gap:7px;padding:7px}
-  main>.tiles{grid-auto-rows:minmax(290px,1fr)}
-  main>.tiles>.tw2{min-height:290px}
-  main>.tiles>.tw2>.tile{min-height:290px}
-}
-@media(prefers-reduced-motion:reduce){.desk-quick-buttons>button,.rt tbody tr{transition:none!important}}
-.tm-av{position:relative;overflow:hidden}
-.tm-av .tm-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit}
-.tm-av .tm-initials{position:relative;z-index:0}
-.tm-av.has-photo .tm-initials{display:none}
-</style>
-
-<style id="hortlog-desktop-final-task-polish">
-@media(min-width:900px){
-  /* Records toolbar: filters stay left, count and primary action sit at the far right. */
-  .recr>.rfhead{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-  .recr>.rfhead #rftog{flex:0 0 auto}
-  .recr>.rfhead .rcount{margin-left:auto!important;white-space:nowrap}
-  .recr>.rfhead #addr{flex:0 0 auto;margin-left:4px!important;white-space:nowrap}
-  .recr>.rfhead #vtl{flex:0 0 auto}
-  .recr>.rfhead:has(#vtl) #vtl{order:2}
-  .recr>.rfhead:has(#vtl) .rcount{order:3}
-  .recr>.rfhead:has(#vtl) #addr{order:4}
-  .recr>.rfhead:not(:has(#vtl)) .rcount{order:2}
-  .recr>.rfhead:not(:has(#vtl)) #addr{order:3}
-
-  /* Clear separation between the purple Documents to Sign panel and the
-     manually added compliance records below it. */
-  .compliance-signing-card{margin:0 0 34px!important;padding-bottom:22px;border-bottom:1px solid var(--map)}
-  .compliance-signing-card>.card{margin:0!important}
-  .compliance-signing-card+#compliance-records{margin-top:10px}
-
-  /* Saved PDFs: make View/Open read as a clear secondary action beside Delete. */
-  .dfi{gap:12px;padding:10px 2px}
-  .dfo{min-height:42px;padding:6px 10px;gap:14px}
-  .dfg{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 13px;background:var(--map);color:var(--deep);border:1px solid color-mix(in srgb,var(--deep) 18%,var(--map));font:700 13px Barlow,system-ui,sans-serif;text-decoration:none;white-space:nowrap}
-  .dfo:hover .dfg{background:var(--deep);color:#fff}
-  .dfi>.x{flex:0 0 38px}
-
-  /* Team profiles: show a real profile image cleanly when one is available. */
-  #teampg .tm-av{position:relative;overflow:hidden;background:var(--deep);color:var(--sun)}
-  #teampg .tm-av .tm-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit;z-index:1}
-  #teampg .tm-av.has-photo .tm-initials{display:none}
-
-  /* Home dashboard: align the three content columns and stretch card surfaces
-     consistently without forcing empty/conditional cards to occupy space. */
-  .home>.dash{align-items:stretch!important}
-  .home>.dash>.dl,.home>.dash>.dm,.home>.dash>.dr{min-width:0;align-self:stretch}
-  .home>.dash .card{box-sizing:border-box;min-width:0}
-  .home>.dash .grow>.card{height:100%}
-  .home>.desk-quick-card{box-sizing:border-box;min-width:0}
-  .home>.desk-quick-card .desk-quick-actions{min-width:0}
-  .home>.desk-quick-card .desk-quick-buttons>button{min-width:0;min-height:66px}
-}
-@media(min-width:900px) and (max-width:1199px){
-  .recr>.rfhead{flex-wrap:wrap}
-  .recr>.rfhead .rcount{margin-left:auto!important}
-  .home>.dash{gap:14px}
-}
-@media(prefers-reduced-motion:reduce){.dfo .dfg{transition:none!important}}
-</style>
 </head><body><div class="top"><span class="lg">Hort<i>log</i></span></div><main id="m"><p class="s">Loading…</p></main>';var F=function page(T,U){var $=function(s){return document.querySelector(s)},m=$('#m');
 function say(t,h){m.innerHTML='<div class="card"><h1>'+h+'</h1><p>'+t+'</p></div>'}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -1590,9 +1458,10 @@ P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.ge
 <div class="tabs"><button class="tab on" data-v="home">Home</button><button class="tab" data-v="cal">Calendar</button><button class="tab" data-v="blocks">Blocks</button><button class="tab tteam" data-v="team">Team</button></div>
 </header>
 <aside id="desktopSidebar" aria-label="Desktop navigation">
-  <button type="button" class="tab desk-brand" data-v="home" aria-label="Hortlog — go to Home">
+  <div class="desk-brand" aria-label="Hortlog">
     <span class="desk-brand-word">Hort<span>log</span></span>
-  </button>
+    <span class="desk-brand-sub">ORCHARD WORK &amp; RECORDS</span>
+  </div>
   <div class="desk-nav-label">WORKSPACE</div>
   <nav class="desk-nav" aria-label="Main navigation">
     <button type="button" class="tab desk-tab" data-v="home">
@@ -1752,12 +1621,10 @@ if(MEMBERS.length<2){if(seen.teamHide&&Date.now()-seen.teamHide<14*864e5)return 
 return ''}
 async function paintTeam(){const b=$('#teampg');if(!b||!ROLES)return;const o=ORCH.find(x=>x.orchard_id===OID)||{},mg=isMgr();
 const mem=await sb.rpc('list_members',{o:OID}),inv=mg?await sb.rpc('list_invites',{o:OID}):{data:[]};if(!$('#teampg'))return;if(!mem.error)MEMBERS=mem.data||[];
-const memberPrefs=Object.create(null);try{const ids=MEMBERS.map(m=>m.user_id).filter(Boolean);if(ids.length){const pr=await sb.from('profiles').select('user_id,prefs').in('user_id',ids);if(!pr.error)(pr.data||[]).forEach(v=>{memberPrefs[v.user_id]=v.prefs||{}})}}catch(e){}
 const RO=(sel,own)=>['owner','manager','supervisor','worker','contractor','other'].filter(r=>own||r!=='owner').map(r=>`<option value="${r}" ${r===sel?'selected':''}>${r==='owner'?'Manager (orchard owner)':RLAB[r]}</option>`).join(''),me=MEMBERS.find(m=>m.user_id===U.id)||{},nOwn=MEMBERS.filter(m=>m.role==='owner').length,solo=MEMBERS.length<2;
 const initials=nm=>String(nm||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase(),RR=['manager','supervisor','worker','contractor','other'];
-const photoFor=m=>{const pr=memberPrefs[m.user_id]||{},mp=m.prefs||{},v=m.avatar_url||m.photo_url||m.profile_photo_url||m.picture_url||m.avatar||(mp.avatar||mp.avatar_url||mp.photo||mp.photo_url||mp.profile_photo_url||mp.picture||mp.image)||(pr.avatar||pr.avatar_url||pr.photo||pr.photo_url||pr.profile_photo_url||pr.picture||pr.image)||(m.user_id===U.id&&(PROF.avatar||PROF.avatar_url||PROF.photo||PROF.photo_url))||'';return typeof v==='string'&&/^(https?:\/\/|data:image\/|\/)/i.test(v)?v:''};
-const rows=MEMBERS.map(m=>{const self=m.user_id===U.id,canEd=mg&&!(R()==='manager'&&m.role==='owner')&&!(m.role==='owner'&&nOwn<2),nm=m.full_name||(m.email||'').split('@')[0]||'Unnamed',photo=photoFor(m);
-return `<div class="tm-row"><span class="tm-av" aria-hidden="true">${photo?`<img class="tm-photo" src="${esc(photo)}" alt="">`:''}<span class="tm-initials">${esc(initials(nm))}</span></span><span class="tm-id"><b>${esc(nm)}${self?' (you)':''}</b><small>${esc(m.email||'')}${m.role==='contractor'&&m.blocks&&m.blocks.length?' · blocks '+m.blocks.join(', '):''}</small></span>${canEd?`<select class="tm-sel" data-mrole="${m.user_id}" aria-label="Role">${RO(m.role,R()==='owner')}</select>`:`<span class="tm-role">${RLAB[m.role]}</span>`}${m.role==='contractor'&&canEd?`<button class="tm-lk" type="button" data-mblk="${m.user_id}">Blocks</button>`:''}${mg&&!self&&!(R()==='manager'&&m.role==='owner')?`<button class="x" type="button" data-mrm="${m.user_id}" aria-label="Remove">&times;</button>`:''}</div>`}).join('');
+const rows=MEMBERS.map(m=>{const self=m.user_id===U.id,canEd=mg&&!(R()==='manager'&&m.role==='owner')&&!(m.role==='owner'&&nOwn<2),nm=m.full_name||(m.email||'').split('@')[0]||'Unnamed';
+const avatar=m.avatar_url||m.avatar||m.photo_url||m.profile_picture||m.picture||'';return `<div class="tm-row"><span class="tm-av" aria-hidden="true">${avatar?`<img class="tm-photo" src="${esc(avatar)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:''}<span class="tm-initials"${avatar?' style="display:none"':''}>${esc(initials(nm))}</span></span><span class="tm-id"><b>${esc(nm)}${self?' (you)':''}</b><small>${esc(m.email||'')}${m.role==='contractor'&&m.blocks&&m.blocks.length?' · blocks '+m.blocks.join(', '):''}</small></span>${canEd?`<select class="tm-sel" data-mrole="${m.user_id}" aria-label="Role">${RO(m.role,R()==='owner')}</select>`:`<span class="tm-role">${RLAB[m.role]}</span>`}${m.role==='contractor'&&canEd?`<button class="tm-lk" type="button" data-mblk="${m.user_id}">Blocks</button>`:''}${mg&&!self&&!(R()==='manager'&&m.role==='owner')?`<button class="x" type="button" data-mrm="${m.user_id}" aria-label="Remove">&times;</button>`:''}</div>`}).join('');
 const waiting=(inv.data||[]).length?'<div class="tm-lab">Waiting to join</div>'+inv.data.map(v=>`<div class="tm-row"><span class="tm-av" aria-hidden="true">@</span><span class="tm-id"><b>${esc(v.email)}</b><small>${RLAB[v.role]} · expires ${vfmt(String(v.expires_at).slice(0,10))}</small></span><button class="tm-lk" type="button" data-ires="${esc(v.email)}|${v.role}|${(v.blocks||[]).join('.')}">Resend</button><button class="x" type="button" data-irev="${v.id}" aria-label="Cancel invitation">&times;</button></div>`).join(''):'';
 const invite=mg?`<div class="tinv" id="tinv" ${solo?'':'hidden'}><p class="tm-note">${solo?'You are the only person here. Invite your staff and contractors so everyone logs to the same orchard and everyone is alerted when spraying is happening.':'Invite someone by email.'}</p><div class="edf"><label>Email<input id="iem" type="email" placeholder="name@example.com" autocomplete="off"></label><label>Role<select id="irl">${RR.map(r=>`<option value="${r}" ${r==='worker'?'selected':''}>${RLAB[r]}</option>`).join('')}</select></label><div class="rhint" id="irole">${esc(RDESC.worker)}</div><div id="ibk" style="display:none"><div class="rhint">Blocks this contractor can see</div><div class="acts">${bl().map(n=>`<label class="ck"><input type="checkbox" data-ibk="${n}"> ${esc(bn(n))}</label>`).join('')}</div></div></div><div class="acts"><button class="btn" id="isend" type="button">Send invitation email</button><button class="btn alt" id="ishare" type="button">Share a link instead</button></div><div id="imsg" class="hint"></div></div>`:'';
 const guide=`<details class="tdet"><summary>What each role can do</summary><div class="rolegd">${RR.map(r=>`<div class="fi"><b>${RLAB[r]}</b><span>${esc(RDESC[r])}</span></div>`).join('')}</div><p class="rhint">Everyone in the orchard is alerted when spraying or spreading is planned or done today.</p></details>`;
@@ -1765,7 +1632,6 @@ const prevH=ROLE==='owner'?`<details class="tdet"><summary>Preview the app as</s
 const sett=`<details class="tdet"><summary>Orchard settings and my details</summary>${ORCH.length>1?`<div class="acts"><label>Orchard <select id="osw">${ORCH.map(x=>`<option value="${x.orchard_id}" ${x.orchard_id===OID?'selected':''}>${esc(x.name)} (${esc((RLAB[x.role]||'').toLowerCase())})</option>`).join('')}</select></label></div>`:''}${mg?`<div class="acts"><input id="tnm" type="text" value="${esc(o.name||'')}" placeholder="Orchard name" style="max-width:230px"><button class="btn alt" id="tnms">Rename orchard</button></div>`:''}<div class="acts"><input id="tmy" type="text" value="${esc(me.full_name||'')}" placeholder="Your name" style="max-width:230px"><button class="btn alt" id="tmys">Save my name</button></div><div class="acts"><button class="btn alt" id="tleave">Leave this orchard</button>${R()==='owner'?'<button class="btn alt" id="tdel">Delete this orchard…</button>':''}</div></details>`;
 const head=`<div class="thead cut"><div><h2>${mg?'Team':'Team at '+esc(o.name||'this orchard')}</h2><p>${MEMBERS.length} ${MEMBERS.length===1?'person':'people'}${mg?'':' · you are '+esc(({owner:'a Manager',manager:'a Manager',supervisor:'a Supervisor',worker:'an Orchard worker',contractor:'a Contractor',other:'view only'})[R()]||'a member')}</p></div>${mg?'<button class="btn" id="tinvb" type="button">+ Invite</button>':''}</div>`;
 b.innerHTML=head+`<div class="tcols"><section class="team-main-col"><div class="tlist">${invite}${rows}${waiting}</div></section><aside class="team-side-col">${guide+prevH+sett}</aside></div>`;
-b.querySelectorAll('.tm-photo').forEach(img=>{const ready=()=>img.closest('.tm-av')?.classList.add('has-photo');if(img.complete&&img.naturalWidth)ready();else img.addEventListener('load',ready,{once:true});img.addEventListener('error',()=>img.remove(),{once:true})});
 {const ib=b.querySelector('#tinvb');if(ib)ib.onclick=()=>{const p=b.querySelector('#tinv');if(!p)return;p.hidden=!p.hidden;if(!p.hidden){const em=b.querySelector('#iem');if(em)em.focus()}}}const pv=b.querySelector('#pvs');if(pv)pv.onchange=()=>{PREV=pv.value;render()};
 const setM=async(u,role,blocks)=>{const r=await sb.rpc('set_member',{o:OID,u,p_role:role,p_blocks:blocks});toast(r.error?r.error.message:'Role updated.');paintTeam()};
 b.querySelectorAll('[data-mrole]').forEach(x=>x.onchange=()=>{const u=x.dataset.mrole;if(x.value==='contractor'){const m=MEMBERS.find(y=>y.user_id===u)||{};pickBlocks(m.blocks,v=>setM(u,'contractor',v))}else setM(u,x.value,null)});
@@ -1853,7 +1719,7 @@ const m1=()=>{mode='group';q('#sgm1').className='btn';q('#sgm2').className='btn 
 const m2=()=>{mode='link';q('#sgm2').className='btn';q('#sgm1').className='btn alt';q('#sgh').textContent='Best for one-off jobs, like hedge trimming or a single spray. You send a link and they sign on their own phone.';q('#sgnl').textContent='Who needs to sign it?';q('#sgkl').style.display='';bt.textContent='Create link'};
 q('#sgm1').onclick=m1;q('#sgm2').onclick=m2;m1();
 const libRender=async()=>{const el=q('#sgd');if(!el)return;let all=[];try{all=(await DOCDB.all()).filter(d=>d.oid===OID)}catch(e){}
-el.innerHTML=all.length?'<div class="rlabel">Saved documents</div>'+all.map(d=>`<div class="dfi"><div class="dfn"><b>${capN(d.title||d.name,30)}</b><small>${capN(d.name,34)} · ${Math.max(1,Math.round(d.size/1024))} KB</small></div><button class="df-open" type="button" data-dv="${esc(d.id)}">Open / View</button><button class="x" type="button" data-dx="${esc(d.id)}" aria-label="Delete saved document">&times;</button></div>`).join('')+'<p class="hint">Saved on this device, so you do not have to upload them again.</p>':'';
+el.innerHTML=all.length?'<div class="rlabel">Saved documents</div>'+all.map(d=>`<div class="dfi"><button class="dfo" type="button" data-dv="${esc(d.id)}"><span class="dfn"><b>${capN(d.title||d.name,30)}</b><small>${capN(d.name,34)} · ${Math.max(1,Math.round(d.size/1024))} KB</small></span><span class="dfg">Preview</span></button><button class="x" type="button" data-dx="${esc(d.id)}" aria-label="Delete saved document">&times;</button></div>`).join('')+'<p class="hint">Saved on this device, so you do not have to upload them again.</p>':'';
 el.querySelectorAll('[data-dv]').forEach(x=>x.onclick=()=>docPreview(all.find(d=>d.id===x.dataset.dv)));
 el.querySelectorAll('[data-dx]').forEach(x=>x.onclick=async()=>{const d=all.find(y=>y.id===x.dataset.dx);if(d&&confirm('Delete "'+(d.title||d.name)+'" from your saved documents? Sign-on sheets you already made are not affected.')){await DOCDB.del(d.id);libRender()}})};
 const docPreview=d=>{if(!d)return;const old=$('#dpv');if(old)old.remove();const url=URL.createObjectURL(d.blob),isImg=/^image\//.test(d.type),e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'dpv',className:'ov'}));
@@ -1873,10 +1739,10 @@ const openDoc=async id=>{const q=await sb.from('sign_requests').select('doc_path
 const load=async()=>{const r=await sb.from('sign_requests').select('id,to_name,doc_name,doc_path,doc_type,status,token,signed_at,notes,mode').eq('orchard_id',OID).order('created_at',{ascending:false}).limit(12);if(r.error){ls.innerHTML='<p class="hint">Signing is not set up yet.</p>';return}
 const rows=r.data||[],cnt={};if(rows.some(x=>x.mode==='group')){const g=await sb.from('sign_signatures').select('request_id').in('request_id',rows.filter(x=>x.mode==='group').map(x=>x.id)).limit(2000);(g.data||[]).forEach(t=>cnt[t.request_id]=(cnt[t.request_id]||0)+1)}
 ls.innerHTML=rows.map(x=>{RS[x.id]=x;const n=cnt[x.id]||0;x._n=n;let st,bb='';
-if(x.mode==='group'){st=x.status==='signed'?'In person · '+n+' signed · '+vfmt(String(x.signed_at).slice(0,10)):'In person · '+n+' signed so far · open';bb=(x.status==='sent'?`<button class="btn" data-sgo="${x.id}">Continue</button>`:`<button class="btn" data-sgp="${x.id}">PDF</button>`)+`<button class="btn alt" data-sgd="${x.id}">Open</button>`+(isMgr()||x.status==='sent'?`<button class="btn alt" data-sgx="${x.id}">Delete</button>`:'')}
-else{st=x.status==='signed'?'Signed '+vfmt(String(x.signed_at).slice(0,10))+(x.notes?' · '+x.notes:''):'Link sent · waiting for signature';bb=x.status==='sent'?`<button class="btn" data-sgs="${x.token}">Share</button><button class="btn alt" data-sgd="${x.id}">Open</button><button class="btn alt" data-sgx="${x.id}">Delete</button>`:`<button class="btn" data-sgr="${x.id}">Receipt</button><button class="btn alt" data-sgd="${x.id}">Open</button>${isMgr()?`<button class="btn alt" data-sgx="${x.id}">Delete</button>`:''}`}
+if(x.mode==='group'){st=x.status==='signed'?'In person · '+n+' signed · '+vfmt(String(x.signed_at).slice(0,10)):'In person · '+n+' signed so far · open';bb=(x.status==='sent'?`<button class="btn" data-sgo="${x.id}">Open</button>`:`<button class="btn" data-sgp="${x.id}">PDF</button>`)+`<button class="btn alt" data-sgv="${x.id}">View</button>`+(isMgr()||x.status==='sent'?`<button class="btn alt" data-sgx="${x.id}">Delete</button>`:'')}
+else{st=x.status==='signed'?'Signed '+vfmt(String(x.signed_at).slice(0,10))+(x.notes?' · '+x.notes:''):'Link sent · waiting for signature';bb=x.status==='sent'?`<button class="btn" data-sgs="${x.token}">Share</button><button class="btn alt" data-sgv="${x.id}">View</button><button class="btn alt" data-sgx="${x.id}">Delete</button>`:`<button class="btn" data-sgr="${x.id}">Receipt</button><button class="btn alt" data-sgv="${x.id}">View</button>${isMgr()?`<button class="btn alt" data-sgx="${x.id}">Delete</button>`:''}`}
 return `<div class="fi" style="flex-wrap:wrap;gap:8px"><span style="flex:1;min-width:200px;overflow-wrap:anywhere"><b>${capN(x.to_name,22)}</b><small style="display:block">${capN(x.doc_name,26)} · ${esc(st)}</small></span><span class="acts" style="margin:0">${bb}</span></div>`}).join('')||'<p class="hint">Nothing here yet.</p>';
-ls.querySelectorAll('[data-sgs]').forEach(k=>k.onclick=()=>share(k.dataset.sgs));ls.querySelectorAll('[data-sgr]').forEach(k=>k.onclick=()=>receipt(k.dataset.sgr));ls.querySelectorAll('[data-sgd]').forEach(k=>k.onclick=()=>openDoc(k.dataset.sgd));
+ls.querySelectorAll('[data-sgs]').forEach(k=>k.onclick=()=>share(k.dataset.sgs));ls.querySelectorAll('[data-sgr]').forEach(k=>k.onclick=()=>receipt(k.dataset.sgr));ls.querySelectorAll('[data-sgd],[data-sgv]').forEach(k=>k.onclick=()=>openDoc(k.dataset.sgd||k.dataset.sgv));
 ls.querySelectorAll('[data-sgo]').forEach(k=>k.onclick=()=>openGroup(RS[k.dataset.sgo],load));ls.querySelectorAll('[data-sgp]').forEach(k=>k.onclick=()=>groupSheet(RS[k.dataset.sgp]));
 ls.querySelectorAll('[data-sgx]').forEach(k=>k.onclick=async()=>{const x=RS[k.dataset.sgx];if(!x)return;const g=x.mode==='group',sgn=x.status==='signed';if(!confirm(sgn?'Delete "'+x.to_name+'"? This permanently deletes the signed record, the document and '+(g&&x._n?'all '+x._n+' signature'+(x._n===1?'':'s'):'the signature')+'. It can not be undone.':'Delete "'+x.to_name+'"? '+(g?'The sheet':'The link')+' and its document will be removed.'))return;
 let paths=[x.doc_path,x.sig_path];if(g){const sg=await sb.from('sign_signatures').select('sig_path').eq('request_id',x.id);paths=paths.concat((sg.data||[]).map(t=>t.sig_path))}paths=paths.filter(Boolean);
@@ -2091,7 +1957,11 @@ if(od.length)return {id:'od',html:`<div class="fi link" data-nav="cal"><span cla
 const days=new Set(items.filter(i=>i.id>1e12).map(i=>iso(new Date(i.id))));let st=0;const d=new Date();if(!days.has(iso(d)))d.setDate(d.getDate()-1);while(days.has(iso(d))){st++;d.setDate(d.getDate()-1)}
 if(st>=3)return {id:'st',html:`<div class="fi"><span class="sq" style="background:var(--crew)"></span><span>Your orchard has been logged ${st} days in a row. Keep it going.</span></div>`};
 return null}
-function keepCard(){return ''}
+function keepCard(){if(!U||setupCard())return '';const now=Date.now(),n=keepNudge();
+if(seen.keepShown&&(!n||n.id!==seen.keepShown)){seen.keepGap=now+NUDGE_GAP;delete seen.keepShown;wr(SK,seen);return ''}
+if(!n||(seen.keepGap&&now<seen.keepGap))return '';
+if(seen.keepShown!==n.id){seen.keepShown=n.id;wr(SK,seen)}
+return '<div class="nudge">'+card('var(--spray)','<h2>Keep your records complete</h2>'+n.html)+'</div>'}
 function showProdPick(id){const it=items.find(x=>x.id===id);if(!it||it.prod||$('#ppq')||busy())return;const P=(B[0]&&B[0].products)||[],rk=prodRank(),ord=P.map((p,k)=>k).sort((a,b)=>(rk[String(P[b].n).toLowerCase()]||0)-(rk[String(P[a].n).toLowerCase()]||0)),top=ord.length&&rk[String(P[ord[0]].n).toLowerCase()];const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'ppq',className:'ov'}));
 e.innerHTML=`<div class="box cut"><h2>What was the product?</h2><p>“${esc(it.t)}” was logged without a product. Adding it keeps your spray diary and audit complete.</p>${P.length?`<div class="acts wqb">${ord.map((k,j)=>`<button class="btn ${j===0&&top?'':'alt'}" data-k="${k}">${esc(P[k].n)}</button>`).join('')}</div>${top?'<p class="hint" style="margin:0 0 6px">Your most used product is first.</p>':''}`:''}<input id="ppn" type="text" placeholder="Or type the product name"><input id="ppr" type="text" placeholder="Rate, e.g. 2 kg/ha"><input id="ppw" type="text" placeholder="Water rate, e.g. 1000 L/ha"><div class="acts"><button class="btn" id="pps">Save product</button><button class="btn alt" id="ppx">Skip</button></div></div>`;
 const put=(n,p)=>{it.prod=n;if(p&&p.r&&!it.rate)it.rate=p.r;if(p&&p.w&&!it.water)it.water=p.w;save();e.remove();render();toast('Product added: '+n)};
@@ -2976,9 +2846,9 @@ return `<div class="mobile-home">
 function homeHtml(){return window.innerWidth<900?mobileHomeHtml():desktopHomeHtml()}
 function desktopHomeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)),it=items.find(i=>i.id===sel),m=T.slice(0,7);
 const STNAV={'Open jobs':'lists','Due today':'cal','Overdue':'cal','Open PSA':'blocks','Records this month':'records'};const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i)).length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
-const AB=alertBar(),SC=setupCard();if([AB,SC].filter(Boolean).length>=2){const k=st.findIndex(x=>x[0]==='Open PSA');if(k>=0)st.splice(k,1)}
+const AB=alertBar(),SC=setupCard(),KC='';if([AB,SC,KC].filter(Boolean).length>=2){const k=st.findIndex(x=>x[0]==='Open PSA');if(k>=0)st.splice(k,1)}
 const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
-let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+(canWrite()?`<section class="desk-quick-actions" aria-label="Quick actions"><div class="desk-quick-heading"><b>Quick actions</b><span>Capture what is happening in the orchard.</span></div><div class="desk-quick-buttons"><button type="button" data-home-action="record"><span class="desk-qa-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="desk-qa-copy"><b>New record</b><small>Log a job or spray</small></span></button><button type="button" data-home-action="note"><span class="desk-qa-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v13H9l-4 3zM8 8h8M8 12h6"/></svg></span><span class="desk-qa-copy"><b>Quick note</b><small>Save an observation</small></span></button><button type="button" data-home-action="product"><span class="desk-qa-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8M9 4v4l-3 3v8h12v-8l-3-3V4M8 13h8M12 10v6M9 16h6"/></svg></span><span class="desk-qa-copy"><b>Add product</b><small>Update spray products</small></span></button></div></section>`:'')+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}</div><div class="o9">${acct()}</div></div></div></div>`}
+let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+(canWrite()?`<section class="desk-quick-actions" aria-label="Quick actions"><div class="desk-quick-heading"><b>Quick actions</b><span>Capture something while it is fresh.</span></div><div class="desk-quick-buttons"><button type="button" data-home-action="record"><i>+</i><span><b>Add a record</b><small>Type a job or observation</small></span></button><button type="button" data-home-action="note"><i>≡</i><span><b>Quick note</b><small>Save a thought for later</small></span></button><button type="button" data-home-action="product"><i>＋</i><span><b>Add product</b><small>Update spray products</small></span></button></div></section>`:'')+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
 function monthCard(){const[y,m]=calM.split('-').map(Number),first=new Date(y,m-1,1),nd=new Date(y,m,0).getDate(),off=(first.getDay()+6)%7,T=iso(new Date());
 let s=`<div class="mh"><button class="x" data-cm="-1" aria-label="Previous month">←</button><b>${first.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</b><button class="x" data-cm="1" aria-label="Next month">→</button></div><div class="mg">`+['M','T','W','T','F','S','S'].map(d=>`<span class="wd">${d}</span>`).join('');
 for(let i=0;i<off;i++)s+='<span></span>';
@@ -3022,10 +2892,10 @@ function recHtml(){const all=recRows(),cat=all.filter(r=>r.rc===recCat),F=fold(r
 let s=tip('records')+brandStrip()+demoFor('records',!recRows().length)+'<div class="rec"><div class="recl"><div class="aud">'+(canExp()?auditCard():'')+'</div>'+`<div class="rlabel">Category</div><div class="chips catrow wrap">${Object.keys(RC).filter(k=>k!=='sf'||seesSpray()).map(k=>`<button class="chip ${recCat===k?'on':''}" data-rc="${k}"><span class="sq" style="background:${RC[k][1]}"></span>${RC[k][0]} ${all.filter(r=>r.rc===k).length}</button>`).join('')}${canBlk()?'<button class="chip" id="addc">+ Add</button><button class="chip" id="renc" aria-label="Rename this category">✎ Rename</button>':''}</div>`;s+='</div><div class="recr">';
 s+=`<div class="rlabel">Folder in ${esc(RC[recCat][0])}</div><div class="chips wrap"><button class="chip ${recFolder==='all'?'on':''}" data-rf="all">All</button>${F.map(f=>`<button class="chip ${recFolder===f?'on':''}" data-rf="${esc(f)}">${esc(f)} ${cat.filter(r=>r.rf===f).length}</button>`).join('')}${canBlk()?'<button class="chip" id="addf">+ Folder</button>':''}</div>`;
 const fon=!!(recF.from||recF.to||recF.b||recF.q);
-const addable=canWrite()&&(recCat!=='sf'||seesSpray()),timeline=canExp()&&recCat==='vine';
-s+=`<div class="rfhead"><button class="btn alt" id="rftog" aria-expanded="${recFiltOpen?'true':'false'}">${recFiltOpen?'Hide filters':'Advanced filters'}${fon?' (on)':''}</button>${timeline?'<button class="btn alt" id="vtl">Timeline PDF</button>':''}<div class="rcount">${rows.length} record${rows.length===1?'':'s'}${fon?' (filtered)':''}</div>${addable?'<button class="btn" id="addr">+ Add record</button>':''}</div><div class="rfilt${recFiltOpen?' open':''}"><label>From<input type="date" data-rfl="from" value="${recF.from}"></label><label>To<input type="date" data-rfl="to" value="${recF.to}"></label><label>Block<select data-rfl="b"><option value="">All blocks</option>${bl().map(n=>`<option value="${n}" ${recF.b===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><label class="grow2">Search<input type="text" data-rfl="q" placeholder="Product, details…" value="${esc(recF.q)}"></label>${fon?'<button class="btn alt" id="rfclr">Clear filters</button>':''}</div>`;
+s+=`<div class="rfhead"><div class="rfhead-left"><button class="btn alt" id="rftog" aria-expanded="${recFiltOpen?'true':'false'}">${recFiltOpen?'Hide filters':'Advanced filters'}${fon?' (on)':''}</button><div class="rcount">${rows.length} record${rows.length===1?'':'s'}${fon?' (filtered)':''}</div></div>${canWrite()&&(recCat!=='sf'||seesSpray())?'<button class="btn" id="addr">+ Add record</button>':''}</div><div class="rfilt${recFiltOpen?' open':''}"><label>From<input type="date" data-rfl="from" value="${recF.from}"></label><label>To<input type="date" data-rfl="to" value="${recF.to}"></label><label>Block<select data-rfl="b"><option value="">All blocks</option>${bl().map(n=>`<option value="${n}" ${recF.b===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><label class="grow2">Search<input type="text" data-rfl="q" placeholder="Product, details…" value="${esc(recF.q)}"></label>${fon?'<button class="btn alt" id="rfclr">Clear filters</button>':''}</div>`;
+s+=`<div class="acts">${canExp()&&recCat==='vine'?'<button class="btn" id="vtl">Timeline PDF</button>':''}</div>`;
 if(recForm)s+=card(RC[recCat][1],`<h2>New ${RC[recCat][0].toLowerCase()} record</h2><div class="acts"><select id="rf2">${F.map(f=>`<option ${f===(dr.rf||(recFolder!=='all'?recFolder:F[0]))?'selected':''}>${esc(f)}</option>`).join('')}</select><input id="rd" type="date" value="${dr.rd||iso(new Date())}"><select id="rb"><option value="">No block</option>${bl().map(n=>`<option value="${n}" ${String(dr.rb)===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></div><div style="padding:0 0 6px"><input id="rt" type="text" placeholder="Details, e.g. PSA monitoring, 12 vines checked, no symptoms" value="${esc(dr.t||'')}"></div><div class="acts"><button class="btn alt" id="rph">${recPhoto?'Change photo':'Add photo'}</button>${recPhoto?'<img class="thumb" src="'+recPhoto+'" alt="Photo">':''}<button class="btn" id="rsave">Save record</button><button class="btn alt" id="rcancel">Cancel</button></div>`);
-const sfc=recCat==='sf';if(recCat==='compliance'&&canBlk())s+=`<div class="compliance-signing-card">${signCard()}</div>`;if(recCat==='vine')s+=vineCard();
+const sfc=recCat==='sf';if(recCat==='compliance'&&canBlk())s+=signCard();if(recCat==='vine')s+=vineCard();
 s+=`<div class="tw"><table class="rt"><thead><tr><th>Date</th><th>Folder</th><th>Block</th>${sfc?'<th>Product</th><th>Rate</th><th>Water rate</th>':''}<th>Details</th><th>Photo</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.date}</td><td>${esc(r.rf||'')}</td><td>${esc(blab(r))}</td>${sfc?`<td>${esc(r.prod||'')}</td><td>${esc(r.rate||'')}</td><td>${esc(r.water||'')}</td>`:''}<td>${esc(r.t)}</td><td>${r.p?`<img class="thumb" data-pid="${r.id}" src="${r.p}" alt="Photo">`:''}</td><td class="acell">${canEditId(r.id)?`<button class="edb" data-ed="${r.id}">✎ Edit</button>`:''}${canDelId(r.id)?`<button class="x" data-x="${r.id}" aria-label="Delete">✕</button>`:''}</td></tr>`).join('')||`<tr><td colspan="${sfc?9:6}" class="empty">Nothing in this folder yet. Tap + Add record, or log one by typing, like “monitoring PSA block 3, no symptoms”.</td></tr>`}</tbody></table></div>`;
 return s+'</div></div>'}
 const _d=r=>r.date,_b=r=>blab(r),_t=r=>r.t,_p=r=>r.p?'Yes':'',_f=r=>r.rf||'',_r=r=>r.r||'',_y=r=>r.y||'';
