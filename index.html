@@ -1189,6 +1189,110 @@ header::before,header::after{display:none!important;content:none!important}
 @media(prefers-reduced-motion:reduce){#desktopSidebar .desk-tab{transition:none}}
 </style>
 
+
+<style id="hortlog-desktop-sidebar-settings-team-records-refinement">
+@media(min-width:900px){
+  :root{--desk-sidebar-width:248px}
+  @media(max-width:1199px){:root{--desk-sidebar-width:224px}}
+
+  /* Keep every sidebar section within the available screen height. */
+  #desktopSidebar{width:var(--desk-sidebar-width)!important;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#527c75 var(--deep)}
+  #desktopSidebar::-webkit-scrollbar{width:8px}
+  #desktopSidebar::-webkit-scrollbar-track{background:var(--deep)}
+  #desktopSidebar::-webkit-scrollbar-thumb{background:#527c75;border:2px solid var(--deep);border-radius:8px}
+  #desktopSidebar::-webkit-scrollbar-thumb:hover{background:#78a39a}
+  #sidebarResizeGrip{position:absolute;z-index:20;top:0;right:-3px;bottom:0;width:8px;cursor:col-resize;touch-action:none;outline:none}
+  #sidebarResizeGrip::after{content:"";position:absolute;top:0;bottom:0;left:3px;width:1px;background:rgba(210,235,229,.16);transition:background .15s,width .15s}
+  #sidebarResizeGrip:hover::after,#sidebarResizeGrip:focus-visible::after{left:2px;width:3px;background:var(--hot)}
+  body.desk-sidebar-resizing{cursor:col-resize!important;user-select:none!important}
+  body.desk-sidebar-resizing *{cursor:col-resize!important;user-select:none!important}
+
+  main#main{width:calc(100% - var(--desk-sidebar-width,248px))!important;margin-left:var(--desk-sidebar-width,248px)!important}
+  @media(max-width:1199px){main#main{width:calc(100% - var(--desk-sidebar-width,224px))!important;margin-left:var(--desk-sidebar-width,224px)!important}}
+
+  /* The browser scrollbar should feel like part of Hortlog, not a white system rail. */
+  html,body,*{scrollbar-width:thin;scrollbar-color:#9bb6af var(--bg)}
+  *::-webkit-scrollbar{width:9px;height:9px}
+  *::-webkit-scrollbar-track{background:var(--bg)}
+  *::-webkit-scrollbar-thumb{background:#9bb6af;border:2px solid var(--bg);border-radius:8px}
+  *::-webkit-scrollbar-thumb:hover{background:#6f928a}
+  #desktopSidebar{scrollbar-color:#527c75 var(--deep)}
+
+  /* Settings categories stay in one clear vertical column. If they exceed the
+     viewport, only this navigation list scrolls, using the muted Hortlog rail. */
+  .setdesk{grid-template-columns:minmax(230px,280px) minmax(0,1fr)!important;gap:28px!important;align-items:start}
+  .setdesk .settings-nav{position:sticky!important;top:24px!important;max-height:calc(100vh - 48px)!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;padding:0 10px 18px 0!important;scrollbar-width:thin;scrollbar-color:#9bb6af transparent}
+  .setdesk .settings-nav .settings-group{display:block;width:100%;margin:0 0 15px}
+  .setdesk .settings-nav .smwrap{position:static!important;display:flex!important;flex-direction:column!important;width:100%;max-width:none!important}
+  .setdesk .settings-nav .smi{width:100%;min-height:48px}
+  .setdesk .settings-nav::-webkit-scrollbar{width:7px}
+  .setdesk .settings-nav::-webkit-scrollbar-track{background:transparent}
+  .setdesk .settings-nav::-webkit-scrollbar-thumb{background:#9bb6af;border:2px solid transparent;background-clip:padding-box;border-radius:8px}
+
+  /* Team: people and invitations on the left; role guidance and orchard controls
+     alongside on the right. The same content returns to a single column on mobile. */
+  #teampg{max-width:none!important;width:100%;margin:0!important}
+  #teampg .thead{min-height:104px;padding:22px 26px;margin-bottom:18px;align-items:center}
+  #teampg .thead h2{font-size:42px}
+  #teampg .thead p{font-size:16px}
+  #teampg .tcols{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.9fr);gap:22px;align-items:start}
+  #teampg .team-main-col,#teampg .team-side-col{min-width:0}
+  #teampg .tlist{border-radius:4px;overflow:hidden}
+  #teampg .tm-row{display:grid;grid-template-columns:44px minmax(160px,1fr) minmax(155px,190px) auto auto;gap:14px;align-items:center;padding:15px 18px;min-height:72px}
+  #teampg .tm-av{width:42px;height:42px;border-radius:4px;font-size:15px}
+  #teampg .tm-id b{font-size:16px}
+  #teampg .tm-id small{font-size:13px}
+  #teampg .tm-sel{width:100%;max-width:none;min-width:0;font-size:14px}
+  #teampg .tm-role{font-size:14px;white-space:nowrap}
+  #teampg .tm-lk{white-space:nowrap;font-size:14px}
+  #teampg .tm-row>.x{justify-self:end}
+  #teampg .team-side-col{display:flex;flex-direction:column;gap:12px}
+  #teampg .tdet{margin:0;border-radius:4px}
+  #teampg .tdet>summary{padding:16px 18px;font-size:18px}
+  #teampg .tdet>*:not(summary){margin:14px 18px}
+  #teampg .rolegd .fi{padding:10px 0}
+  #teampg .tinv{padding:20px;background:var(--bg)}
+  #teampg .tinv .edf{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,190px);gap:10px 14px;align-items:end}
+  #teampg .tinv .edf>.rhint,#teampg .tinv .edf>#ibk{grid-column:1/-1}
+  #teampg .tinv .acts{gap:10px}
+  #teampg .team-side-col .acts{flex-wrap:wrap}
+
+  /* Align the folder controls with the actual top edge of the Audit Pack panel. */
+  main>.rec{grid-template-columns:minmax(260px,300px) minmax(0,1fr)!important;align-items:start!important}
+  .recl>.aud{margin:0!important}
+  .recr{padding-top:0!important}
+  .recr>.rlabel:first-child{margin-top:0!important}
+
+  /* Desktop Quick Actions replace the floating plus, which only exposed typing. */
+  #plus{display:none!important}
+  #quickAddDismiss{z-index:9}
+  #log{z-index:10}
+  .home>.desk-quick-actions{order:-5!important}
+  .desk-quick-actions{grid-column:1/-1;display:flex;align-items:center;gap:24px;padding:13px 16px;margin:0 0 12px;background:var(--card);border:1px solid var(--map);border-left:4px solid var(--hot);min-width:0}
+  .desk-quick-heading{display:flex;flex-direction:column;gap:3px;flex:0 0 205px;min-width:0}
+  .desk-quick-heading b{font:800 19px/1.05 'Barlow Condensed',Impact,sans-serif;color:var(--ink)}
+  .desk-quick-heading span{font:500 12px/1.25 Barlow,system-ui,sans-serif;color:var(--soft)}
+  .desk-quick-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;flex:1;min-width:0}
+  .desk-quick-buttons>button{display:flex;align-items:center;gap:10px;min-width:0;min-height:58px;padding:8px 11px;border:1px solid var(--map);background:var(--bg);color:var(--ink);text-align:left;cursor:pointer;font:600 14px/1.2 Barlow,system-ui,sans-serif;transition:background .15s,border-color .15s}
+  .desk-quick-buttons>button:hover{background:color-mix(in srgb,var(--map) 65%,var(--card));border-color:var(--soft)}
+  .desk-quick-buttons>button>i{display:grid;place-items:center;flex:none;width:34px;height:34px;background:var(--hot);color:#fff;font:800 22px/1 Barlow Condensed, sans-serif;font-style:normal}
+  .desk-quick-buttons>button>span{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .desk-quick-buttons>button b{font:700 14px/1.1 Barlow,system-ui,sans-serif;white-space:nowrap}
+  .desk-quick-buttons>button small{font:500 11px/1.2 Barlow,system-ui,sans-serif;color:var(--soft);white-space:normal}
+}
+@media(min-width:900px) and (max-width:1099px){
+  #teampg .tcols{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:900px) and (max-width:1199px){
+  #teampg .tcols{grid-template-columns:minmax(0,1.2fr) minmax(270px,.85fr);gap:16px}
+  #teampg .tm-row{grid-template-columns:40px minmax(120px,1fr) minmax(135px,160px) auto auto;gap:9px;padding:13px 12px}
+  .desk-quick-actions{gap:12px;padding:10px 12px}
+  .desk-quick-heading{flex-basis:165px}
+  .desk-quick-buttons>button{gap:7px;padding:7px}
+}
+@media(prefers-reduced-motion:reduce){#sidebarResizeGrip::after,.desk-quick-buttons>button{transition:none!important}}
+</style>
+
 </head>
 <body class="boot">
 <script>(function(){var T=new URLSearchParams(location.search).get('sign');if(T===null)return;T=String(T);var U='https://hqarztbbnayyjlpzyufp.supabase.co/functions/v1/sign-doc';var H='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex"><title>Hortlog: sign a document</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Barlow+Condensed:wght@800&display=swap"><style>*{box-sizing:border-box}:root{--bg:#E6EFEC;--card:#FBFDFC;--ink:#0B1F20;--soft:#4D6665;--line:#D4E3DE}@media(prefers-color-scheme:dark){:root{--bg:#0A1718;--card:#122A2B;--ink:#E6F2EF;--soft:#9DB8B3;--line:#1D6B6C}}html,body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,sans-serif}.top{background:#0F3D3E;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top,0px))}.lg{font:800 30px/1 \'Barlow Condensed\',sans-serif;color:#fff;letter-spacing:.5px}.lg i{font-style:normal;color:#FFD23F}main{max-width:880px;margin:0 auto;padding:16px}h1,p,b,a,label,small{overflow-wrap:anywhere;word-break:break-word}.card{background:var(--card);border:1px solid var(--line);padding:18px}h1{font:800 30px/1.1 \'Barlow Condensed\',sans-serif;margin:0 0 8px}label{display:block;font-weight:600;color:var(--soft);margin:14px 0 4px}input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}canvas{display:block;width:100%;background:#fff;border:1px solid var(--line);touch-action:none}.doc{max-width:100%;display:block;margin:10px 0}.btn{display:inline-block;font:600 17px Barlow,sans-serif;background:#FF6B2C;color:#fff;border:0;padding:12px 20px;margin-top:12px;text-decoration:none;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);margin-right:8px}.btn:disabled{opacity:.6}.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}.err{color:#E03131;font-weight:600;min-height:1em}.s{text-align:center;color:var(--soft)}#go{display:block;width:100%;text-align:center;margin-top:18px;font-size:19px}.pitch .btn{display:block;text-align:center}.pitch{margin-top:14px;border-top:6px solid #FFD23F}.pitch h2{font:800 26px/1.1 Barlow Condensed,sans-serif;margin:0 0 6px}</style>
@@ -1330,7 +1434,7 @@ P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.ge
 <aside id="desktopSidebar" aria-label="Desktop navigation">
   <div class="desk-brand" aria-label="Hortlog">
     <span class="desk-brand-word">Hort<span>log</span></span>
-    <span class="desk-brand-sub">ORCHARD WORKSPACE</span>
+    <span class="desk-brand-sub">ORCHARD WORK &amp; RECORDS</span>
   </div>
   <div class="desk-nav-label">WORKSPACE</div>
   <nav class="desk-nav" aria-label="Main navigation">
@@ -1356,8 +1460,8 @@ P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.ge
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.2a7.6 7.6 0 0 0 0-2.4l1.4-1.1-1.8-3.1-1.7.7a7.8 7.8 0 0 0-2.1-1.2L14.9 4h-3.6l-.3 2.1a7.8 7.8 0 0 0-2.1 1.2l-1.7-.7-1.8 3.1 1.4 1.1a7.6 7.6 0 0 0 0 2.4l-1.4 1.1 1.8 3.1 1.7-.7a7.8 7.8 0 0 0 2.1 1.2l.3 2.1h3.6l.3-2.1a7.8 7.8 0 0 0 2.1-1.2l1.7.7 1.8-3.1z"/></svg>
       <span class="desk-settings-copy"><b>Settings &amp; account</b><small>Profile and preferences</small></span>
     </button>
-    <div class="desk-sidebar-foot">Made for the work in your orchard.</div>
   </div>
+  <div id="sidebarResizeGrip" role="separator" aria-orientation="vertical" aria-label="Resize navigation sidebar" aria-valuemin="200" aria-valuemax="340" tabindex="0" title="Drag to resize sidebar"></div>
 </aside>
 <main id="main"></main>
 <div id="toast"></div>
@@ -1501,7 +1605,7 @@ const guide=`<details class="tdet"><summary>What each role can do</summary><div 
 const prevH=ROLE==='owner'?`<details class="tdet"><summary>Preview the app as</summary><div class="acts"><select id="pvs" aria-label="Preview as"><option value="">${PREV?'Back to my own role':'Choose a role…'}</option>${RR.map(r=>`<option value="${r}" ${PREV===r?'selected':''}>${RLAB[r]}</option>`).join('')}</select></div><div class="rhint">Only changes what you see on this device. Nothing is saved or changed.</div></details>`:'';
 const sett=`<details class="tdet"><summary>Orchard settings and my details</summary>${ORCH.length>1?`<div class="acts"><label>Orchard <select id="osw">${ORCH.map(x=>`<option value="${x.orchard_id}" ${x.orchard_id===OID?'selected':''}>${esc(x.name)} (${esc((RLAB[x.role]||'').toLowerCase())})</option>`).join('')}</select></label></div>`:''}${mg?`<div class="acts"><input id="tnm" type="text" value="${esc(o.name||'')}" placeholder="Orchard name" style="max-width:230px"><button class="btn alt" id="tnms">Rename orchard</button></div>`:''}<div class="acts"><input id="tmy" type="text" value="${esc(me.full_name||'')}" placeholder="Your name" style="max-width:230px"><button class="btn alt" id="tmys">Save my name</button></div><div class="acts"><button class="btn alt" id="tleave">Leave this orchard</button>${R()==='owner'?'<button class="btn alt" id="tdel">Delete this orchard…</button>':''}</div></details>`;
 const head=`<div class="thead cut"><div><h2>${mg?'Team':'Team at '+esc(o.name||'this orchard')}</h2><p>${MEMBERS.length} ${MEMBERS.length===1?'person':'people'}${mg?'':' · you are '+esc(({owner:'a Manager',manager:'a Manager',supervisor:'a Supervisor',worker:'an Orchard worker',contractor:'a Contractor',other:'view only'})[R()]||'a member')}</p></div>${mg?'<button class="btn" id="tinvb" type="button">+ Invite</button>':''}</div>`;
-b.innerHTML=head+`<div class="tlist">${invite}${rows}${waiting}</div>`+guide+prevH+sett;
+b.innerHTML=head+`<div class="tcols"><section class="team-main-col"><div class="tlist">${invite}${rows}${waiting}</div></section><aside class="team-side-col">${guide+prevH+sett}</aside></div>`;
 {const ib=b.querySelector('#tinvb');if(ib)ib.onclick=()=>{const p=b.querySelector('#tinv');if(!p)return;p.hidden=!p.hidden;if(!p.hidden){const em=b.querySelector('#iem');if(em)em.focus()}}}const pv=b.querySelector('#pvs');if(pv)pv.onchange=()=>{PREV=pv.value;render()};
 const setM=async(u,role,blocks)=>{const r=await sb.rpc('set_member',{o:OID,u,p_role:role,p_blocks:blocks});toast(r.error?r.error.message:'Role updated.');paintTeam()};
 b.querySelectorAll('[data-mrole]').forEach(x=>x.onchange=()=>{const u=x.dataset.mrole;if(x.value==='contractor'){const m=MEMBERS.find(y=>y.user_id===u)||{};pickBlocks(m.blocks,v=>setM(u,'contractor',v))}else setM(u,x.value,null)});
@@ -2718,7 +2822,7 @@ function desktopHomeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.du
 const STNAV={'Open jobs':'lists','Due today':'cal','Overdue':'cal','Open PSA':'blocks','Records this month':'records'};const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i)).length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
 const AB=alertBar(),SC=setupCard(),KC=SC?'':keepCard();if([AB,SC,KC].filter(Boolean).length>=2){const k=st.findIndex(x=>x[0]==='Open PSA');if(k>=0)st.splice(k,1)}
 const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
-let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
+let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+(canWrite()?`<section class="desk-quick-actions" aria-label="Quick actions"><div class="desk-quick-heading"><b>Quick actions</b><span>Capture something while it is fresh.</span></div><div class="desk-quick-buttons"><button type="button" data-home-action="record"><i>+</i><span><b>Add a record</b><small>Type a job or observation</small></span></button><button type="button" data-home-action="note"><i>≡</i><span><b>Quick note</b><small>Save a thought for later</small></span></button><button type="button" data-home-action="product"><i>＋</i><span><b>Add product</b><small>Update spray products</small></span></button></div></section>`:'')+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="strip o3">${tiles()}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
 function monthCard(){const[y,m]=calM.split('-').map(Number),first=new Date(y,m-1,1),nd=new Date(y,m,0).getDate(),off=(first.getDay()+6)%7,T=iso(new Date());
 let s=`<div class="mh"><button class="x" data-cm="-1" aria-label="Previous month">←</button><b>${first.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</b><button class="x" data-cm="1" aria-label="Next month">→</button></div><div class="mg">`+['M','T','W','T','F','S','S'].map(d=>`<span class="wd">${d}</span>`).join('');
 for(let i=0;i<off;i++)s+='<span></span>';
@@ -3018,6 +3122,38 @@ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{upd
   #log{z-index:10}
   @media(max-width:899px){#quickAddDismiss{z-index:8}#mobilePlus{position:relative;z-index:9}}
 </style>
+<style id="hortlog-desktop-quickadd-dismiss-layer">@media(min-width:900px){#quickAddDismiss{z-index:9!important}#log{z-index:10!important}}</style>
+
+<script id="hortlog-desktop-sidebar-resizer">
+(function(){
+  const root=document.documentElement,side=document.getElementById('desktopSidebar'),grip=document.getElementById('sidebarResizeGrip');
+  if(!side||!grip)return;
+  const MIN=200,MAX=340,KEY='hortlog.desktop.sidebar.width';
+  const clamp=n=>Math.max(MIN,Math.min(MAX,Math.round(n)));
+  const apply=n=>{const w=clamp(n);root.style.setProperty('--desk-sidebar-width',w+'px');grip.setAttribute('aria-valuenow',String(w));grip.setAttribute('aria-valuetext',w+' pixels');return w};
+  let saved=0;try{saved=parseInt(localStorage.getItem(KEY)||'',10)||0}catch(e){}
+  if(saved)apply(saved);else grip.setAttribute('aria-valuenow',String(window.innerWidth<1200?224:248));
+  let startX=0,startW=0,dragging=false;
+  const persist=()=>{try{localStorage.setItem(KEY,String(parseInt(getComputedStyle(root).getPropertyValue('--desk-sidebar-width'),10)||248))}catch(e){}};
+  grip.addEventListener('pointerdown',e=>{
+    if(window.innerWidth<900||e.button!==0)return;
+    startX=e.clientX;startW=side.getBoundingClientRect().width;dragging=true;
+    document.body.classList.add('desk-sidebar-resizing');
+    try{grip.setPointerCapture(e.pointerId)}catch(x){}
+    e.preventDefault();
+  });
+  grip.addEventListener('pointermove',e=>{if(!dragging)return;apply(startW+(e.clientX-startX))});
+  const end=e=>{if(!dragging)return;dragging=false;document.body.classList.remove('desk-sidebar-resizing');persist();try{grip.releasePointerCapture(e.pointerId)}catch(x){}};
+  grip.addEventListener('pointerup',end);grip.addEventListener('pointercancel',end);
+  grip.addEventListener('keydown',e=>{
+    if(window.innerWidth<900)return;
+    const cur=side.getBoundingClientRect().width;
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){apply(cur+(e.key==='ArrowRight'?16:-16));persist();e.preventDefault()}
+    else if(e.key==='Home'){apply(MIN);persist();e.preventDefault()}
+    else if(e.key==='End'){apply(MAX);persist();e.preventDefault()}
+  });
+})();
+</script>
 
 </body>
 </html>
