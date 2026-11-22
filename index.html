@@ -1482,8 +1482,8 @@ P(V[S])()}catch(e){}})()</script><script>setTimeout(function(){var s=document.ge
   </nav>
   <div class="desk-sidebar-bottom">
     <div class="desk-sidebar-rule"></div>
-    <button type="button" class="tab desk-tab desk-settings" data-v="settings">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.2a7.6 7.6 0 0 0 0-2.4l1.4-1.1-1.8-3.1-1.7.7a7.8 7.8 0 0 0-2.1-1.2L14.9 4h-3.6l-.3 2.1a7.8 7.8 0 0 0-2.1 1.2l-1.7-.7-1.8 3.1 1.4 1.1a7.6 7.6 0 0 0 0 2.4l-1.4 1.1 1.8 3.1 1.7-.7a7.8 7.8 0 0 0 2.1 1.2l.3 2.1h3.6l.3-2.1a7.8 7.8 0 0 0 2.1-1.2l1.7.7 1.8-3.1z"/></svg>
+    <button type="button" class="tab desk-tab desk-settings" data-v="settings" aria-label="Profile, settings and account">
+      <span class="desk-profile-avatar" id="deskProfileAvatar" aria-hidden="true"><span class="desk-profile-initials">•</span></span>
       <span class="desk-settings-copy"><b>Settings &amp; account</b><small>Profile and preferences</small></span>
     </button>
   </div>
@@ -1842,8 +1842,10 @@ e.innerHTML=`<div class="box cut"><h2>What’s your orchard called?</h2><p>Your 
 const fin=()=>{seen.biz=1;wr(SK,seen);e.remove();maybeSetup()};
 $('#bqs').onclick=()=>{const v=$('#bq').value.trim();if(v){const B0=B[0]=B[0]||{};B0.biz=v;saveB()}fin()};$('#bqk').onclick=fin;$('#bq').onkeydown=ev=>{if(ev.key==='Enter')$('#bqs').click()};setTimeout(()=>$('#bq')&&$('#bq').focus(),50)}
 function showProd(pre,idx){const P=(B[0]&&B[0].products)||[],cur=idx!=null?P[idx]:null,e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'prodq'}));
-e.innerHTML=`<div class="box cut"><h2>${cur?'Edit product':pre?'Create a product':'Add a product'}</h2><p>${pre&&!cur?'You just logged a spray with '+esc(pre)+'. Save it as a product and add its rate and water rate, so audits and compliance are easier. Next time it fills in for you.':'A spray or fertiliser you use. When you log it by name, it is filled in for you.'}</p><input id="pn" type="text" placeholder="Product name, e.g. Botector" value="${esc(cur?cur.n:pre||'')}"><div style="height:10px"></div><input id="pr" type="text" placeholder="Product rate, e.g. 2 kg/ha" value="${esc(cur?cur.r||'':'')}"><div style="height:10px"></div><input id="pw2" type="text" placeholder="Water rate, e.g. 1000 L/ha" value="${esc(cur?cur.w||'':'')}"><div class="acts"><button class="btn" id="ps">Save product</button><button class="btn alt" id="pc">${cur?'Cancel':'Not now'}</button></div></div>`;
-const fin=()=>{seen.prodq=1;wr(SK,seen);e.remove()};$('#pc').onclick=fin;
+e.innerHTML=`<div class="box cut" role="dialog" aria-modal="true" aria-labelledby="prodq-title"><h2 id="prodq-title">${cur?'Edit product':pre?'Create a product':'Add a product'}</h2><p>${pre&&!cur?'You just logged a spray with '+esc(pre)+'. Save it as a product and add its rate and water rate, so audits and compliance are easier. Next time it fills in for you.':'A spray or fertiliser you use. When you log it by name, it is filled in for you.'}</p><input id="pn" type="text" placeholder="Product name, e.g. Botector" value="${esc(cur?cur.n:pre||'')}"><div style="height:10px"></div><input id="pr" type="text" placeholder="Product rate, e.g. 2 kg/ha" value="${esc(cur?cur.r||'':'')}"><div style="height:10px"></div><input id="pw2" type="text" placeholder="Water rate, e.g. 1000 L/ha" value="${esc(cur?cur.w||'':'')}"><div class="acts"><button class="btn" id="ps">Save product</button><button class="btn alt" id="pc">Close</button></div></div>`;
+const onEsc=ev=>{if(ev.key==='Escape'){ev.preventDefault();fin()}};
+const fin=()=>{seen.prodq=1;wr(SK,seen);e.remove();document.removeEventListener('keydown',onEsc)};
+e.addEventListener('click',ev=>{if(ev.target===e)fin()});document.addEventListener('keydown',onEsc);$('#pc').onclick=fin;
 $('#ps').onclick=()=>{const n=$('#pn').value.trim();if(!n){toast('Add a product name first.');return}const B0=B[0]=B[0]||{},o={n,r:$('#pr').value.trim(),w:$('#pw2').value.trim()};B0.products=B0.products||[];if(cur)B0.products[idx]=o;else B0.products.push(o);saveB();fin();render();toast('Saved. Sprays you log by this name fill in automatically.')};setTimeout(()=>{const f=$(pre?'#pr':'#pn');if(f)f.focus()},50)}
 
 let ejPhoto,epPhoto;
@@ -2695,8 +2697,9 @@ const c=col[1].h<col[0].h-1e-6?col[1]:col[0];c.a.push(`<div class="tw2">${t}</di
 return '<div class="tiles mas">'+col.map(c=>'<div class="tcol">'+c.a.join('')+'</div>').join('')+'</div>'};
 const tiles=edit=>{if(edit&&window.innerWidth<900&&bl().length)return tilesMas();return tilesFlat(edit)};
 const tilesFlat=edit=>{const L=bl();if(!L.length)return '<p class="hint">No blocks yet. Add your first block on the Blocks tab.</p>';
-return '<div class="tiles">'+L.map(n=>{const l=items.filter(i=>inBlk(i,n)&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.06),rgba(8,28,28,.28)),url('${im}') center/cover;color:#fff"`:'';
-const t=`<button class="tile"${st} data-blk="${n}"><b>${esc(bn(n))} →</b><span class="dkonly tbig">${l.length}<small> open jobs</small></span>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}<span class="dk tmeta">${B[n].rows||'?'} rows · ${B[n].bays||'?'} bays · ${l.length} open</span></button>`;
+const layout=L.length===4?'four':L.length===5?'five':L.length===3?'three':L.length===2?'two':L.length===1?'one':'many';
+return `<div class="tiles block-tiles blocks-${layout}">`+L.map(n=>{const l=items.filter(i=>inBlk(i,n)&&!i.d),im=B[n].img,st=im?` style="background:linear-gradient(rgba(8,28,28,.06),rgba(8,28,28,.28)),url('${im}') center/cover;color:#fff"`:'';
+const t=`<button class="tile${im?' ti':''}"${st} data-blk="${n}"><b>${esc(bn(n))} →</b><span class="dkonly tbig">${l.length}<small> open jobs</small></span>${counts(l)||'All clear'}${lastSpray(n)}${im?'':'<span style="display:block;opacity:.7;font-size:13px">Add imagery</span>'}<span class="dk tmeta">${B[n].rows||'?'} rows · ${B[n].bays||'?'} bays · ${l.length} open</span></button>`;
 return edit?`<div class="tw2">${t}</div>`:t}).join('')+'</div>'};
 const recs=()=>items.filter(i=>i.c==='spray'&&i.d).sort((a,b)=>(b.doneAt||b.id)-(a.doneAt||a.id));
 const acct=()=>`<p class="hint"><span id="sy">${syncMsg}</span></p>`;
@@ -2804,8 +2807,10 @@ const MINDG={early:['Early start','Good morning'],morning:['Good morning','Morni
 function MD(){const d=new Date(),h=d.getHours()+d.getMinutes()/60,k=h<4?'late':h<6?'early':h<11.5?'morning':h<13.5?'lunch':h<17?'afternoon':h<21?'evening':'night';
 if(mindC&&mindC.k===k&&!mindDirty)return mindC;mindDirty=false;let pool=MINDP[k].slice();const wd=d.getDay();if(!['morning','lunch','afternoon','evening'].includes(k)){}else if(wd===5)pool.push('Friday. What needs wrapping up before the weekend?');else if(wd===1)pool.push('New week. What is first?');else if(wd===0||wd===6)pool.push('Weekend. Only the important stuff.');
 let last='';try{last=localStorage.getItem('hl.mind')||''}catch(e){}const p2=pool.filter(x=>x!==last),l=(p2.length?p2:pool)[Math.floor(Math.random()*(p2.length||pool.length))],gs=MINDG[k],g=gs[Math.floor(Math.random()*gs.length)];try{localStorage.setItem('hl.mind',l)}catch(e){}mindC={k,l,g};return mindC}
-const heroHtml=()=>{const b=B[0]&&B[0].biz,d=new Date(),hr=d.getHours(),mind=MD(),g=mind.g,T=iso(d),du=items.filter(i=>!i.d&&i.due&&i.due<=T).length;
-const fn=myFullName().split(/\s+/)[0];return `<div class="hero"><b>${g}${fn?', '+esc(fn):''}</b><span class="dkonly">${d.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})} · ${du?du+' job'+(du>1?'s':'')+' due today':'nothing due today'}</span><span class="mbonly">${esc(mind.l)}</span></div>`};
+const profileAvatar=()=>meP().avatar||(U&&U.user_metadata&&(U.user_metadata.avatar_url||U.user_metadata.picture||U.user_metadata.photo_url||U.user_metadata.image))||'';
+const profileInitials=()=>{const p=(myFullName()||(U&&U.email)||'').replace(/@.*/,'').trim().split(/\s+/).filter(Boolean);return (p.length>1?p[0][0]+p[1][0]:(p[0]||'•').slice(0,2)).toUpperCase()};
+const heroHtml=()=>{const d=new Date(),mind=MD(),g=mind.g,T=iso(d),du=items.filter(i=>!i.d&&i.due&&i.due<=T).length;
+const full=myFullName(),fn=full.split(/\s+/)[0],pic=profileAvatar(),ini=profileInitials();return `<div class="hero"><div class="hero-person"><span class="hero-avatar" aria-hidden="true">${pic?`<img class="hero-avatar-photo" src="${esc(pic)}" alt="" onerror="this.style.display='none'">`:''}<span class="hero-avatar-initials">${esc(ini)}</span></span><span class="hero-copy"><b>${g}${fn?', '+esc(fn):''}</b><span class="dkonly">${d.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})} · ${du?du+' job'+(du>1?'s':'')+' due today':'nothing due today'}</span><span class="mbonly">${esc(mind.l)}</span></span></div></div>`};
 function mobileHomeHtml(){
 const T=iso(new Date()),d=new Date();
 const due=items.filter(i=>!i.d&&i.due===T).sort((a,b)=>a.id-b.id);
@@ -2844,11 +2849,11 @@ return `<div class="mobile-home">
 </div>`;
 }
 function homeHtml(){return window.innerWidth<900?mobileHomeHtml():desktopHomeHtml()}
-function desktopHomeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due&&i.due<=T),od=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)),it=items.find(i=>i.id===sel),m=T.slice(0,7);
-const STNAV={'Open jobs':'lists','Due today':'cal','Overdue':'cal','Open PSA':'blocks','Records this month':'records'};const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i)).length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
-const AB=alertBar(),SC=setupCard(),KC='';if([AB,SC,KC].filter(Boolean).length>=2){const k=st.findIndex(x=>x[0]==='Open PSA');if(k>=0)st.splice(k,1)}
-const feed=items.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(i=>`<div class="fi"><span class="sq" style="background:var(${CATS[i.c][1]})"></span><span>${esc(i.t)}</span><small>${i.id>1e12?dayLabel(iso(new Date(i.id))):''}</small></div>`).join('');
-let TC=(!SC||setupNear())&&teamReady()?teamCta():'';if(TC&&!promptSlot('team'))TC='';let IB=(!SC&&!TC&&!KC&&!AB&&instReady())?instBar():'';if(IB&&!promptSlot('inst'))IB='';return '<div class="home desktop-home">'+heroHtml()+(canWrite()?`<section class="desk-quick-actions" aria-label="Quick actions"><div class="desk-quick-heading"><b>Quick actions</b><span>Capture something while it is fresh.</span></div><div class="desk-quick-buttons"><button type="button" data-home-action="record"><i>+</i><span><b>Add a record</b><small>Type a job or observation</small></span></button><button type="button" data-home-action="note"><i>≡</i><span><b>Quick note</b><small>Save a thought for later</small></span></button><button type="button" data-home-action="product"><i>＋</i><span><b>Add product</b><small>Update spray products</small></span></button></div></section>`:'')+'<div class="rcw">'+recapBanner()+'</div><div class="asg">'+assignedCard()+'</div><div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+`</div><div class="hbn">${AB+TC+tip('home')+IB+demoFor('home',!items.length)+SC+KC}</div><div class="dash"><div class="dl"><div class="o1">${nextBanner()}</div><div class="o2 link" data-nav="cal">${card('var(--hot)',`<h2>Due today<em>${du.length} →</em></h2>`+(du.length?list(du.slice(0,4)):'<div class="empty">Nothing due today.</div>'))}</div><div class="o8 feed grow">${card('var(--soft)',`<h2>Recent activity</h2>${feed||'<div class="empty">Nothing logged yet.</div>'}`)}</div><div class="o8c dkonly">${canBlk()&&ROLES?signOnCard():''}</div></div><div class="dm"><div class="o6">${seesSpray()?sprayCard():''}</div><div class="o7b">${checkinCard()}</div><div class="o7a grow dkonly">${canBlk()?prodCard():''}</div><div class="o7c dkonly">${progressCard()}</div></div><div class="dr"><div class="o0 dkonly">${canExp()?auditCta():''}</div><div class="o4">${chips()}</div><div class="o5 grow">${mapSvg()}${it?card(`var(${CATS[it.c][1]})`,rowHtml(it,1)):'<p class="hint">Tap a block to open it. Add imagery under a block to see it here.</p>'}</div><div class="o9">${acct()}</div></div></div></div>`}
+function desktopHomeHtml(){const T=iso(new Date()),du=items.filter(i=>!i.d&&i.due===T),od=items.filter(i=>!i.d&&i.due&&i.due<T&&!(i.wk&&T<=i.wk)),m=T.slice(0,7);
+const STNAV={'Open jobs':'lists','Due today':'cal','Overdue':'cal','Open PSA':'blocks','Records this month':'records'};
+const st=[['Open jobs',items.filter(i=>!i.d&&i.c!=='rec'&&!vineNote(i)).length,'var(--hot)'],['Due today',du.length,'var(--sun)'],['Overdue',od.length,'var(--psa)'],['Open PSA',items.filter(i=>!i.d&&i.c==='psa').length,'var(--spray)'],['Records this month',recRows().filter(r=>r.date.slice(0,7)===m).length,'var(--dead)']];
+return '<div class="home desktop-home">'+heroHtml()+(canWrite()?`<section class="desk-quick-actions" aria-label="Quick actions"><div class="desk-quick-heading"><b>Quick actions</b><span>Start the work that matters today.</span></div><div class="desk-quick-buttons"><button type="button" data-home-action="record"><i>+</i><span><b>Add a record</b><small>Log a job or orchard observation</small></span></button>${canBlk()?`<button type="button" data-so="group"><i>✓</i><span><b>Sign on in person</b><small>Get contractors signed in</small></span></button>`:''}<button type="button" data-home-action="product"><i>＋</i><span><b>Add product</b><small>Save a spray or fertiliser</small></span></button></div></section>`:'')+'<div class="stats">'+st.map(([n,v,c])=>`<div class="stat cut link" data-nav="${STNAV[n]}" style="--c:${c}"><b>${v}</b>${n}</div>`).join('')+'</div>'+(canExp()?`<section class="home-slideshow" aria-label="Hortlog updates and reminders">${homeSlides()}</section>`:'')+'</div>'}
+
 function monthCard(){const[y,m]=calM.split('-').map(Number),first=new Date(y,m-1,1),nd=new Date(y,m,0).getDate(),off=(first.getDay()+6)%7,T=iso(new Date());
 let s=`<div class="mh"><button class="x" data-cm="-1" aria-label="Previous month">←</button><b>${first.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</b><button class="x" data-cm="1" aria-label="Next month">→</button></div><div class="mg">`+['M','T','W','T','F','S','S'].map(d=>`<span class="wd">${d}</span>`).join('');
 for(let i=0;i<off;i++)s+='<span></span>';
@@ -2889,7 +2894,7 @@ const inner=fold('vine').map(f=>{const d=[...new Set(rows.filter(r=>r.rf===f).ma
 return inner?card('var(--crew)',`<h2>Season timeline</h2>${inner}`):''}
 const RCH={sf:'spray diary and fertiliser. Say “sprayed copper in Block 1” and it files here.',compliance:'equipment calibration, induction and visitor records.',monitoring:'PSA checks, bud counts, fruit maturity, leaf and soil samples.',vine:'bud break, flowering and thinning, with photos and dates.',biodiversity:'plantings, wildlife and soil.'};
 function recHtml(){const all=recRows(),cat=all.filter(r=>r.rc===recCat),F=fold(recCat),rows=exRows(),dr=recDraft;
-let s=tip('records')+brandStrip()+demoFor('records',!recRows().length)+'<div class="rec"><div class="recl"><div class="aud">'+(canExp()?auditCard():'')+'</div>'+`<div class="rlabel">Category</div><div class="chips catrow wrap">${Object.keys(RC).filter(k=>k!=='sf'||seesSpray()).map(k=>`<button class="chip ${recCat===k?'on':''}" data-rc="${k}"><span class="sq" style="background:${RC[k][1]}"></span>${RC[k][0]} ${all.filter(r=>r.rc===k).length}</button>`).join('')}${canBlk()?'<button class="chip" id="addc">+ Add</button><button class="chip" id="renc" aria-label="Rename this category">✎ Rename</button>':''}</div>`;s+='</div><div class="recr">';
+let s=tip('records')+brandStrip()+demoFor('records',!recRows().length)+'<div class="rec"><div class="recl">'+`<div class="rlabel">Category</div><div class="chips catrow wrap">${Object.keys(RC).filter(k=>k!=='sf'||seesSpray()).map(k=>`<button class="chip ${recCat===k?'on':''}" data-rc="${k}"><span class="sq" style="background:${RC[k][1]}"></span>${RC[k][0]} ${all.filter(r=>r.rc===k).length}</button>`).join('')}${canBlk()?'<button class="chip" id="addc">+ Add</button><button class="chip" id="renc" aria-label="Rename this category">✎ Rename</button>':''}</div>`+'<div class="aud">'+(canExp()?auditCard():'')+'</div>' ;s+='</div><div class="recr">';
 s+=`<div class="rlabel">Folder in ${esc(RC[recCat][0])}</div><div class="chips wrap"><button class="chip ${recFolder==='all'?'on':''}" data-rf="all">All</button>${F.map(f=>`<button class="chip ${recFolder===f?'on':''}" data-rf="${esc(f)}">${esc(f)} ${cat.filter(r=>r.rf===f).length}</button>`).join('')}${canBlk()?'<button class="chip" id="addf">+ Folder</button>':''}</div>`;
 const fon=!!(recF.from||recF.to||recF.b||recF.q);
 s+=`<div class="rfhead"><div class="rfhead-left"><button class="btn alt" id="rftog" aria-expanded="${recFiltOpen?'true':'false'}">${recFiltOpen?'Hide filters':'Advanced filters'}${fon?' (on)':''}</button><div class="rcount">${rows.length} record${rows.length===1?'':'s'}${fon?' (filtered)':''}</div></div>${canWrite()&&(recCat!=='sf'||seesSpray())?'<button class="btn" id="addr">+ Add record</button>':''}</div><div class="rfilt${recFiltOpen?' open':''}"><label>From<input type="date" data-rfl="from" value="${recF.from}"></label><label>To<input type="date" data-rfl="to" value="${recF.to}"></label><label>Block<select data-rfl="b"><option value="">All blocks</option>${bl().map(n=>`<option value="${n}" ${recF.b===String(n)?'selected':''}>${esc(bn(n))}</option>`).join('')}</select></label><label class="grow2">Search<input type="text" data-rfl="q" placeholder="Product, details…" value="${esc(recF.q)}"></label>${fon?'<button class="btn alt" id="rfclr">Clear filters</button>':''}</div>`;
@@ -3132,7 +3137,7 @@ const chipKey=(v,c,i)=>v+':'+(v==='records'&&i>0?c:'')+':'+i;
 function chipSave(){if(!lastV)return;document.querySelectorAll('#main .chips').forEach((e,i)=>{chipMem[chipKey(lastV,lastC,i)]=e.scrollLeft})}
 function chipRestore(){document.querySelectorAll('#main .chips').forEach((e,i)=>{const m=chipMem[chipKey(view,recCat,i)];if(m)e.scrollLeft=m});lastV=view;lastC=recCat}
 function render(){try{setTimeout(()=>{if(view!=='home')return;if(document.querySelector('.nudge'))shownOnce('nudge_setup');if(document.querySelector('.teamcta')&&window.innerWidth<900)shownOnce('nudge_team');if(document.querySelector('.instbar'))shownOnce('nudge_install')},400)}catch(e){}syncCats();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));document.querySelectorAll('#mobileNav .mnav-item').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
-chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):'<h2 class="mobile-page-title">Blocks</h2>'+tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);document.body.classList.toggle('mobile-home-view',view==='home');document.documentElement.classList.toggle('mobile-home-view',view==='home');syncThemeColor();$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=meP().avatar;if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
+chipSave();$('#main').innerHTML=view==='home'?homeHtml():view==='cal'?calHtml():view==='blocks'?(blk?blockPage(blk):'<h2 class="mobile-page-title">Blocks</h2>'+tip('blocks')+tiles(true)+(canBlk()?'<div class="acts"><button class="btn" id="addb">+ Add block</button></div>':'')):view==='records'?recHtml():view==='settings'?setHtml():view==='team'?teamHtml():listsHtml();chipRestore();document.body.classList.toggle('roles',!!ROLES);document.body.classList.toggle('mobile-home-view',view==='home');document.documentElement.classList.toggle('mobile-home-view',view==='home');syncThemeColor();$('#teamb').classList.toggle('on',view==='team');$('#recb').classList.toggle('on',view==='records');$('#hb').classList.toggle('on',view==='settings');{const hb=$('#hb'),av=profileAvatar();if(av){hb.style.backgroundImage="url('"+av+"')";hb.classList.add('av');hb.textContent=''}else{hb.style.backgroundImage='';hb.classList.remove('av');hb.textContent=U&&U.email?U.email[0].toUpperCase():'•'}const pa=$('#deskProfileAvatar'),ini=profileInitials();if(pa){pa.innerHTML=`<span class="desk-profile-initials">${esc(ini)}</span>`+(av?`<img class="desk-profile-photo" src="${esc(av)}" alt="" onerror="this.style.display='none'">`:'');pa.classList.toggle('has-photo',!!av)}}bind();prevBar();if(view==='settings'){paintNotif();paintPerm()}if(view==='team')paintTeam();if(view==='records'&&!seen.recintro&&!$('#recintro'))showRecIntro();{const dm=$('.demo');if(dm){if(!demoT)demoT=setTimeout(()=>endDemo(dm.dataset.k),6500);let sx=0;dm.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});dm.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-sx)>60)endDemo(dm.dataset.k)})}}}
 (async()=>{try{if(!window.claude)return;AI=await window.claude.use('sample');DL=await window.claude.use('downloads');
 if(AI){const l=await AI.limits().catch(()=>null);canImg=!!(l&&l.images)}render()}catch(e){}})();
 render();
@@ -3180,6 +3185,73 @@ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{upd
   });
 })();
 </script>
+
+
+<style id="hortlog-focused-home-and-block-layout">
+@media(min-width:900px){
+  /* Keep the desktop Home focused on the core daily workflow. */
+  main>.home.desktop-home{display:flex;flex-direction:column;gap:0;min-height:calc(100vh - 120px);}
+  .hero{padding:0 2px 17px!important;}
+  .hero-person{display:flex;align-items:center;gap:14px;min-width:0;}
+  .hero-avatar{position:relative;display:block;flex:none;width:52px;height:52px;overflow:hidden;background:var(--deep);color:#fff;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+  .hero-avatar-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-avatar-initials{position:absolute;z-index:2;top:5px;left:6px;padding:2px 4px;background:rgba(8,31,32,.78);color:#fff;font:800 12px/1 Barlow,system-ui,sans-serif;letter-spacing:.04em;}
+  .hero-copy{display:flex;flex-direction:column;min-width:0;}
+  .hero-copy>b{display:block;font:800 34px/1 'Barlow Condensed',sans-serif;color:var(--ink);}
+  .hero-copy>span{display:block;margin-top:5px;color:var(--soft);font-weight:600;}
+  .home>.desk-quick-actions{order:0!important;margin:0 0 14px!important;}
+  .desk-quick-actions{gap:20px;}
+  .desk-quick-buttons{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .desk-quick-buttons>button{border-left:5px solid var(--hot)!important;min-height:66px;padding:9px 12px 9px 10px;}
+  .desk-quick-buttons>button:nth-child(2){border-left-color:var(--crew)!important;}
+  .desk-quick-buttons>button:nth-child(3){border-left-color:var(--spray)!important;}
+  .stats{order:1;gap:12px;margin:0 0 16px!important;}
+  .stat{min-height:84px;display:flex;flex-direction:column;justify-content:center;}
+  .home-slideshow{order:2;width:100%;min-width:0;margin:0;}
+  .home-slideshow .cta-wrap{width:100%;min-height:230px;}
+  .home-slideshow .cta-s{min-height:230px;}
+
+  /* Desktop blocks use a responsive mosaic rather than oversized equal tiles. */
+  main>.tiles.block-tiles{min-height:0!important;height:auto;margin:0!important;gap:14px!important;align-items:stretch;grid-auto-rows:minmax(0,1fr);}
+  .block-tiles .tw2{display:flex;min-width:0;min-height:0;}
+  .block-tiles .tw2>.tile{height:100%;min-height:0!important;width:100%;padding:17px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;overflow:hidden;}
+  .block-tiles .tw2>.tile>b{font-size:27px;line-height:1.05;margin-bottom:8px;}
+  .block-tiles .tw2>.tile .tbig{font-size:43px;line-height:.95;margin:8px 0;}
+  .block-tiles .tw2>.tile .tbig small{font-size:14px;}
+  .block-tiles .tw2>.tile .tmeta{margin-top:auto;font-size:12px;}
+  .block-tiles .tw2>.tile.ti{background-size:auto,contain!important;background-position:center!important;background-repeat:no-repeat!important;background-color:#173a3a!important;}
+  .block-tiles.blocks-one{grid-template-columns:minmax(260px,480px)!important;grid-template-rows:300px;}
+  .block-tiles.blocks-two{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:320px;}
+  .block-tiles.blocks-three{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:320px;}
+  .block-tiles.blocks-four{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr));height:clamp(460px,calc(100vh - 360px),680px);}
+  .block-tiles.blocks-four .tw2:nth-child(-n+3){grid-column:1;}
+  .block-tiles.blocks-four .tw2:nth-child(4){grid-column:2;grid-row:1 / span 3;}
+  .block-tiles.blocks-five{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr));height:clamp(380px,calc(100vh - 440px),560px);}
+  .block-tiles.blocks-five .tw2:nth-child(1){grid-column:1;grid-row:1;}
+  .block-tiles.blocks-five .tw2:nth-child(2){grid-column:2;grid-row:1;}
+  .block-tiles.blocks-five .tw2:nth-child(3){grid-column:1;grid-row:2;}
+  .block-tiles.blocks-five .tw2:nth-child(4){grid-column:2;grid-row:2;}
+  .block-tiles.blocks-five .tw2:nth-child(5){grid-column:3;grid-row:1 / span 2;}
+  .block-tiles.blocks-many{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-rows:minmax(205px,235px);}
+
+  /* Put the category picker ahead of the Audit Pack panel. */
+  .recl .catrow{order:0;}
+  .recl .aud{order:1;margin-top:8px!important;}
+
+  /* A real avatar sits beside the desktop Settings & account link. */
+  #desktopSidebar .desk-settings{gap:11px;}
+  .desk-profile-avatar{position:relative;display:block;flex:none;width:38px;height:38px;overflow:hidden;background:var(--hot);color:#0b1f20;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+  .desk-profile-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block;}
+  .desk-profile-initials{position:absolute;z-index:2;top:5px;left:5px;font:800 12px/1 Barlow,system-ui,sans-serif;color:#fff;background:rgba(8,31,32,.78);padding:2px 3px;}
+  .desk-profile-avatar:not(.has-photo) .desk-profile-initials{font-size:13px;}
+}
+@media(max-width:899px){
+  .hero-person{display:flex;align-items:center;gap:10px;}
+  .hero-avatar{position:relative;display:block;flex:none;width:42px;height:42px;overflow:hidden;background:var(--deep);}
+  .hero-avatar-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .hero-avatar-initials{position:absolute;z-index:2;top:4px;left:5px;padding:2px 3px;background:rgba(8,31,32,.78);color:#fff;font:800 11px/1 Barlow,system-ui,sans-serif;}
+}
+</style>
 
 </body>
 </html>
