@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Hortlog: orchard records, by voice</title>
-<meta name="description" content="Try Hortlog on your orchard. Capture jobs, sprays and observations as you work, keep your crew in sync and spend less time on admin.">
+<meta name="description" content="Hortlog is the orchard notebook that listens. Log jobs, sprays and PSA by voice, see them on your block map, warn the crew and have your audit records ready.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hortlog: orchard records, by voice">
-<meta property="og:description" content="Try Hortlog on a real orchard block. Capture jobs, pin issues and keep your team up to date.">
+<meta property="og:description" content="Say what you see. Hortlog files it, pins it on your block map, tells the crew and keeps your audit records ready.">
 <meta property="og:image" content="https://hortlog-nz.vercel.app/og-image.png"><meta property="og:url" content="https://hortlog-nz.vercel.app/home.html"><link rel="canonical" href="https://hortlog-nz.vercel.app/home.html">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -26,7 +26,7 @@ a{color:inherit}
 h1,h2,h3{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-weight:800;line-height:1;margin:0;letter-spacing:.2px}
 .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
 .cut{clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,var(--cut) 100%,0 calc(100% - var(--cut)))}
-.btn{display:inline-block;font:600 19px/1 Barlow,sans-serif;text-decoration:none;padding:17px 30px;background:var(--hot);color:#0B1F20;border:0;cursor:pointer;transition:transform .15s,filter .15s}
+.btn{display:inline-block;font:600 19px/1 Barlow,sans-serif;text-decoration:none;padding:17px 30px;background:var(--hot);color:#fff;border:0;cursor:pointer;transition:transform .15s,filter .15s}
 .btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
 .btn.deep{background:var(--deep);color:#fff}
@@ -34,15 +34,15 @@ h1,h2,h3{font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;font-we
 .eyebrow:before{content:"";width:10px;height:10px;background:currentColor;transform:rotate(45deg)}
 
 /* top bar */
-.top{position:sticky;top:0;z-index:20;background:#0F3D3E;color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.top{position:sticky;top:0;z-index:20;background:var(--deep);box-shadow:0 1px 0 rgba(255,255,255,.08)}
 .top .in{max-width:1120px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .lg{font:800 34px/1 'Barlow Condensed',Impact,sans-serif;color:#fff;text-decoration:none;letter-spacing:.5px}
 .lg i{font-style:normal;color:var(--sun)}
 .nav{display:flex;align-items:center;gap:6px}
 .nav a{color:#fff;text-decoration:none;font-weight:600;font-size:17px;padding:8px 12px}
 .nav a:hover{text-decoration:underline}
-.nav .btn{padding:11px 20px;font-size:17px;margin-left:8px;color:#0B1F20}
-@media(max-width:720px){.nav a:not(.btn){display:none}.nav .btn{font-size:14px;padding:10px 11px;margin-left:0;white-space:nowrap}.lg{font-size:31px}}
+.nav .btn{padding:11px 20px;font-size:17px;margin-left:8px;color:#fff}
+@media(max-width:720px){.nav a:not(.btn){display:none}}
 
 /* hero */
 .hero{background:var(--deep);color:#fff;position:relative;overflow:hidden;min-height:calc(100vh - var(--navh,66px));min-height:calc(100svh - var(--navh,66px));display:flex;align-items:center}.hero .wrap{width:100%;min-height:inherit}
@@ -104,9 +104,8 @@ section{padding:84px 0}
 /* feature rows */
 .row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:44px 0}
 .row.flip .txt{order:2}
-.featband{background:var(--card);color:var(--ink);text-align:center;padding:72px 0 64px;margin-bottom:24px;border-block:1px solid var(--line)}
-.feat-h{font-size:clamp(34px,5.4vw,64px);max-width:none;margin:0 auto}.feat-h span{color:#B84B24}
-@media(prefers-color-scheme:dark){.feat-h span{color:#FF936B}}
+.featband{background:var(--sun);color:#0B1F20;text-align:center;padding:84px 0 76px;margin-bottom:24px}
+.feat-h{font-size:clamp(34px,5.4vw,64px);max-width:none;margin:0 auto}.feat-h span{color:var(--deep)}
 .row h3{font-size:clamp(30px,3.8vw,44px);text-transform:uppercase;margin-bottom:16px}
 .row p{margin:0 0 14px;color:var(--soft)}
 .row ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
@@ -127,46 +126,42 @@ section{padding:84px 0}
 .card p{margin:0;color:var(--soft);font-size:17px;line-height:1.5}
 
 .g4{grid-template-columns:repeat(4,1fr)}@media(max-width:980px){.g4{grid-template-columns:1fr 1fr}}@media(max-width:560px){.g4{grid-template-columns:1fr}}
-/* roles */
-.roles{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
-.role{background:var(--card);border:1px solid var(--line);padding:12px 18px;font:800 22px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;display:flex;align-items:center;gap:10px}
-.role i{width:10px;height:10px;background:var(--c,var(--hot));transform:rotate(45deg)}
-
-/* Role section: a restrained warm neutral to separate it from the surrounding green/white sections */
-#roles{background:#F0EFE7;border-block:1px solid #DEDDD3}
-@media(prefers-color-scheme:dark){#roles{background:#122425;border-color:#254244}}
-
-/* Interactive illustrated role cards */
-.rgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:34px;align-items:stretch}
-.rcard{appearance:none;width:100%;min-width:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--c);padding:0 18px 22px;display:flex;flex-direction:column;transition:border-color .18s ease,background .18s ease,transform .18s ease;}
-.rcard:hover{transform:translateY(-3px);border-color:var(--c)}
-.rcard:focus-visible{outline:3px solid var(--deep);outline-offset:4px}
-.rcard[aria-pressed="true"]{border-color:var(--c);background:var(--card);box-shadow:inset 0 0 0 1px var(--c)}
-.role-art{height:174px;margin:0 -18px 16px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);border-bottom:1px solid var(--line)}
-.role-art:after{content:"";position:absolute;width:116px;height:116px;border-radius:50%;background:var(--c);opacity:.09;right:calc(50% - 58px);top:24px}
-.role-art svg{position:relative;z-index:1;width:100%;height:100%;max-height:174px;overflow:visible}
-.rcard h3{font-size:30px;text-transform:uppercase;margin:0 0 8px;line-height:1.05}
-.rcard p{margin:0;color:var(--soft);font-size:16px;line-height:1.45}
-.rcard .role-hint{display:block;margin-top:auto;padding-top:14px;color:var(--ink);font-size:14px;font-weight:600;letter-spacing:.02em}
-.role-detail{display:flex;gap:12px;align-items:flex-start;margin-top:16px;padding:16px 18px;background:var(--bg);border-left:4px solid var(--hot);color:var(--ink);min-height:62px}
-.role-detail strong{font-family:'Barlow Condensed',sans-serif;font-size:21px;line-height:1.1;text-transform:uppercase;white-space:nowrap}
-.role-detail span{font-size:16px;color:var(--soft);line-height:1.45}
-.role-line{fill:none;stroke:#0B1F20;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
-.role-ink{stroke:#0B1F20;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.role-leaf{transform-box:fill-box;transform-origin:bottom center;animation:leafSway 5.5s ease-in-out infinite}
-.rcard[aria-pressed="true"] .role-bob{animation:characterBob .65s ease-in-out 1}
-.rcard[aria-pressed="true"] .role-ping{animation:ping .7s ease-out 1}
-.rcard[aria-pressed="true"] .role-wave{animation:radioWave .8s ease-out 1}
-.rcard[aria-pressed="true"] .role-tool{animation:toolNudge .55s ease-in-out 1}
-@keyframes leafSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
-@keyframes characterBob{0%,100%{transform:translateY(0)}45%{transform:translateY(-5px)}}
-@keyframes ping{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.18)}}
-@keyframes radioWave{0%{opacity:0;transform:scale(.7)}45%{opacity:1}100%{opacity:0;transform:scale(1.2)}}
-@keyframes toolNudge{0%,100%{transform:rotate(0)}35%{transform:rotate(-9deg)}70%{transform:rotate(6deg)}}
-@media(max-width:980px){.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.rgrid{grid-template-columns:1fr}.role-art{height:190px}.role-detail{display:block}.role-detail strong{display:block;margin-bottom:5px}}
-@media(prefers-color-scheme:dark){.rcard:focus-visible{outline-color:var(--sun)}}
-@media(prefers-reduced-motion:reduce){.rcard{transition:none}.rcard:hover{transform:none}.role-leaf{animation:none}.rcard[aria-pressed="true"] .role-bob,.rcard[aria-pressed="true"] .role-ping,.rcard[aria-pressed="true"] .role-wave,.rcard[aria-pressed="true"] .role-tool{animation:none}}
+/* desktop product preview */
+.desktop-section{background:var(--card);border-block:1px solid var(--line);overflow:hidden}
+.desktop-intro{max-width:790px}
+.desktop-device{position:relative;max-width:1080px;margin:42px auto 0;padding:11px 11px 14px;background:#071a1b;border:1px solid #234647;border-radius:18px;box-shadow:0 30px 65px rgba(15,61,62,.23)}
+.desktop-browserbar{height:30px;display:flex;align-items:center;gap:12px;padding:0 9px 9px;color:#a9c9c3;font:600 11px/1 Barlow,sans-serif;letter-spacing:.04em}
+.desktop-dots{display:flex;gap:5px;flex:none}.desktop-dots i{width:7px;height:7px;border-radius:50%;background:#64817d}.desktop-address{margin:auto;max-width:310px;width:42%;padding:5px 12px;background:#102c2d;border:1px solid #24494a;border-radius:5px;text-align:center;color:#a9c9c3}
+.desktop-account{width:22px;height:22px;display:grid;place-items:center;background:var(--sun);color:#0b1f20;font-weight:800;flex:none}
+.desktop-screen{display:grid;grid-template-columns:178px minmax(0,1fr);min-height:490px;overflow:hidden;border-radius:8px;background:#E6EFEC;color:#0B1F20}
+.demo-sidebar{padding:23px 13px;background:#0F3D3E;color:#e8f3ef;display:flex;flex-direction:column;gap:23px}
+.demo-brand{font:800 27px/.95 'Barlow Condensed',Impact,sans-serif;letter-spacing:-.02em;color:#fff;padding:0 8px}.demo-brand span{color:var(--sun)}
+.demo-nav-label{font:700 9px/1 Barlow,sans-serif;letter-spacing:.13em;color:#8fb4ad;padding:0 9px;margin-bottom:-13px}
+.demo-nav{display:grid;gap:5px}.demo-nav-item{display:flex;align-items:center;gap:10px;padding:10px 9px;color:#d7e7e2;font:600 12px/1 Barlow,sans-serif;border-left:3px solid transparent}.demo-nav-item:before{content:"";width:13px;height:13px;border:1.5px solid currentColor;opacity:.8;flex:none}.demo-nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--hot);color:#fff}
+.demo-main{min-width:0;padding:28px 30px 25px}
+.demo-greeting{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}
+.demo-date{display:block;color:#4D6665;font:700 10px/1 Barlow,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.demo-greeting h3{font-size:36px;letter-spacing:-.02em;text-transform:none;margin:0 0 5px}.demo-greeting p{margin:0;color:#4D6665;font-size:14px}
+.demo-daytag{background:#fff;border-left:4px solid var(--hot);padding:9px 12px;color:#0F3D3E;font:700 11px/1.2 Barlow,sans-serif;white-space:nowrap}
+.demo-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.demo-stat{min-height:104px;background:#FBFDFC;border:1px solid #D4E3DE;border-top:5px solid var(--c,var(--hot));padding:13px 13px 12px;min-width:0}
+.demo-stat span{display:block;color:#4D6665;font:700 10px/1.2 Barlow,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.demo-stat b{display:block;margin-top:10px;font:800 36px/.9 'Barlow Condensed',sans-serif;color:#0B1F20}.demo-stat small{display:block;color:#4D6665;font-size:10px;margin-top:5px}
+.demo-bottom{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;align-items:stretch}
+.demo-panel{background:#FBFDFC;border:1px solid #D4E3DE;padding:16px;min-width:0}
+.demo-panel-title{font:800 21px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;margin-bottom:13px;color:#0B1F20}
+.demo-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.demo-action{min-height:84px;padding:11px 10px;background:#F2F7F5;border:1px solid #D4E3DE;border-left:5px solid var(--c,var(--hot));display:flex;flex-direction:column;justify-content:space-between;color:#0B1F20;font:700 12px/1.2 Barlow,sans-serif}
+.demo-action b{display:grid;place-items:center;width:24px;height:24px;background:var(--c,var(--hot));color:#fff;font-size:17px}
+.demo-slide{background:#0F3D3E;color:#fff;border-left:6px solid var(--sun);padding:17px 18px;min-height:116px;display:flex;flex-direction:column;justify-content:space-between}
+.demo-slide span{font:700 9px/1 Barlow,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b9d3cc}
+.demo-slide strong{font:800 24px/1.05 'Barlow Condensed',sans-serif;text-transform:uppercase;max-width:260px}
+.demo-slide-dots{display:flex;gap:5px}.demo-slide-dots i{width:5px;height:5px;background:#86a9a2;transform:rotate(45deg)}.demo-slide-dots i:first-child{background:var(--sun)}
+.desktop-stand{width:19%;height:17px;margin:0 auto;background:linear-gradient(#263f40,#102b2c);clip-path:polygon(12% 0,88% 0,100% 100%,0 100%)}
+.desktop-foot{width:30%;height:9px;margin:0 auto;background:#102b2c;border-radius:0 0 12px 12px}
+.desktop-caption{display:flex;justify-content:center;align-items:center;gap:11px;margin:25px auto 0;max-width:720px;text-align:center;color:var(--soft);font-size:17px}.desktop-caption i{width:9px;height:9px;transform:rotate(45deg);background:var(--hot);flex:none}
+@media(max-width:900px){.desktop-screen{grid-template-columns:135px minmax(0,1fr);min-height:450px}.demo-sidebar{padding:20px 9px}.demo-main{padding:23px 18px}.demo-greeting h3{font-size:30px}.demo-stat{padding:11px 9px}.demo-stat b{font-size:30px}.demo-bottom{grid-template-columns:1fr}.demo-slide{min-height:96px}}
+@media(max-width:620px){.desktop-device{padding:8px 8px 11px;border-radius:13px;margin-top:30px}.desktop-browserbar{height:26px;padding-bottom:7px}.desktop-address{width:55%;font-size:9px}.desktop-screen{grid-template-columns:57px minmax(0,1fr);min-height:390px}.demo-sidebar{padding:16px 6px;gap:18px}.demo-brand{font-size:17px;padding:0 4px}.demo-nav-label{font-size:0;height:1px}.demo-nav-item{justify-content:center;padding:8px 2px;font-size:0;gap:0}.demo-nav-item:before{width:12px;height:12px}.demo-main{padding:17px 12px}.demo-greeting{margin-bottom:13px}.demo-date{font-size:8px;margin-bottom:6px}.demo-greeting h3{font-size:22px}.demo-greeting p{font-size:11px}.demo-daytag{display:none}.demo-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:10px}.demo-stat{min-height:76px;padding:9px;border-top-width:4px}.demo-stat span{font-size:8px}.demo-stat b{font-size:26px;margin-top:7px}.demo-stat small{font-size:8px;margin-top:3px}.demo-bottom{gap:8px}.demo-panel{padding:11px}.demo-panel-title{font-size:17px;margin-bottom:9px}.demo-actions{gap:5px}.demo-action{min-height:66px;padding:7px 6px;font-size:9px;border-left-width:4px}.demo-action b{width:19px;height:19px;font-size:14px}.demo-slide{min-height:83px;padding:12px}.demo-slide strong{font-size:20px}.desktop-caption{font-size:14px;margin-top:17px}.desktop-stand{height:12px}.desktop-foot{height:7px}}
 /* steps */
 .steps{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
 .steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);padding:26px 24px 28px;position:relative}
@@ -186,12 +181,12 @@ details[open] summary:after{content:"\2212"}
 details p{margin:0;padding:0 22px 20px;color:var(--soft)}
 
 /* cta */
-.cta{background:var(--deep);color:#fff;padding:76px 0;position:relative;overflow:hidden}
+.cta{background:var(--sun);color:#0B1F20;padding:76px 0;position:relative;overflow:hidden}
 .cta .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
 .cta h2{font-size:clamp(44px,7vw,88px);text-transform:uppercase}
 .cta p{font-size:21px;font-weight:600;margin:14px 0 26px;max-width:560px}
-.cta .btn{background:var(--hot);color:#0B1F20}
-.cta .btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.9)}
+.cta .btn{background:var(--deep)}
+.cta .btn.ghost{background:transparent;color:#0B1F20}
 .cta .acts{display:flex;gap:14px;flex-wrap:wrap}
 .cta .qr{justify-self:end}
 .cta .qr .phone{position:relative;width:230px;bottom:auto;left:auto;transform:rotate(4deg);margin-bottom:-170px}
@@ -212,14 +207,14 @@ footer a{color:#fff}
 
 <header class="top"><div class="in">
   <a class="lg" href="home.html">Hort<i>log</i></a>
-  <nav class="nav" aria-label="Main"><a href="#roles">Roles</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="/index.html?app=1" style="--cut:9px">Try Hortlog</a></nav>
+  <nav class="nav" aria-label="Main"><a href="#desktop">Desktop</a><a href="#features">Features</a><a href="#faq">Questions</a><a class="btn cut" href="./?app=1" style="--cut:9px">Open Hortlog</a></nav>
 </div></header>
 
 <div class="hero"><video class="hero-v" muted loop playsinline preload="none" poster="hero.jpg" aria-hidden="true"></video><div class="hero-sh"></div><div class="wrap">
   <div>
     <h1>Stop carrying your orchard <span>in your head.</span></h1>
-    <p class="lead">Say what you see. Hortlog logs the job, pins PSA on your block map and keeps your crew and records up to date.</p>
-    <div class="acts"><a class="btn cut" href="/index.html?app=1">Try Hortlog</a><a class="btn ghost cut" href="#features">See what it does</a></div>
+    <p class="lead">Hortlog is the orchard notebook that listens. Say what you see. It files the job, pins the PSA on your block map, tells the crew and keeps your audit records ready.</p>
+    <div class="acts"><a class="btn cut" href="./?app=1">Open Hortlog</a><a class="btn ghost cut" href="#features">See what it does</a></div>
     
   </div>
   <div class="stage" aria-hidden="false">
@@ -240,14 +235,14 @@ footer a{color:#fff}
 
 <section>
   <div class="wrap">
-    
-    <h2 class="h2 rv">Less admin. More time getting the work done.</h2>
-    <p class="sub rv">Hortlog captures the jobs, observations and spray details your team already talks about, so you spend less time remembering, rewriting and chasing updates later.</p>
+    <p class="eyebrow rv">What you get back</p>
+    <h2 class="h2 rv">Never lose a job again.</h2>
+    <p class="sub rv">Say it once, wherever you are in the orchard. Hortlog does the rest.</p>
     <div class="grid g4">
-      <div class="card cut rv" style="--c:#FF6B2C"><h3>Capture it once</h3><p>Log jobs, sprays and observations as they happen. No scraps of paper to rewrite when you get back to the office.</p></div>
-      <div class="card cut rv" style="--c:#E03131"><h3>Go straight to the spot</h3><p>Pin PSA and dead vines to the block map, so the team knows where to look instead of searching block by block.</p></div>
-      <div class="card cut rv" style="--c:#0A9C82"><h3>Build records as you work</h3><p>Keep dated records moving in the background, with Excel and PDF exports and an audit pack ready when you need them.</p></div>
-      <div class="card cut rv" style="--c:#1C7ED6"><h3>Less chasing. Clearer days.</h3><p>Assign work and send useful reminders, so the right people know what is planned and who is doing it.</p></div>
+      <div class="card cut rv" style="--c:#FF6B2C"><h3>Nothing gets forgotten</h3><p>Every job, spray and problem is filed and dated the moment you say it, and it waits on your calendar.</p></div>
+      <div class="card cut rv" style="--c:#E03131"><h3>Know exactly where</h3><p>Every PSA and dead vine is pinned on the aerial map of its block, so anyone can walk straight to it.</p></div>
+      <div class="card cut rv" style="--c:#0A9C82"><h3>Audit ready, any day</h3><p>Records are kept as you go. When the auditor rings, your audit pack is one tap away.</p></div>
+      <div class="card cut rv" style="--c:#1C7ED6"><h3>The whole crew in the loop</h3><p>Spray alerts, assigned jobs and morning reminders reach the right people before they walk in.</p></div>
     </div>
   </div>
 </section>
@@ -256,42 +251,42 @@ footer a{color:#fff}
 
 <section id="features" style="padding-top:0">
   <div class="featband"><div class="wrap">
-    <h2 class="h2 rv feat-h">The orchard moves quickly.<br><span>Your admin should too.</span></h2>
+    <h2 class="h2 rv feat-h">Everything the orchard needs.<br><span>Nothing it doesn’t.</span></h2>
   </div></div>
   <div class="wrap">
 
     <div class="row">
       <div class="txt rv">
-        <h3>Say it once. Get back to work.</h3>
-        <p>Tap the orange button and speak naturally, just as you would to your foreman. Hortlog helps turn that quick update into a record, without stopping the job to write it all out.</p>
-        <ul><li>Log jobs, sprays, fertiliser, PSA, dead vines and observations.</li><li>Saved product details can fill in the product rate and water rate.</li><li>Schedule work by voice, then record when it has been completed.</li><li>Rather type or add a photo? Those options are there too.</li></ul>
+        <h3>Talk. Hortlog files it.</h3>
+        <p>Tap the orange button and say it the way you would say it to your foreman. Hortlog works out what it is, which block, and when.</p>
+        <ul><li>Jobs, sprays, fertiliser, PSA and dead vines are sorted for you.</li><li>Say a product name and its rate and water rate fill in.</li><li>“Spray block 2 tomorrow” closes itself when you later say it is done.</li><li>Prefer to type or snap a photo? That works too.</li></ul>
       </div>
       <div class="shot rv" style="--r:2deg"><div class="phone"><img src="shot-home.webp" width="780" height="1688" loading="lazy" alt="The Tap and speak button on the Hortlog home screen"></div></div>
     </div>
 
     <div class="row flip">
       <div class="txt rv">
-        <h3>Find the problem without the guesswork.</h3>
-        <p>Use your block map to show where PSA and dead vines have been spotted. The next person can head to the right place instead of asking around or walking the rows to find it.</p>
-        <ul><li>Choose the block and add a pin in a few taps.</li><li>Keep the location with the record, not just in someone's memory.</li><li>See open issues by block from Home.</li></ul>
+        <h3>See every problem where it is.</h3>
+        <p>Your blocks sit on real LINZ aerial imagery. PSA and dead vines show as pins, so the whole team knows exactly where to look.</p>
+        <ul><li>Choose your block on the map in a few taps.</li><li>Tap roughly where a problem is and the pin stays there.</li><li>Open issues per block, at a glance, on Home.</li></ul>
       </div>
       <div class="shot rv"><div class="mapcard cut" style="--r:-2deg"><img src="shot-map.webp" width="900" height="718" loading="lazy" alt="Block map with PSA and dead vine pins on aerial imagery"><div class="mapcap"><span>Block 3</span><span>PSA and dead vine pins</span></div></div></div>
     </div>
 
     <div class="row">
       <div class="txt rv">
-        <h3>Keep the crew moving. Not chasing.</h3>
-        <p>Put the plan in one shared calendar, so people can see what is due, what is overdue and what is coming up without a string of calls and messages.</p>
-        <ul><li>Assign a job to the person responsible and notify them.</li><li>Use the 8am New Zealand-time reminders to keep the day on track.</li><li>Give each role the access that matches their work.</li></ul>
+        <h3>Everyone knows the plan.</h3>
+        <p>A calendar the whole orchard shares. Tap Overdue and it opens straight on the late jobs. Tap a day in Coming up and it jumps there.</p>
+        <ul><li>Assign a job to a team member. They get a notification.</li><li>Morning reminders at 8am New Zealand time.</li><li>Roles for Manager, Supervisor, Orchard worker and Contractor, so people see what they should.</li></ul>
       </div>
       <div class="shot rv" style="--r:-2deg"><div class="phone"><img src="shot-calendar.webp" width="780" height="1688" loading="lazy" alt="Hortlog calendar with jobs on their days"></div></div>
     </div>
 
     <div class="row flip">
       <div class="txt rv">
-        <h3>Stop rebuilding the paperwork at the end.</h3>
-        <p>Keep records organised as the work happens, in the folders you need for Spray and Fert, Compliance, Monitoring, Biodiversity and Vine Development.</p>
-        <ul><li>Export records to Excel or PDF, or create an audit pack zip.</li><li>Bring signed documents together with the rest of the pack.</li><li>Send contractors a signing link or sign your crew on in person.</li></ul>
+        <h3>Audit ready before the auditor rings.</h3>
+        <p>Records are filed as you go, in the folders an auditor expects: Spray and Fert, Compliance, Monitoring, Biodiversity and Vine Development.</p>
+        <ul><li>Excel and PDF exports, and a one-tap audit pack zip.</li><li>Signed documents come inside the pack.</li><li>Send a contractor a signing link, or sign your crew on in person.</li></ul>
       </div>
       <div class="shot rv" style="--r:2deg"><div class="phone"><img src="shot-records.webp" width="780" height="1688" loading="lazy" alt="Hortlog records organised by category and folder"></div></div>
     </div>
@@ -300,127 +295,78 @@ footer a{color:#fff}
 
 <section style="background:var(--card);border-block:1px solid var(--line)">
   <div class="wrap">
-    <p class="eyebrow rv">Designed around orchard life</p>
-    <h2 class="h2 rv">Useful in the rows. Valuable back at the desk.</h2>
+    <p class="eyebrow rv">Built for the orchard</p>
+    <h2 class="h2 rv">Made for a real orchard.</h2>
     <div class="grid g4">
-      <div class="card cut rv" style="--c:#FF6B2C"><h3>Keep moving in patchy signal</h3><p>Hortlog is designed for orchard conditions. It can keep working through patchy reception and catch up when you are back in range.</p></div>
-      <div class="card cut rv" style="--c:#0A9C82"><h3>Ready on your phone</h3><p>Add Hortlog to your phone’s Home Screen. No app-store download or separate device needed.</p></div>
-      <div class="card cut rv" style="--c:#7C4DFF"><h3>Your orchard. Your records.</h3><p>Your invited team can access the records their role allows. Hortlog is built with New Zealand orchard privacy needs in mind.</p></div>
-      <div class="card cut rv" style="--c:#1C7ED6"><h3>Updates without the noise</h3><p>Send relevant spray and job alerts to the crew, without notifying someone about their own entry.</p></div>
+      <div class="card cut rv" style="--c:#FF6B2C"><h3>Works with patchy signal</h3><p>Hortlog opens fast and keeps working when the signal drops. It catches up when you are back in range.</p></div>
+      <div class="card cut rv" style="--c:#0A9C82"><h3>On your Home Screen</h3><p>No app store needed. Open it in your phone’s browser and add it to your Home Screen.</p></div>
+      <div class="card cut rv" style="--c:#7C4DFF"><h3>Your records are yours</h3><p>Only people in your orchard see your records. Built to follow the New Zealand Privacy Act 2020.</p></div>
+      <div class="card cut rv" style="--c:#1C7ED6"><h3>Alerts that matter</h3><p>The team is told when spraying is on, and the person who logged it is not pinged about their own entry.</p></div>
     </div>
     
   </div>
 </section>
 
-<section id="roles">
+<section id="desktop" class="desktop-section">
   <div class="wrap">
-    <p class="eyebrow rv">One orchard. One connected team.</p>
-    <h2 class="h2 rv">Everyone gets the right view.</h2>
-    <p class="sub rv">Choose a role to see how Hortlog keeps the right people in the loop, without giving everyone the same screen to manage.</p>
-    <div class="rgrid" aria-label="Explore Hortlog roles">
-      <button class="rcard rv" type="button" aria-pressed="true" aria-controls="role-detail" data-title="Manager view" data-detail="A whole-orchard view for setting up blocks, managing people, reviewing records and exporting what the business needs.">
-        <div class="role-art">
-          <svg viewBox="0 0 240 180" aria-hidden="true" focusable="false">
-            <path d="M15 151 Q58 141 92 151 T225 150" fill="none" stroke="#A8C7BB" stroke-width="3" stroke-linecap="round"/>
-            <g class="role-leaf" fill="#3A9D72"><path d="M35 62 Q14 36 30 22 Q51 33 35 62Z"/><path d="M36 66 Q52 33 70 43 Q65 66 36 66Z"/></g>
-            <circle cx="197" cy="31" r="13" fill="#FFD23F"/>
-            <g class="role-bob">
-              <path d="M82 151 L88 123 L107 123 L110 151 M126 151 L130 123 L149 125 L153 151" fill="#263F43" class="role-ink"/>
-              <path d="M82 88 Q116 74 147 89 L153 133 Q117 143 76 133Z" fill="#0F3D3E" class="role-ink"/>
-              <path d="M89 91 L72 119 L83 126 M143 92 L162 112 L150 122" fill="none" stroke="#D89A70" stroke-width="10" stroke-linecap="round"/>
-              <path d="M89 47 Q91 27 113 27 Q136 29 138 50 L132 68 Q125 83 108 78 Q91 73 89 47Z" fill="#D99A72" class="role-ink"/>
-              <path d="M89 49 Q84 24 111 19 Q137 21 140 46 L130 41 Q117 31 96 44 L93 57Z" fill="#263238" class="role-ink"/>
-              <path d="M101 55 L105 55 M122 55 L126 55 M107 66 Q115 72 123 65" class="role-line"/>
-              <rect x="91" y="99" width="59" height="36" rx="5" fill="#263F43" class="role-ink"/>
-              <rect x="97" y="104" width="47" height="25" rx="2" fill="#CDE4DC" stroke="#0B1F20" stroke-width="2"/>
-              <path d="M105 121 L113 114 L120 118 L132 109" fill="none" stroke="#FF6B2C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-            <path d="M165 144 l7 -9 7 9 M172 135 v13" class="role-line"/>
-          </svg>
-        </div>
-        <h3>Manager</h3><p>See the whole orchard. Set up blocks, manage people, review records and export what you need.</p><span class="role-hint">Select to explore <span aria-hidden="true">↗</span></span>
-      </button>
-      <button class="rcard rv" type="button" aria-pressed="false" aria-controls="role-detail" data-title="Supervisor view" data-detail="A practical day-to-day view for organising the crew, assigning work, checking progress and keeping jobs moving.">
-        <div class="role-art">
-          <svg viewBox="0 0 240 180" aria-hidden="true" focusable="false">
-            <path d="M15 151 Q58 141 92 151 T225 150" fill="none" stroke="#A8C7BB" stroke-width="3" stroke-linecap="round"/>
-            <g class="role-leaf" fill="#3A9D72"><path d="M202 68 Q180 42 197 27 Q218 38 202 68Z"/><path d="M201 73 Q220 42 235 54 Q231 75 201 73Z"/></g>
-            <g class="role-bob">
-              <path d="M84 151 L91 126 L109 126 L111 151 M127 151 L130 126 L148 127 L153 151" fill="#263F43" class="role-ink"/>
-              <path d="M82 86 Q116 76 148 87 L153 133 L77 133Z" fill="#FFD23F" class="role-ink"/>
-              <path d="M108 87 L116 132 M126 86 L118 132" fill="none" stroke="#0B1F20" stroke-width="3"/>
-              <path d="M84 93 L65 116 L78 125 M146 92 L163 108" fill="none" stroke="#D99A72" stroke-width="10" stroke-linecap="round"/>
-              <path d="M91 48 Q93 26 115 27 Q138 30 139 51 L133 69 Q126 83 109 78 Q93 73 91 48Z" fill="#C98762" class="role-ink"/>
-              <path d="M88 43 Q91 20 116 19 Q139 21 143 43 L136 42 Q116 34 93 46Z" fill="#29464B" class="role-ink"/>
-              <path d="M104 56 L108 56 M124 56 L128 56 M109 67 Q117 71 124 66" class="role-line"/>
-              <rect x="148" y="88" width="16" height="25" rx="4" fill="#0F3D3E" class="role-ink"/>
-              <circle cx="156" cy="95" r="2" fill="#FFD23F"/>
-              <g class="role-wave" fill="none" stroke="#FF6B2C" stroke-width="3" stroke-linecap="round"><path d="M168 91 Q181 100 168 110"/><path d="M176 85 Q195 100 176 117"/></g>
-            </g>
-            <path d="M26 137 v-18 m-7 9 h14" class="role-line"/>
-          </svg>
-        </div>
-        <h3>Supervisor</h3><p>Keep the day moving. Organise the crew, assign jobs, manage blocks and check progress.</p><span class="role-hint">Select to explore <span aria-hidden="true">↗</span></span>
-      </button>
-      <button class="rcard rv" type="button" aria-pressed="false" aria-controls="role-detail" data-title="Orchard worker view" data-detail="A simple way to record what happened in the block, add a photo or voice note, and see the jobs assigned to you.">
-        <div class="role-art">
-          <svg viewBox="0 0 240 180" aria-hidden="true" focusable="false">
-            <path d="M15 151 Q58 141 92 151 T225 150" fill="none" stroke="#A8C7BB" stroke-width="3" stroke-linecap="round"/>
-            <g class="role-leaf" fill="#3A9D72"><path d="M34 65 Q13 40 29 25 Q50 37 34 65Z"/><path d="M35 68 Q54 38 71 50 Q66 70 35 68Z"/></g>
-            <g class="role-bob">
-              <path d="M84 151 L91 127 L109 127 L112 151 M126 151 L132 127 L149 128 L153 151" fill="#284B3B" class="role-ink"/>
-              <path d="M83 87 Q116 75 148 89 L152 133 L77 133Z" fill="#26765C" class="role-ink"/>
-              <path d="M94 91 L94 125 M137 91 L137 125" fill="none" stroke="#0B1F20" stroke-width="3"/>
-              <path d="M84 94 L67 115 L79 124 M146 93 L165 109" fill="none" stroke="#D99A72" stroke-width="10" stroke-linecap="round"/>
-              <path d="M91 49 Q94 29 115 28 Q137 30 139 51 L132 69 Q125 82 109 78 Q93 73 91 49Z" fill="#D99A72" class="role-ink"/>
-              <path d="M86 43 Q89 23 112 21 Q137 21 144 42 L137 40 L93 48Z" fill="#1F543F" class="role-ink"/>
-              <path d="M103 57 L107 57 M124 57 L128 57 M109 67 Q117 72 125 66" class="role-line"/>
-              <g id="worker-phone"><rect x="151" y="98" width="19" height="30" rx="4" fill="#203B40" class="role-ink"/><rect x="155" y="102" width="11" height="20" rx="1" fill="#CDE4DC"/><circle cx="160.5" cy="125" r="1.5" fill="#FFD23F"/></g>
-              <path d="M71 124 q-11 -7 -17 2 l10 10 q8 -5 7 -12Z" fill="#A0643A" class="role-ink"/>
-            </g>
-            <path d="M184 144 l8 -10 8 10 M192 134 v14" class="role-line"/>
-          </svg>
-        </div>
-        <h3>Orchard worker</h3><p>Record work in the block. Log jobs, sprays, PSA, dead vines and photos by voice.</p><span class="role-hint">Select to explore <span aria-hidden="true">↗</span></span>
-      </button>
-      <button class="rcard rv" type="button" aria-pressed="false" aria-controls="role-detail" data-title="Contractor view" data-detail="A focused view of the assigned blocks and jobs, with the access needed to complete the work and no access to orchard spray records.">
-        <div class="role-art">
-          <svg viewBox="0 0 240 180" aria-hidden="true" focusable="false">
-            <path d="M15 151 Q58 141 92 151 T225 150" fill="none" stroke="#A8C7BB" stroke-width="3" stroke-linecap="round"/>
-            <g class="role-leaf" fill="#3A9D72"><path d="M199 67 Q177 41 194 26 Q216 38 199 67Z"/><path d="M199 71 Q216 42 234 53 Q228 73 199 71Z"/></g>
-            <g class="role-bob">
-              <path d="M83 151 L91 127 L109 127 L112 151 M127 151 L132 127 L150 128 L153 151" fill="#414C4C" class="role-ink"/>
-              <path d="M79 87 Q116 75 151 88 L155 132 L76 132Z" fill="#FFD23F" class="role-ink"/>
-              <path d="M99 88 L113 132 M132 88 L119 132" fill="none" stroke="#0B1F20" stroke-width="4"/>
-              <path d="M81 94 L65 119 L78 127 M148 93 L165 112" fill="none" stroke="#D99A72" stroke-width="10" stroke-linecap="round"/>
-              <path d="M91 47 Q93 28 115 28 Q136 30 139 50 L133 69 Q126 82 109 78 Q93 72 91 47Z" fill="#C98762" class="role-ink"/>
-              <path d="M87 45 L92 28 Q116 12 139 28 L145 46Z" fill="#F2B52E" class="role-ink"/>
-              <path d="M104 56 L108 56 M124 56 L128 56 M109 67 Q117 71 125 66" class="role-line"/>
-              <g id="contractor-bag" class="role-tool"><path d="M150 111 Q163 103 178 112 L181 143 L149 143Z" fill="#A0643A" class="role-ink"/><path d="M155 111 Q157 98 166 98 Q175 98 176 111" fill="none" stroke="#0B1F20" stroke-width="3"/><path d="M158 126 h14" stroke="#FFD23F" stroke-width="3" stroke-linecap="round"/></g>
-              <path d="M55 123 l9 -12 8 4 -7 12Z" fill="#A0643A" class="role-ink"/>
-            </g>
-            <path d="M27 139 h17 M35 130 v18" class="role-line"/>
-          </svg>
-        </div>
-        <h3>Contractor</h3><p>See your assigned work and blocks, without access to the orchard's spray records.</p><span class="role-hint">Select to explore <span aria-hidden="true">↗</span></span>
-      </button>
+    <div class="desktop-intro">
+      <p class="eyebrow rv">A bigger view of your orchard</p>
+      <h2 class="h2 rv">The full orchard, in view.</h2>
+      <p class="sub rv">Use Hortlog on a desktop to see what is due, what is overdue and what needs attention. Then take the same workspace into the orchard on your phone.</p>
     </div>
-    <div class="role-detail rv" id="role-detail" aria-live="polite" aria-atomic="true"><strong>Manager view</strong><span>A whole-orchard view for setting up blocks, managing people, reviewing records and exporting what the business needs.</span></div>
+    <div class="desktop-device cut rv" aria-label="Illustration of the Hortlog desktop workspace">
+      <div class="desktop-browserbar"><span class="desktop-dots"><i></i><i></i><i></i></span><span class="desktop-address">hortlog.nz / orchard workspace</span><span class="desktop-account">LP</span></div>
+      <div class="desktop-screen">
+        <aside class="demo-sidebar">
+          <div class="demo-brand">Hort<span>log</span></div>
+          <div class="demo-nav-label">WORKSPACE</div>
+          <div class="demo-nav">
+            <div class="demo-nav-item active">Home</div>
+            <div class="demo-nav-item">Calendar</div>
+            <div class="demo-nav-item">Blocks</div>
+            <div class="demo-nav-item">Records</div>
+            <div class="demo-nav-item">Team</div>
+          </div>
+          <div class="demo-nav-label">ACCOUNT</div>
+          <div class="demo-nav"><div class="demo-nav-item">Settings</div></div>
+        </aside>
+        <div class="demo-main">
+          <div class="demo-greeting">
+            <div><span class="demo-date">Your orchard at a glance</span><h3>Good morning, Liam.</h3><p>Here is what needs your attention today.</p></div>
+            <div class="demo-daytag">ORCHARD WORKSPACE</div>
+          </div>
+          <div class="demo-stats">
+            <div class="demo-stat" style="--c:#FF6B2C"><span>Due today</span><b>4</b><small>Jobs to get through</small></div>
+            <div class="demo-stat" style="--c:#D9483B"><span>Overdue</span><b>2</b><small>Need a follow-up</small></div>
+            <div class="demo-stat" style="--c:#0A9C82"><span>Open PSA</span><b>6</b><small>Issues to keep an eye on</small></div>
+            <div class="demo-stat" style="--c:#FFD23F"><span>Records this month</span><b>28</b><small>Captured as work happens</small></div>
+          </div>
+          <div class="demo-bottom">
+            <div class="demo-panel"><div class="demo-panel-title">Quick actions</div><div class="demo-actions">
+              <div class="demo-action" style="--c:#FF6B2C"><b>+</b><span>Add a record</span></div>
+              <div class="demo-action" style="--c:#0A9C82"><b>✓</b><span>Sign on in person</span></div>
+              <div class="demo-action" style="--c:#D9A900"><b>＋</b><span>Add product</span></div>
+            </div></div>
+            <div class="demo-slide"><span>Hortlog field note</span><strong>Keep the whole crew on the same page.</strong><div class="demo-slide-dots"><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="desktop-caption rv"><i></i>Plan and review from the desktop. Capture the work on your phone, right there in the orchard.</p>
   </div>
 </section>
 
 <section id="faq" style="background:var(--card);border-top:1px solid var(--line)">
   <div class="wrap">
     <p class="eyebrow rv">Questions</p>
-    <h2 class="h2 rv">A few practical answers.</h2>
+    <h2 class="h2 rv">Straight answers.</h2>
     <div class="faq rv">
-      <details><summary>How much time will it save?</summary><p>That depends on how your orchard works today. Hortlog is designed to reduce double-handling: capture the job once, share the update with the right people and keep the record as you go. Try it with a real block and see where it saves your team time.</p></details>
       <details><summary>Do I need to download anything?</summary><p>No. Hortlog is a web app. Open it in your phone’s browser and add it to your Home Screen. It works like an app.</p></details>
-      <details><summary>Does it work with patchy signal?</summary><p>Hortlog is designed to keep working through patchy reception and catch up when you are back in range. Voice logging uses your phone’s speech recognition, which may need a connection depending on the phone.</p></details>
+      <details><summary>Does it work without signal?</summary><p>It opens and keeps working with patchy signal. Voice logging uses your phone’s speech recognition, so that part needs a connection on most phones.</p></details>
       <details><summary>Who can see my records?</summary><p>Only people you invite to your orchard, and each person only sees what their role allows. A contractor, for example, sees only the blocks they were given and no spray records.</p></details>
-      <details><summary>Will it make audit preparation easier?</summary><p>Records are filed into the usual folders as you go, and the audit pack brings together your exports and signed documents in one zip.</p></details>
-      <details><summary>Can I get my records out?</summary><p>Yes. Export to Excel or PDF, and you can delete your account yourself from Settings.</p></details>
-      <details><summary>Does it work on iPhone?</summary><p>Hortlog is built for Android first and tested most on Android. It runs in iPhone browsers too, and we are continuing to test it.</p></details>
+      <details><summary>Will it help with audits?</summary><p>Yes. Records are filed into the usual folders as you go, and the audit pack gives you Excel files and your signed documents in one zip.</p></details>
+      <details><summary>Can I get my records out?</summary><p>Any time. Export to Excel or PDF, and you can delete your account yourself from Settings.</p></details>
+      <details><summary>Does it work on iPhone?</summary><p>Hortlog is built for Android first and tested most on Android. It runs in iPhone browsers too, and we are testing that now. Tell us how it goes.</p></details>
     </div>
   </div>
 </section>
@@ -428,8 +374,8 @@ footer a{color:#fff}
 <div class="cta"><div class="wrap">
   <div class="rv">
     <h2>Try Hortlog on your orchard.</h2>
-    <p>Try it on a real block. Capture a job, pin an issue and spend less time chasing updates.</p>
-    <div class="acts"><a class="btn cut" href="/index.html?app=1">Try Hortlog</a><a class="btn ghost cut" href="mailto:pentreathliam@gmail.com">Ask Liam a question</a></div>
+    <p>It takes a few minutes to set up. Say your first job out loud and see where it lands.</p>
+    <div class="acts"><a class="btn cut" href="./?app=1">Open Hortlog</a><a class="btn ghost cut" href="mailto:pentreathliam@gmail.com">Ask Liam a question</a></div>
   </div>
   <div class="qr" aria-hidden="true"><div class="phone"><img src="shot-home.webp" width="780" height="1688" loading="lazy" alt=""></div></div>
 </div></div>
@@ -445,22 +391,5 @@ footer a{color:#fff}
 })();
 </script>
 <script>(function(){var v=document.querySelector('.hero-v');if(v){var wide=matchMedia('(min-width:701px)').matches,rm=matchMedia('(prefers-reduced-motion:reduce)').matches,sd=navigator.connection&&navigator.connection.saveData;if(!wide||rm||sd){v.remove()}else{v.src=innerWidth>=1100?'hero-hd.mp4':'hero.mp4';v.autoplay=true;v.addEventListener('canplay',function(){var p=v.play&&v.play();if(p&&p.catch)p.catch(function(){})});v.load()}}})();
-(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script>
-<script>
-(function(){
-  var cards=[].slice.call(document.querySelectorAll('.rcard[data-title]'));
-  var detail=document.getElementById('role-detail');
-  if(!cards.length||!detail)return;
-  cards.forEach(function(card){
-    card.addEventListener('click',function(){
-      cards.forEach(function(item){item.setAttribute('aria-pressed',item===card?'true':'false')});
-      var title=detail.querySelector('strong');
-      var copy=detail.querySelector('span');
-      if(title)title.textContent=card.getAttribute('data-title')||'';
-      if(copy)copy.textContent=card.getAttribute('data-detail')||'';
-    });
-  });
-})();
-</script>
-</body>
+(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script></body>
 </html>
