@@ -200,7 +200,44 @@ footer a{color:#fff}
 .js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
 .js .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
-.strip{display:none!important}</style>
+.strip{display:none!important}
+/* Refined real-world device previews and current feature visuals */
+.mini-cal-phone{width:236px!important;right:0!important;bottom:-112px!important;transform:rotate(5deg)!important;overflow:hidden}
+.mini-cal-ui{background:#E6EFEC;color:#0B1F20;border-radius:30px;overflow:hidden;min-height:420px;padding:17px 10px 10px;font-family:Barlow,system-ui,sans-serif;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.mini-cal-status{display:flex;justify-content:space-between;padding:0 9px 12px;font:700 8px/1 Barlow,sans-serif;color:#dbe8e4}
+.mini-cal-brand{background:#0F3D3E;color:#fff;margin:-17px -10px 0;padding:21px 13px 13px;display:flex;justify-content:space-between;align-items:center;font:800 20px/1 'Barlow Condensed',sans-serif}
+.mini-cal-brand span{color:#FFD23F}.mini-cal-brand i{font:700 12px/1 Barlow,sans-serif;font-style:normal;color:#d8e8e3}
+.mini-cal-title{padding:16px 8px 12px;display:grid;gap:3px}.mini-cal-title small{font-size:7px;letter-spacing:.12em;color:#4D6665;font-weight:700}.mini-cal-title strong{font:800 24px/1 'Barlow Condensed',sans-serif;text-transform:uppercase}.mini-cal-title span{font-size:9px;color:#4D6665}
+.mini-cal-days{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:0 2px 12px}.mini-cal-days span{display:grid;text-align:center;gap:5px;color:#4D6665;font-size:7px;padding:7px 0}.mini-cal-days b{font:800 15px/1 'Barlow Condensed',sans-serif;color:#0B1F20}.mini-cal-days .today{background:#0F3D3E;color:#cfe0db}.mini-cal-days .today b{color:#FFD23F}
+.mini-cal-jobs{background:#FBFDFC;border:1px solid #D4E3DE;padding:10px 9px;display:grid;gap:10px}.mini-cal-jobs>small{font-size:7px;letter-spacing:.1em;font-weight:700;color:#4D6665}.mini-cal-jobs>div{display:flex;gap:7px;align-items:flex-start}.mini-cal-jobs>div>i{width:7px;height:7px;transform:rotate(45deg);flex:none;margin-top:4px}.dot-orange{background:#FF6B2C}.dot-green{background:#0A9C82}.dot-yellow{background:#D9A900}.mini-cal-jobs span{display:grid;gap:2px}.mini-cal-jobs b{font-size:8px;line-height:1.1}.mini-cal-jobs em{font-size:7px;font-style:normal;color:#4D6665}.mini-cal-nav{display:flex;align-items:center;justify-content:space-around;margin:12px -2px 0;color:#4D6665;font-size:12px}.mini-cal-nav b{background:#FF6B2C;color:#fff;padding:6px 12px;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%)}
+.map-preview-card{width:min(100%,455px);background:#071a1b;padding:9px;box-shadow:0 22px 42px rgba(15,61,62,.22);transform:rotate(var(--r,-1deg));--cut:17px}
+.map-preview-top{display:flex;align-items:center;justify-content:space-between;color:#fff;padding:7px 7px 10px;font:700 14px/1 Barlow,sans-serif}.map-preview-top span{font-size:9px;letter-spacing:.13em;color:#a9c9c3}
+.map-preview-window{height:218px;overflow:hidden;background:#cbded4;position:relative;border:1px solid #31595a}.map-preview-window img{width:100%;height:100%;object-fit:cover;object-position:center 54%;transform:scale(1.14)}
+.map-preview-legend{display:flex;align-items:center;gap:15px;padding:12px 6px 4px;color:#d7e7e2;font:600 11px/1 Barlow,sans-serif}.map-preview-legend span{display:flex;align-items:center;gap:6px}.map-preview-legend strong{margin-left:auto;color:#FFD23F}.map-preview-legend i{width:8px;height:8px;border-radius:50%;display:inline-block}.pin-orange{background:#FF6B2C}.pin-red{background:#e03131}
+.schedule-preview{width:min(100%,490px);padding:18px;background:#FBFDFC;border:1px solid #D4E3DE;border-top:7px solid #0F3D3E;box-shadow:0 20px 42px rgba(15,61,62,.13);transform:rotate(-1deg);--cut:16px}
+.schedule-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.schedule-head>div{display:grid;gap:4px}.schedule-head small{font:700 9px/1 Barlow,sans-serif;color:#4D6665;letter-spacing:.12em}.schedule-head b{font:800 25px/1 'Barlow Condensed',sans-serif;text-transform:uppercase}.schedule-head>span{font:700 9px/1 Barlow,sans-serif;color:#0F3D3E;background:#E6EFEC;padding:8px}
+.schedule-week{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding-bottom:14px;border-bottom:1px solid #D4E3DE}.schedule-week span{display:grid;gap:5px;text-align:center;color:#4D6665;font:700 9px/1 Barlow,sans-serif;padding:8px 0}.schedule-week b{font:800 20px/1 'Barlow Condensed',sans-serif;color:#0B1F20}.schedule-week .active{background:#0F3D3E;color:#cfe0db}.schedule-week .active b{color:#FFD23F}
+.schedule-list{display:grid;gap:0;padding-top:13px}.schedule-list>small{font:700 9px/1 Barlow,sans-serif;letter-spacing:.1em;color:#4D6665;margin-bottom:6px}.schedule-list>div{display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:9px;padding:11px 2px;border-bottom:1px solid #E2ECE8}.schedule-mark{width:8px;height:8px;transform:rotate(45deg)}.schedule-mark.orange{background:#FF6B2C}.schedule-mark.green{background:#0A9C82}.schedule-mark.red{background:#D9483B}.schedule-list span{display:grid;gap:4px}.schedule-list b{font:700 12px/1 Barlow,sans-serif}.schedule-list em{font:500 10px/1 Barlow,sans-serif;color:#4D6665;font-style:normal}.schedule-list strong{font:700 9px/1 Barlow,sans-serif;color:#4D6665}.schedule-foot{display:flex;justify-content:space-between;align-items:center;padding-top:12px;color:#4D6665;font:600 9px/1 Barlow,sans-serif}.schedule-foot b{color:#0F3D3E}
+/* centred device selector */
+.preview-switch{display:flex;justify-content:center;align-items:center;gap:8px;margin:30px auto 0}.preview-switch>span{font:700 10px/1 Barlow,sans-serif;letter-spacing:.14em;color:var(--soft);margin-right:5px}.preview-choice{border:1px solid var(--line);background:transparent;color:var(--deep);padding:11px 18px;font:700 14px/1 Barlow,sans-serif;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);transition:background .18s,color .18s,border-color .18s}.preview-choice.active{background:var(--deep);color:#fff;border-color:var(--deep)}.preview-choice:focus-visible{outline:3px solid var(--hot);outline-offset:3px}
+.device-wrap{--device-max:1090px;max-width:var(--device-max);margin:24px auto 0;perspective:1600px;position:relative;padding:4px 0 0}
+.device-perspective{position:relative;transform-style:preserve-3d;transform:rotateX(5deg) rotateY(-7deg) rotateZ(-.4deg);transform-origin:50% 70%;transition:transform .45s ease}
+.laptop-screen-shell{position:relative;padding:17px 17px 18px;background:linear-gradient(145deg,#132b2c,#061516 55%,#183334);border:1px solid #3b5a5a;border-radius:17px 17px 8px 8px;box-shadow:0 28px 48px rgba(4,24,25,.38),inset 0 1px 0 rgba(255,255,255,.18)}
+.laptop-camera{position:absolute;top:5px;left:50%;width:5px;height:5px;background:#456566;border-radius:50%;transform:translateX(-50%);z-index:3}
+.laptop-hinge{height:8px;margin:0 2%;background:linear-gradient(180deg,#0c2021,#506465 48%,#152a2b);border-radius:0 0 5px 5px}
+.laptop-base{height:108px;margin:-1px -6% 0;position:relative;display:flex;justify-content:center;align-items:flex-start;padding-top:12px;background:linear-gradient(180deg,#627778 0,#253d3e 9%,#142c2d 70%,#071a1b 100%);clip-path:polygon(5% 0,95% 0,100% 88%,96% 100%,4% 100%,0 88%);box-shadow:0 22px 36px rgba(0,0,0,.28)}
+.keyboard-grid{width:59%;height:54px;border-radius:5px;background-color:#1b3031;background-image:repeating-linear-gradient(90deg,transparent 0 29px,rgba(150,180,176,.38) 29px 31px),repeating-linear-gradient(0deg,transparent 0 10px,rgba(150,180,176,.38) 10px 12px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.55);opacity:.95;position:relative}.keyboard-grid:before{content:"";position:absolute;inset:4px 4px;background:repeating-linear-gradient(90deg,#31494a 0 25px,#162c2d 25px 29px);opacity:.86}.laptop-trackpad{position:absolute;bottom:11px;width:22%;height:30px;border:1px solid rgba(145,174,170,.48);border-radius:3px;background:linear-gradient(140deg,rgba(12,30,31,.7),rgba(86,111,110,.22))}.laptop-notch{position:absolute;bottom:0;left:44%;width:12%;height:4px;background:rgba(210,225,220,.45);border-radius:0 0 8px 8px}
+/* Desktop workspace details */
+.desktop-browserbar{height:26px;display:flex;align-items:center;gap:12px;padding:0 9px 8px;color:#a9c9c3;font:600 10px/1 Barlow,sans-serif;letter-spacing:.04em}.desktop-address{margin:auto;max-width:310px;width:42%;padding:5px 12px;background:#102c2d;border:1px solid #24494a;border-radius:5px;text-align:center;color:#a9c9c3}.desktop-account{width:24px;height:24px;display:grid;place-items:center;background:#FFD23F;color:#0b1f20;font-weight:800;flex:none}.desktop-screen{display:grid;grid-template-columns:168px minmax(0,1fr);min-height:440px;overflow:hidden;border-radius:5px;background:#E6EFEC;color:#0B1F20}.demo-sidebar{padding:19px 12px;background:#0F3D3E;color:#e8f3ef;display:flex;flex-direction:column;gap:17px}.demo-brand{font:800 25px/.95 'Barlow Condensed',Impact,sans-serif;letter-spacing:-.02em;color:#fff;padding:0 7px}.demo-brand span{color:#FFD23F}.demo-nav-label{font:700 8px/1 Barlow,sans-serif;letter-spacing:.13em;color:#8fb4ad;padding:0 8px;margin-bottom:-10px}.demo-nav{display:grid;gap:3px}.demo-nav-item{display:flex;align-items:center;gap:9px;padding:8px 9px;color:#d7e7e2;font:600 11px/1 Barlow,sans-serif;border-left:3px solid transparent}.demo-nav-item i{font-style:normal;width:13px;font-size:14px;text-align:center;opacity:.9}.demo-nav-item.active{background:rgba(255,255,255,.1);border-left-color:#FF6B2C;color:#fff}.demo-nav-item.settings{margin-top:auto}.demo-nav-spacer{flex:1}.demo-sidebar-foot{display:flex;gap:8px;align-items:center;border-top:1px solid rgba(255,255,255,.14);padding:12px 3px 0}.demo-orchard-mark{width:25px;height:25px;display:grid;place-items:center;background:#FFD23F;color:#0B1F20;font:800 12px/1 Barlow,sans-serif}.demo-sidebar-foot span:last-child{display:grid;gap:3px;min-width:0}.demo-sidebar-foot b{font:700 9px/1 Barlow,sans-serif}.demo-sidebar-foot small{font:500 8px/1 Barlow,sans-serif;color:#a9c9c3}.demo-main{min-width:0;padding:22px 24px 20px}.demo-greeting{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:17px}.demo-date{display:block;color:#4D6665;font:700 8px/1 Barlow,sans-serif;letter-spacing:.12em;margin-bottom:7px}.demo-greeting h3{font:800 29px/1 'Barlow Condensed',sans-serif;letter-spacing:-.02em;text-transform:none;margin:0 0 4px}.demo-greeting p{margin:0;color:#4D6665;font:500 11px/1.2 Barlow,sans-serif}.demo-daytag{background:#fff;border-left:3px solid #0A9C82;padding:7px 10px;color:#0F3D3E;font:700 8px/1 Barlow,sans-serif;white-space:nowrap}.demo-daytag i{width:6px;height:6px;display:inline-block;background:#0A9C82;border-radius:50%;margin-right:5px}.demo-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:13px}.demo-stat{min-height:78px;background:#FBFDFC;border:1px solid #D4E3DE;border-top:4px solid var(--c,#FF6B2C);padding:10px 11px;min-width:0}.demo-stat span{display:block;color:#4D6665;font:700 8px/1.2 Barlow,sans-serif;text-transform:uppercase;letter-spacing:.04em}.demo-stat b{display:block;margin-top:8px;font:800 29px/.9 'Barlow Condensed',sans-serif;color:#0B1F20}.demo-stat small{display:block;color:#4D6665;font:500 8px/1.2 Barlow,sans-serif;margin-top:4px}
+.demo-lower{display:grid;grid-template-columns:.88fr 1.12fr;gap:10px;align-items:stretch}.demo-panel{background:#FBFDFC;border:1px solid #D4E3DE;padding:12px;min-width:0}.demo-panel-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px}.demo-panel-title{font:800 18px/1 'Barlow Condensed',sans-serif;text-transform:uppercase;color:#0B1F20}.demo-panel-head>span{font:700 7px/1 Barlow,sans-serif;letter-spacing:.1em;color:#4D6665}.demo-quick-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #E4ECE8}.demo-quick-row:last-child{border-bottom:0}.quick-ico{width:25px;height:25px;display:grid;place-items:center;color:#fff;font:800 15px/1 Barlow,sans-serif;flex:none}.quick-ico.orange{background:#FF6B2C}.quick-ico.green{background:#0A9C82}.quick-ico.yellow{background:#D9A900;color:#0B1F20}.demo-quick-row>span{display:grid;gap:3px;min-width:0}.demo-quick-row b{font:700 9px/1 Barlow,sans-serif;color:#0B1F20}.demo-quick-row small{font:500 7px/1.2 Barlow,sans-serif;color:#4D6665}.demo-quick-row em{font:700 13px/1 Barlow,sans-serif;color:#4D6665;margin-left:auto;font-style:normal}.crew-panel-heading{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.crew-panel-heading>div>span{font:700 7px/1 Barlow,sans-serif;letter-spacing:.12em;color:#4D6665}.crew-panel-heading h4{font:800 19px/1.03 'Barlow Condensed',sans-serif;text-transform:uppercase;margin:5px 0 10px;color:#0F3D3E}.crew-panel-heading>i{font-style:normal;background:#E6EFEC;color:#0F3D3E;padding:6px}.crew-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.crew-metrics div{display:grid;gap:3px;padding:8px 7px;background:#F0F6F3;border-left:3px solid #0A9C82}.crew-metrics div:first-child{border-left-color:#FF6B2C}.crew-metrics div:last-child{border-left-color:#FFD23F}.crew-metrics b{font:800 24px/.9 'Barlow Condensed',sans-serif;color:#0B1F20}.crew-metrics span{font:600 7px/1.1 Barlow,sans-serif;color:#4D6665}.crew-progress{height:5px;background:#DDE9E4;margin:9px 0 7px}.crew-progress span{height:100%;display:block;background:#0A9C82}.crew-teamline{display:flex;align-items:center;gap:8px}.crew-avatars{display:flex;padding-left:2px}.crew-avatars i{font:700 7px/1 Barlow,sans-serif;font-style:normal;width:20px;height:20px;margin-left:-3px;display:grid;place-items:center;background:#0F3D3E;color:white;border:1px solid #FBFDFC}.crew-avatars i:nth-child(2){background:#FF6B2C}.crew-avatars i:nth-child(3){background:#647F7A}.crew-avatars i:nth-child(4){background:#FFD23F;color:#0B1F20}.crew-teamline>span{font:600 7px/1 Barlow,sans-serif;color:#4D6665}.crew-note{display:flex;align-items:center;gap:7px;border-top:1px solid #E4ECE8;margin-top:8px;padding-top:8px}.crew-note>i{width:7px;height:7px;background:#0A9C82;transform:rotate(45deg);flex:none}.crew-note span{display:grid;gap:2px}.crew-note b{font:700 8px/1 Barlow,sans-serif;color:#0B1F20}.crew-note small{font:500 7px/1 Barlow,sans-serif;color:#4D6665}.crew-note strong{font:700 7px/1 Barlow,sans-serif;color:#0A9C82;margin-left:auto}.sample-data-note{display:block;text-align:right;color:#748A86;font:700 6px/1 Barlow,sans-serif;letter-spacing:.1em;margin-top:5px}
+.desktop-caption{display:flex;justify-content:center;align-items:center;gap:11px;margin:25px auto 0;max-width:720px;text-align:center;color:var(--soft);font-size:17px}.desktop-caption i{width:9px;height:9px;transform:rotate(45deg);background:var(--hot);flex:none}.preview-note{text-align:center;color:var(--soft);font:500 12px/1 Barlow,sans-serif;margin:8px 0 0}
+/* Tablet mode */
+.device-wrap[data-mode="tablet"] .device-perspective{transform:none;max-width:850px;margin:0 auto}.device-wrap[data-mode="tablet"] .laptop-screen-shell{padding:18px;border-radius:30px;box-shadow:0 24px 55px rgba(4,24,25,.28),inset 0 0 0 2px #405b5c}.device-wrap[data-mode="tablet"] .laptop-camera{top:7px}.device-wrap[data-mode="tablet"] .desktop-screen{min-height:560px;grid-template-columns:155px minmax(0,1fr)}.device-wrap[data-mode="tablet"] .demo-main{padding:24px 26px}.device-wrap[data-mode="tablet"] .demo-stats{gap:10px}.device-wrap[data-mode="tablet"] .demo-stat{min-height:90px}.device-wrap[data-mode="tablet"] .demo-lower{grid-template-columns:.85fr 1.15fr}.device-wrap[data-mode="tablet"] .laptop-hinge,.device-wrap[data-mode="tablet"] .laptop-base{display:none}.tablet-home-indicator{display:none}.device-wrap[data-mode="tablet"] .tablet-home-indicator{display:block;width:78px;height:5px;border-radius:10px;background:#9bb1ad;margin:10px auto 0}
+@media(max-width:900px){.device-wrap{max-width:100%}.device-perspective{transform:perspective(1200px) rotateX(3deg) rotateY(-3deg)}.desktop-screen{grid-template-columns:135px minmax(0,1fr);min-height:415px}.demo-sidebar{padding:17px 8px}.demo-main{padding:18px 16px}.demo-greeting h3{font-size:26px}.demo-stat{padding:9px}.demo-stat b{font-size:26px}.demo-lower{grid-template-columns:.9fr 1.1fr}.device-wrap[data-mode="tablet"] .desktop-screen{grid-template-columns:125px minmax(0,1fr);min-height:500px}.device-wrap[data-mode="tablet"] .demo-main{padding:18px}}
+@media(max-width:620px){.mini-cal-phone{width:190px!important;bottom:-95px!important;right:-2px!important}.mini-cal-ui{min-height:345px;padding:15px 8px 8px;border-radius:26px}.mini-cal-brand{margin-top:-15px;padding:19px 10px 10px}.mini-cal-title{padding:12px 6px 9px}.mini-cal-title strong{font-size:20px}.mini-cal-days{padding-bottom:8px}.mini-cal-jobs{gap:8px;padding:8px}.mini-cal-nav{margin-top:9px}.map-preview-card{width:100%;padding:7px}.map-preview-window{height:180px}.map-preview-legend{gap:9px;font-size:9px}.schedule-preview{width:100%;padding:14px}.schedule-list>div{gap:6px}.preview-switch{margin-top:23px}.preview-choice{padding:10px 13px;font-size:12px}.preview-switch>span{font-size:9px}.device-wrap{margin-top:20px;padding:0 2px}.device-perspective{transform:none}.laptop-screen-shell{padding:10px 9px 10px;border-radius:12px 12px 5px 5px}.laptop-camera{top:3px;width:4px;height:4px}.desktop-browserbar{height:22px;gap:5px;padding:0 5px 6px}.desktop-dots{gap:3px}.desktop-dots i{width:5px;height:5px}.desktop-address{font-size:7px;padding:4px;width:60%}.desktop-account{width:17px;height:17px;font-size:9px}.desktop-screen{grid-template-columns:53px minmax(0,1fr);min-height:390px}.demo-sidebar{padding:13px 4px;gap:12px}.demo-brand{font-size:16px;padding:0 3px}.demo-nav-label{font-size:0;height:1px;padding:0;margin:0}.demo-nav{gap:2px}.demo-nav-item{justify-content:center;padding:8px 2px;font-size:0;gap:0}.demo-nav-item i{font-size:12px}.demo-nav-spacer{min-height:10px}.demo-sidebar-foot{padding-top:7px;justify-content:center}.demo-sidebar-foot span:last-child{display:none}.demo-orchard-mark{width:20px;height:20px;font-size:9px}.demo-main{padding:12px 9px}.demo-greeting{margin-bottom:10px;gap:4px}.demo-date{font-size:6px;margin-bottom:5px}.demo-greeting h3{font-size:19px}.demo-greeting p{font-size:8px}.demo-daytag{font-size:0;padding:6px;width:10px;height:10px;border-left:0;border-radius:50%;background:#0A9C82}.demo-daytag i{display:none}.demo-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-bottom:7px}.demo-stat{min-height:61px;padding:7px 6px;border-top-width:3px}.demo-stat span{font-size:6px}.demo-stat b{font-size:22px;margin-top:6px}.demo-stat small{font-size:6px;margin-top:2px}.demo-lower{grid-template-columns:1fr;gap:6px}.demo-panel{padding:8px}.demo-panel-title{font-size:15px}.demo-panel-head>span{font-size:6px}.demo-quick-row{padding:6px 0;gap:6px}.quick-ico{width:20px;height:20px;font-size:12px}.demo-quick-row b{font-size:7px}.demo-quick-row small{font-size:6px}.demo-quick-row em{font-size:11px}.crew-panel-heading h4{font-size:16px}.crew-metrics div{padding:6px 5px}.crew-metrics b{font-size:19px}.crew-metrics span,.crew-teamline>span{font-size:6px}.crew-note{margin-top:6px;padding-top:6px}.crew-note b{font-size:7px}.crew-note small,.crew-note strong{font-size:6px}.laptop-hinge{height:5px}.laptop-base{height:36px;margin:0 -5%;padding-top:4px}.keyboard-grid{width:58%;height:17px;background-size:13px 5px,100% 6px}.keyboard-grid:before{inset:1px 2px;background-size:13px 100%}.laptop-trackpad{height:10px;bottom:3px;width:22%}.laptop-notch{height:2px}.device-wrap[data-mode="tablet"] .device-perspective{max-width:100%}.device-wrap[data-mode="tablet"] .laptop-screen-shell{width:95%;margin:0 auto;padding:13px 9px;border-radius:18px}.device-wrap[data-mode="tablet"] .desktop-screen{grid-template-columns:53px minmax(0,1fr);min-height:410px}.device-wrap[data-mode="tablet"] .demo-main{padding:12px 9px}.device-wrap[data-mode="tablet"] .laptop-camera{top:5px}.device-wrap[data-mode="tablet"] .tablet-home-indicator{width:48px;height:3px}}
+@media(prefers-reduced-motion:reduce){.device-perspective,.preview-choice{transition:none}}
+
+</style>
 <script>document.documentElement.className='js'</script>
 </head>
 <body>
@@ -221,7 +258,16 @@ footer a{color:#fff}
     <span class="chip cut c1"><i></i>PSA pinned to block 3</span>
     <span class="chip o cut c2"><i></i>Crew alerted</span>
     <span class="chip cut c3"><i></i>Diary updated</span>
-    <div class="phone ph-b"><img src="shot-calendar.webp" width="780" height="1688" alt="Hortlog calendar showing jobs for the month"></div>
+    <div class="phone ph-b mini-cal-phone" aria-label="Hortlog calendar preview">
+      <div class="mini-cal-ui">
+        <div class="mini-cal-status"><span>9:41</span><span>● ● ●</span></div>
+        <div class="mini-cal-brand"><b>Hort<span>log</span></b><i>•••</i></div>
+        <div class="mini-cal-title"><small>YOUR ORCHARD</small><strong>Coming up</strong><span>November 2026</span></div>
+        <div class="mini-cal-days"><span>Mon<b>16</b></span><span>Tue<b>17</b></span><span class="today">Wed<b>18</b></span><span>Thu<b>19</b></span><span>Fri<b>20</b></span></div>
+        <div class="mini-cal-jobs"><small>WEDNESDAY 18</small><div><i class="dot-orange"></i><span><b>Spray block 2</b><em>Spray &amp; fert · 8:30 am</em></span></div><div><i class="dot-green"></i><span><b>Check irrigation</b><em>Block 4 · Assigned</em></span></div><div><i class="dot-yellow"></i><span><b>PSA follow-up</b><em>Block 1 · Due today</em></span></div></div>
+        <div class="mini-cal-nav"><span>⌂</span><span>▦</span><b>＋</b><span>▤</span></div>
+      </div>
+    </div>
     <div class="phone ph-a"><img src="shot-home.webp" width="780" height="1688" alt="Hortlog home screen with jobs due today and block tiles"></div>
   </div>
 </div></div>
@@ -270,16 +316,29 @@ footer a{color:#fff}
         <p>Your blocks sit on real LINZ aerial imagery. PSA and dead vines show as pins, so the whole team knows exactly where to look.</p>
         <ul><li>Choose your block on the map in a few taps.</li><li>Tap roughly where a problem is and the pin stays there.</li><li>Open issues per block, at a glance, on Home.</li></ul>
       </div>
-      <div class="shot rv"><div class="mapcard cut" style="--r:-2deg"><img src="shot-map.webp" width="900" height="718" loading="lazy" alt="Block map with PSA and dead vine pins on aerial imagery"><div class="mapcap"><span>Block 3</span><span>PSA and dead vine pins</span></div></div></div>
+      <div class="shot rv"><div class="map-preview-card cut" style="--r:-1deg">
+        <div class="map-preview-top"><b>Minack Orchard</b><span>BLOCK MAP</span></div>
+        <div class="map-preview-window"><img src="shot-map.webp" width="900" height="718" loading="lazy" alt="Aerial block map with PSA and dead vine location pins"></div>
+        <div class="map-preview-legend"><span><i class="pin-orange"></i>PSA issue</span><span><i class="pin-red"></i>Dead vine</span><strong>Block 3</strong></div>
+      </div></div>
     </div>
 
     <div class="row">
       <div class="txt rv">
         <h3>Everyone knows the plan.</h3>
-        <p>A calendar the whole orchard shares. Tap Overdue and it opens straight on the late jobs. Tap a day in Coming up and it jumps there.</p>
-        <ul><li>Assign a job to a team member. They get a notification.</li><li>Morning reminders at 8am New Zealand time.</li><li>Roles for Manager, Supervisor, Orchard worker and Contractor, so people see what they should.</li></ul>
+        <p>See what is due, what is overdue and who is looking after each job. Your team starts the day with the same clear picture.</p>
+        <ul><li>Assign work to a team member and keep the responsibility clear.</li><li>See overdue work without hunting through messages.</li><li>Keep the whole crew up to date as jobs are completed.</li></ul>
       </div>
-      <div class="shot rv" style="--r:-2deg"><div class="phone"><img src="shot-calendar.webp" width="780" height="1688" loading="lazy" alt="Hortlog calendar with jobs on their days"></div></div>
+      <div class="shot rv"><div class="schedule-preview cut">
+        <div class="schedule-head"><div><small>ORCHARD CALENDAR</small><b>November 2026</b></div><span>THIS WEEK&nbsp;⌄</span></div>
+        <div class="schedule-week"><span>MON<b>16</b></span><span>TUE<b>17</b></span><span class="active">WED<b>18</b></span><span>THU<b>19</b></span><span>FRI<b>20</b></span></div>
+        <div class="schedule-list"><small>WEDNESDAY · 3 JOBS</small>
+          <div><i class="schedule-mark orange"></i><span><b>Spray &amp; fertiliser</b><em>Block 2 · 8:30 am</em></span><strong>Due</strong></div>
+          <div><i class="schedule-mark green"></i><span><b>Irrigation check</b><em>Block 4 · Assigned to Sam</em></span><strong>In progress</strong></div>
+          <div><i class="schedule-mark red"></i><span><b>PSA follow-up</b><em>Block 1 · Needs attention</em></span><strong>Overdue</strong></div>
+        </div>
+        <div class="schedule-foot"><span>← Previous week</span><b>Today</b><span>Next week →</span></div>
+      </div></div>
     </div>
 
     <div class="row flip">
@@ -312,50 +371,73 @@ footer a{color:#fff}
     <div class="desktop-intro">
       <p class="eyebrow rv">A bigger view of your orchard</p>
       <h2 class="h2 rv">The full orchard, in view.</h2>
-      <p class="sub rv">Use Hortlog on a desktop to see what is due, what is overdue and what needs attention. Then take the same workspace into the orchard on your phone.</p>
+      <p class="sub rv">A clear workspace for planning the day, checking progress and keeping the whole crew on the same page. Switch between the desktop and tablet view.</p>
     </div>
-    <div class="desktop-device cut rv" aria-label="Illustration of the Hortlog desktop workspace">
-      <div class="desktop-browserbar"><span class="desktop-dots"><i></i><i></i><i></i></span><span class="desktop-address">hortlog.nz / orchard workspace</span><span class="desktop-account">LP</span></div>
-      <div class="desktop-screen">
-        <aside class="demo-sidebar">
-          <div class="demo-brand">Hort<span>log</span></div>
-          <div class="demo-nav-label">WORKSPACE</div>
-          <div class="demo-nav">
-            <div class="demo-nav-item active">Home</div>
-            <div class="demo-nav-item">Calendar</div>
-            <div class="demo-nav-item">Blocks</div>
-            <div class="demo-nav-item">Records</div>
-            <div class="demo-nav-item">Team</div>
-          </div>
-          <div class="demo-nav-label">ACCOUNT</div>
-          <div class="demo-nav"><div class="demo-nav-item">Settings</div></div>
-        </aside>
-        <div class="demo-main">
-          <div class="demo-greeting">
-            <div><span class="demo-date">Your orchard at a glance</span><h3>Good morning, Liam.</h3><p>Here is what needs your attention today.</p></div>
-            <div class="demo-daytag">ORCHARD WORKSPACE</div>
-          </div>
-          <div class="demo-stats">
-            <div class="demo-stat" style="--c:#FF6B2C"><span>Due today</span><b>4</b><small>Jobs to get through</small></div>
-            <div class="demo-stat" style="--c:#D9483B"><span>Overdue</span><b>2</b><small>Need a follow-up</small></div>
-            <div class="demo-stat" style="--c:#0A9C82"><span>Open PSA</span><b>6</b><small>Issues to keep an eye on</small></div>
-            <div class="demo-stat" style="--c:#FFD23F"><span>Records this month</span><b>28</b><small>Captured as work happens</small></div>
-          </div>
-          <div class="demo-bottom">
-            <div class="demo-panel"><div class="demo-panel-title">Quick actions</div><div class="demo-actions">
-              <div class="demo-action" style="--c:#FF6B2C"><b>+</b><span>Add a record</span></div>
-              <div class="demo-action" style="--c:#0A9C82"><b>✓</b><span>Sign on in person</span></div>
-              <div class="demo-action" style="--c:#D9A900"><b>＋</b><span>Add product</span></div>
-            </div></div>
-            <div class="demo-slide"><span>Hortlog field note</span><strong>Keep the whole crew on the same page.</strong><div class="demo-slide-dots"><i></i><i></i><i></i></div></div>
+    <div class="preview-switch rv" role="group" aria-label="Choose device preview">
+      <span>VIEW ON</span>
+      <button type="button" class="preview-choice active" data-preview="desktop" aria-pressed="true">▱&nbsp; Desktop</button>
+      <button type="button" class="preview-choice" data-preview="tablet" aria-pressed="false">▭&nbsp; Tablet</button>
+    </div>
+    <div class="device-wrap rv" id="hortlogDevicePreview" data-mode="desktop">
+      <div class="device-perspective">
+        <div class="laptop-screen-shell">
+          <div class="laptop-camera"></div>
+          <div class="desktop-browserbar"><span class="desktop-dots"><i></i><i></i><i></i></span><span class="desktop-address">hortlog.nz&nbsp; / &nbsp;orchard workspace</span><span class="desktop-account">M</span></div>
+          <div class="desktop-screen">
+            <aside class="demo-sidebar">
+              <div class="demo-brand">Hort<span>log</span></div>
+              <div class="demo-nav-label">WORKSPACE</div>
+              <div class="demo-nav">
+                <div class="demo-nav-item active"><i>⌂</i>Home</div>
+                <div class="demo-nav-item"><i>▦</i>Calendar</div>
+                <div class="demo-nav-item"><i>◇</i>Blocks</div>
+                <div class="demo-nav-item"><i>▤</i>Records</div>
+                <div class="demo-nav-item"><i>♧</i>Team</div>
+              </div>
+              <div class="demo-nav-spacer"></div>
+              <div class="demo-nav-item settings"><i>⚙</i>Settings</div>
+              <div class="demo-sidebar-foot"><span class="demo-orchard-mark">M</span><span><b>Minack Orchard</b><small>Manager account</small></span></div>
+            </aside>
+            <div class="demo-main">
+              <div class="demo-greeting">
+                <div><span class="demo-date">MONDAY, 23 NOVEMBER 2026</span><h3>Minack Orchard</h3><p>Your orchard at a glance.</p></div>
+                <div class="demo-daytag"><i></i>ALL SYSTEMS UP TO DATE</div>
+              </div>
+              <div class="demo-stats">
+                <div class="demo-stat" style="--c:#FF6B2C"><span>Due today</span><b>4</b><small>Jobs to get through</small></div>
+                <div class="demo-stat" style="--c:#D9483B"><span>Overdue</span><b>2</b><small>Need a follow-up</small></div>
+                <div class="demo-stat" style="--c:#0A9C82"><span>Open PSA</span><b>6</b><small>Issues to keep an eye on</small></div>
+                <div class="demo-stat" style="--c:#FFD23F"><span>Records this month</span><b>28</b><small>Captured as work happens</small></div>
+              </div>
+              <div class="demo-lower">
+                <div class="demo-panel demo-quick-panel"><div class="demo-panel-head"><div class="demo-panel-title">Quick actions</div><span>FAST CAPTURE</span></div>
+                  <div class="demo-quick-row"><i class="quick-ico orange">＋</i><span><b>Add a record</b><small>Log work, a spray or an issue</small></span><em>→</em></div>
+                  <div class="demo-quick-row"><i class="quick-ico green">✓</i><span><b>Sign on in person</b><small>Record a crew or contractor sign-on</small></span><em>→</em></div>
+                  <div class="demo-quick-row"><i class="quick-ico yellow">＋</i><span><b>Add product</b><small>Update your spray products</small></span><em>→</em></div>
+                </div>
+                <div class="demo-panel demo-crew-panel">
+                  <div class="crew-panel-heading"><div><span>TEAM SNAPSHOT</span><h4>Keep the whole crew<br>on the same page.</h4></div><i>↗</i></div>
+                  <div class="crew-metrics">
+                    <div><b>12</b><span>Jobs assigned</span></div><div><b>8</b><span>Completed</span></div><div><b>4</b><span>Still open</span></div>
+                  </div>
+                  <div class="crew-progress"><span style="width:67%"></span></div>
+                  <div class="crew-teamline"><div class="crew-avatars"><i>JS</i><i>MK</i><i>AP</i><i>+2</i></div><span>5 team members active this week</span></div>
+                  <div class="crew-note"><i></i><span><b>Spray crew notified</b><small>Block 2 · Today, 8:15 am</small></span><strong>Sent</strong></div>
+                  <small class="sample-data-note">SAMPLE ORCHARD DATA</small>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="laptop-hinge"></div>
+        <div class="laptop-base"><div class="keyboard-grid" aria-hidden="true"></div><div class="laptop-trackpad" aria-hidden="true"></div><div class="laptop-notch"></div></div>
       </div>
+      <div class="tablet-home-indicator" aria-hidden="true"></div>
     </div>
-    <p class="desktop-caption rv"><i></i>Plan and review from the desktop. Capture the work on your phone, right there in the orchard.</p>
+    <p class="desktop-caption rv"><i></i>Plan and review on a bigger screen. Take the same workspace out into the orchard on your phone.</p>
+    <p class="preview-note rv">Illustrative preview with sample orchard figures.</p>
   </div>
 </section>
-
 <section id="faq" style="background:var(--card);border-top:1px solid var(--line)">
   <div class="wrap">
     <p class="eyebrow rv">Questions</p>
@@ -391,5 +473,20 @@ footer a{color:#fff}
 })();
 </script>
 <script>(function(){var v=document.querySelector('.hero-v');if(v){var wide=matchMedia('(min-width:701px)').matches,rm=matchMedia('(prefers-reduced-motion:reduce)').matches,sd=navigator.connection&&navigator.connection.saveData;if(!wide||rm||sd){v.remove()}else{v.src=innerWidth>=1100?'hero-hd.mp4':'hero.mp4';v.autoplay=true;v.addEventListener('canplay',function(){var p=v.play&&v.play();if(p&&p.catch)p.catch(function(){})});v.load()}}})();
-(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script></body>
+(function(){function n(){var t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--navh',t.offsetHeight+'px')}n();addEventListener('resize',n);addEventListener('load',n)})()</script>
+<script>
+(function(){
+  var device=document.getElementById('hortlogDevicePreview');
+  if(!device)return;
+  var choices=[].slice.call(document.querySelectorAll('[data-preview]'));
+  choices.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var mode=btn.getAttribute('data-preview')==='tablet'?'tablet':'desktop';
+      device.setAttribute('data-mode',mode);
+      choices.forEach(function(other){var active=other===btn;other.classList.toggle('active',active);other.setAttribute('aria-pressed',active?'true':'false')});
+    });
+  });
+})();
+</script>
+</body>
 </html>
