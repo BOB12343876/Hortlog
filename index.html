@@ -2485,6 +2485,18 @@ m=s.match(/\bat\s+([01]?\d|2[0-3]):([0-5]\d)\b/i);if(m)return String(+m[1]).padS
 function sprayTimeLabel(value){if(!value)return 'Not recorded';const d=new Date(value);return Number.isNaN(d.getTime())?'Not recorded':d.toLocaleTimeString('en-NZ',{hour:'numeric',minute:'2-digit',hour12:true})}
 function sprayDateTime(date,time){return date&&time?date+'T'+time:''}
 function sprayPointFor(i,blockOverride){const id=blockOverride!==undefined?blockOverride:(i&&i.ab?'all':(i&&i.b));if(!id)return null;const b=(id==='all'?B[0]:B[+id]||B[id])||{};const p=b.weatherPoint;if(p&&Number.isFinite(+p.lat)&&Number.isFinite(+(p.lon??p.lng)))return{lat:+p.lat,lon:+(p.lon??p.lng),source:p.source||'block-location',address:b.weatherAddress||''};const address=String(b.weatherAddress||b.address||'').trim();return address?{address,source:'address'}:null}
+let lastWeatherAddressLookupAt=0;
+async function geocodeSprayAddress(address){
+const clean=String(address||'').trim();if(clean.length<5||clean.length>240)throw new Error('Enter a fuller orchard or block address (5–240 characters).');
+const wait=Math.max(0,1100-(Date.now()-lastWeatherAddressLookupAt));if(wait)await new Promise(r=>setTimeout(r,wait));lastWeatherAddressLookupAt=Date.now();
+const query=/\b(new zealand|aotearoa)\b/i.test(clean)?clean:clean+', New Zealand';const url=new URL('https://nominatim.openstreetmap.org/search');url.searchParams.set('format','jsonv2');url.searchParams.set('limit','1');url.searchParams.set('countrycodes','nz');url.searchParams.set('q',query);
+const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);let response;
+try{response=await fetch(url.toString(),{headers:{Accept:'application/json','Accept-Language':'en'},referrerPolicy:'strict-origin-when-cross-origin',signal:controller.signal})}catch(error){if(error&&error.name==='AbortError')throw new Error('Address lookup timed out. Please try again.');throw new Error('Could not reach the address service from this browser. Try again or set the block location on the map.') }finally{clearTimeout(timeout)}
+const raw=await response.text();if(!response.ok){if(response.status===429)throw new Error('OpenStreetMap is busy. Wait a moment before trying again.');if(response.status===403)throw new Error('OpenStreetMap refused the browser lookup (HTTP 403). Set the block location on the map or use coordinates instead.');throw new Error('OpenStreetMap address lookup failed (HTTP '+response.status+'). Try a nearby road and town, or set the block location on the map.')}
+let results;try{results=JSON.parse(raw)}catch(error){throw new Error('The address service returned an unexpected result. Try setting the block location on the map.')}
+const first=Array.isArray(results)?results[0]:null,lat=Number(first&&first.lat),lon=Number(first&&first.lon);if(!Number.isFinite(lat)||lat< -90||lat>90||!Number.isFinite(lon)||lon< -180||lon>180)throw new Error('We could not match that address. Try the nearest road and town, or set the block location on the map.');
+return{lat,lon,displayName:String(first.display_name||clean)}
+}
 function askBlockWeatherAddress(i,blockId,opts){const id=blockId==='all'?0:(+blockId||0),b=B[id]||(B[id]={}),isAll=blockId==='all';if($('#weather-address-modal'))return;const e=document.body.appendChild(Object.assign(document.createElement('div'),{id:'weather-address-modal',className:'ov'}));e.innerHTML=`<div class="box cut"><h2>${isAll?'Add the orchard address':'Add this block’s address'}</h2><p>Hortlog needs a location to look up historical weather for this spray. You only need to enter it once.</p><label>${isAll?'Orchard address':'Block address'}<input id="weather-address-input" type="text" autocomplete="street-address" value="${esc(b.weatherAddress||'')}" placeholder="Street, orchard road or nearest address"></label><p class="hint" style="margin:8px 0">A street address, orchard gate address or nearest road and town is fine. Hortlog works out the map location automatically. The address is sent to OpenStreetMap for a one-time lookup and then the coordinates are saved in this block. Use an orchard location, not a private home address. © OpenStreetMap contributors.</p><div class="acts"><button class="btn" id="weather-address-save">Save address and fetch</button><button class="btn alt" id="weather-address-cancel">Cancel</button></div></div>`;const input=$('#weather-address-input');setTimeout(()=>input&&input.focus(),50);$('#weather-address-cancel').onclick=()=>e.remove();$('#weather-address-save').onclick=()=>{const address=input.value.trim();if(address.length<5){toast('Enter a street address or nearest road and town.');input.focus();return}const previous=String(b.weatherAddress||'');b.weatherAddress=address;if(previous!==address)delete b.weatherPoint;b.cfg=true;saveB();e.remove();fetchSprayWeather(i,false,opts)};e.addEventListener('click',ev=>{if(ev.target===e)e.remove()})}
 async function fetchSprayWeather(i,quiet,opts){
 opts=opts||{};if(!i||i.c!=='spray'){if(!quiet)toast('Weather is only available for spray records.');return false}
@@ -2494,7 +2506,19 @@ i.sprayAt=date+'T'+time;i.doneAt=new Date(i.sprayAt).getTime();if(opts.block!==u
 const status=$('#ewstatus');if(status)status.textContent='Finding the block location and historical weather…';
 try{
  if(!sb.functions||!sb.functions.invoke)throw new Error('The spray-weather function is not installed yet.');
- const requestBody={date,time,timezone:'Pacific/Auckland'};if(Number.isFinite(point.lat)&&Number.isFinite(point.lon)){requestBody.lat=point.lat;requestBody.lon=point.lon}else requestBody.address=point.address;
+ const requestBody={date,time,timezone:'Pacific/Auckland'};let browserGeocoded=null;
+ if(Number.isFinite(point.lat)&&Number.isFinite(point.lon)){requestBody.lat=point.lat;requestBody.lon=point.lon;if(point.address)requestBody.address=point.address}
+ else{
+   if(status)status.textContent='Finding the orchard location…';
+   browserGeocoded=await geocodeSprayAddress(point.address);
+   point.lat=browserGeocoded.lat;point.lon=browserGeocoded.lon;
+   requestBody.lat=browserGeocoded.lat;requestBody.lon=browserGeocoded.lon;requestBody.address=browserGeocoded.displayName;
+   const saveId=blockId==='all'?0:(+blockId||0),locationBlock=B[saveId]||(B[saveId]={});
+   locationBlock.weatherPoint={lat:browserGeocoded.lat,lon:browserGeocoded.lon,source:'OpenStreetMap Nominatim'};
+   if(point.address)locationBlock.weatherAddress=point.address;
+   locationBlock.weatherLocationName=browserGeocoded.displayName;saveB();
+ }
+ if(status)status.textContent='Fetching historical weather…';
  const {data,error}=await sb.functions.invoke('spray-weather',{body:requestBody});
  if(error){
    let detail=error.message||'The weather function returned an error.';
@@ -2509,10 +2533,11 @@ try{
    throw new Error(detail);
  }
  if(!data||!data.weather)throw new Error(data&&data.error?data.error:'No historical weather data was returned.');
- i.weather=data.weather;i.weather.requestedAt=date+'T'+time;const resolved=data.resolvedLocation||{};if(Number.isFinite(+resolved.lat)&&Number.isFinite(+resolved.lon)){i.weather.blockLocation={lat:+resolved.lat,lon:+resolved.lon,address:resolved.displayName||point.address||'',source:resolved.source||'OpenStreetMap'};const saveId=blockId==='all'?0:(+blockId||0),locationBlock=B[saveId]||(B[saveId]={});locationBlock.weatherPoint={lat:+resolved.lat,lon:+resolved.lon,source:'address-geocoded'};if(point.address)locationBlock.weatherAddress=point.address;if(resolved.displayName)locationBlock.weatherLocationName=resolved.displayName;saveB()}else if(Number.isFinite(point.lat)&&Number.isFinite(point.lon))i.weather.blockLocation={lat:point.lat,lon:point.lon,address:point.address||'',source:point.source};save();
- const w=i.weather,summary=`${w.windSpeedKmh==null?'Wind n/a':w.windSpeedKmh+' km/h'}${w.windDirectionDeg==null?'':' · '+w.windDirectionDeg+'°'}${w.temperatureC==null?'':' · '+w.temperatureC+'°C'}`;
- if(status)status.textContent='Saved modelled estimate: '+summary+' · '+(w.modelTime||'nearest hourly data')+(resolved.displayName?' · Location: '+resolved.displayName:'');
- if(!quiet)toast('Historical weather estimate added to this spray record.'+(resolved.displayName?' Location matched: '+resolved.displayName+'. Check Block settings if this is not right.':''));return true;
+ i.weather=data.weather;i.weather.requestedAt=date+'T'+time;const resolved=data.resolvedLocation||{};if(browserGeocoded){i.weather.geocodingSource='OpenStreetMap Nominatim';i.weather.locationAddress=browserGeocoded.displayName}
+ if(Number.isFinite(+resolved.lat)&&Number.isFinite(+resolved.lon)){const matchedName=browserGeocoded?browserGeocoded.displayName:(resolved.displayName||point.address||'');i.weather.blockLocation={lat:+resolved.lat,lon:+resolved.lon,address:matchedName,source:browserGeocoded?'OpenStreetMap Nominatim':(resolved.source||'Saved block location')};const saveId=blockId==='all'?0:(+blockId||0),locationBlock=B[saveId]||(B[saveId]={});locationBlock.weatherPoint={lat:+resolved.lat,lon:+resolved.lon,source:browserGeocoded?'OpenStreetMap Nominatim':'block-location'};if(point.address)locationBlock.weatherAddress=point.address;if(matchedName)locationBlock.weatherLocationName=matchedName;saveB()}else if(Number.isFinite(point.lat)&&Number.isFinite(point.lon))i.weather.blockLocation={lat:point.lat,lon:point.lon,address:browserGeocoded?browserGeocoded.displayName:(point.address||''),source:browserGeocoded?'OpenStreetMap Nominatim':point.source};save();
+ const w=i.weather,matchedName=browserGeocoded?browserGeocoded.displayName:(resolved.displayName||''),summary=`${w.windSpeedKmh==null?'Wind n/a':w.windSpeedKmh+' km/h'}${w.windDirectionDeg==null?'':' · '+w.windDirectionDeg+'°'}${w.temperatureC==null?'':' · '+w.temperatureC+'°C'}`;
+ if(status)status.textContent='Saved modelled estimate: '+summary+' · '+(w.modelTime||'nearest hourly data')+(matchedName?' · Location: '+matchedName:'');
+ if(!quiet)toast('Historical weather estimate added to this spray record.'+(matchedName?' Location matched: '+matchedName+'. Check Block settings if this is not right.':''));return true;
  }catch(err){const msg=err&&err.message?err.message:'Could not fetch historical weather.';if(status)status.textContent='Weather not added: '+msg;if(!quiet)toast('Could not fetch weather. '+msg);return false}
 }
 async function add(text,blob,photo,opts){text=(text||'').trim();if(!text&&!blob)return;if(!canWrite()){toast('Your role is view-only. Ask your manager to change it.');return}toast(blob?'Looking at your photo…':'Sorting…');
