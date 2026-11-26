@@ -2496,7 +2496,19 @@ try{
  if(!sb.functions||!sb.functions.invoke)throw new Error('The spray-weather function is not installed yet.');
  const requestBody={date,time,timezone:'Pacific/Auckland'};if(Number.isFinite(point.lat)&&Number.isFinite(point.lon)){requestBody.lat=point.lat;requestBody.lon=point.lon}else requestBody.address=point.address;
  const {data,error}=await sb.functions.invoke('spray-weather',{body:requestBody});
- if(error)throw error;if(!data||!data.weather)throw new Error(data&&data.error?data.error:'No historical weather data was returned.');
+ if(error){
+   let detail=error.message||'The weather function returned an error.';
+   const response=error.context;
+   if(response&&typeof response.clone==='function'){
+     const copy=response.clone();let payload=null;let raw='';
+     try{payload=await copy.json()}catch(e){try{raw=await response.clone().text()}catch(x){}}
+     if(payload&&typeof payload==='object')detail=String(payload.error||payload.message||detail);
+     else if(raw.trim())detail=raw.trim().slice(0,420);
+     if(response.status)detail+=' (HTTP '+response.status+')';
+   }
+   throw new Error(detail);
+ }
+ if(!data||!data.weather)throw new Error(data&&data.error?data.error:'No historical weather data was returned.');
  i.weather=data.weather;i.weather.requestedAt=date+'T'+time;const resolved=data.resolvedLocation||{};if(Number.isFinite(+resolved.lat)&&Number.isFinite(+resolved.lon)){i.weather.blockLocation={lat:+resolved.lat,lon:+resolved.lon,address:resolved.displayName||point.address||'',source:resolved.source||'OpenStreetMap'};const saveId=blockId==='all'?0:(+blockId||0),locationBlock=B[saveId]||(B[saveId]={});locationBlock.weatherPoint={lat:+resolved.lat,lon:+resolved.lon,source:'address-geocoded'};if(point.address)locationBlock.weatherAddress=point.address;if(resolved.displayName)locationBlock.weatherLocationName=resolved.displayName;saveB()}else if(Number.isFinite(point.lat)&&Number.isFinite(point.lon))i.weather.blockLocation={lat:point.lat,lon:point.lon,address:point.address||'',source:point.source};save();
  const w=i.weather,summary=`${w.windSpeedKmh==null?'Wind n/a':w.windSpeedKmh+' km/h'}${w.windDirectionDeg==null?'':' · '+w.windDirectionDeg+'°'}${w.temperatureC==null?'':' · '+w.temperatureC+'°C'}`;
  if(status)status.textContent='Saved modelled estimate: '+summary+' · '+(w.modelTime||'nearest hourly data')+(resolved.displayName?' · Location: '+resolved.displayName:'');
